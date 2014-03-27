@@ -1,0 +1,110 @@
+function [t,c,v,mpars] = sim_opoxi_single()
+%SIM_GLYCEROL_SINGLE Performs simple simulation with PPP model.
+%   Simulation example with the glycolysis, gluconeogenesis and ppp model.
+%
+%   Returns:
+%       t:      vector of time points
+%       c:      matrix of concentrations for the time points t
+%       v:      matrix of fluxes for the time points t
+%       mpars : parameter of simulation
+
+%   Matthias Koenig (matthias.koenig@charite.de)
+%   Copyright 2011 Matthias Koenig
+%   date:   110820  -   v0.1
+
+clear all; close all; format compact;
+
+%% Initialisation
+disp('*** Initialisation ***');
+
+% Debug information
+mpars.debug         = false;
+
+% Get the modul folder
+name = 'opoxi';
+
+% Get the functions for names, stoichiometry and ode
+d.name = name;
+d.pars          = create_handle(name, 'pars');
+d.pars_x        = create_handle(name, 'pars_x');
+d.pars_v        = create_handle(name, 'pars_v');
+d.dxdt          = create_handle(name, 'dxdt');
+                                          
+% Basic parameters
+mpars   = d.pars()
+
+% Generate initial concentration vector
+x_init = zeros(mpars.Nx, 1);
+for k=1:mpars.Nx
+    key = char(mpars.x_names(k));
+    x_init(k, 1) = mpars.x_init(key);
+end
+
+% test function call
+d.dxdt(0, x_init, mpars);
+
+
+%% Integrate the system with the settings
+disp('*** Simulation ***');
+tic
+
+options = odeset('NonNegative', mpars.Nx);
+
+% Steady state start 
+t_end_ss = 1E5;
+x_init_ss = x_init;
+[t_ss,c_ss] = ode15s(@(t,x) d.dxdt(t,x, mpars), ...
+                                        [0 t_end_ss], x_init_ss, options);
+
+%Startpunkt festlegen
+opt=odeset;
+[t,x]=ode15s(@HH_Energy_Abl_CAC,[0 1e5],x_start0,opt,0);
+dd=size(x);
+x0=x(dd(1),:); %Ruhezustand
+
+%integrate for t_ruhe sec (Ruhezustand)
+t_ruhe=100
+[t,x] = ode15s(@HH_Energy_Abl_CAC,[0 t_ruhe],x0,opt,0); 
+dd=size(x);
+S_rest=x(dd(1),:);
+xrest=x;
+trest=t;
+
+%t_oxi_weg  f"ur t_oxi sec 
+t_oxi=1000
+[t,x] = ode15s(@HH_Energy_Abl_CAC,[0 t_oxi],S_rest,opt,0);%
+dd=size(x);
+S_deoxi=x(dd(1),:); %startwerte nach deoxigenierung 
+x_deoxi=x;
+t_deoxi=t+t_ruhe;
+
+%t_reoxigenierung sec erregung
+t_erregung=1899
+[t,x] = ode15s(@HH_Energy_Abl_CAC,[0 t_erregung],S_deoxi,opt,0.9);
+dd=size(x);
+S_reoxi=x(dd(1),:); %startwerte anch erregung 
+x_reoxi=x;
+t_reoxi=t+t_ruhe+t_oxi;
+
+tall=[trest; t_deoxi; t_reoxi];
+xall=[xrest; x_deoxi; x_reoxi];
+
+toc
+
+
+% Calculate the fluxes
+Nt = length(t_span);          % and timepoints
+v = zeros(Nt, mpars.Nv);
+for k = 1:Nt
+   v(k,:) = m_opoxi_ode(c(k,:) , t_span(k), mpars);
+end
+
+
+%% Display the results
+disp('*** Create figures ***');
+fig_opoxi_single(t, c, v, mpars);
+
+% Generate images for cytoscape
+%modul_fig(t, c, v, d)
+
+end

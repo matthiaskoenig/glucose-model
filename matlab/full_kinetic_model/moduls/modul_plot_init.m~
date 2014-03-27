@@ -1,0 +1,19 @@
+function [res] = modul_plot_init(name)
+% Plot the initial concentrations of the module
+d = modul_info(name);
+
+names_s = d.names_s(); 
+init    = d.init();
+
+res = {};
+
+disp('--------------------------------')
+disp(strcat('Initial concentrations: ', name))
+disp('--------------------------------')
+
+for k=1:length(init)
+    res{k, 1:3} = {}
+    fprintf('%i \t %s \t %f \n', k, names_s{k, 1}, init(k))
+end
+disp('--------------------------------')
+

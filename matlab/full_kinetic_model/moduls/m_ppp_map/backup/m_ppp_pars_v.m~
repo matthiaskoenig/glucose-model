@@ -1,0 +1,47 @@
+function [v_names, vmax, v_ind] = m_ppp_pars_v()
+%% M_PPP_PARS_V Definition of the flux names and Vmax values
+%
+% Returns:
+%   v_names: cellarray of names
+%   Vmax:    map of vmax values
+%
+%   author: Matthias Koenig 
+%   date:   110820
+
+% scaling factors for glycolysis and pentose phosphate pathway
+f_gly = 1;  
+f_ppp = 0.2;
+
+% flux data
+data = {
+    'GLUT2',    f_gly * 250
+    'GK',       f_gly * 15
+    'G6P',      f_gly * 11.25
+    'GPI',      f_gly * 250
+    'PFK2',     f_gly * 0.0025
+    'FBP2',     f_gly * 0.075
+    'PFK1',     f_gly * 0.525
+    'FBP1',     f_gly * 2.575
+    'ALD',      f_gly * 250
+    'TPI',      f_gly * 250
+    'G6PD',     f_ppp * 20
+    'PGLS',     f_ppp * 20
+    'PGD',      f_ppp * 20
+    'RPE',      f_ppp * 200
+    'RPIA',     f_ppp * 40
+    'TALDO',    f_ppp *  5
+    'TKT1',     f_ppp *  5
+    'TKT2',     f_ppp *  5
+    'R5PU',     f_ppp *  5
+    'NADPHU,'   f_ppp *  260
+    'GRAPU',    f_gly *  0
+    'PRPPS',    f_ppp *  100
+    'PRPPU',    f_ppp *  1
+    'PGLS2',             1      % spontaneaous reaction, not scaled
+};
+
+v_names = data(:,1);
+vmax     = containers.Map(v_names, cell2mat(data(:,2)));
+v_ind    = containers.Map(v_names, 1:vmax.Count);    % necessary if stoichiometric matrix
+
+end

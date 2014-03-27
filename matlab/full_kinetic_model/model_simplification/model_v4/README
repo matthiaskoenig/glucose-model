@@ -1,0 +1,40 @@
+Overview simplified model of glucose metabolism 
+for integration into FEAPS: Model MV4
+------------------------------------------
+   author: Matthias Koenig 
+           Charite Berlin
+           Computational Systems Biochemistry Berlin
+           matthias.koenig@charite.de
+   date:   110809
+
+folders:
+    data 		: data files from fortran and matlab
+    fortran 	: fortran source code (implementation Euler)
+    figures		
+	latex		: tex files for model overview
+
+source files:
+    mv4_dxdt  	: definition of metabolic reactions (ODE system)
+    mv4_sinks 	: calculation of sources and sinks for Euler
+    mv4_sinks_ode 	: calculation of sources and sinks for ODE Solver
+*   mv4_solve 	: solution with Euler and Matlab
+    fig_solve 	: plot the solutions (called by fortran solve)
+
+
+------------------------------------------
+Model_V4
+------------------------------------------
+Simplified hepatic glucose model consisting of 5 core concentrations.
+- C1 : glucose extern
+- C2 : glucose 
+- C3 : glycogen
+- C4 : lactate
+- C5 : lactate extern
+
+Contains 
+- glycogen storage and utilization.
+- switch between HGP & HGP
+- different set points for glycogen metabolism and glycolysis/gluconeogenesis
+- direct and indirect glycogen synthesis
+------------------------------------------
+

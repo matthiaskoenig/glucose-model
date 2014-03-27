@@ -1,0 +1,222 @@
+/*      ------------------------------------------------
+	Hierarchical Modeling Composition via SBML-comp
+	Combined model for galactose clearance by the liver.
+	------------------------------------------------
+	The model consists of an array of cells which can clear galactose from the 
+	blood compartment. The blood flows from periportal (pp) to perivenious (pv)
+	via the blood compartments adjacent to the single cells.
+
+	Layout:	
+	-------------------------
+	 pp |S01|S02|S03|S04| pv
+	-------------------------
+	    |D01|D02|D03|D04|
+             ----------------
+	    |  H01  |  H02  |
+             ----------------
+	
+	Matthias König - 2013-10-14
+	Copyright © Matthias König 2013 All Rights Reserved.
+*/
+
+/*      ------------------------------------------------
+	Single sinusoid compartment model
+        ------------------------------------------------
+*/
+model single_S(, GALK_vmax, Vblood)
+  // Unit definitions:
+  unit substance = 1e-3 mole;
+  unit volume = litre;
+  unit area = metre^2; 
+  unit length = metre;
+
+  unit mM = 1e-3 mole / litre;  
+  unit mmol_per_s = 1e-3 mole / second;
+  unit per_s = 1 / second;
+  unit mmol = 1e-3 mole;
+
+   compartment cell;			// single cell compartment
+   cell is "Hepatocyte";
+   cell has litre;			// single cell compartment
+   cell = 2*Vblood;   
+
+   species gal in cell;			// galactose in the single cell
+   gal is "D-galactose";
+   gal = 0 mM;
+
+   GALI: gal_ext -> gal;
+   GALI in cell;
+   GALI is "Galactose Importer";
+   GALI_vmax = 1E-7 mmol_per_s;    // fast Michaelis-Menten import relative to clearance
+   GALI_kgal = 1 mM; 
+   GALI = GALI_vmax/GALI_kgal*(gal_ext-gal)/(1+gal/GALI_kgal + gal_ext/GALI_kgal);
+
+   GALK: gal => ;
+   GALK in cell;
+   GALK is "Galactose Clearance";
+   GALK_kgal = 0.3 mM;
+   GALK = GALK_vmax * gal/(gal + GALK_kgal);
+end
+
+
+
+
+
+/*      ------------------------------------------------
+	Single cell model
+        ------------------------------------------------
+	This model is instantiated multiple times in the full hierarchical 
+	model with different parameters sets (function arguments).
+	Depending on the parametrization the cells have different functionality,
+	in this toy example it corresponds to different galactose clearance capacity.
+	
+	GALI - galactose import
+	GALK - galactokinase reaction (irreversible galactose clearance)
+*/
+model single_cell(gal_ext, GALK_vmax, Vblood)
+  // Unit definitions:
+  unit substance = 1e-3 mole;
+  unit volume = litre;
+  unit area = metre^2; 
+  unit length = metre;
+
+  unit mM = 1e-3 mole / litre;  
+  unit mmol_per_s = 1e-3 mole / second;
+  unit per_s = 1 / second;
+  unit mmol = 1e-3 mole;
+
+   compartment cell;			// single cell compartment
+   cell is "Hepatocyte";
+   cell has litre;			// single cell compartment
+   cell = 2*Vblood;   
+
+   species gal in cell;			// galactose in the single cell
+   gal is "D-galactose";
+   gal = 0 mM;
+
+   GALI: gal_ext -> gal;
+   GALI in cell;
+   GALI is "Galactose Importer";
+   GALI_vmax = 1E-7 mmol_per_s;    // fast Michaelis-Menten import relative to clearance
+   GALI_kgal = 1 mM; 
+   GALI = GALI_vmax/GALI_kgal*(gal_ext-gal)/(1+gal/GALI_kgal + gal_ext/GALI_kgal);
+
+   GALK: gal => ;
+   GALK in cell;
+   GALK is "Galactose Clearance";
+   GALK_kgal = 0.3 mM;
+   GALK = GALK_vmax * gal/(gal + GALK_kgal);
+end
+
+
+/*      ------------------------------------------------
+	Combined model of multiple cells
+        ------------------------------------------------
+*/
+model full()
+ // Unit definitions:
+  unit substance = 1e-3 mole;
+  unit volume = litre;
+  unit area = metre^2; 
+  unit length = metre;
+
+  unit mM = 1e-3 mole / litre;  
+  unit mmol_per_s = 1e-3 mole / second;
+  unit per_s = 1 / second;
+  unit mmol = 1e-3 mole;
+  unit litre_per_s = litre / second;
+
+  // Blood compartments and cell (hepatocyte Hc) compartments
+   Vblood = 1E-9 litre;
+   compartment pp;
+   compartment blood1;
+   compartment blood2;
+   compartment blood3;
+   compartment blood4;
+   compartment blood5;
+   compartment pv;
+
+   pp = Vblood;
+   blood1 = Vblood;
+   blood2 = Vblood
+   blood3 = Vblood
+   blood4 = Vblood
+   blood5 = Vblood
+   pv = Vblood;
+
+   pp has litre;
+   blood1 has litre;
+   blood2 has litre;
+   blood3 has litre;
+   blood4 has litre;
+   blood5 has litre;
+   pv has litre;
+
+   pp is "periportal";
+   pv is "perivenous";
+
+   // Species in the external layout (blood)
+   const species gal_pp;        // fixed periportal galactose concentration
+   gal_pp = 3 mM;	  	// periportal (front compartment)
+   gal_pp in pp;
+   gal_1 = 0 mM;                // 1st blood compartment
+   gal_1 in blood1;
+   gal_2 = 0 mM;		// ...
+   gal_2 in blood2;
+   gal_3 = 0 mM;		// ...
+   gal_3 in blood3;
+   gal_4 = 0 mM;		// ...
+   gal_4 in blood4;
+   gal_5 = 0 mM;		// ...
+   gal_5 in blood5;
+   gal_pv = 0 mM;		// perivenious (end compartment)
+   gal_pv in pv;
+   gal_pp is "D-galactose";
+   gal_1 is "D-galactose";
+   gal_2 is "D-galactose";
+   gal_3 is "D-galactose";
+   gal_4 is "D-galactose";
+   gal_5 is "D-galactose";
+   gal_pv is "D-galactose"; 
+
+   // here the exchanger with external
+   TPP: gal_pp -> gal_1;
+   T1: gal_1 -> gal_2;
+   T2: gal_2 -> gal_3;
+   T3: gal_3 -> gal_4;
+   T4: gal_4 -> gal_5;
+   T5: gal_5 -> gal_pv;
+   TPV: gal_pv => ;
+   D = 5E-9 litre_per_s;    // Diffusion like transport
+   
+   TPP = D*(gal_pp - gal_1);
+   T1  = D*(gal_1 - gal_2);
+   T2  = D*(gal_2 - gal_3);
+   T3  = D*(gal_3 - gal_4);
+   T4  = D*(gal_4 - gal_5);
+   T5  = D*(gal_5 - gal_pv);
+   TPV = D*gal_pv;
+   TPP has mmol_per_s;
+   T1 has mmol_per_s; 
+   T2 has mmol_per_s;
+   T3 has mmol_per_s;
+   T4 has mmol_per_s;
+   T5 has mmol_per_s;
+   TPV has mmol_per_s;
+
+   // initialize cells;
+   k1 = 0.1E-9 mmol_per_s;
+   k2 = 0.2E-9 mmol_per_s;
+   k3 = 0.4E-9 mmol_per_s;
+   k4 = 0.8E-9 mmol_per_s;
+   k5 = 1.6E-9 mmol_per_s;
+   
+   H1 : single_cell(gal_1, k1, Vblood);
+   H2 : single_cell(gal_2, k2, Vblood); 
+   H3 : single_cell(gal_3, k3, Vblood);
+   H4 : single_cell(gal_4, k4, Vblood); 
+   H5 : single_cell(gal_5, k5, Vblood);
+
+   // Event changing galactose concentration
+   at(time==20): gal_pp = 0 mM;
+end
