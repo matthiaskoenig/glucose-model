@@ -1,0 +1,106 @@
+function [t,c,v,mpars] = sim_tca_niko()
+%SIM_PPP_SINGLE Performs simple simulation with PPP model.
+%   function [t,c,v,mpars] = sim_ppp_single()
+%   Simulation example with the glycolysis, gluconeogenesis and ppp model.
+%
+%   Returns:
+%       t:      vector of time points
+%       c:      matrix of concentrations for the time points t
+%       v:      matrix of fluxes for the time points t
+%       mpars : parameter of simulation
+
+%   Matthias Koenig (matthias.koenig@charite.de)
+%   Copyright 2011 Matthias Koenig
+%   date:   110523  -   v0.1
+
+clear all
+close all
+
+% Debug information
+mpars.debug         = false;
+%flux_factor         = 12.5;     % all fluxes in mM/min/P
+                                % factor for conversion to µmol/min/kg
+
+% Basic parameters
+mpars.t_end         = 50;                            % integration time in [min]
+mpars.t_stepsize    = 0.1;                               % steps in solution vector (not stepsize of integration !)
+mpars.t_span        = 0:mpars.t_stepsize:mpars.t_end;
+mpars.S_start       = pars_tca_init;                   % initial concentrations
+mpars.Vmax          = pars_tca_vmax;                   % vmax values 
+mpars.stoichiometry = model_tca_stoichiometry();       % stoichiometry
+
+
+% Concentration settings for simulation
+% additional constant concentrations can be specified here
+mpars.const_in_simulation = {};
+
+% changed initial concentrations for simulation
+mpars.changed_initial = {};
+
+
+% [1] get in steady state
+t_ss = 100;
+mpars.t_end = t_ss;
+mpars.z = 0;            % z State
+[t, x, v] = model_tca(mpars);
+dd = size(x);
+mpars.S_start = x(dd(1),:);
+
+% [2] integrate resting state
+t_ruhe = 1000;
+mpars.t_end = t_ruhe;
+mpars.z = 0;            % z State
+
+[t, x, v] = model_tca(mpars);
+
+dd = size(x);
+S_rest = x(dd(1),:);
+t_rest  = t;
+x_rest  = x;
+v_rest  = v;
+
+% [3] change in oxidative phosphorylation
+% ?NIKO? What exactly is the z? How related to oxidative phosphorylation?
+t_oxi = 1e8;
+mpars.S_start = S_rest;
+mpars.t_end = t_oxi;
+mpars.z = 0;
+
+[t, x, v] = model_tca(mpars);
+
+dd=size(x);
+S_deoxi = x(dd(1),:);     %startwerte nach deoxigenierung 
+t_deoxi = t+t_ruhe;
+x_deoxi = x;
+v_deoxi = v;
+
+
+% [4] t_reoxigenierung sec erregung
+t_excitation = 1e8;
+mpars.S_start = S_deoxi;
+mpars.t_end = t_excitation;
+mpars.z = 1;
+
+[t, x, v] = model_tca(mpars);
+
+dd = size(x);
+S_reoxi = x(dd(1),:);     %startwerte anch erregung 
+t_reoxi = t+t_ruhe+t_oxi;
+x_reoxi = x;
+v_reoxi = v;
+
+t_all = [t_rest; t_deoxi; t_reoxi];
+x_all = [x_rest; x_deoxi; x_reoxi];
+v_all = [v_rest; v_deoxi; v_reoxi];
+%}
+
+t_all = [t_rest];
+x_all = [x_rest];
+v_all = [v_rest];
+
+
+%% Save the data
+% save('test.mat', 't', 'v', 'c', 'mpars', -v7.3');
+
+%% Display the results
+fig_tca_niko(t_all, x_all, v_all, mpars);

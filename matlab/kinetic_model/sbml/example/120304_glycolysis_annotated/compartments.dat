@@ -1,0 +1,7 @@
+# number	model id	name	dimension	size	constant	SBO	SBO name	GO	GO name
+1	cyto	cytosol	3	5	Y	SBO:0000290	physical compartment	GO:0005829	cytosol
+2	blood	blood	3	10000	Y	SBO:0000290	physical compartment	GO:0005615	extracellular space
+3	mito	mitochondrion	3	1	Y	SBO:0000290	physical compartment	GO:0005739	mitochondrion
+4	mm	mitochondrial membrane	2	0	Y	SBO:0000290	physical compartment	GO:0031966	mitochondrial membrane
+5	pm	plasma membrane	2	0	Y	SBO:0000290	physical compartment	GO:0005886	plasma membrane
+

@@ -1,0 +1,42 @@
+function [c_names, c_init, c_constant] = m_ppp_pars_x()
+%% Inital metabolite concentrations 
+%   
+% Returns:
+%   names:  vector of concentration names
+%   c_init: vector of initial substrate concentrations
+%   author: Matthias Koenig 
+%   date:   110523
+
+
+data = {
+    'atp',              2.8,     1
+    'adp',              0.8,     1
+    'nadp',              0.1,   0
+    'nadph',             0.1,   0
+    'p',                   5,    1
+    'h2o',             55000,    1
+    'co2',                 5,    1
+    'h',           5.00E-008,    1
+    'glc',                 5,    1
+    'glc6p',            0.12,   0
+    'fru6p',            0.05,   0
+    'fru16bp',          0.02,   0
+    'fru26bp',         0.004,   0
+    'grap',              0.1,   0
+    'dhap',             0.03,   0
+    'pgl6',              0.1,   0
+    'pg6',               0.1,   0
+    'ru5p',              0.1,   0
+    'x5p',               0.1,   0
+    'r5p',               0.1,   0
+    's7p',               1.0,   0
+    'e4p',               0.1,   0
+    'glc_ext',             5,    1
+    'amp',              0.16,   0
+    'prpp',              0.1,   0
+    'gdp',               0.1,   0
+};
+
+c_names = data(:,1);
+c_init = cell2mat(data(:,2));
+c_constant = cell2mat(data(:,3));

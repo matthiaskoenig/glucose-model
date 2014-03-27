@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level2" level="2" version="1">
+  <model>
+    <listOfCompartments>
+      <compartment id="ext" name="blood" size="10000"/>
+      <compartment id="pm" name="plasma membrane" size="0"/>
+      <compartment id="cyto" name="cytosol" size="5"/>
+      <compartment id="mm" name="mitochondrial membrane" size="0"/>
+      <compartment id="mito" name="mitochondrion" size="1"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="atp" name="ATP" compartment="cyto"/>
+      <species id="adp" name="ADP" compartment="cyto"/>
+      <species id="amp" name="AMP" compartment="cyto"/>
+      <species id="utp" name="UTP" compartment="cyto"/>
+      <species id="udp" name="UDP" compartment="cyto"/>
+      <species id="gtp" name="GTP" compartment="cyto"/>
+      <species id="gdp" name="GDP" compartment="cyto"/>
+      <species id="nad" name="NAD+" compartment="cyto"/>
+      <species id="nadh" name="NADH" compartment="cyto"/>
+      <species id="p" name="phosphate" compartment="cyto"/>
+      <species id="pp" name="pyrophosphate" compartment="cyto"/>
+      <species id="h2o" name="water" compartment="cyto"/>
+      <species id="co2" name="CO2" compartment="cyto"/>
+      <species id="h" name="H+" compartment="cyto"/>
+      <species id="glc1p" name="glucose-1-phosphate" compartment="cyto"/>
+      <species id="udpglc" name="UDP-glucose" compartment="cyto"/>
+      <species id="glc" name="glucose" compartment="cyto"/>
+      <species id="glyglc" name="glycogen" compartment="cyto"/>
+      <species id="fru6p" name="fructose-6-phosphate" compartment="cyto"/>
+      <species id="glc6p" name="glucose-6-phosphate" compartment="cyto"/>
+      <species id="fru26bp" name="fructose-2,6-bisphosphate" compartment="cyto"/>
+      <species id="fru16bp" name="fructose-1,6-bisphosphate" compartment="cyto"/>
+      <species id="dhap" name="dihydroxyacetone phosphate" compartment="cyto"/>
+      <species id="grap" name="glyceraldehyde 3-phosphate" compartment="cyto"/>
+      <species id="pg3" name="3-phospho glycerate" compartment="cyto"/>
+      <species id="bpg13" name="1,3-biphospho glycerate" compartment="cyto"/>
+      <species id="pep" name="phosphoenol pyruvate" compartment="cyto"/>
+      <species id="pg2" name="2-phospho glycerate" compartment="cyto"/>
+      <species id="oaa" name="oxalacetate" compartment="cyto"/>
+      <species id="pyr" name="pyruvate" compartment="cyto"/>
+      <species id="glc_ext" name="glucose" compartment="ext"/>
+      <species id="lac" name="lactate" compartment="cyto"/>
+      <species id="p_mito" name="phosphate" compartment="mito"/>
+      <species id="oaa_mito" name="oxalacetate" compartment="mito"/>
+      <species id="lac_ext" name="lactate" compartment="ext"/>
+      <species id="co2_mito" name="CO2" compartment="mito"/>
+      <species id="pyr_mito" name="pyruvate" compartment="mito"/>
+      <species id="cit_mito" name="citrate" compartment="mito"/>
+      <species id="pep_mito" name="phosphoenol pyruvate" compartment="mito"/>
+      <species id="acoa_mito" name="acetyl-coenzyme A" compartment="mito"/>
+      <species id="gtp_mito" name="GTP" compartment="mito"/>
+      <species id="gdp_mito" name="GDP" compartment="mito"/>
+      <species id="atp_mito" name="ATP" compartment="mito"/>
+      <species id="adp_mito" name="ADP" compartment="mito"/>
+      <species id="nad_mito" name="NAD" compartment="mito"/>
+      <species id="h_mito" name="H+" compartment="mito"/>
+      <species id="coa_mito" name="coenzyme A" compartment="mito"/>
+      <species id="nadh_mito" name="NADH" compartment="mito"/>
+      <species id="h2o_mito" name="water" compartment="mito"/>
+    </listOfSpecies>
+    <listOfReactions>
+      <reaction id="GLUT2_pm" name="GLUT2 glucose transport 1 glucose_ext &lt;-&gt; 1 glucose">
+        <listOfReactants>
+          <speciesReference species="glc_ext"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="glc"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="GK_cyto" name="glucokinase 1 atp + 1 glc -&gt; 1 adp + 1 glc6p">
+        <listOfReactants>
+          <speciesReference species="atp"/>
+          <speciesReference species="glc"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="adp"/>
+          <speciesReference species="glc6p"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="G6Pase_cyto" name="Glucose-6 phosphatatse 1 glc6p + 1 h2o -&gt; 1 glc + 1 p">
+        <listOfReactants>
+          <speciesReference species="h2o"/>
+          <speciesReference species="glc6p"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="p"/>
+          <speciesReference species="glc"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="GPI_cyto" name="Glucose-6-phosphate isomerase 1 glc6p &lt;-&gt; fru6p">
+        <listOfReactants>
+          <speciesReference species="glc6p"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="fru6p"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="G16PI_cyto" name="Glucose-1-phosphate 1,6-phosphomutase 1 glc1p &lt;-&gt; 1 glc6p">
+        <listOfReactants>
+          <speciesReference species="glc1p"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="glc6p"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="UPGase_cyto" name="UTP:Glucose-1-phosphate uridylyltransferase 1 glc1p + utp &lt;-&gt; 1 udpglc + pp">
+        <listOfReactants>
+          <speciesReference species="utp"/>
+          <speciesReference species="glc1p"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="pp"/>
+          <speciesReference species="udpglc"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="PPase_cyto" name="Pyrophosphate phosphohydrolase 1 pp + 1 h2o -&gt; 2 p">
+        <listOfReactants>
+          <speciesReference species="pp"/>
+          <speciesReference species="h2o"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="p" stoichiometry="2"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="GS_cyto" name="Glycogen synthase 1 udpglc + 1 udp -&gt; 1 glyglc">
+        <listOfReactants>
+          <speciesReference species="udpglc"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="udp"/>
+          <speciesReference species="glyglc"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="GP_cyto" name="Glycogen phosphorylase 1 glyglc + 1 p &lt;-&gt; 1 glc1p">
+        <listOfReactants>
+          <speciesReference species="p"/>
+          <speciesReference species="glyglc"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="glc1p"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="NDK_GTP_cyto" name="Nucleosid diphosphate kinase (GTP) 1 atp + 1 gdp &lt;-&gt; 1 adp + 1 gtp">
+        <listOfReactants>
+          <speciesReference species="atp"/>
+          <speciesReference species="gdp"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="adp"/>
+          <speciesReference species="gtp"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="NDK_UTP_cyto" name="Nucleosid diphosphate kinase (UTP) 1 atp + 1 udp &lt;-&gt; 1 adp + 1 utp">
+        <listOfReactants>
+          <speciesReference species="atp"/>
+          <speciesReference species="udp"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="adp"/>
+          <speciesReference species="utp"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="AK_cyto" name="Adenylate kinase 1 atp + 1 amp &lt;-&gt; 2 adp">
+        <listOfReactants>
+          <speciesReference species="atp"/>
+          <speciesReference species="amp"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="adp" stoichiometry="2"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="PFK2_cyto" name="Phosphofructo kinase 2 1 atp + 1 fru6p -&gt; 1 adp + 1 fru26bp">
+        <listOfReactants>
+          <speciesReference species="atp"/>
+          <speciesReference species="fru6p"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="adp"/>
+          <speciesReference species="fru26bp"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="FBP2_cyto" name="Fructose-2,6-bisphosphatase 1 fru26bp + 1 h2o -&gt; 1 p + 1 fru6p">
+        <listOfReactants>
+          <speciesReference species="h2o"/>
+          <speciesReference species="fru26bp"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="p"/>
+          <speciesReference species="fru6p"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="PFK1_cyto" name="Phosphofructo kinase 1 1 atp + 1 fru6p -&gt; 1 adp + 1 fru16bp">
+        <listOfReactants>
+          <speciesReference species="atp"/>
+          <speciesReference species="fru6p"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="adp"/>
+          <speciesReference species="fru16bp"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="FBP1_cyto" name="Fructose-2,6-bisphosphatase 1 fru16bp + 1 h2o -&gt; 1 p + 1 fru6p">
+        <listOfReactants>
+          <speciesReference species="h2o"/>
+          <speciesReference species="fru16bp"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="p"/>
+          <speciesReference species="fru6p"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="ALD_cyto" name="Aldolase 1 fru16bp &lt;-&gt; 1 dhap + 1 grap">
+        <listOfReactants>
+          <speciesReference species="fru16bp"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="grap"/>
+          <speciesReference species="dhap"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="TPI_cyto" name="Triosephosphate isomerase 1 dhap &lt;-&gt; 1 grap">
+        <listOfReactants>
+          <speciesReference species="dhap"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="grap"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="GAPDH_cyto" name="Glyceraldehydephosphate dehydrogenase 1 grap + 1 p + 1 nad &lt;-&gt; 1 nadh + 1 h + 1 bpg13">
+        <listOfReactants>
+          <speciesReference species="nad"/>
+          <speciesReference species="p"/>
+          <speciesReference species="grap"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="nadh"/>
+          <speciesReference species="h"/>
+          <speciesReference species="bpg13"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="PGK_cyto" name="Phosphoglycerate kinase 1 adp + 1 bpg13 &lt;-&gt; 1 atp + pg3">
+        <listOfReactants>
+          <speciesReference species="adp"/>
+          <speciesReference species="bpg13"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="atp"/>
+          <speciesReference species="pg3"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="PGM_cyto" name="3-Phosphoglycerate mutase 1 pg3 &lt;-&gt; 1 pg2">
+        <listOfReactants>
+          <speciesReference species="pg3"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="pg2"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="EN_cyto" name="Enolase 1 pg2 &lt;-&gt; 1 pep + 1 h2o">
+        <listOfReactants>
+          <speciesReference species="pg2"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="h2o"/>
+          <speciesReference species="pep"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="PK_cyto" name="Pyruvate kinase 1 adp + 1 pep -&gt; 1 atp + 1 pyr">
+        <listOfReactants>
+          <speciesReference species="adp"/>
+          <speciesReference species="pep"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="atp"/>
+          <speciesReference species="pyr"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="PEPCK_cyto" name="Phosphoenolpyruvate kinase 1 oaa + 1 gtp &lt;-&gt; 1 pep + 1 gdp + 1 co2">
+        <listOfReactants>
+          <speciesReference species="gtp"/>
+          <speciesReference species="oaa"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="gdp"/>
+          <speciesReference species="co2"/>
+          <speciesReference species="pep"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="PEPCK_mito" name="Phosphoenolpyruvate kinase 1 oaa_mito + 1 gtp_mito &lt;-&gt; 1 pep_mito + 1 gdp_mito + 1 co2_mito">
+        <listOfReactants>
+          <speciesReference species="oaa_mito"/>
+          <speciesReference species="gtp_mito"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="co2_mito"/>
+          <speciesReference species="pep_mito"/>
+          <speciesReference species="gdp_mito"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="PC_mito" name="Pyruvate Carboxylase 1 pyr_mito + 1 atp_mito + 1 co2_mito -&gt; 1 oaa_mito + 1 adp_mito + 1 p_mito">
+        <listOfReactants>
+          <speciesReference species="co2_mito"/>
+          <speciesReference species="pyr_mito"/>
+          <speciesReference species="atp_mito"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="p_mito"/>
+          <speciesReference species="oaa_mito"/>
+          <speciesReference species="adp_mito"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="LDH_cyto" name="Lactate dehydrogenase 1 pyr + 1 nadh + 1 h &lt;-&gt; 1 lac + 1 nad">
+        <listOfReactants>
+          <speciesReference species="nadh"/>
+          <speciesReference species="h"/>
+          <speciesReference species="pyr"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="nad"/>
+          <speciesReference species="lac"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="LacT_pm" name="Lactate transport 1 lac_ext &lt;-&gt; 1 lac">
+        <listOfReactants>
+          <speciesReference species="lac_ext"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="lac"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="PyrT_mm" name="Pyruvate transport 1 pyr -&gt; 1 pyr_mito">
+        <listOfReactants>
+          <speciesReference species="pyr"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="pyr_mito"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="PepT_mm" name="PEP transport 1 pep_mito -&gt; 1 pep">
+        <listOfReactants>
+          <speciesReference species="pep_mito"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="pep"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="PDH_mito" name="Pyruvate dehydrogenase 1 pyr_mito + 1 coa_mito + 1 nad_mito -&gt; 1 acoa_mito + 1 co2_mito + 1 nadh_mito + 1 h_mito">
+        <listOfReactants>
+          <speciesReference species="pyr_mito"/>
+          <speciesReference species="coa_mito"/>
+          <speciesReference species="nad_mito"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="co2_mito"/>
+          <speciesReference species="acoa_mito"/>
+          <speciesReference species="nadh_mito"/>
+          <speciesReference species="h_mito"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="CS_mito" name="Citrate synthase 1 acoa_mito + 1 oaa_mito + 1 h2o mito -&gt; 1 cit_mito + 1 coa_mito">
+        <listOfReactants>
+          <speciesReference species="oaa_mito"/>
+          <speciesReference species="acoa_mito"/>
+          <speciesReference species="h2o_mito"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="cit_mito"/>
+          <speciesReference species="coa_mito"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="NDK_GTP_mito" name="Nucleosid diphospate kinase (GTP) 1 atp_mito + 1 gdp_mito -&gt; 1 adp_mito + 1 gtp_mito">
+        <listOfReactants>
+          <speciesReference species="atp_mito"/>
+          <speciesReference species="gdp_mito"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="adp_mito"/>
+          <speciesReference species="gtp_mito"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="OAAFLX_mito" name="oxalacetate influx -&gt; 1 oaa_mito">
+        <listOfProducts>
+          <speciesReference species="oaa_mito"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="ACOAFLX_mito" name="acetyl-CoA efflux 1 acoa_mito -&gt;">
+        <listOfReactants>
+          <speciesReference species="acoa_mito"/>
+        </listOfReactants>
+      </reaction>
+      <reaction id="CITFLX_mito" name="citrate efflux 1 cit_mito -&gt;">
+        <listOfReactants>
+          <speciesReference species="cit_mito"/>
+        </listOfReactants>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>

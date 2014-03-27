@@ -1,0 +1,38 @@
+#reaction	model_id	name	compartment	irreversible	stoichiometry	Vmax	Delta G [kJ/mol]	EC	KEGG	UniProt	SBO	SBO name
+1	GLUT2	 GLUT2 glucose transporter (facilitated diffusion) 	pm	N	1 glc_ext <-> 1 glc	420	0			UNIPROT:P11168	SBO:0000284	transporter
+2	GK	 Glucokinase, hexokinase IV 	cyto	Y	 1 atp + 1 glc -> 1 adp + 1 glc6p	25.2	-16.7	EC:2.7.1.2	KEGG:R00299	UNIPROT:P35557	SBO:0000014	enzyme
+3	G6PASE	 Glucose-6-phosphatase 	cyto	Y	1 glc6p + 1 h2o -> 1 glc + 1 p	18.9	-13.8	EC:3.1.3.9	KEGG:R00303	UNIPROT:P35575	SBO:0000014	enzyme
+4	GPI	 Glucose-6-phosphate isomerase 	cyto	N	1 glc6p <-> fru6p	420	1.7	EC:5.3.1.9	KEGG:R00771	UNIPROT:P06744 	SBO:0000014	enzyme
+5	G16PI	 glucose-1-phosphate 1,6-phosphomutase 	cyto	N	1 glc1p <-> 1 glc6p	100	-7.1	EC:5.4.2.2	KEGG:R00959	UNIPROT:P36871, UNIPROT:Q96G03	SBO:0000014	enzyme
+6	UPGASE	 UTP:Glucose-1-phosphate uridylyltransferase 	cyto	N	1 glc1p + utp <-> 1 udpglc + pp	80	3	EC:2.7.7.9	KEGG:R00289	UNIPROT:Q16851	SBO:0000014	enzyme
+7	PPASE	 Pyrophosphate phosphohydrolase 	cyto	Y	1 pp + 1 h2o -> 2 p	2.4	-19.1	EC:3.6.1.1	KEGG:R00004	UNIPROT:Q15181	SBO:0000014	enzyme
+8	GS	 Glycogen synthase 	cyto	Y	1 udpglc + 1 udp -> 1 glyglc	13.2	0 (?)			UNIPROT:P54840	SBO:0000014	enzyme
+9	GP	 Glycogen phosphorylase 	cyto	N	1 glyglc + 1 p <-> 1 glc1p	6.8	4			UNIPROT:P06737	SBO:0000014	enzyme
+10	NTK (GTP)	 Nucleosid diphosphate kinase (GTP) 	cyto	N	1 atp + 1 gdp <-> 1 adp + 1 gtp	0	0	EC:2.7.4.6	KEGG:R00330		SBO:0000014	enzyme
+11	NTK (UTP)	 Nucleosid diphosphate kinase (UTP) 	cyto	N	1 atp + 1 udp <-> 1 adp + 1 utp	2940	0	EC:2.7.4.6	KEGG:R00156		SBO:0000014	enzyme
+12	AK	 Adenylat kinase 	cyto	N	1 atp + 1 amp <-> 2 adp	0	3.6	EC:2.7.4.3	KEGG:R00127		SBO:0000014	enzyme
+13	PFK2	 Phosphofructo kinase 2	cyto	Y	1 atp + 1 fru6p -> 1 adp + 1 fru26bp	0.0042	-14.2	EC:2.7.1.105	KEGG:R02732	UNIPROT:P16118	SBO:0000014	enzyme
+14	FBP2	 Fructose-2,6-bisphosphatase 	cyto	Y	1 fru26bp + 1 h2o -> 1 p + 1 fru6p	0.126	-16.3	EC:3.1.3.46	KEGG:R02731	UNIPROT:P16118	SBO:0000014	enzyme
+15	PFK1	 Phosphofructo kinase 1	cyto	Y	1 atp + 1 fru6p -> 1 adp + 1 fru16bp	7.182	-14.2	EC:2.7.1.11	KEGG:R00756	UNIPROT:P17858	SBO:0000014	enzyme
+16	FBP1	 Fructose-1,6-bisphosphatase 	cyto	Y	1 fru16bp + 1 h2o -> 1 p + 1 fru6p	4.326	-16.3	EC:3.1.3.11	KEGG:R00762	UNIPROT:O00757, UNIPROT:P09467	SBO:0000014	enzyme
+17	ALD	 Aldolase 	cyto	N	1 fru16bp <-> 1 dhap + 1 grap	420	23.8	EC:4.1.2.13	KEGG:R01068	UNIPROT:P05062	SBO:0000014	enzyme
+18	TPI	 Triosephosphate isomerase 	cyto	N	1 dhap <-> 1 grap	420	7.5	EC:5.3.1.1	KEGG:R01015	UNIPROT:P60174	SBO:0000014	enzyme
+19	GAPDH	 Glyceraldehydephosphate dehydrogenase 	cyto	N	1 grap + 1 p + 1 nad <-> 1 nadh + 1 h + 1 bpg13	420	6.3	EC:1.2.1.12	KEGG:R01061	UNIPROT:P04406	SBO:0000014	enzyme
+20	PGK	 Phosphoglycerate kinase	cyto	N	1 adp + 1 bpg13 <-> 1 atp + pg3	420	-5	EC:2.7.2.3	KEGG:R01512	UNIPROT:P00558	SBO:0000014	enzyme
+21	PGAM	 3-Phosphoglycerate mutase 	cyto	N	1 pg3 <-> 1 pg2	420	4.4	EC:5.4.2.1	KEGG:R01518	UNIPROT:P18669	SBO:0000014	enzyme
+22	EN	 Enolase 	cyto	N	1 pg2 <-> 1 pep + 1 h2o	35.994	7.5	EC:4.2.1.11	KEGG:R00658	UNIPROT:P06733, UNIPROT:P09104, UNIPROT:P13929	SBO:0000014	enzyme
+23	PK	 Pyruvate kinase 	cyto	Y	1 adp + 1 pep -> 1 atp + 1 pyr	46.2	-31.4	EC:2.7.1.40	KEGG:R00200	UNIPROT:P30613	SBO:0000014	enzyme
+24	PEPCK	 Phosphoenolpyruvate carboxykinase 	cyto	N	1 oaa + 1 gtp <-> 1 pep + 1 gdp + 1 co2	0	-15	EC:4.1.1.32	KEGG:R00431	UNIPROT:P35558	SBO:0000014	enzyme
+25	PEPCK_mito	 Phosphoenolpyruvate carboxykinase 	mito	N	1 oaa_mito + 1 gtp_mito <-> 1 pep_mito + 1 gdp_mito + 1 co2_mito	546	-15	EC:4.1.1.32	KEGG:R00431	UNIPROT:Q16822	SBO:0000014	enzyme
+26	PC	 Pyruvate Carboxylase 	mito	Y	1 pyr_mito + 1 atp_mito + 1 co2_mito -> 1 oaa_mito + 1 adp_mito + 1 p_mito	168	0	EC:6.4.1.1	KEGG:R00344	UNIPROT:P11498	SBO:0000014	enzyme
+27	LDH	 Lactate dehydrogenase 	cyto	N	1 pyr + 1 nadh + 1 h <-> 1 lac + 1 nad	12.6	21.1	EC:1.1.1.27	-KEGG:R00703	UNIPROT:P00338, UNIPROT:P07195, UNIPROT:P07864	SBO:0000014	enzyme
+28	LACT	 Lactate transporter 	pm	N	1 lac_ext <-> 1 lac	5.418	0 (?)				SBO:0000284	transporter
+29	PYRT	 Pyruvate transporter 	mm	N	 1 pyr <-> 1 pyr_mito 	42	0 (?)				SBO:0000284	transporter
+30	PEPT	 PEP transporter 	mm	N	1 pep_mito <-> 1 pep	33.6	0 (?)				SBO:0000284	transporter
+31	PDH	 Pyruvate dehydrogenase 	mito	Y	1 pyr_mito + 1 coa_mito + 1 nad_mito -> 1 acoa_mito + 1 co2_mito + 1 nadh_mito + 1 h_mito	13.44	-	EC:1.2.4.1	KEGG:R00209	UNIPROT:P08559, UNIPROT:P11177, UNIPROT:P10515, UNIPROT:P09622, O00330	SBO:0000014	enzyme
+32	CS	 Citrate synthase 	mito	N	1 acoa_mito + 1 oaa_mito + 1 h2o mito <-> 1 cit_mito + 1 coa_mito	4.2	-32.2	EC:2.3.3.1	-KEGG:R00351	UNIPROT:O75390	SBO:0000014	enzyme
+33	NDK_mito	 Nucleosid diphosphate kinase (GTP) 	mito	N	1 atp_mito + 1 gdp_mito <-> 1 adp_mito + 1 gtp_mito	420	0	EC:2.7.4.6	KEGG:R00330		SBO:0000014	enzyme
+34	OAAFLX	 Oxalacetate flux 	mito	N	-> 1 oaa_mito	0	-				SBO:0000014	enzyme
+35	ACOAFLX	 Acetyl-CoA flux 	mito	N	1 acoa_mito -> 	0	-				SBO:0000014	enzyme
+36	VCITFLX	 Citrate flux 	mito	N	1 cit_mito ->	0	-				SBO:0000014	enzyme
+

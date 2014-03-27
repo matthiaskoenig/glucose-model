@@ -1,0 +1,23 @@
+function [dxdt] = m_ppp_dxdt(t, x_vec, mpars)
+%DXDT Calculates the changes in concentration for given concentrations
+
+    % map of changes in fluxes
+    v_dxdt = m_ppp_ode(x_vec, t, mpars);
+    
+    % generate vector of changes 
+    v_vec = zeros(mpars.Nv, 1);
+    for k=1:mpars.Nv
+       key = char(mpars.v_names(k));
+       v_vec(k) = v_dxdt(key);
+    end
+  
+    % vector of changes in concentration
+    dxdt = m_ppp_stoichiometry() * v_vec;
+    % map of changes in concentrations
+    %dxdt = containers.Map(mpars.x_names, tmp);
+    
+    % set constant concentrations (has to be managed in the above module
+    % settings)
+    
+    
+end

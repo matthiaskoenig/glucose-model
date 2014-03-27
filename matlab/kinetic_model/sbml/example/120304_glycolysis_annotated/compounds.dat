@@ -1,0 +1,53 @@
+#	model id	fullname	compartment	constant	c [mM]	KEGG	Chebi	UniProt	SBO	SBO name	charge
+1	atp	ATP	cyto	Y	2.8	KEGG:C00002	CHEBI:15422		SBO:0000299	metabolite	0
+2	adp	ADP	cyto	Y	0.8	KEGG:C00008	CHEBI:16761		SBO:0000299	metabolite	0
+3	amp	AMP	cyto	Y	0.16	KEGG:C00020	CHEBI:16027		SBO:0000299	metabolite	0
+4	utp	UTP	cyto	N	0.27	KEGG:C00075	CHEBI:15713		SBO:0000299	metabolite	0
+5	udp	UDP	cyto	N	0.09	KEGG:C00015	CHEBI:17659		SBO:0000299	metabolite	0
+6	gtp	GTP	cyto	N	0.29	KEGG:C00044	CHEBI:15996		SBO:0000299	metabolite	0
+7	gdp	GDP	cyto	N	0.10	KEGG:C00035	CHEBI:17552		SBO:0000299	metabolite	0
+8	nad	NAD+	cyto	Y	1.22	KEGG:C00003	CHEBI:15846		SBO:0000299	metabolite	1
+9	nadh	NADH	cyto	Y	5.60E-004	KEGG:C00004	CHEBI:16908		SBO:0000299	metabolite	0
+10	p	phosphate	cyto	Y	5	KEGG:C00009			SBO:0000299	metabolite	0
+11	pp	pyrophosphate	cyto	N	0.008	KEGG:C00013			SBO:0000299	metabolite	0
+12	h2o	H2O	cyto	Y	55000	KEGG:C00001	CHEBI:15377		SBO:0000299	metabolite	0
+13	co2	CO2	cyto	Y	5	KEGG:C00011	CHEBI:16526		SBO:0000299	metabolite	0
+14	h	H+	cyto	Y	5.00E-008	KEGG:C00080	CHEBI:24636		SBO:0000299	metabolite	1
+15	glc1p	glucose-1-phosphate	cyto	N	0.012	KEGG:C00103	CHEBI:16077		SBO:0000299	metabolite	0
+16	udpglc	UDP-glucose	cyto	N	0.38	KEGG:C00029	CHEBI:18066		SBO:0000299	metabolite	0
+17	glyglc	glycogen	cyto	N	250	KEGG:C00182	CHEBI:28087		SBO:0000299	metabolite	0
+18	glc	glucose	cyto	N	5	KEGG:C00031	CHEBI:4167		SBO:0000299	metabolite	0
+19	glc6p	glucose-6-phosphate	cyto	N	0.12	KEGG:C00092	CHEBI:4170		SBO:0000299	metabolite	0
+20	fru6p	fructose-6-phosphate	cyto	N	0.05	KEGG:C00085	CHEBI:15946		SBO:0000299	metabolite	0
+21	fru16bp	fructose-1,6-bisphospate	cyto	N	0.02	KEGG:C00354	CHEBI:16905		SBO:0000299	metabolite	0
+22	fru26bp	fructose-2,6-bisphospate	cyto	N	0.004	KEGG:C00665	CHEBI:28602		SBO:0000299	metabolite	0
+23	grap	glyceraldehyde 3-phosphate	cyto	N	0.1	KEGG:C00118	CHEBI:29052		SBO:0000299	metabolite	0
+24	dhap	dihydroxyacetone phosphate	cyto	N	0.03	KEGG:C00111	CHEBI:16108		SBO:0000299	metabolite	0
+25	bpg13	1,3-bisphospho-glycerate	cyto	N	0.3	KEGG:C00236	CHEBI:16001		SBO:0000299	metabolite	0
+26	pg3	3-phosphoglycerate	cyto	N	0.27	KEGG:C00197	CHEBI:17794		SBO:0000299	metabolite	0
+27	pg2	2-phosphoglycerate	cyto	N	0.03	KEGG:C00631	CHEBI:17835		SBO:0000299	metabolite	0
+28	pep	phosphoenolpyruvate	cyto	N	0.15	KEGG:C00074	CHEBI:44897		SBO:0000299	metabolite	0
+29	pyr	pyruvate	cyto	N	0.1	KEGG:C00022	CHEBI:32816		SBO:0000299	metabolite	0
+30	oaa	oxaloacetate	cyto	N	0.01	KEGG:C00036	CHEBI:30744		SBO:0000299	metabolite	0
+31	lac	lactate	cyto	N	0.5	KEGG:C00186	CHEBI:422		SBO:0000299	metabolite	0
+32	glc_blood	glucose	blood	Y	5	KEGG:C00031	CHEBI:4167		SBO:0000299	metabolite	0
+33	lac_blood	lactate	blood	Y	1.2	KEGG:C00186	CHEBI:422		SBO:0000299	metabolite	0
+34	co2_mito	CO2	mito	Y	5	KEGG:C00011	CHEBI:16526		SBO:0000299	metabolite	0
+35	p_mito	phosphate	mito	Y	5	KEGG:C00009			SBO:0000299	metabolite	0
+36	oaa_mito	oxaloacetate	mito	N	0.01	KEGG:C00036	CHEBI:30744		SBO:0000299	metabolite	0
+37	pep_mito	pep	mito	N	0.15	KEGG:C00074	CHEBI:44897		SBO:0000299	metabolite	0
+38	acoa_mito	acetyl-coenzyme A	mito	Y	0.04	KEGG:C00024	CHEBI:15351		SBO:0000299	metabolite	0
+39	pyr_mito	pyruvate	mito	N	0.1	KEGG:C00022	CHEBI:32816		SBO:0000299	metabolite	0
+40	cit_mito	citrate	mito	Y	0.32	KEGG:C00158	CHEBI:30769		SBO:0000299	metabolite	0
+41	atp_mito	ATP	mito	Y	2.8	KEGG:C00002	CHEBI:15422		SBO:0000299	metabolite	0
+42	adp_mito	ADP	mito	Y	0.8	KEGG:C00008	CHEBI:16761		SBO:0000299	metabolite	0
+43	gtp_mito	GTP	mito	N	0.29	KEGG:C00044	CHEBI:15996		SBO:0000299	metabolite	0
+44	gdp_mito	GDP	mito	N	0.10	KEGG:C00035	CHEBI:17552		SBO:0000299	metabolite	0
+45	coa_mito	coenzymeA	mito	Y	0.055	KEGG:C00010	CHEBI:15346		SBO:0000299	metabolite	0
+46	nadh_mito	NADH	mito	Y	0.24	KEGG:C00004	CHEBI:16908		SBO:0000299	metabolite	0
+47	nad_mito	NAD+	mito	Y	0.98	KEGG:C00003	CHEBI:15846		SBO:0000299	metabolite	1
+48	h_mito	H+	mito	Y	1.00E-008	KEGG:C00011	CHEBI:24636		SBO:0000299	metabolite	1
+49	h20_mito	H2O	mito	Y	55000	KEGG:C00080	CHEBI:15377		SBO:0000299	metabolite	0
+50	insulin_blood	insulin	blood	N	7.61E-008	KEGG:C00723		UNIPROT:P01308	SBO:0000299	metabolite	-
+51	glucagon_blood	glucagon	blood	N	4.36E-008	KEGG:C01501		UNIPROT:P01275	SBO:0000299	metabolite	-
+52	epinephrine_blood	epinephrine	blood	N	206.11	KEGG:C00547	CHEBI:18357		SBO:0000299	metabolite	0

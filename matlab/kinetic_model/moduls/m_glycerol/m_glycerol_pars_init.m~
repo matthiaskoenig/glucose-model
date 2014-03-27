@@ -1,0 +1,17 @@
+function [c_init] = m_glycerol_pars_ioni(modus)
+%% PARS_SEX Inital metabolite concentrations
+%  Returns the concentration vector for the given modus. 
+%   
+% Returns:
+%   c_init:    vector of substrate concentrations for given modus
+%
+%   author: Matthias Koenig 
+%   date:   110815
+
+% Experimental data has to be updated (NADH has to be changed)
+c_init = [
+    
+
+
+
+]

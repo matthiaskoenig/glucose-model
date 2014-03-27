@@ -1,0 +1,644 @@
+function [V] = m_oxphos_ode_cac(x, t, mpars)
+%% MODEL_OXPHOS_ODE Rate laws for metabolic parts of the reactions
+%  Definition of the rate laws and calculation of the fluxes for the given
+%  parameters and concentrations. This function is called by the ODE
+%  integration routine.
+%
+% Units
+%   time: minutes     [min] ,  
+%   concentration     [mM] = [mmol/l] 
+%   volume:           [l]
+%   fluxes:           [µmol/(min kg)] kg body weight
+%
+%   author: Matthias Koenig 
+%           Charite Berlin
+%           Computational Systems Biochemistry Berlin
+%           matthias.koenig@charite.de
+%   date:   110817
+
+
+%% Test for negative concentrations
+%TODO : analyse possble problems in more detail
+if any(find(x<0))
+   warning('Negative concentrations !!!')
+   for k=1:length(x)
+      if x(k) < 0
+          x(k)
+          k
+          x(k) = 0;
+      end
+   end
+end
+
+
+%% Concentrations
+cit        = x(36);
+acoa       = x(37);
+malcoa     = x(38);
+
+nad        = x(39);
+nadh       = x(40);
+oxa        = x(41);
+isocit     = x(42);
+
+%%% tca %%%
+pyr_mito      = x(43);
+acoa_mito     = x(44);
+cit_mito      = x(45);
+isocit_mito   = x(46);
+akg_mito      = x(47);
+succoa_mito   = x(48);
+suc_mito      = x(49);
+fum_mito      = x(50);
+mal_mito      = x(51);
+oxa_mito      = x(52);
+pyr           = x(53);
+
+nad_mito     = x(54);
+nadh_mito    = x(55);
+gtp_mito     = x(56); 
+gdp_mito     = x(57);
+
+k_drain      = x(58);
+free1        = x(59);
+p_mito       = x(60);
+
+glu_mito     = x(61);
+asp_mito     = x(62);
+asp          = x(63);
+glu          = x(64);
+mal          = x(65);
+akg          = x(66);
+
+co2          = x(67);
+co2_mito     = x(68);
+
+atp_mito     = x(69); 
+adp_mito     = x(70);
+
+acoadh_fad   = x(71);
+acoadh_fadh2 = x(72);
+etp_fad      = x(73);
+etp_fadh2    = x(74);
+etfp_ox      = x(75);
+etfp_red     = x(76);
+
+%%% beta-oxidation %%%
+c4_coa_mito       = x(77);
+c6_coa_mito       = x(78);
+c8_coa_mito       = x(79);
+c10_coa_mito      = x(80);
+c12_coa_mito      = x(81);
+c14_coa_mito      = x(82);
+c16_coa_mito      = x(83);
+
+e_c4_coa_mito     = x(84);
+e_c6_coa_mito     = x(85);
+e_c8_coa_mito     = x(86);
+e_c10_coa_mito    = x(87);
+e_c12_coa_mito    = x(88);
+e_c14_coa_mito    = x(89);
+e_c16_coa_mito    = x(90);
+
+l_c4_coa_mito     = x(91);
+l_c6_coa_mito     = x(92);
+l_c8_coa_mito     = x(93);
+l_c10_coa_mito    = x(94);
+l_c12_coa_mito    = x(95);
+l_c14_coa_mito    = x(96);
+l_c16_coa_mito    = x(97);
+
+k_c4_coa     = x(98);
+k_c6_coa     = x(99);
+k_c8_coa     = x(100);
+k_c10_coa    = x(101);
+k_c12_coa    = x(102);
+k_c14_coa    = x(103);
+k_c16_coa    = x(104);
+
+%%% carnithine shuttle %%%
+c16_coa         = x(105);
+c16_car         = x(106);
+car             = x(107);
+coa             = x(108);
+c16_car_mito    = x(109);
+car_mito        = x(110);
+
+%%% ketone bodies %%%
+hmg_coa_mito    = x(111);
+acac_mito       = x(112);
+hydroxybut_mito = x(113);
+
+
+%% Aditional variables
+
+ca = 0.05 + (k_drain-1)*2.5;
+
+%% Vmax values
+Vmax = mpars.vmax;
+
+%% Reaction kinetics
+% *********************************** %
+% v1 : KDRAIN : Change in k_drain parameter
+% *********************************** %
+Vmax_1 = 1E15;
+v_k_drain = Vmax_1*(3.8-k_drain);
+
+
+% *********************************** %
+% v2 : PDH - Pyruvatedehydrogenase Complex
+% *********************************** %	
+% EC{1.2.4.1, 1.8.1.4, 2.3.1.12}
+% KEGG{R00209}
+% pyr_mito + coa_mito + nad_mito -> acoa_mito + co2_mito + nadh_mito +
+% h_mito
+% irreversible
+pdh_deltag = 0;                          % [kJ/mol]
+pdh_keq = keq(pdh_deltag);                    
+pdh_td = (pyr_mito*coa_mito*nad_mito - acoa_mito*co2_mito*nadh_mito*h_mito/pdh_keq);
+
+pdh_km_pyr = 0.017;      %[mM]
+pdh_km_nad = 0.036;      %[mM]
+pdh_km_coa = 0.0047;      %[mM]
+Vmax_2 = 20;
+
+v_pdh = Vmax_2 * pyr_mito/(pdh_km_pyr + pyr_mito) * ...
+                  nad_mito/(pdh_km_nad + nad_mito) * ...
+                  coa_mito/(pdh_km_coa + coa_mito);
+
+% *********************************** %
+% v3 : CS - Citrate synthase
+% *********************************** %
+% EC{2.3.3.1}
+% KEGG{-R00351}
+% oa_mito + acoa_mito + h2o_mito <-> cit_mito + coa_mito
+cs_deltag = -31.5;                          % [kJ/mol]
+cs_keq = keq(cs_deltag);                    % niko 2.03e5;                    
+cs_td = (oa_mito*acoa_mito - cit_mito*coa_mito/cs_keq);
+
+cs_km_oa = 0.0361;      %[mM]
+cs_km_acoa = 0.016;    %[mM]
+Vmax_3 = 40;
+
+v_cs = Vmax_3 * oa_mito/(cs_km_oa + oa_mito) * ...
+                 acoa_mito/(cs_km_acoa + accoa_mito);
+
+% *********************************** %
+% v4 : ACO - Aconitase
+% *********************************** %
+% EC{4.2.1.3}
+% KEGG{R01324}
+% cit_mito <-> isocit_mito
+%Purification of Rat Heart and Rat Liver Citrate Synthases (Moriyama,
+% Srere)
+aco_deltag = 7.72;                         % [kJ/mol]
+aco_keq = keq(aco_deltag);                  % niko 0.05 (0.067)                 
+aco_td = (cit_mito - isocit_mito/aco_keq);
+
+aco_km_cit = 0.45;
+aco_km_isocit = 0.1;
+Vmax_4 = 1E7;
+
+v_aco = Vmax_4 * (cit_mito - isocit_mito/aco_keq) / ...
+                     (1 + cit_mito/aco_km_cit + isocit_mito/aco_km_isocit);
+                 
+% *********************************** %
+% v5: IDH - Isocitrate dehydrogenase (NAD)
+% *********************************** %
+% EC{1.1.1.42} -> NADP
+% EC{1.1.1.41} -> NAD
+% KEGG{R00709}
+% isocit_mito + nad_mito -> akg_mito + co2_mito + nadh_mito + h_mito
+% irreversible
+idh_deltag = 0;                          % [kJ/mol]
+idh_keq = keq(idh_deltag);                    
+idh_td = (isocit_mito*nad_mito - akg_mito*co2_mito*nadh_mito*h_mito/idh_keq);
+
+% Characterization of the effects of Ca2+ on the intramitochondrial
+% Ca2+-sensitive enzymes from rat liver and within intact rat liver mitochondria
+idh_km_isocit = 0.24;
+idh_ki1_ca = 1.5;
+idh_ki2_ca = 0.5;
+idh_ki1_adp = 1.5;
+idh_ki2_adp = 0.1;
+
+idh_keff_isocit = idh_km_isocit * (idh_ki1_ca - ca/(ca+idh_ki2_ca)) * ...
+                        (idh_ki1_adp - adp_mito/(adp_mito+idh_ki2_adp));
+
+% Purification and Properties of Diphosphopyridine Nucleotidelinked
+% Isocitrate Dehydrogenase of Mammalian Liver*
+idh_keff_nad = 0.051;                 
+
+Vmax_5 = 20;
+v_idh = Vmax_5 * isocit_mito^2./(isocit_mito^2 + idh_keff_isocit^2) * ...
+                  nad_mito./(nad_mito + idh_keff_nad);
+
+% *********************************** %
+% v6 : KGDH -  alpha - Ketoglutarate dehydrogenase
+% *********************************** %
+% EC{1.2.4.2, 1.8.1.4, 2.3.1.61}
+% KEGG{R08549}
+% akg_mito + coa_mito + nad_mito -> succoa_mito + co2_mito + nadh_mito +
+% h_mito
+% irreversible
+% (Activation:ADP, Pi, Ca, inhibition: TTP, xXx-CoA, SucCoA, ATP, NADH, ADP)
+% (Inactivation of beef brain Alpha-Ketogluterate dehydrogenase complex by ...(luder, Parks, ...))
+% (Kinetic and spectral investigation of allosteric interaction of coenzymes ... (Strumilo))
+% (primary Regulation of CAC ()alpha-ketogluterate dehydrogenase: a target ... (Tretter) )
+% (Regulation of mitochondrial a-Ketogluterate metabolism by product
+% inhibiton at ...(Smith, ...))
+
+kgdh_deltag = 0;                          % [kJ/mol]
+kgdh_keq = keq(kgdh_deltag);                    
+kgdh_td = (akg_mito*coa_mito*nad_mito - succoa_mito*co2_mito*nadh_mito*h_mito/kgdh_keq);
+
+% Characterization of the effects of Ca2+ on the intramitochondrial
+% Ca2+-sensitive enzymes from rat liver and within intact rat liver mitochondria
+kgdh_km_akg = 2;        %[mM]
+kgdh_ki1_ca = 1.5;      %[]
+kgdh_ki2_ca = 0.5;      %[mM]
+kgdh_keff_akg =  kgdh_km_akg * ( kgdh_ki1_ca-ca/(ca + kgdh_ki2_ca) );
+
+kgdh_km_nad     = 0.021;    % [mM]
+kgdh_ki_nadh    = 0.0045;  % [mM]
+kgdh_km_coa     = 0.0013;    % [mM]
+kgdh_ki_succoa  = 0.004;  % [mM]
+
+Vmax_6 = 50;
+v_kgdh = Vmax_6 * akg_mito./(akg_mito + kgdh_keff_akg) * ...
+    nad_mito/(nad_mito + kgdh_km_nad*(1+nad_mito/kgdh_ki_nadh)) * ...
+    coa_mito/(coa_mito + kgdh_km_coa*(1 +succoa_mito/kgdh_ki_succoa));
+
+
+% *********************************** %
+% v7 : SCS1 - Succhinyl-CoA synthetase (ATP)
+% *********************************** %
+% EC{6.2.1.5}
+% KEGG{-R00405}
+% adp_mito + p_mito + succoa_mito <-> atp_mito + suc_mito + coa_mito
+scs_deltag = -3.44;                          % [kJ/mol]
+scs_keq = keq(scs_deltag);        % niko 3.8                
+scs1_td = (adp_mito*p_mito*succoa_mito - ...
+                atp_mito*suc_mito*coa_mito/scs_keq);
+ 
+scs1_km_atp     = 0.055;    % [mM]
+scs1_km_suc     = 5.1;      % [mM]
+scs1_km_coa     = 0.032;    % [mM]    
+scs1_km_adp     = 0.25;     % [mM]
+scs1_km_succoa  = 0.041;    % [mM]
+scs1_km_p = 0.72;           % [mM]
+
+scs1_f = (1 + 1.2*p_mito^3/(p_mito^3 + 2.5^3));
+Vmax_7 = 50;
+
+v_scs1 = Vmax_7 * scs1_f/(scs1_km_succoa*scs1_km_adp*scs1_km_p) * ... 
+    (succoa_mito*adp_mito*p_mito - 1/scs_keq*suc_mito*coa_mito*atp_mito)/ ...
+        ((1+succoa_mito/scs1_km_succoa)*(1+adp_mito/scs1_km_adp)*(1+p_mito/scs1_km_p) + ...
+           (1+suc_mito/scs1_km_suc)*(1+coa_mito/scs1_km_coa)*(1+atp_mito/scs1_km_atp) - 1); 
+
+% *********************************** %
+% v8 : SCS2 - Succhinyl-CoA synthetase (GTP)
+% *********************************** %
+% EC{6.2.1.4}
+% KEGG{-R00432}
+% gdp_mito + p_mito + succoa_mito <-> gtp_mito + suc_mito + coa_mito
+%Affinity Chromatography and Affinity Labeling of Rat Liver Succinyl-CoA
+%Synthetase
+
+scs2_td = (gdp_mito*p_mito*succoa_mito - ...
+                gtp_mito*suc_mito*coa_mito/scs_keq);
+
+scs2_km_gtp     = 0.04;     % [mM]
+scs2_km_suc     = 0.7;      % [mM]
+scs2_km_coa     = 0.02;     % [mM]
+scs2_km_gdp     = 0.007;    % [mM]
+scs2_km_succoa  = 0.086;    % [mM]
+scs2_km_p       = 2.26;     % [mM]
+
+scs2_f = (1 + 1.2*p_mito^3/(p_mito^3 + 2.5^3));
+Vmax_8 = 50;
+
+v_scs2 = Vmax(8) * scs2_f/(scs2_km_succoa*scs2_km_gdp*scs2_km_p) * ...
+         (succoa_mito*gdp_mito*p_mito - 1/scs_keq*suc_mito*coa_mito*gtp_mito)/ ...
+         ((1+succoa_mito/scs2_km_succoa)*(1+gdp_mito/scs2_km_gdp)*(1+p_mito/scs2_km_p) + ...
+          (1+suc_mito/scs2_km_suc)*(1+coa_mito/scs2_km_coa)*(1+gtp_mito/scs2_km_gtp) - 1);     
+
+% *********************************** %
+% v9 : SDH - Succhinate dehydrogenase
+% *********************************** %
+% EC{1.3.5.1}
+% (KEGG{R02164}) Ubiquinol cofactor instead of FADH2
+% suc_mito + fad_mm -> fum_mito + fadh2_mm
+% ?NICO? What happens to the cofactors in the oxidative phosphorylation?
+% How handled in the combination with oxidative phosphorylation?
+sdh_deltag = 0;                          % [kJ/mol]
+sdh_keq = keq(sdh_deltag); 
+sdh_td = (suc_mito*fad_mm - fum_mito*fadh2_mm/sdh_keq);
+
+sdh_km_suc = 1.6;      % [mM]
+Vmax_9 = 14;
+
+v_sdh = Vmax(9) * suc_mito/(suc_mito + sdh_km_suc);
+
+
+% *********************************** %
+% v10 : FUMR - Fumarase
+% *********************************** %
+% EC{4.2.1.2}
+% KEGG{-R01082}
+% fum_mito + h2o_mito <-> mal_mito 
+%Physicochemical, Catalytic, and Immunochemical Properties ofFmnarases
+%Crystallized Separately from Mitochondrial and Cytosolic Fractions of Rat
+%Liver1   
+fumr_deltag = -3.82;                  % [kJ/mol]
+fumr_keq = keq(fumr_deltag);          % niko 4.4
+fumr_td = (fum_mito - mal_mito/fumr_keq); 
+
+fumr_km_fum     = 0.14;        % [mM]
+fumr_km_mal     = 0.3;         % [mM]
+
+Vmax_10 = 2E7;
+v_fumr = Vmax(10) * (fum_mito - 1/fumr_keq*mal_mito)/ ...
+    (1+fum_mito/fumr_km_fum + mal_mito/fumr_km_mal);       
+
+
+% ***************************************************** %
+% v11 : MDH - Malate dehydrogenase Mitochondrium
+% ***************************************************** %
+% EC{1.1.1.37}
+% KEGG{R00342}
+% mal_mito + nad_mito <-> oa_mito + nadh_mito + h_mito
+% Rat Liver Mitochondrial Malate Purification, Kinetic Properties, in
+% Ethanol Metabolism
+mdh_deltag = 17.8;              % [kJ/mol] (Schuster1995)
+mdh_keq = keq(mdh_deltag);      % niko 1e-3             
+mdh_td = (mal_mito*nad_mito - oa_mito*nadh_mito*h_mito/mdh_keq);
+
+mdh_km_mal  = 1.4;
+mdh_km_nad  = 0.1;
+mdh_km_oa   = 0.04;
+mdh_km_nadh = 0.05;
+
+Vmax_11 = 1E5;
+v_mdh = Vmax(11)*(mal_mito*nad_mito - 1/mdh_keq*oa_mito*nadh_mito) / ...
+    ((1+mal_mito/mdh_km_mal)*(1+nad_mito/mdh_km_nad) + ... 
+                        (1+oa_mito/mdh_km_oa)*(1+nadh_mito/mdh_km_nadh) - 1); 
+   
+% *********************************** %
+% v12 : MDH2 - Malate dehydrogenase Cytosol
+% *********************************** %
+% EC{1.1.1.37}
+% KEGG{R00342}
+% mal_mito + nad_mito <-> oa_mito + nadh_mito + h_mito
+mdh2_deltag = 11.9;              % [kJ/mol] (Schuster1995)
+mdh2_keq = keq(mdh_deltag);      % niko 1e-2             
+mdh2_td = (mal_mito*nad_mito - oa_mito*nadh_mito*h_mito/mdh_keq);
+
+mdh2_km_mal  = 1.4;
+mdh2_km_nad  = 0.1;
+mdh2_km_oa   = 0.04;
+mdh2_km_nadh = 0.05;
+
+Vmax_12 = 1E10;
+v_mdh2 = Vmax(11)*(mal_mito*nad_mito - 1/mdh_keq*oa_mito*nadh_mito) / ...
+    ((1+mal_mito/mdh2_km_mal)*(1+nad_mito/mdh2_km_nad) + ... 
+                        (1+oa_mito/mdh2_km_oa)*(1+nadh_mito/mdh2_km_nadh) - 1); 
+
+% *********************************** %
+% v13 : CPT1 - Carnitinpalmitoyltransferase 1
+% *********************************** %
+% EC{}
+% KEGG{}
+% Carnitinpalmitoyltransferase 1 (inhibiert durch Malonyl-CoA und 
+% Hauptregulationspunkt f�r Acetyl-CoA Eintritt in Mitochondrien 
+% (Bartlett, Eaton: Mitochondrial beta-oxidation))
+% c16_coa + car -> c16_car + coa_cyt
+
+cpt1_km_c16coa  = 0.02;
+cpt1_km_car     = 0.1;
+cpt1_ki_malcoa  = 0.00007;
+
+Vmax_13 = 2.3;
+v_cpt1  = Vmax(13) * c16_coa / (c16_coa + cpt1_km_c16coa) * ...
+                     car_cyt/(car + cpt1_km_car) * ...
+                     (1 - min(1, malcoa/cpt1_ki_malcoa));
+
+% *********************************** %
+% v14 : CACT - Carnitin-AcylCarnitintranslocase
+% *********************************** %
+% EC{}
+% KEGG{}
+% c16_car + car_mito -> c16_car_mito + car
+
+cact_km_car_mito = 0.1;
+cact_km_c16_car = 0.2;
+
+Vmax_14 = 11.5;
+v_cact = Vmax_14 * car_mito/(car_mito + cact_km_car_mito) * ...
+                   c16_car/(c16_car + cact_km_c16_car);
+
+% *********************************** %
+% v15 : CPT2 - Carnitinpalmitoyltransferase 2
+% *********************************** %
+% EC{}
+% KEGG{}
+% c16_car_mito + coa_mito -> c16_coa_mito + car_mito
+cpt2_km_car_mito  = 0.1;
+cpt2_km_coa_mito  = 0.01;
+
+Vmax_15 = 2.3;
+v_cpt2 = Vmax(15) * c16_car_mito/(c16_car_mito + cpt2_km_car_mito) * ...
+                    coA_mito/(coa_mito + cpt2_km_coa_mito);
+
+% *********************************** %
+%% beta - Oxidation
+% *********************************** %
+% Acyl-CoA-Dehydrogenase
+% [v16] C4_CoA -> T_C4_CoA
+% [v17] C6_CoA -> T_C6_CoA 
+% [v18] C8_CoA -> T_C8_CoA 
+% [v19] C10_CoA -> T_C10_CoA
+% [v20] C12_CoA -> T_C12_CoA
+% [v21] C14_CoA -> T_C14_CoA 
+% [v22] C16_CoA -> T_C16_CoA 
+Vmax_16 = 6.9E-3 * 1000;
+Vmax_17 = 6.9E-3 * 1010;
+Vmax_18 = 6.9E-3 * 1200;
+Vmax_19 = 6.9E-3 * 755;
+Vmax_20 = 6.9E-3 * 627;
+Vmax_21 = 6.9E-3 * 331;
+Vmax_22 = 6.9E-3 * 194;
+v_c4_coa_dh  = Vmax(16) * c4_coa_mito/(c4_coa_mito + 0.01); 
+v_c6_coa_dh  = Vmax(17) * c6_coa_mito/(c6_coa_mito + 0.015);
+v_c8_coa_dh  = Vmax(18) * c8_coa_mito/(C8_coa_mito + 0.0034); 
+v_c10_coa_dh = Vmax(19) * c10_coa_mito/(c10_coa_mito + 0.0116);
+v_c12_coa_dh = Vmax(20) * c12_coa_mito/(c12_coa_mito + 0.0058); 
+v_c14_coa_dh = Vmax(21) * c14_coa_mito/(c14_coa_mito + 0.0129);
+v_c16_coa_dh = Vmax(22) * c16_coa_mito/(c16_coa_mito + 0.0041);
+
+% Crotonase
+% [v23] T_C4_CoA <-> L_C4_CoA
+% [v24] T_C6_CoA -> L_C6_CoA
+% [v25] T_C8_CoA -> L_C8_CoA
+% [v26] T_C10_CoA -> L_C10_CoA
+% [v27] T_C12_CoA -> L_C12_CoA
+% [v28] T_C14_CoA -> L_C14_CoA
+% [v29] T_C16_CoA -> L_C16_CoA
+Vmax_23 = 8.28E8 * 2300;
+Vmax_24 = 8.28E8 * 530;
+Vmax_25 = 8.28E8 * 400;
+Vmax_26 = 8.28E8 * 360;
+Vmax_27 = 8.28E8 * 210;
+Vmax_28 = 8.28E8 * 149;
+Vmax_29 = 8.28E8 * 1;
+v_c4_coa_crot = Vmax(23) * (e_c4_coa_mito - l_c4_coa_mito)./(e_c4_coa_mito + 0.03);
+v_c6_coa_crot = Vmax(24) * (e_c6_coa_mito - l_c6_coa_mito)./(e_c6_coa_mito + 0.015);
+v_c8_coa_crot = Vmax(25) * (e_c8_coa_mito - l_c8_coa_mito)./(e_c8_coa_mito + 0.009);
+v_c10_coa_crot = Vmax(26) * (e_c10_coa_mito - l_c10_coa_mito)./(e_c10_coa_mito + 0.007);
+v_c12_coa_crot = Vmax(27) * (e_c12_coa_mito - l_c12_coa_mito)./(e_c12_coa_mito + 0.005);
+v_c14_coa_crot = Vmax(28) * (e_c14_coa_mito - l_c14_coa_mito)./(e_c14_coa_mito + 0.005);
+v_c16_coa_crot = Vmax(29) * (e_c16_coa_mito - l_c16_coa_mito)./(e_c16_coa_mito + 0.0055);
+
+% 3-Hydroxyacyl-CoA dehdrogenase
+% [v30] L_C4_CoA + NAD <-> K_C4_CoA + NADH
+% [v31] L_C6_CoA + NAD <-> K_C6_CoA + NADH
+% [v32] L_C8_CoA + NAD <-> K_C8_CoA + NADH
+% [v33] L_C10_CoA + NAD <-> K_C10_CoA + NADH
+% [v34] L_C12_CoA + NAD <-> K_C12_CoA + NADH
+% [v35] L_C14_CoA + NAD <-> K_C14_CoA + NADH
+% [v36] L_C16_CoA + NAD <-> K_C16_CoA + NADH
+Vmax_30 = 23E3 * 1;
+Vmax_31 = 23E3 * 1;
+Vmax_32 = 23E3 * 1;
+Vmax_33 = 23E3 * 1;
+Vmax_34 = 23E3 * 1;
+Vmax_35 = 23E3 * 1;
+Vmax_36 = 23E3 * 10;
+
+v_c4_hcdh = Vmax(30) * (l_c4_coa_mito*nad_mito - 1/100*k_c4_coa_mito*nadh_mito)/ ...
+    ((1 + l_c4_coa_mito/0.0699).*(1 + nad_mito/0.0585) + (1 + k_c4_coa_mito/0.0169).*(1 + nadh_mito/0.0054) - 1);
+
+v_c6_hcdh = Vmax(31) * (l_c6_coa_mito*nad_mito - 1/100*k_c6_coa_mito*nadh_mito)/ ...
+    ((1 + l_c6_coa_mito/0.0286).*(1 + nad_mito/0.0585) + (1 + k_c6_coa_mito/0.02).*(1 + nadh_mito/0.0054) - 1); 
+
+v_c8_hcdh = Vmax(32) * (l_c8_coa_mito*nad_mito - 1/100*k_c8_coa_mito*nadh_mito)/ ...
+    ((1 + l_c8_coa_mito/0.0163).*(1 + nad_mito/0.0585) + (1 + k_c8_coa_mito/0.02).*(1 + nadh_mito/0.0054) - 1);
+
+v_c10_hcdh = Vmax(33) * (l_c10_coa_mito.*nad_mito - 1/100*k_c10_coa_mito*nadh_mito)/ ...
+    ((1 + l_c10_coa_mito/0.0088).*(1 + nad_mito/0.0585) + (1 + k_c10_coa_mito/0.02).*(1 + nadh_mito/0.0054) - 1);
+
+v_c12_hcdh = Vmax(34) * (l_c12_coa_mito.*nad_mito - 1/100*k_c12_coa_mito*nadh_mito)/ ...
+    ((1 + l_c12_coa_mito/0.0088).*(1 + nad_mito/0.0585) + (1 + k_c12_coa_mito/0.02).*(1 + nadh_mito/0.0054) - 1);
+
+v_c14_hcdh = Vmax(35) * (l_c14_coa_mito*nad_mito - 1/100*k_c14_coa_mito.*nadh_mito)/ ...
+    ((1 + l_c14_coa_mito/0.0088).*(1 + nad_mito/0.0585) + (1 + k_c14_coa_mito/0.02).*(1 + nadh_mito/0.0054) - 1);
+
+v_c16_hcdh = Vmax(36) * (l_c16_coa_mito*nad_mito - 1/100*k_c16_coa_mito.*nadh_mito)/ ...
+    ((1 + l_c16_coa_mito/0.003).*(1 + nad_mito/0.0145) + (1 + k_c16_coa_mito/0.02).*(1 + nadh_mito/0.0054) - 1);
+
+% acyl-CoA thiolase
+% [v37] K_C4_CoA + CoA -> AcCoA + AcCoA;
+% [v38] K_C6_CoA + CoA -> C4_CoA + AcCoA;
+% [v39] K_C8_CoA + CoA -> C6_CoA + AcCoA;
+% [v40] K_C10_CoA + CoA -> C8_CoA + AcCoA;
+% [v41] K_C12_CoA + CoA -> C10_CoA + AcCoA;
+% [v42] K_C14_CoA + CoA -> C12_CoA + AcCoA;
+% [v43] K_C16_CoA + CoA -> C14_CoA + AcCoA;
+Vmax_37 = 1E6;
+Vmax_38 = 207;
+Vmax_39 = 207;
+Vmax_40 = 207;
+Vmax_41 = 207;
+Vmax_42 = 207;
+Vmax_43 = 207;
+v_c4_3kt = Vmax(37) * (coa_mito.*k_c4_coa_mito - 1/10^(26.94/5.7)* acoa_mito.^2);
+v_c4_3kt = Vmax(38) * coa_mito./(coa_mito + 0.05).*k_c6_coa_mito./(k_c6_coa_mito + 0.006);
+v_c4_3kt = Vmax(39) * coa_mito./(coa_mito + 0.05).*k_c8_coa_mito./(k_c8_coa_mito + 0.006);
+v_c4_3kt = Vmax(40) * coa_mito./(coa_mito + 0.05).*k_c10_coa_mito./(k_c10_coa_mito + 0.006);
+v_c4_3kt = Vmax(41) * coa_mito./(coa_mito + 0.05).*k_c12_coa_mito./(k_c12_coa_mito + 0.006);
+v_c4_3kt = Vmax(42) * coa_mito./(coa_mito + 0.05).*k_c14_coa_mito./(k_c14_coa_mito + 0.006);
+v_c4_3kt = Vmax(43) * coa_mito./(coa_mito + 0.05).*k_c16_coa_mito./(k_c16_coa_mito + 0.006);
+
+
+% *********************************** %
+%% keton - bodies
+% *********************************** %
+% [v44] HMGCOAS - HMG-CoA-Synthase 
+% acoa_mito + k_c4_coa_mito -> hmg_coa_mito + coa_mito
+
+hmgcoas_k1 = 0.00035;
+hmgcoas_k2 = 0.012;
+hmgcoas_k3 = 0.029;
+
+Vmax_44 = 1E-3;
+v_hmgcoas = Vmax(44)* acoa_mito.*k_c4_coa_mito / ...
+    (hmgcoas_k1*(1+k_c4_coa_mito/hmgcoas_k2)*acoa_mito + hmgcoas_k3*k_c4_coa_mito + acoa_mito.*k_c4_coa_mito); 
+
+
+% [v45] HMGCOAL - HMG-CoA-Lyase
+% hmgcoa_mito -> acoa_mito + acac_mito
+hmgcoal_km_hmgcoa = 0.048;
+Vmax_45 = 1E-3;
+v_hmgcoal = Vmax(45) * hmgcoa_mito./(hmgcoa_mito + hmgcoal_km_hmgcoa);
+
+
+% [v46] HBDH - b-Hydroxybutyrate dehydrogenase
+% The Kinetics of Rat Liver and Heart Mitochondrial beta-Hydroxybuterate
+% Dehydrogenase %
+% acetoacetate + NADH + H <-> (R)-3-hydroxybutanoate + NAD
+% AcAc_mito + NADH_mito <-> R3HBut_mito + NAD_mito
+% acac_mito + nadh_mito + h_mito <-> bhbut_mito + nad_mito
+
+Vmax_46 = 1;
+hbdh_keq = 10.^(15.7424/5.7);
+v_hbdh = Vmax(46)* (acac_mito*nadh_mito - 1/hbdh_keq*bhbut_mito.*nad_mito) / ...
+    ((1 + nadh_mito/0.017*(1+nad_mito/0.121)).*(1 + acac_mito/0.204) + ...
+      (1 + bhbut_mito/1.604).*(1 + nad_mito/0.067*(1+nadh_mito/0.066)) - 1); 
+
+
+% [v47] ACACME - acetoacetate mito export
+acacme_km_acac = 0.1;
+Vmax_47 = 10;
+v_acacme   = Vmax(47) * (acac_mito./(acac_mito + acacme_km_acac));
+
+% [v48] BHBUTME - b-hydroxybutyrate mito export
+bhbutme_km_bhbut = 0.1;
+Vmax_48 = 10;
+v_bhbutme = Vmax(48) * (bhbut_mito./(bhbut_mito + bhbutme_km_bhbut));
+
+
+% *********************************** %
+%% malate-citrate exchange
+% *********************************** %
+
+% [v49] CITMAL - Citrate-Malate-Exchanger
+% mal + cit_mito <-> mal_mito + cit_in
+Vmax_47 = 10;
+v_citmal = Vmax(47)*(Cit_mito.*Mal_in - 0.1*Cit_in.*Mal_mito)./ ...
+    ( (1 + Cit_mito/0.13).*(1 + Mal_in/0.78) + (1+Cit_in/0.13).*(1+Mal_mito/0.78) -1 );
+
+atp   = 3;        % ATP constant !!!
+gamma = 1;        % phosphorylation state
+
+% [v50] ATPCL - ATP-Citrate-lyase1
+% cit + coa + atp -> acoa + oa + adp + p
+Vmax_50 = 1E-3;
+v_Cit_Lys = Vmax(50)* cit/(cit + 0.104) * ...
+            atp/(atp + 0.041) * coa/(coa + 0.002);
+
+% [v51] ACC - Acetyl-CoA carboxylase 
+% - inhibited by MalonylCoA (Ki~0.009) and PalmitoylCoA (Ki~0.0008);
+% - activated by Citrate
+% - interconvertible enzyme
+% acoa + atp + ?? -> mal_coa + adp + p
+Vmax_51 = 0.1; 
+v_acc = Vmax(51) * ATP_in./(ATP_in + 0.12) * AcCoA_in./(AcCoA_in + 0.058) * ...
+    (1-Mal_CoA_in./(Mal_CoA_in + 0.009)); %Expresion, purification, and characterization of human and rat acetyl coenzyme A carboxylase (ACC) isoenzymes %
+
+        
+
+
+
+%% Return fluxes
+V  = [v1 v2 v3]';
+TD = [v1_td v2_td v3_td]';

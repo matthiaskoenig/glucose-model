@@ -1,0 +1,8 @@
+Calculation of the gamma function
+----------------------------------------
+
+pars_hormone :	parameters for the insulin, glucagon and epinephrine dose-response curves
+gamma_f		 :  calculation of gamma from given absolute hormone concentrations
+hormone_f	 :  generates function handels to the hormone functions
+
+example_gamma :  calculates gamma for given glucose values
