@@ -28,15 +28,21 @@ model *Koenig2014_hepatic_glucose()
   cyto = 1 litre;
   mito = 5 litre;
 
+  // Localisation
+  species $atp in cyto, $adp in cyto, amp in cyto, utp in cyto, ump in cyto;
+  species gtp in cyto, gdp in cyto, $nad in cyto, $nadh in cyto;
+  species $p in cyto, pp in cyto, $co2 in cyto;
+  species glc1p in cyto, udpglc in cyto, glyglc in cyto, glc in cyto;
+  species glc6p in cyto, fru6p in cyto, fru16bp in cyto, fru26bp in cyto;
+  species grap in cyto, dhap in cyto, bpg13 in cyto, pg3 in cyto, pg2 in cyto;
+  species pep in cyto, species pyr in cyto, species oaa in cyto, species lac in cyto;
 
+  species glc_ext in ext, species lac_ext in ext;
 
-
-  species glc_dis in disse, gal_dis in disse, galM_dis in disse;
-  species glc in hepatocyte, gal in hepatocyte, galM in hepatocyte;
-  species glc1p in hepatocyte, $glc6p in hepatocyte, gal1p in hepatocyte;
-  species udpglc in hepatocyte, udpgal in hepatocyte, galtol in hepatocyte;
-  species atp in hepatocyte, adp in hepatocyte, utp in hepatocyte, udp in hepatocyte;
-  species phos in hepatocyte, ppi in hepatocyte, nadp in hepatocyte, nadph in hepatocyte;
+  species $co2_mito in mito, $phos_mito in mito, pep_mito in mito;
+  species acoa_mito in mito, pyr_mito in mito, cit_mito in mito;
+  species $atp_mito in mito, $adp_mito in mito, $gtp_mito in mito, $gdp_mito in mito;
+  species coa_mito in mito, $nadh_mito in mito, nad_mito in mito; 
 
   // Species initializations:
   atp = 2.8000 mM;
@@ -48,9 +54,10 @@ model *Koenig2014_hepatic_glucose()
   gdp = 0.1000 mM;
   nad = 1.2200 mM;
   nadh = 0.56E-3 mM;
-  p = 5.0000 mM;
+  phos = 5.0000 mM;
   pp = 0.0080 mM;
   co2 = 5.0000 mM;
+  
   glc1p = 0.0120 mM;
   udpglc = 0.3800 mM;
   glyglc = 250.0000 mM;
@@ -73,7 +80,7 @@ model *Koenig2014_hepatic_glucose()
   lac_ext = 1.2000 mM;
   
   co2_mito = 5.0000 mM;
-  p_mito = 5.0000 mM;
+  phos_mito = 5.0000 mM;
   oaa_mito = 0.0100 mM;
   pep_mito = 0.1500 mM;
   acoa_mito = 0.0400 mM;
@@ -87,89 +94,15 @@ model *Koenig2014_hepatic_glucose()
   nadh_mito = 0.2400 mM;
   nad_mito = 0.9800 mM;
 
-
-
-  glc_dis is "D-glucose[disse]";
-  gal_dis is "D-galactose[disse]";
-  galM_dis is "D-galactoseM[disse]";
-  glc is "D-glucose";
-  gal is "D-galactose";
-  galM is "D-galactoseM";
-  glc1p is "D-glucose 1-phophate";
-  glc6p is "D-glucose 6-phosphate";
-  gal1p is "D-galactose 1-phosphate";
-  udpglc is "UDP-D-glucose";
-  udpgal is "UDP-D-galactose";
-  galtol is "D-galactitol";
-  atp is "ATP";
-  adp is "ADP";
-  utp is "UTP";
-  udp is "UDP";
-  phos is "phosphate";
-  ppi is "pyrophosphate";
-  nadp is "NADP";
-  nadph is "NADPH";
-
   // Assignment rules for balances
-  nadp_tot := nadp + nadph;
-  atp_tot := atp + adp;
-  utp_tot := utp + udp + udpglc + udpgal;
-  phos_tot := 3*atp + 2*adp + 3*utp + 2*udp + phos + 2*ppi + glc1p + glc6p + gal1p + 2*udpglc + 2*udpgal;
+  nadh_tot := nadh + nad;
+  atp_tot := atp + adp + amp;
+  utp_tot := utp + udp;
+  gtp_tot := gtp + gdp;
+  nadh_mito_tot := nadh_mito + nad_mito;
+  atp_mito_tot := atp_mito + adp_mito;
+  gtp_mito_tot := gtp_mito + gdp_mito; 
 
-  /* Simulation of galactose challenge via events */
-  EGAL1: at eq(time, 50):  gal_dis = 3 mM;
-  EGAL2: at eq(time, 100): gal_dis = 0 mM;
-
-  // Protein initialization (mainly for SBGN)
-  REF_P = 1 mM;
-  const species GLUT2_P = 1 mM;
-  const species GALK_P = 1 mM;
-  const species IMP_P = 1 mM;
-  const species ATPS_P = 1 mM;
-  const species ALDR_P = 1 mM;
-  const species NADPR_P = 1 mM;
-  const species GALT_P = 1 mM;
-  const species GALE_P = 1 mM;
-  const species UGP_P = 1 mM;
-  const species PPASE_P = 1 mM;
-  const species NDKU_P = 1 mM;
-  const species PGM1_P = 1 mM;
-  const species GTFGAL_P = 1 mM;
-  const species GTFGLC_P = 1 mM;
-
-  GLUT2_P is "GLUT2"; 
-  GALK_P is "GALK";
-  IMP_P is "IMP";
-  ATPS_P is "ATPS";
-  ALDR_P is "ALDR";
-  NADPR_P is "NADPR";
-  GALT_P is "GALT";
-  GALE_P is "GALE";
-  UGP_P is "UGP";
-  PPASE_P is "PPASE";
-  NDKU_P is "NDKU";
-  PGM1_P is "PGM1";
-  GTFGAL_P is "GTFGAL";
-  GTFGLC_P is "GTFGLC";
-
-  GLUT2_P in protein; 
-  GALK_P in protein;
-  IMP_P in protein;
-  ATPS_P in protein;
-  ALDR_P in protein;
-  NADPR_P in protein;
-  GALT_P in protein;
-  GALE_P in protein;
-  UGP_P in protein;
-  PPASE_P in protein;
-  NDKU_P in protein;
-  PGM1_P in protein;
-  GTFGAL_P in protein;
-  GTFGLC_P in protein;
-
-
-  /* Simulation of galactosemias via events */
-  deficiency = 0 dimensionless;
 
   // model scaling to right size;
   scale = 1e-015 dimensionless;
