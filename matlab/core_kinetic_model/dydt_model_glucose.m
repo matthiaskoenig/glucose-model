@@ -60,7 +60,7 @@ nad_mito    = y(47);
 
 %% Hormonal response & phosphorylation state
 % insulin
-x_ins1 = 818.9;
+x_ins1 = 818.9; %[
 x_ins2 = 0;
 x_ins3 = 8.6;
 x_ins4 = 4.2;
