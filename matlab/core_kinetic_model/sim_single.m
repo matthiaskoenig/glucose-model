@@ -13,10 +13,16 @@ function [t, c, v] = sim_single()
 %   Copyright 2014 Matthias Koenig
 %   date:   2014-03-27
 
+% # SBML TODO #
+% TODO: put the initial concentrations in the ODE definition
+% TODO: time units -> convert to seconds
+% TODO: volumes of cytosol and mito
+% TODO: 
+
 clear all, close all, format compact
 results_folder = '../../results';
 
-% TODO: put the initial concentrations in the ODE definition
+
 % Initial concentrations
 S0 = [
     2.8000  % S1 atp

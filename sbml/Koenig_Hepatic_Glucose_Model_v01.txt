@@ -1,50 +1,38 @@
-//Created by libAntimony v2.4
-/*      ------------------------------------------------
-	Human Hepatic Glucose Metabolism
-	------------------------------------------------
-	The model consists of the main reaction of glucose metabolism
-	and additional surrounding reaction.
-
-	Matthias Knig - 2014-03-28
-	Copyright  Matthias Koenig 2014 All Rights Reserved.
-*/
-
 model *Koenig2014_hepatic_glucose()
   // Units
   unit substance = 1e-3 mole;
   unit volume = litre;
   unit area = metre^2; 
   unit length = metre;
- 
   unit mM = 1e-3 mole / litre;
   unit per_mM = litre / 1e-3 mole;
   unit mmol_per_s = 1e-3 mole / second;
   unit per_s = 1 / second;
   unit mmol = 1e-3 mole;
+  unit pmol_per_l = 1e-12 mole / litre;
 
   // Compartments and Species
-  compartment ext, cyto, mito;
-  ext = 10 litre;
+  const compartment extern, cyto, mito;
+  extern = 10 litre;
   cyto = 1 litre;
   mito = 5 litre;
 
-  // Localisation
   species $atp in cyto, $adp in cyto, amp in cyto, utp in cyto, ump in cyto;
   species gtp in cyto, gdp in cyto, $nad in cyto, $nadh in cyto;
   species $p in cyto, pp in cyto, $co2 in cyto;
   species glc1p in cyto, udpglc in cyto, glyglc in cyto, glc in cyto;
   species glc6p in cyto, fru6p in cyto, fru16bp in cyto, fru26bp in cyto;
   species grap in cyto, dhap in cyto, bpg13 in cyto, pg3 in cyto, pg2 in cyto;
-  species pep in cyto, species pyr in cyto, species oaa in cyto, species lac in cyto;
+  species pep in cyto, pyr in cyto, oaa in cyto, lac in cyto;
 
-  species glc_ext in ext, species lac_ext in ext;
+  species glc_ext in extern, lac_ext in extern;
 
   species $co2_mito in mito, $phos_mito in mito, pep_mito in mito;
   species acoa_mito in mito, pyr_mito in mito, cit_mito in mito;
   species $atp_mito in mito, $adp_mito in mito, $gtp_mito in mito, $gdp_mito in mito;
   species coa_mito in mito, $nadh_mito in mito, nad_mito in mito; 
 
-  // Species initializations:
+ // Species initializations:
   atp = 2.8000 mM;
   adp = 0.8000 mM;
   amp = 0.1600 mM;
@@ -57,7 +45,6 @@ model *Koenig2014_hepatic_glucose()
   phos = 5.0000 mM;
   pp = 0.0080 mM;
   co2 = 5.0000 mM;
-  
   glc1p = 0.0120 mM;
   udpglc = 0.3800 mM;
   glyglc = 250.0000 mM;
@@ -103,119 +90,45 @@ model *Koenig2014_hepatic_glucose()
   atp_mito_tot := atp_mito + adp_mito;
   gtp_mito_tot := gtp_mito + gdp_mito; 
 
+  // hormonal regulation
+  x_ins1 = 818.9;
+  x_ins2 = 0;
+  x_ins3 = 8.6;
+  x_ins4 = 4.2;
+  ins = max(0.0, (x_ins1-x_ins2) * glc_ext^x_ins4/(glc_ext^x_ins4 + x_ins3^x_ins4));
 
-  // model scaling to right size;
-  scale = 1e-015 dimensionless;
+  x_glu1 = 190;
+  x_glu2 = 37.9;
+  x_glu3 = 3.01;
+  x_glu4 = 6.40;
+  glu = max(0.0, (x_glu1-x_glu2)*(1 - glc_ext^x_glu4/(glc_ext^x_glu4 + x_glu3^x_glu4)));
+
+  x_epi1 = 6090;
+  x_epi2 = 100;
+  x_epi3 = 3.10;
+  x_epi4 = 8.40;
+  epi = max(0.0, (x_epi1-x_epi2) * (1 - glc_ext^x_epi4/(glc_ext^x_epi4 + x_epi3^x_glu4)));
+
+  K_val = 0.1;
+  epi_f = 0.8;
+  K_ins = (x_ins1-x_ins2) * K_val;
+  K_glu = (x_glu1-x_glu2) * K_val;
+  K_epi = (x_epi1-x_epi2) * K_val;
+  gamma = 0.5 * (1 - ins/(ins+K_ins) + max(glu/(glu+K_glu), epi_f*epi/(epi+K_epi)) );
+
 
   // Reactions
-  GLUT2_GLC is "GLUT2 (glucose)";
-  GLUT2_GAL is "GLUT2 (galactose)";
-  GLUT2_GALM is "GLUT2 (galactose M)";
-  GALK is "Galactokinase";
-  GALKM is "Galactokinase M";
-  IMP is "Inositol monophosphatase";
   ATPS is "ATP synthase";
-  ALDR is "Aldose reductase";
-  NADPR is "NADP reductase";
-  GALT is "Galactose-1-phosphate uridyl transferase";
-  GALE is "UDP-glucose 4-epimerase";
-  UGP is "UDP-glucose pyrophosphorylase";
-  UGALP is "UDP-galactose pyrophosphorylase";
-  PPASE is "Pyrophosphatase";
-  NDKU is "Nucleoside diphosphokinase";
-  PGM1 is "Phosphoglucomutase-1";
-  GTFGLC is "Glycosyltransferase glucose";
-  GTFGAL is "Glycosyltransferase galactose";
-
-  GLUT2_GLC: $glc_dis -> glc; 
-  GLUT2_GLC has mmol_per_s;
-  pGLUT2_GLC: GLUT2_P -( GLUT2_GLC;
-
-  GLUT2_GAL: $gal_dis -> gal;
-  GLUT2_GAL has mmol_per_s;
-  pGLUT2_GAL: GLUT2_P -( GLUT2_GAL;
-
-  GLUT2_GALM: $galM_dis -> galM;
-  GLUT2_GALM has mmol_per_s;
-  pGLUT2_GALM: GLUT2_P -( GLUT2_GALM;
-
-  GALK: gal + atp -> gal1p + adp; 
-  GALK has mmol_per_s;
-  pGALK: GALK_P -( GALK;
-
-  GALKM: galM + atp => gal1p + adp;
-  GALKM has mmol_per_s;
-  pGALKM: GALK_P -( GALKM;
-
-  IMP: gal1p => gal + phos;
-  IMP has mmol_per_s;
-  pIMP: IMP_P -( IMP;
 
   ATPS: adp + phos -> atp;
   ATPS has mmol_per_s;
-  pATPS: ATPS_P -( ATPS;
   
-  GALK_Vmax = 1 mmol_per_s;
-  ATPS_P = 1 mM;
   ATPS_keq = 0.58 per_mM;
   ATPS_kadp = 0.1 mM;
   ATPS_katp = 0.5 mM;
   ATPS_kphos = 0.1 mM;
-  ATPS_Vmax = 20.0*GALK_Vmax * ATPS_P/REF_P;
+  ATPS_Vmax = 20.0 mmol_per_s;
   ATPS_Vmax has mmol_per_s;
   ATPS = ATPS_Vmax/(ATPS_kadp*ATPS_kphos) *(adp*phos-atp/ATPS_keq)/((1+adp/ATPS_kadp)*(1+phos/ATPS_kphos) + atp/ATPS_katp);
-   
-
-
-  ALDR: gal + nadph -> galtol + nadp;
-  ALDR has mmol_per_s;
-  pALDR: ALDR_P -( ALDR;
- 
-  NADPR: nadp -> nadph; 
-  NADPR has mmol_per_s;
-  pNADPR: NADPR_P -( NADPR;
-
-  GALT: gal1p + udpglc -> glc1p + udpgal;
-  GALT has mmol_per_s;
-  pGALT: GALT_P -( GALT;
-
-  GALE: udpglc -> udpgal;
-  GALE has mmol_per_s;
-  pGALE: GALE_P -( GALE;
- 
-  UGP: glc1p + utp -> udpglc + ppi;
-  UGP has mmol_per_s;
-  pUGP: UGP_P -( UGP;
-
-  UGALP: gal1p + utp -> udpgal + ppi;
-  UGALP has mmol_per_s;
-  pUGALP: UGP_P -( UGALP;
-
-  PPASE: ppi => 2phos;
-  PPASE has mmol_per_s;
-  pPPASE: PPASE_P -( PPASE;
-
-  NDKU: atp + udp -> adp + utp;
-  NDKU has mmol_per_s;
-  pNDKU: NDKU_P -( NDKU;
-
-  PGM1: glc1p -> $glc6p + phos;
-  PGM1 has mmol_per_s;
-  pPGM1: PGM1_P -( PGM1;
-
-  GTFGAL: udpgal -> udp;
-  GTFGAL has mmol_per_s;
-  pGTFGAL: GTFGAL_P -( GTFGAL;
-
-  GTFGLC: udpglc -> udp; 
-  GTFGLC has mmol_per_s;
-  pGTFGLC: GTFGLC_P -( GTFGLC;
-
-  // Events:
-  E1: at eq(deficiency, 1): GALK_kcat = 2 per_s, GALK_k_gal = 7.7 mM, GALK_k_atp = 0.13 mM;
-  E2: at eq(deficiency, 2): GALK_kcat = 3.9 per_s, GALK_k_gal = 0.43 mM, GALK_k_atp = 0.11 mM;
-  E3: at eq(deficiency, 3): GALK_kcat = 5.9 per_s, GALK_k_gal = 0.66 mM, GALK_k_atp = 0.026 mM;
-
-
 
 end
