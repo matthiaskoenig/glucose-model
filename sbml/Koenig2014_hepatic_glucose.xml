@@ -1,7 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-28 18:29 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-28 19:10 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
+    <listOfFunctionDefinitions>
+      <functionDefinition id="max">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <lambda>
+            <bvar>
+              <ci> x </ci>
+            </bvar>
+            <bvar>
+              <ci> y </ci>
+            </bvar>
+            <piecewise>
+              <piece>
+                <ci> x </ci>
+                <apply>
+                  <gt/>
+                  <ci> x </ci>
+                  <ci> y </ci>
+                </apply>
+              </piece>
+              <otherwise>
+                <ci> y </ci>
+              </otherwise>
+            </piecewise>
+          </lambda>
+        </math>
+      </functionDefinition>
+      <functionDefinition id="min">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <lambda>
+            <bvar>
+              <ci> x </ci>
+            </bvar>
+            <bvar>
+              <ci> y </ci>
+            </bvar>
+            <piecewise>
+              <piece>
+                <ci> x </ci>
+                <apply>
+                  <lt/>
+                  <ci> x </ci>
+                  <ci> y </ci>
+                </apply>
+              </piece>
+              <otherwise>
+                <ci> y </ci>
+              </otherwise>
+            </piecewise>
+          </lambda>
+        </math>
+      </functionDefinition>
+    </listOfFunctionDefinitions>
     <listOfUnitDefinitions>
       <unitDefinition id="substance">
         <listOfUnits>
@@ -59,7 +111,6 @@
       </unitDefinition>
     </listOfUnitDefinitions>
     <listOfCompartments>
-      <compartment sboTerm="SBO:0000410" id="default_compartment" spatialDimensions="3" size="1" constant="true"/>
       <compartment id="extern" spatialDimensions="3" size="10" units="litre" constant="true"/>
       <compartment id="cyto" spatialDimensions="3" size="1" units="litre" constant="true"/>
       <compartment id="mito" spatialDimensions="3" size="5" units="litre" constant="true"/>
@@ -69,12 +120,12 @@
       <species id="adp" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="amp" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="utp" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="ump" compartment="cyto" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="udp" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="gtp" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="gdp" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="nad" compartment="cyto" initialConcentration="1" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="nadh" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="p" compartment="cyto" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="phos" compartment="cyto" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="pp" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="co2" compartment="cyto" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="glc1p" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
@@ -109,10 +160,8 @@
       <species id="coa_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="nadh_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="nad_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="phos" compartment="default_compartment" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
-      <parameter id="udp" value="0" units="mM" constant="true"/>
       <parameter id="oaa_mito" value="0" units="mM" constant="true"/>
       <parameter id="nadh_tot" constant="false"/>
       <parameter id="atp_tot" constant="false"/>
@@ -147,7 +196,6 @@
       <parameter id="ATPS_katp" value="0" units="mM" constant="true"/>
       <parameter id="ATPS_kphos" value="0" units="mM" constant="true"/>
       <parameter id="ATPS_Vmax" value="20" units="mmol_per_s" constant="true"/>
-      <parameter id="max" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="ins">

@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by libAntimony version v2.5 on 2014-03-28 20:39 with libSBML version 5.9.1. -->
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" xmlns:comp="http://www.sbml.org/sbml/level3/version1/comp/version1" level="3" version="1" comp:required="true">
+  <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
+    <listOfFunctionDefinitions>
+      <functionDefinition id="max">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <lambda>
+            <bvar>
+              <ci> x </ci>
+            </bvar>
+            <bvar>
+              <ci> y </ci>
+            </bvar>
+            <piecewise>
+              <piece>
+                <ci> x </ci>
+                <apply>
+                  <gt/>
+                  <ci> x </ci>
+                  <ci> y </ci>
+                </apply>
+              </piece>
+              <otherwise>
+                <ci> y </ci>
+              </otherwise>
+            </piecewise>
+          </lambda>
+        </math>
+      </functionDefinition>
+      <functionDefinition id="min">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <lambda>
+            <bvar>
+              <ci> x </ci>
+            </bvar>
+            <bvar>
+              <ci> y </ci>
+            </bvar>
+            <piecewise>
+              <piece>
+                <ci> x </ci>
+                <apply>
+                  <lt/>
+                  <ci> x </ci>
+                  <ci> y </ci>
+                </apply>
+              </piece>
+              <otherwise>
+                <ci> y </ci>
+              </otherwise>
+            </piecewise>
+          </lambda>
+        </math>
+      </functionDefinition>
+    </listOfFunctionDefinitions>
+    <listOfUnitDefinitions>
+      <unitDefinition id="substance">
+        <listOfUnits>
+          <unit kind="mole" exponent="1" scale="-3" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="volume">
+        <listOfUnits>
+          <unit kind="litre" exponent="1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="area">
+        <listOfUnits>
+          <unit kind="metre" exponent="2" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="length">
+        <listOfUnits>
+          <unit kind="metre" exponent="1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="mM">
+        <listOfUnits>
+          <unit kind="mole" exponent="1" scale="-3" multiplier="1"/>
+          <unit kind="litre" exponent="-1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="per_mM">
+        <listOfUnits>
+          <unit kind="litre" exponent="1" scale="0" multiplier="1"/>
+          <unit kind="mole" exponent="-1" scale="-3" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="mmol_per_s">
+        <listOfUnits>
+          <unit kind="mole" exponent="1" scale="-3" multiplier="1"/>
+          <unit kind="second" exponent="-1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="per_s">
+        <listOfUnits>
+          <unit kind="second" exponent="-1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="mmol">
+        <listOfUnits>
+          <unit kind="mole" exponent="1" scale="-3" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="pmol_per_l">
+        <listOfUnits>
+          <unit kind="mole" exponent="1" scale="-12" multiplier="1"/>
+          <unit kind="litre" exponent="-1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+    </listOfUnitDefinitions>
+    <listOfCompartments>
+      <compartment id="extern" spatialDimensions="3" size="10" units="litre" constant="true"/>
+      <compartment id="cyto" spatialDimensions="3" size="1" units="litre" constant="true"/>
+      <compartment id="mito" spatialDimensions="3" size="5" units="litre" constant="true"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="atp" compartment="cyto" initialConcentration="2.8" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="adp" compartment="cyto" initialConcentration="0.8" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="amp" compartment="cyto" initialConcentration="0.16" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="utp" compartment="cyto" initialConcentration="0.27" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="udp" compartment="cyto" initialConcentration="0.09" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="gtp" compartment="cyto" initialConcentration="0.29" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="gdp" compartment="cyto" initialConcentration="0.1" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="nad" compartment="cyto" initialConcentration="1.22" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="nadh" compartment="cyto" initialConcentration="0.00056" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="phos" compartment="cyto" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="pp" compartment="cyto" initialConcentration="0.008" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="co2" compartment="cyto" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="glc1p" compartment="cyto" initialConcentration="0.012" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="udpglc" compartment="cyto" initialConcentration="0.38" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="glyglc" compartment="cyto" initialConcentration="250" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="glc" compartment="cyto" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="glc6p" compartment="cyto" initialConcentration="0.12" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="fru6p" compartment="cyto" initialConcentration="0.05" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="fru16bp" compartment="cyto" initialConcentration="0.02" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="fru26bp" compartment="cyto" initialConcentration="0.004" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="grap" compartment="cyto" initialConcentration="0.1" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="dhap" compartment="cyto" initialConcentration="0.03" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="bpg13" compartment="cyto" initialConcentration="0.3" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="pg3" compartment="cyto" initialConcentration="0.27" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="pg2" compartment="cyto" initialConcentration="0.03" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="pep" compartment="cyto" initialConcentration="0.15" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="pyr" compartment="cyto" initialConcentration="0.1" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="oaa" compartment="cyto" initialConcentration="0.01" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="lac" compartment="cyto" initialConcentration="0.5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="glc_ext" compartment="extern" initialConcentration="3" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="lac_ext" compartment="extern" initialConcentration="1.2" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="co2_mito" compartment="mito" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="phos_mito" compartment="mito" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="pep_mito" compartment="mito" initialConcentration="0.15" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="acoa_mito" compartment="mito" initialConcentration="0.04" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="pyr_mito" compartment="mito" initialConcentration="0.1" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="cit_mito" compartment="mito" initialConcentration="0.32" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="atp_mito" compartment="mito" initialConcentration="2.8" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="adp_mito" compartment="mito" initialConcentration="0.8" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="gtp_mito" compartment="mito" initialConcentration="0.29" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="gdp_mito" compartment="mito" initialConcentration="0.1" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="coa_mito" compartment="mito" initialConcentration="0.055" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="nadh_mito" compartment="mito" initialConcentration="0.24" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="nad_mito" compartment="mito" initialConcentration="0.98" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+    </listOfSpecies>
+    <listOfParameters>
+      <parameter id="oaa_mito" value="0.01" units="mM" constant="true"/>
+      <parameter id="nadh_tot" constant="false"/>
+      <parameter id="atp_tot" constant="false"/>
+      <parameter id="utp_tot" constant="false"/>
+      <parameter id="gtp_tot" constant="false"/>
+      <parameter id="nadh_mito_tot" constant="false"/>
+      <parameter id="atp_mito_tot" constant="false"/>
+      <parameter id="gtp_mito_tot" constant="false"/>
+      <parameter id="x_ins1" value="818.9" constant="true"/>
+      <parameter id="x_ins2" value="0" constant="true"/>
+      <parameter id="x_ins3" value="8.6" constant="true"/>
+      <parameter id="x_ins4" value="4.2" constant="true"/>
+      <parameter id="ins" constant="false"/>
+      <parameter id="x_glu1" value="190" constant="true"/>
+      <parameter id="x_glu2" value="37.9" constant="true"/>
+      <parameter id="x_glu3" value="3.01" constant="true"/>
+      <parameter id="x_glu4" value="6.4" constant="true"/>
+      <parameter id="glu" constant="false"/>
+      <parameter id="x_epi1" value="6090" constant="true"/>
+      <parameter id="x_epi2" value="100" constant="true"/>
+      <parameter id="x_epi3" value="3.1" constant="true"/>
+      <parameter id="x_epi4" value="8.4" constant="true"/>
+      <parameter id="epi" constant="false"/>
+      <parameter id="K_val" value="0.1" constant="true"/>
+      <parameter id="epi_f" value="0.8" constant="true"/>
+      <parameter id="K_ins" constant="true"/>
+      <parameter id="K_glu" constant="true"/>
+      <parameter id="K_epi" constant="true"/>
+      <parameter id="gamma" constant="false"/>
+      <parameter id="ATPS_keq" value="0.58" units="per_mM" constant="true"/>
+      <parameter id="ATPS_kadp" value="0.1" units="mM" constant="true"/>
+      <parameter id="ATPS_katp" value="0.5" units="mM" constant="true"/>
+      <parameter id="ATPS_kphos" value="0.1" units="mM" constant="true"/>
+      <parameter id="ATPS_Vmax" value="20" units="mmol_per_s" constant="true"/>
+    </listOfParameters>
+    <listOfInitialAssignments>
+      <initialAssignment symbol="K_ins">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <apply>
+              <minus/>
+              <ci> x_ins1 </ci>
+              <ci> x_ins2 </ci>
+            </apply>
+            <ci> K_val </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="K_glu">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <apply>
+              <minus/>
+              <ci> x_glu1 </ci>
+              <ci> x_glu2 </ci>
+            </apply>
+            <ci> K_val </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="K_epi">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <apply>
+              <minus/>
+              <ci> x_epi1 </ci>
+              <ci> x_epi2 </ci>
+            </apply>
+            <ci> K_val </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+    </listOfInitialAssignments>
+    <listOfRules>
+      <assignmentRule variable="nadh_tot">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> nadh </ci>
+            <ci> nad </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="atp_tot">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> atp </ci>
+            <ci> adp </ci>
+            <ci> amp </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="utp_tot">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> utp </ci>
+            <ci> udp </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="gtp_tot">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> gtp </ci>
+            <ci> gdp </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="nadh_mito_tot">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> nadh_mito </ci>
+            <ci> nad_mito </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="atp_mito_tot">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> atp_mito </ci>
+            <ci> adp_mito </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="gtp_mito_tot">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> gtp_mito </ci>
+            <ci> gdp_mito </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="ins">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <ci> max </ci>
+            <cn type="integer"> 0 </cn>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> x_ins1 </ci>
+                  <ci> x_ins2 </ci>
+                </apply>
+                <apply>
+                  <power/>
+                  <ci> glc_ext </ci>
+                  <ci> x_ins4 </ci>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <apply>
+                  <power/>
+                  <ci> glc_ext </ci>
+                  <ci> x_ins4 </ci>
+                </apply>
+                <apply>
+                  <power/>
+                  <ci> x_ins3 </ci>
+                  <ci> x_ins4 </ci>
+                </apply>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="glu">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <ci> max </ci>
+            <cn type="integer"> 0 </cn>
+            <apply>
+              <times/>
+              <apply>
+                <minus/>
+                <ci> x_glu1 </ci>
+                <ci> x_glu2 </ci>
+              </apply>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <power/>
+                    <ci> glc_ext </ci>
+                    <ci> x_glu4 </ci>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <apply>
+                      <power/>
+                      <ci> glc_ext </ci>
+                      <ci> x_glu4 </ci>
+                    </apply>
+                    <apply>
+                      <power/>
+                      <ci> x_glu3 </ci>
+                      <ci> x_glu4 </ci>
+                    </apply>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="epi">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <ci> max </ci>
+            <cn type="integer"> 0 </cn>
+            <apply>
+              <times/>
+              <apply>
+                <minus/>
+                <ci> x_epi1 </ci>
+                <ci> x_epi2 </ci>
+              </apply>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <power/>
+                    <ci> glc_ext </ci>
+                    <ci> x_epi4 </ci>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <apply>
+                      <power/>
+                      <ci> glc_ext </ci>
+                      <ci> x_epi4 </ci>
+                    </apply>
+                    <apply>
+                      <power/>
+                      <ci> x_epi3 </ci>
+                      <ci> x_glu4 </ci>
+                    </apply>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="gamma">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <cn> 0.5 </cn>
+            <apply>
+              <plus/>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> ins </ci>
+                  <apply>
+                    <plus/>
+                    <ci> ins </ci>
+                    <ci> K_ins </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <ci> max </ci>
+                <apply>
+                  <divide/>
+                  <ci> glu </ci>
+                  <apply>
+                    <plus/>
+                    <ci> glu </ci>
+                    <ci> K_glu </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> epi_f </ci>
+                    <ci> epi </ci>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <ci> epi </ci>
+                    <ci> K_epi </ci>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+    </listOfRules>
+    <listOfReactions>
+      <reaction id="ATPS" name="ATP synthase" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="adp" stoichiometry="1" constant="true"/>
+          <speciesReference species="phos" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="atp" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <ci> ATPS_Vmax </ci>
+                  <apply>
+                    <times/>
+                    <ci> ATPS_kadp </ci>
+                    <ci> ATPS_kphos </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <times/>
+                    <ci> adp </ci>
+                    <ci> phos </ci>
+                  </apply>
+                  <apply>
+                    <divide/>
+                    <ci> atp </ci>
+                    <ci> ATPS_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <cn type="integer"> 1 </cn>
+                    <apply>
+                      <divide/>
+                      <ci> adp </ci>
+                      <ci> ATPS_kadp </ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <cn type="integer"> 1 </cn>
+                    <apply>
+                      <divide/>
+                      <ci> phos </ci>
+                      <ci> ATPS_kphos </ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <apply>
+                  <divide/>
+                  <ci> atp </ci>
+                  <ci> ATPS_katp </ci>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>
