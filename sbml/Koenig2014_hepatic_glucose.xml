@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 19:19 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 19:36 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -380,6 +380,26 @@
       <parameter id="PK_pep_p_inp" units="mM" constant="false"/>
       <parameter id="PK_native" units="mmol_per_s" constant="false"/>
       <parameter id="PK_phospho" units="mmol_per_s" constant="false"/>
+      <parameter id="PEPCK_keq" value="336" units="dimensionless" constant="true"/>
+      <parameter id="PEPCK_k_pep" value="0" units="mM" constant="true"/>
+      <parameter id="PEPCK_k_gdp" value="0" units="mM" constant="true"/>
+      <parameter id="PEPCK_k_co2" value="25" units="mM" constant="true"/>
+      <parameter id="PEPCK_k_oaa" value="0" units="mM" constant="true"/>
+      <parameter id="PEPCK_k_gtp" value="0" units="mM" constant="true"/>
+      <parameter id="PEPCK_Vmax" value="0" units="mmol_per_s" constant="true"/>
+      <parameter id="PEPCKM_Vmax" value="546" units="mmol_per_s" constant="true"/>
+      <parameter id="PC_k_atp" value="0" units="mM" constant="true"/>
+      <parameter id="PC_k_pyr" value="0" units="mM" constant="true"/>
+      <parameter id="PC_k_co2" value="3" units="mM" constant="true"/>
+      <parameter id="PC_k_acoa" value="0" units="mM" constant="true"/>
+      <parameter id="PC_n" value="2" units="dimensionless" constant="true"/>
+      <parameter id="PC_Vmax" value="168" units="mmol_per_s" constant="true"/>
+      <parameter id="LDH_keq" value="0" units="dimensionless" constant="true"/>
+      <parameter id="LDH_k_pyr" value="0" units="mM" constant="true"/>
+      <parameter id="LDH_k_lac" value="31" units="mM" constant="true"/>
+      <parameter id="LDH_k_nad" value="0" units="mM" constant="true"/>
+      <parameter id="LDH_k_nadh" value="0" units="mM" constant="true"/>
+      <parameter id="LDH_Vmax" value="12" units="mmol_per_s" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="ins">
@@ -2787,6 +2807,409 @@
                 <times/>
                 <ci> gamma </ci>
                 <ci> PK_phospho </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="PEPCK" name="PEPCK cyto" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="oaa" stoichiometry="1" constant="true"/>
+          <speciesReference species="gtp" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="pep" stoichiometry="1" constant="true"/>
+          <speciesReference species="gdp" stoichiometry="1" constant="true"/>
+          <speciesReference species="co2" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> PEPCK_Vmax </ci>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <ci> PEPCK_k_oaa </ci>
+                    <ci> PEPCK_k_gtp </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <times/>
+                    <ci> oaa </ci>
+                    <ci> gtp </ci>
+                  </apply>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <times/>
+                      <ci> pep </ci>
+                      <ci> gdp </ci>
+                      <ci> co2 </ci>
+                    </apply>
+                    <ci> PEPCK_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <minus/>
+                <apply>
+                  <plus/>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> oaa </ci>
+                        <ci> PEPCK_k_oaa </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> gtp </ci>
+                        <ci> PEPCK_k_gtp </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> pep </ci>
+                        <ci> PEPCK_k_pep </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> gdp </ci>
+                        <ci> PEPCK_k_gdp </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> co2 </ci>
+                        <ci> PEPCK_k_co2 </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                </apply>
+                <cn type="integer"> 1 </cn>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="PEPCKM" name="PEPCK mito" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="oaa_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="gtp_mito" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="pep_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="gdp_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="co2_mito" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> PEPCKM_Vmax </ci>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <ci> PEPCK_k_oaa </ci>
+                    <ci> PEPCK_k_gtp </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <times/>
+                    <ci> oaa_mito </ci>
+                    <ci> gtp_mito </ci>
+                  </apply>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <times/>
+                      <ci> pep_mito </ci>
+                      <ci> gdp_mito </ci>
+                      <ci> co2_mito </ci>
+                    </apply>
+                    <ci> PEPCK_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <minus/>
+                <apply>
+                  <plus/>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> oaa_mito </ci>
+                        <ci> PEPCK_k_oaa </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> gtp_mito </ci>
+                        <ci> PEPCK_k_gtp </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> pep_mito </ci>
+                        <ci> PEPCK_k_pep </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> gdp_mito </ci>
+                        <ci> PEPCK_k_gdp </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> co2_mito </ci>
+                        <ci> PEPCK_k_co2 </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                </apply>
+                <cn type="integer"> 1 </cn>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="PC" name="Pyruvate Carboxylase" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="atp" stoichiometry="1" constant="true"/>
+          <speciesReference species="pyr" stoichiometry="1" constant="true"/>
+          <speciesReference species="co2" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="oaa" stoichiometry="1" constant="true"/>
+          <speciesReference species="adp" stoichiometry="1" constant="true"/>
+          <speciesReference species="p" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="acoa_mito"/>
+          <modifierSpeciesReference species="pyr_mito"/>
+          <modifierSpeciesReference species="atp_mito"/>
+          <modifierSpeciesReference species="co2_mito"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <divide/>
+                      <apply>
+                        <times/>
+                        <apply>
+                          <divide/>
+                          <apply>
+                            <times/>
+                            <ci> scale_gly </ci>
+                            <ci> PC_Vmax </ci>
+                            <ci> atp_mito </ci>
+                          </apply>
+                          <apply>
+                            <plus/>
+                            <ci> PC_k_atp </ci>
+                            <ci> atp_mito </ci>
+                          </apply>
+                        </apply>
+                        <ci> pyr_mito </ci>
+                      </apply>
+                      <apply>
+                        <plus/>
+                        <ci> PC_k_pyr </ci>
+                        <ci> pyr_mito </ci>
+                      </apply>
+                    </apply>
+                    <ci> co2_mito </ci>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <ci> PC_k_co2 </ci>
+                    <ci> co2_mito </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <power/>
+                  <ci> acoa_mito </ci>
+                  <ci> PC_n </ci>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <apply>
+                  <power/>
+                  <ci> acoa_mito </ci>
+                  <ci> PC_n </ci>
+                </apply>
+                <apply>
+                  <power/>
+                  <ci> PC_k_acoa </ci>
+                  <ci> PC_n </ci>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="LDH" name="Lactate Dehydrogenase" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="pyr" stoichiometry="1" constant="true"/>
+          <speciesReference species="nadh" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="lac" stoichiometry="1" constant="true"/>
+          <speciesReference species="nad" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> LDH_Vmax </ci>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <ci> LDH_k_pyr </ci>
+                    <ci> LDH_k_nadh </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <times/>
+                    <ci> pyr </ci>
+                    <ci> nadh </ci>
+                  </apply>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <times/>
+                      <ci> lac </ci>
+                      <ci> nad </ci>
+                    </apply>
+                    <ci> LDH_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <minus/>
+                <apply>
+                  <plus/>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> nadh </ci>
+                        <ci> LDH_k_nadh </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> pyr </ci>
+                        <ci> LDH_k_pyr </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> lac </ci>
+                        <ci> LDH_k_lac </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> nad </ci>
+                        <ci> LDH_k_nad </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                </apply>
+                <cn type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>

@@ -497,8 +497,30 @@ model *Koenig2014_hepatic_glucose()
   PEPCKM = scale_gly * PEPCKM_Vmax / (PEPCK_k_oaa * PEPCK_k_gtp) * (oaa_mito*gtp_mito - pep_mito*gdp_mito*co2_mito/PEPCK_keq) / ( (1+oaa_mito/PEPCK_k_oaa)*(1+gtp_mito/PEPCK_k_gtp) + (1+pep_mito/PEPCK_k_pep)*(1+gdp_mito/PEPCK_k_gdp)*(1+co2_mito/PEPCK_k_co2) - 1 );
   PEPCKM has mmol_per_s;
 
-// 'PC'              % v26
-// 'LDH'             % v27
+
+  PC is "Pyruvate Carboxylase";
+  PC : atp + pyr + co2 => oaa + adp + p;
+  PC_k_atp = 0.22 mM;
+  PC_k_pyr = 0.22 mM;
+  PC_k_co2 = 3.2 mM;
+  PC_k_acoa = 0.015 mM;
+  PC_n = 2.5 dimensionless;
+  PC_Vmax = 168 mmol_per_s;
+  PC = scale_gly * PC_Vmax * atp_mito/(PC_k_atp + atp_mito) * pyr_mito/(PC_k_pyr + pyr_mito) * co2_mito/(PC_k_co2 + co2_mito) * acoa_mito^PC_n / (acoa_mito^PC_n + PC_k_acoa^PC_n);
+  PC has mmol_per_s;
+
+
+  LDH is "Lactate Dehydrogenase";
+  LDH : pyr + nadh -> lac + nad;
+  LDH_keq = 2.783210760047520e-004 dimensionless;
+  LDH_k_pyr = 0.495 mM;
+  LDH_k_lac = 31.98 mM;
+  LDH_k_nad = 0.984 mM;
+  LDH_k_nadh = 0.027 mM;
+  LDH_Vmax = 12.6 mmol_per_s;
+  LDH = scale_gly * LDH_Vmax / (LDH_k_pyr * LDH_k_nadh) * (pyr*nadh - lac*nad/LDH_keq) / ( (1+nadh/LDH_k_nadh)*(1+pyr/LDH_k_pyr) + (1+lac/LDH_k_lac) * (1+nad/LDH_k_nad) - 1);
+  LDH has mmol_per_s;
+
 
 // 'LACT'            % v28
 // 'PYRT'            % v29

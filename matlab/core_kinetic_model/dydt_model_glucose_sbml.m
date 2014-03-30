@@ -476,41 +476,32 @@ PEPCKM = scale_gly * PEPCKM_Vmax / (PEPCK_k_oaa * PEPCK_k_gtp) * (oaa_mito*gtp_m
     ( (1+oaa_mito/PEPCK_k_oaa)*(1+gtp_mito/PEPCK_k_gtp) + (1+pep_mito/PEPCK_k_pep)*(1+gdp_mito/PEPCK_k_gdp)*(1+co2_mito/PEPCK_k_co2) - 1 );
 
 % *********************************** %
-% v26 : Pyruvate Carboxylase
+% v26 : PC : Pyruvate Carboxylase
 % *********************************** %
-% Acetyl-CoA is allosterical activator.
-% [Jitrapakdee1999, Scrutton1974]
-% Irreversible reaction
-% atp + pyr + co2 -> oaa + adp + p
-%v26_deltag = 0;                 % ??? [kJ/mol]  
-%v26_keq = keq(v26_deltag); 
-%v26_td = (atp_mito*pyr_mito*co2_mito - oaa_mito*adp_mito*p_mito/v26_keq); 
+% atp + pyr + co2 => oaa + adp + p
+PC_k_atp = 0.22;  % [mM]
+PC_k_pyr = 0.22;  % [mM]
+PC_k_co2 = 3.2;   % [mM]
+PC_k_acoa = 0.015;% [mM]
+PC_n = 2.5;       % [-]
+PC_Vmax = 168;    % [mmol_per_s]
+PC = scale_gly * PC_Vmax * atp_mito/(PC_k_atp + atp_mito) * pyr_mito/(PC_k_pyr + pyr_mito) * co2_mito/(PC_k_co2 + co2_mito) * acoa_mito^PC_n / (acoa_mito^PC_n + PC_k_acoa^PC_n);
+% [mmol_per_s]
 
-v26_k_atp = 0.22;  %[mM]
-v26_k_pyr = 0.22;  %[mM]
-v26_k_co2 = 3.2;   %[mM]
-v26_k_acoa = 0.015; %[mM]
-v26_n = 2.5;
-v26_Vmax = 168;
-
-v26 = scale_gly * v26_Vmax * atp_mito/(v26_k_atp + atp_mito) * pyr_mito/(v26_k_pyr + pyr_mito) * co2_mito/(v26_k_co2 + co2_mito) * acoa_mito^v26_n / (acoa_mito^v26_n + v26_k_acoa^v26_n);
 
 % *********************************** %
-% v27 : Lactate Dehydrogenase
+% v27 : LDH : Lactate Dehydrogenase
 % *********************************** %
-% pyr + nadh <-> lac + nad 
-%v27_deltag = 21.1;        % [kJ/mol]  
-%v27_keq = keq(v27_deltag); 
-%v27_td = (pyr*nadh - lac*nad/v27_keq);
-
-v27_keq = 2.783210760047520e-004;
-v27_k_pyr = 0.495;      % [mM]
-v27_k_lac = 31.98;      % [mM]
-v27_k_nad = 0.984;      % [mM]
-v27_k_nadh = 0.027;      % [mM]
-v27_Vmax = 12.6;
-
-v27 = scale_gly * v27_Vmax / (v27_k_pyr * v27_k_nadh) * (pyr*nadh - lac*nad/v27_keq) / ( (1+nadh/v27_k_nadh)*(1+pyr/v27_k_pyr) + (1+lac/v27_k_lac) * (1+nad/v27_k_nad) - 1);
+% pyr + nadh <-> lac + nad
+LDH_keq = 2.783210760047520e-004; % [-]
+LDH_k_pyr = 0.495;      % [mM]
+LDH_k_lac = 31.98;      % [mM]
+LDH_k_nad = 0.984;      % [mM]
+LDH_k_nadh = 0.027;     % [mM]
+LDH_Vmax = 12.6;        % [mmol_per_s]
+LDH = scale_gly * LDH_Vmax / (LDH_k_pyr * LDH_k_nadh) * (pyr*nadh - lac*nad/LDH_keq) / ...
+     ( (1+nadh/LDH_k_nadh)*(1+pyr/LDH_k_pyr) + (1+lac/LDH_k_lac) * (1+nad/LDH_k_nad) - 1);
+ % [mmol_per_s]
 
 % *********************************** %
 % v28 : Lactate Transport (import)
@@ -645,13 +636,13 @@ dydt(4) = (-UPGASE +NDKUTP)/Vcyto;    % utp
 dydt(5) = (+GS -NDKUTP)/Vcyto;    % udp
 dydt(6) = (+NDKGTP -PEPCK)/Vcyto;   % gtp
 dydt(7) = (-NDKGTP +PEPCK)/Vcyto;   % gdp
-dydt(8) = (-GAPDH +v27)/Vcyto;   % nad
-dydt(9) = (+GAPDH -v27)/Vcyto;   % nadh
+dydt(8) = (-GAPDH +LDH)/Vcyto;   % nad
+dydt(9) = (+GAPDH -LDH)/Vcyto;   % nadh
 dydt(10) = (+G6PASE +2*PPASE -GP +FBP2 +FBP1 -GAPDH)/Vcyto; % phos
 dydt(11) = (+UPGASE -PPASE)/Vcyto;    % pp
 dydt(12) = (-G6PASE -PPASE -FBP2 -FBP1 +EN)/Vcyto;  % h2o
 dydt(13) = (+PEPCK)/Vcyto;        % co2
-dydt(14) = (+GAPDH -v27)/Vcyto;   % h
+dydt(14) = (+GAPDH -LDH)/Vcyto;   % h
 dydt(15) = (-G16PI -UPGASE +GP)/Vcyto; % glc1p
 dydt(16) = (+UPGASE -GS)/Vcyto;     % udpglc
 dydt(17) = (+GS -GP)/Vcyto;     % glyglc
@@ -666,22 +657,22 @@ dydt(25) = (+GAPDH -PGK)/Vcyto;         % bpg13
 dydt(26) = (+PGK -PGM)/Vcyto;         % pg3
 dydt(27) = (+PGM -EN)/Vcyto;         % pg2
 dydt(28) = (+EN -PK +PEPCK +v30)/Vcyto;   % pep
-dydt(29) = (+PK -v27 -v29)/Vcyto;    % pyr
+dydt(29) = (+PK -LDH -v29)/Vcyto;    % pyr
 dydt(30) = (-PEPCK)/Vcyto;        % oaa
-dydt(31) = (+v27 +v28)/Vcyto;   % lac
+dydt(31) = (+LDH +v28)/Vcyto;   % lac
 
 dydt(32) = (-GLUT2)/Vext;   % glc_ext
 dydt(33) = (-v28)/Vext;  % lac_ext
 
-dydt(34) = (+PEPCKM -v26 +v31)/Vmito;      % co2_mito
-dydt(35) = (+v26)/Vmito;                % p_mito
-dydt(36) = (-PEPCKM +v26 -v32 +v34)/Vmito; % oaa_mito
+dydt(34) = (+PEPCKM -PC +v31)/Vmito;      % co2_mito
+dydt(35) = (+PC)/Vmito;                % p_mito
+dydt(36) = (-PEPCKM +PC -v32 +v34)/Vmito; % oaa_mito
 dydt(37) = (+PEPCKM -v30)/Vmito;           % pep_mito
 dydt(38) = (+v31 -v32 -v35)/Vmito;      % acoa_mito
-dydt(39) = (-v26 +v29 -v31)/Vmito;      % pyr_mito
+dydt(39) = (-PC +v29 -v31)/Vmito;      % pyr_mito
 dydt(40) = (+v32 -v36)/Vmito;           % cit_mito
-dydt(41) = (-v26 -v33)/Vmito;           % atp_mito
-dydt(42) = (+v26 +v33)/Vmito;           % adp_mito
+dydt(41) = (-PC -v33)/Vmito;           % atp_mito
+dydt(42) = (+PC +v33)/Vmito;           % adp_mito
 dydt(43) = (-PEPCKM +v33)/Vmito;           % gtp_mito
 dydt(44) = (+PEPCKM -v33)/Vmito;           % gdp_mito
 dydt(45) = (-v31 +v32)/Vmito;           % coa_mito
@@ -741,8 +732,8 @@ v  = [GLUT2   % v1
       PK 
       PEPCK 
       PEPCKM 
-      v26 
-      v27 
+      PC 
+      LDH 
       v28 
       v29 
       v30 
