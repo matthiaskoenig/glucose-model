@@ -570,8 +570,28 @@ model *Koenig2014_hepatic_glucose()
   PDH has mmol_per_s;
 
 
-// 'CS'              % v32
-// 'NDKMITO'        % v33
+  CS is "Citrate Synthase";
+  CS : acoa_mito + oaa_mito + h2o_mito -> cit_mito + coa_mito;
+  CS_keq = 2.665990308427589e+005 dimensionless;
+  CS_k_oaa = 0.002 mM;
+  CS_k_acoa = 0.016 mM;
+  CS_k_cit = 0.420 mM;
+  CS_k_coa = 0.070 mM;
+  CS_Vmax = 4.2 mmol_per_s;
+  CS = scale_gly * CS_Vmax/(CS_k_oaa * CS_k_acoa) * (acoa_mito*oaa_mito - cit_mito*coa_mito/CS_keq) / ( (1+acoa_mito/CS_k_acoa)*(1+oaa_mito/CS_k_oaa) + (1+cit_mito/CS_k_cit)*(1+coa_mito/CS_k_coa) -1 );
+  CS has mmol_per_s;
+
+
+  NDKGTPM is "Nucleoside-diphosphate kinase (ATP, GTP) mito";
+  NDKGTPM : atp_mito + gdp_mito -> adp_mito + gtp_mito;
+  NDKGTPM_keq = 1 dimensionless;
+  NDKGTPM_k_atp = 1.33 mM;
+  NDKGTPM_k_adp = 0.042 mM;
+  NDKGTPM_k_gtp = 0.15 mM;
+  NDKGTPM_k_gdp = 0.031 mM;
+  NDKGTPM_Vmax = 420 mmol_per_s;
+  NDKGTPM = scale_gly * NDKGTPM_Vmax / (NDKGTPM_k_atp * NDKGTPM_k_gdp) * (atp_mito*gdp_mito - adp_mito*gtp_mito/NDKGTPM_keq) / ( (1 + atp_mito/NDKGTPM_k_atp)*(1 + gdp_mito/NDKGTPM_k_gdp) + (1 + adp_mito/NDKGTPM_k_adp)*(1 + gtp_mito/NDKGTPM_k_gtp) - 1) ;
+  NDKGTPM has mmol_per_s;
 
 // 'oaa_{flx}'         % v34
 // 'acoa_{flx}'        % v35

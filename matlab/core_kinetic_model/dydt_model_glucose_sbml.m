@@ -551,42 +551,29 @@ PDH_p = PDH_base * PDH_alpha_p;      % [mmol_per_s]
 PDH = (1-gamma) * PDH_nat + gamma*PDH_p;  % [mmol_per_s]
 
 % *********************************** %
-% v32 : CS
+% v32 : CS : Citrate Synthase
 % *********************************** %
-% acoa_mito + oaa_mito + h2o mito -> cit_mito + coa_mito
-% ATP inhibition not integrated
-% [Shepherd1969, Smitherman1979, Matsuoka1973, Nelson2008]
-%v32_deltag = -32.2;        % [kJ/mol]  
-%v32_keq = keq(v32_deltag); 
-%v32_td = (acoa_mito * oaa_mito - cit_mito*coa_mito/v32_keq);
-
-v32_keq = 2.665990308427589e+005;
-v32_k_oaa = 0.002;           % [mM] 
-v32_k_acoa = 0.016;          % [mM]
-v32_k_cit = 0.420;           % [mM] 
-v32_k_coa = 0.070;           % [mM]
-v32_Vmax = 4.2;
-
-v32 = scale_gly * v32_Vmax/(v32_k_oaa * v32_k_acoa) * (acoa_mito*oaa_mito - cit_mito*coa_mito/v32_keq) / ( (1+acoa_mito/v32_k_acoa)*(1+oaa_mito/v32_k_oaa) + (1+cit_mito/v32_k_cit)*(1+coa_mito/v32_k_coa) -1 );
+% acoa_mito + oaa_mito + h2o_mito <-> cit_mito + coa_mito
+CS_keq = 2.665990308427589e+005;  % [-]
+CS_k_oaa = 0.002;           % [mM] 
+CS_k_acoa = 0.016;          % [mM]
+CS_k_cit = 0.420;           % [mM] 
+CS_k_coa = 0.070;           % [mM]
+CS_Vmax = 4.2;              % [mmol_per_s]
+CS = scale_gly * CS_Vmax/(CS_k_oaa * CS_k_acoa) * (acoa_mito*oaa_mito - cit_mito*coa_mito/CS_keq) / ( (1+acoa_mito/CS_k_acoa)*(1+oaa_mito/CS_k_oaa) + (1+cit_mito/CS_k_cit)*(1+coa_mito/CS_k_coa) -1 );
+% [mmol_per_s]
 
 % *********************************** %
-% v33 : Nucleoside-diphosphate kinase (ATP, GTP)
+% v33 : NDKGTPM : Nucleoside-diphosphate kinase (ATP, GTP) mito
 % *********************************** %
-% ATP + GDP <-> ADP + GTP
-% The concentrations of the nucleotides are coupled via the NDK reaction
-% [Fukuchi1994, Kimura1988, Lam1986]
-%v33_deltag = 0;        % [kJ/mol]  
-%v33_keq = keq(v33_deltag); 
-%v33_td = (atp_mito*gdp_mito - adp_mito*gtp_mito/v33_keq);
-
-v33_keq = 1;
-v33_k_atp = 1.33;       % [mM]
-v33_k_adp = 0.042;      % [mM]
-v33_k_gtp = 0.15;       % [mM]
-v33_k_gdp = 0.031;      % [mM]
-v33_Vmax = 420;
-
-v33 = scale_gly * v33_Vmax / (v33_k_atp * v33_k_gdp) * (atp_mito*gdp_mito - adp_mito*gtp_mito/v33_keq) / ( (1 + atp_mito/v33_k_atp)*(1 + gdp_mito/v33_k_gdp) + (1 + adp_mito/v33_k_adp)*(1 + gtp_mito/v33_k_gtp) - 1) ;
+% atp_mito + gdp_mito <-> adp_mito + gtp_mito
+NDKGTPM_keq = 1;            % [-]
+NDKGTPM_k_atp = 1.33;       % [mM]
+NDKGTPM_k_adp = 0.042;      % [mM]
+NDKGTPM_k_gtp = 0.15;       % [mM]
+NDKGTPM_k_gdp = 0.031;      % [mM]
+NDKGTPM_Vmax = 420;         % [mmol_per_s]
+NDKGTPM = scale_gly * NDKGTPM_Vmax / (NDKGTPM_k_atp * NDKGTPM_k_gdp) * (atp_mito*gdp_mito - adp_mito*gtp_mito/NDKGTPM_keq) / ( (1 + atp_mito/NDKGTPM_k_atp)*(1 + gdp_mito/NDKGTPM_k_gdp) + (1 + adp_mito/NDKGTPM_k_adp)*(1 + gtp_mito/NDKGTPM_k_gtp) - 1) ;
 
 % *********************************** %
 % v34 : OAA influx
@@ -646,20 +633,20 @@ dydt(33) = (-LACT)/Vext;  % lac_ext
 
 dydt(34) = (+PEPCKM -PC +PDH)/Vmito;      % co2_mito
 dydt(35) = (+PC)/Vmito;                % p_mito
-dydt(36) = (-PEPCKM +PC -v32 +v34)/Vmito; % oaa_mito
+dydt(36) = (-PEPCKM +PC -CS +v34)/Vmito; % oaa_mito
 dydt(37) = (+PEPCKM -PEPTM)/Vmito;           % pep_mito
-dydt(38) = (+PDH -v32 -v35)/Vmito;      % acoa_mito
+dydt(38) = (+PDH -CS -v35)/Vmito;      % acoa_mito
 dydt(39) = (-PC +PYRTM -PDH)/Vmito;      % pyr_mito
-dydt(40) = (+v32 -v36)/Vmito;           % cit_mito
-dydt(41) = (-PC -v33)/Vmito;           % atp_mito
-dydt(42) = (+PC +v33)/Vmito;           % adp_mito
-dydt(43) = (-PEPCKM +v33)/Vmito;           % gtp_mito
-dydt(44) = (+PEPCKM -v33)/Vmito;           % gdp_mito
-dydt(45) = (-PDH +v32)/Vmito;           % coa_mito
+dydt(40) = (+CS -v36)/Vmito;           % cit_mito
+dydt(41) = (-PC -NDKGTPM)/Vmito;           % atp_mito
+dydt(42) = (+PC +NDKGTPM)/Vmito;           % adp_mito
+dydt(43) = (-PEPCKM +NDKGTPM)/Vmito;           % gtp_mito
+dydt(44) = (+PEPCKM -NDKGTPM)/Vmito;           % gdp_mito
+dydt(45) = (-PDH +CS)/Vmito;           % coa_mito
 dydt(46) = (+PDH)/Vmito;           % nadh_mito
 dydt(47) = (-PDH)/Vmito;           % nad_mito
 dydt(48) = (+PDH)/Vmito;           % h_mito
-dydt(49) = (-v32)/Vmito;                % h2o_mito
+dydt(49) = (-CS)/Vmito;                % h2o_mito
 
 %% constant metabolites
 dydt(1) = 0;  % atp
@@ -718,8 +705,8 @@ v  = [GLUT2   % v1
       PYRTM 
       PEPTM 
       PDH 
-      v32 
-      v33 
+      CS 
+      NDKGTPM 
       v34 
       v35 
       v36];

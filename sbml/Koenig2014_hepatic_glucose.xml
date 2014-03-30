@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 19:52 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 19:59 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -420,6 +420,18 @@
       <parameter id="PDH_base" units="mmol_per_s" constant="false"/>
       <parameter id="PDH_nat" units="mmol_per_s" constant="false"/>
       <parameter id="PDH_p" units="mmol_per_s" constant="false"/>
+      <parameter id="CS_keq" value="266599" units="dimensionless" constant="true"/>
+      <parameter id="CS_k_oaa" value="0" units="mM" constant="true"/>
+      <parameter id="CS_k_acoa" value="0" units="mM" constant="true"/>
+      <parameter id="CS_k_cit" value="0" units="mM" constant="true"/>
+      <parameter id="CS_k_coa" value="0" units="mM" constant="true"/>
+      <parameter id="CS_Vmax" value="4" units="mmol_per_s" constant="true"/>
+      <parameter id="NDKGTPM_keq" value="1" units="dimensionless" constant="true"/>
+      <parameter id="NDKGTPM_k_atp" value="1" units="mM" constant="true"/>
+      <parameter id="NDKGTPM_k_adp" value="0" units="mM" constant="true"/>
+      <parameter id="NDKGTPM_k_gtp" value="0" units="mM" constant="true"/>
+      <parameter id="NDKGTPM_k_gdp" value="0" units="mM" constant="true"/>
+      <parameter id="NDKGTPM_Vmax" value="420" units="mmol_per_s" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="ins">
@@ -3148,10 +3160,10 @@
           <speciesReference species="p" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <listOfModifiers>
-          <modifierSpeciesReference species="co2_mito"/>
           <modifierSpeciesReference species="atp_mito"/>
-          <modifierSpeciesReference species="pyr_mito"/>
+          <modifierSpeciesReference species="co2_mito"/>
           <modifierSpeciesReference species="acoa_mito"/>
+          <modifierSpeciesReference species="pyr_mito"/>
         </listOfModifiers>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -3498,6 +3510,205 @@
                 <times/>
                 <ci> gamma </ci>
                 <ci> PDH_p </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="CS" name="Citrate Synthase" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="acoa_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="oaa_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="h2o_mito" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="cit_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="coa_mito" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> CS_Vmax </ci>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <ci> CS_k_oaa </ci>
+                    <ci> CS_k_acoa </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <times/>
+                    <ci> acoa_mito </ci>
+                    <ci> oaa_mito </ci>
+                  </apply>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <times/>
+                      <ci> cit_mito </ci>
+                      <ci> coa_mito </ci>
+                    </apply>
+                    <ci> CS_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <minus/>
+                <apply>
+                  <plus/>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> acoa_mito </ci>
+                        <ci> CS_k_acoa </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> oaa_mito </ci>
+                        <ci> CS_k_oaa </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> cit_mito </ci>
+                        <ci> CS_k_cit </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> coa_mito </ci>
+                        <ci> CS_k_coa </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                </apply>
+                <cn type="integer"> 1 </cn>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="NDKGTPM" name="Nucleoside-diphosphate kinase (ATP, GTP) mito" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="atp_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="gdp_mito" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="adp_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="gtp_mito" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> NDKGTPM_Vmax </ci>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <ci> NDKGTPM_k_atp </ci>
+                    <ci> NDKGTPM_k_gdp </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <times/>
+                    <ci> atp_mito </ci>
+                    <ci> gdp_mito </ci>
+                  </apply>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <times/>
+                      <ci> adp_mito </ci>
+                      <ci> gtp_mito </ci>
+                    </apply>
+                    <ci> NDKGTPM_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <minus/>
+                <apply>
+                  <plus/>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> atp_mito </ci>
+                        <ci> NDKGTPM_k_atp </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> gdp_mito </ci>
+                        <ci> NDKGTPM_k_gdp </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> adp_mito </ci>
+                        <ci> NDKGTPM_k_adp </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> gtp_mito </ci>
+                        <ci> NDKGTPM_k_gtp </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                </apply>
+                <cn type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>
