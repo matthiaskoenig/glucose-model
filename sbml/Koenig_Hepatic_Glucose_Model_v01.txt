@@ -225,12 +225,30 @@ model *Koenig2014_hepatic_glucose()
   PPASE_km_pp = 0.005 mM;
   PPASE_Vmax = 2.4 mmol_per_s;
   PPASE = scale_glyglc * PPASE_Vmax * pp/(pp + PPASE_km_pp);
-  PPASE has mmol_per_s; 
-  
+  PPASE has mmol_per_s;   
+
   GS is "Glycogen synthase";
   GS : udpglc => udp + glyglc;
+  GS_C = 500 mM;
+  GS_k1_max = 0.2 dimensionless;
+  GS_k1_nat = 0.224 mMmM;
+  GS_k2_nat = 0.1504 mM;
+  GS_k1_phospho = 3.003 mMmM;
+  GS_k2_phospho = 0.09029 mM;
+  GS_Vmax =  13.2 mmol_per_s;
   
-
+  GS_storage_factor = (1+GS_k1_max) * (GS_C - glyglc)/( (GS_C - glyglc) + GS_k1_max * GS_C);
+  GS_k_udpglc_native = GS_k1_nat / (glc6p + GS_k2_nat);
+  GS_k_udpglc_phospho = GS_k1_phospho / (glc6p + GS_k2_phospho);
+  GS_native = scale_glyglc * GS_Vmax * GS_storage_factor * udpglc / (GS_k_udpglc_native + udpglc);
+  GS_phospho = scale_glyglc * GS_Vmax * GS_storage_factor * udpglc / (GS_k_udpglc_phospho + udpglc); 
+  GS = (1-gamma)*GS_native + gamma*GS_phospho;
+  
+  GS_storage_factor has dimensionless;
+  GS_k_udpglc_native has mM;
+  GS_k_udpglc_phospho has mM;
+  GS_native has mmol_per_s;
+  GS_phospho has mmol_per_s;
   GS has mmol_per_s;
 
 // 'GP'              % v9

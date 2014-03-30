@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 15:08 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 15:14 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -251,6 +251,18 @@
       <parameter id="UPGASE_Vmax" value="80" units="mmol_per_s" constant="true"/>
       <parameter id="PPASE_km_pp" value="0" units="mM" constant="true"/>
       <parameter id="PPASE_Vmax" value="2" units="mmol_per_s" constant="true"/>
+      <parameter id="GS_C" value="500" units="mM" constant="true"/>
+      <parameter id="GS_k1_max" value="0" units="dimensionless" constant="true"/>
+      <parameter id="GS_k1_nat" value="0" units="mMmM" constant="true"/>
+      <parameter id="GS_k2_nat" value="0" units="mM" constant="true"/>
+      <parameter id="GS_k1_phospho" value="3" units="mMmM" constant="true"/>
+      <parameter id="GS_k2_phospho" value="0" units="mM" constant="true"/>
+      <parameter id="GS_Vmax" value="13" units="mmol_per_s" constant="true"/>
+      <parameter id="GS_storage_factor" units="dimensionless" constant="false"/>
+      <parameter id="GS_k_udpglc_native" units="mM" constant="false"/>
+      <parameter id="GS_k_udpglc_phospho" units="mM" constant="false"/>
+      <parameter id="GS_native" units="mmol_per_s" constant="false"/>
+      <parameter id="GS_phospho" units="mmol_per_s" constant="false"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="ins">
@@ -501,6 +513,103 @@
                   <ci> GK_km_fru6p </ci>
                 </apply>
               </apply>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="GS_storage_factor">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <plus/>
+                <cn type="integer"> 1 </cn>
+                <ci> GS_k1_max </ci>
+              </apply>
+              <apply>
+                <minus/>
+                <ci> GS_C </ci>
+                <ci> glyglc </ci>
+              </apply>
+            </apply>
+            <apply>
+              <plus/>
+              <apply>
+                <minus/>
+                <ci> GS_C </ci>
+                <ci> glyglc </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> GS_k1_max </ci>
+                <ci> GS_C </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="GS_k_udpglc_native">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> GS_k1_nat </ci>
+            <apply>
+              <plus/>
+              <ci> glc6p </ci>
+              <ci> GS_k2_nat </ci>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="GS_k_udpglc_phospho">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> GS_k1_phospho </ci>
+            <apply>
+              <plus/>
+              <ci> glc6p </ci>
+              <ci> GS_k2_phospho </ci>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="GS_native">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <ci> scale_glyglc </ci>
+              <ci> GS_Vmax </ci>
+              <ci> GS_storage_factor </ci>
+              <ci> udpglc </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> GS_k_udpglc_native </ci>
+              <ci> udpglc </ci>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="GS_phospho">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <ci> scale_glyglc </ci>
+              <ci> GS_Vmax </ci>
+              <ci> GS_storage_factor </ci>
+              <ci> udpglc </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> GS_k_udpglc_phospho </ci>
+              <ci> udpglc </ci>
             </apply>
           </apply>
         </math>
@@ -944,6 +1053,27 @@
           <speciesReference species="udp" stoichiometry="1" constant="true"/>
           <speciesReference species="glyglc" stoichiometry="1" constant="true"/>
         </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <cn type="integer"> 1 </cn>
+                  <ci> gamma </ci>
+                </apply>
+                <ci> GS_native </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> gamma </ci>
+                <ci> GS_phospho </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
       </reaction>
     </listOfReactions>
   </model>
