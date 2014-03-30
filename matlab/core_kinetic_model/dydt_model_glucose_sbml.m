@@ -454,33 +454,26 @@ PK = (1-gamma)* PK_native + gamma * PK_phospho;  % [mmol_per_s]
 
 
 % *********************************** %
-% v24 : PEPCK
+% v24 : PEPCK : PEPCK cyto
 % *********************************** %
-% Michaelis-Menten Kinetics
-% mitochondrial PEPCK has very similar Kinetics
-% [Yang2009, Case2007]
-% oxalacetate + GTP -> PEP + GDP + CO2
-%v24_deltag = -15;        % [kJ/mol]  
-%v24_keq = keq(v24_deltag); % 337 [mM]
-%v24_td = ( oaa * gtp - pep*gdp*co2/v24_keq); 
-
-v24_keq = 3.369565215864287E2;
-v24_k_pep = 0.237;
-v24_k_gdp = 0.0921;
-v24_k_co2 = 25.5;
-v24_k_oaa = 0.0055;
-v24_k_gtp = 0.0222;
-v24_Vmax = 0;
-
-v24 = scale_gly * v24_Vmax / (v24_k_oaa * v24_k_gtp) * (oaa*gtp - pep*gdp*co2/v24_keq) / ( (1+oaa/v24_k_oaa)*(1+gtp/v24_k_gtp) + (1+pep/v24_k_pep)*(1+gdp/v24_k_gdp)*(1+co2/v24_k_co2) - 1 );
+% oaa + gtp <-> pep + gdp + co2
+PEPCK_keq = 3.369565215864287E2; % [-]
+PEPCK_k_pep = 0.237;      % [mM]
+PEPCK_k_gdp = 0.0921;     % [mM]
+PEPCK_k_co2 = 25.5;       % [mM]
+PEPCK_k_oaa = 0.0055;     % [mM]
+PEPCK_k_gtp = 0.0222;     % [mM]
+PEPCK_Vmax = 0;           % [mmol_per_s]
+PEPCK = scale_gly * PEPCK_Vmax / (PEPCK_k_oaa * PEPCK_k_gtp) * (oaa*gtp - pep*gdp*co2/PEPCK_keq) / ...
+    ( (1+oaa/PEPCK_k_oaa)*(1+gtp/PEPCK_k_gtp) + (1+pep/PEPCK_k_pep)*(1+gdp/PEPCK_k_gdp)*(1+co2/PEPCK_k_co2) - 1 ); % [mmol_per_s]
 
 % *********************************** %
-% v25 : PEPCK mito
+% v25 : PEPCKM : PEPCK mito
 % *********************************** %
-% v25_td = (oaa_mito * gtp_mito - pep_mito*gdp_mito*co2_mito /v24_keq); 
-v25_Vmax = 546;
-
-v25 = scale_gly * v25_Vmax / (v24_k_oaa * v24_k_gtp) * (oaa_mito*gtp_mito - pep_mito*gdp_mito*co2_mito /v24_keq) / ( (1+oaa_mito/v24_k_oaa)*(1+gtp_mito/v24_k_gtp) + (1+pep_mito/v24_k_pep)*(1+gdp_mito/v24_k_gdp)*(1+co2_mito/v24_k_co2) - 1 );
+% oaa_mito + gtp_mito <-> pep_mito + gdp_mito + co2_mito
+PEPCKM_Vmax = 546;  % [mmol_per_s]
+PEPCKM = scale_gly * PEPCKM_Vmax / (PEPCK_k_oaa * PEPCK_k_gtp) * (oaa_mito*gtp_mito - pep_mito*gdp_mito*co2_mito/PEPCK_keq) / ...
+    ( (1+oaa_mito/PEPCK_k_oaa)*(1+gtp_mito/PEPCK_k_gtp) + (1+pep_mito/PEPCK_k_pep)*(1+gdp_mito/PEPCK_k_gdp)*(1+co2_mito/PEPCK_k_co2) - 1 );
 
 % *********************************** %
 % v26 : Pyruvate Carboxylase
@@ -650,14 +643,14 @@ dydt(2) = (+GK +NDKGTP +NDKUTP +2*AK +PFK2 +PFK1 -PGK -PK)/Vcyto; % adp
 dydt(3) = (-AK)/Vcyto;        % amp
 dydt(4) = (-UPGASE +NDKUTP)/Vcyto;    % utp
 dydt(5) = (+GS -NDKUTP)/Vcyto;    % udp
-dydt(6) = (+NDKGTP -v24)/Vcyto;   % gtp
-dydt(7) = (-NDKGTP +v24)/Vcyto;   % gdp
+dydt(6) = (+NDKGTP -PEPCK)/Vcyto;   % gtp
+dydt(7) = (-NDKGTP +PEPCK)/Vcyto;   % gdp
 dydt(8) = (-GAPDH +v27)/Vcyto;   % nad
 dydt(9) = (+GAPDH -v27)/Vcyto;   % nadh
 dydt(10) = (+G6PASE +2*PPASE -GP +FBP2 +FBP1 -GAPDH)/Vcyto; % phos
 dydt(11) = (+UPGASE -PPASE)/Vcyto;    % pp
 dydt(12) = (-G6PASE -PPASE -FBP2 -FBP1 +EN)/Vcyto;  % h2o
-dydt(13) = (+v24)/Vcyto;        % co2
+dydt(13) = (+PEPCK)/Vcyto;        % co2
 dydt(14) = (+GAPDH -v27)/Vcyto;   % h
 dydt(15) = (-G16PI -UPGASE +GP)/Vcyto; % glc1p
 dydt(16) = (+UPGASE -GS)/Vcyto;     % udpglc
@@ -672,29 +665,29 @@ dydt(24) = (+ALD -TPI)/Vcyto;         % dhap
 dydt(25) = (+GAPDH -PGK)/Vcyto;         % bpg13
 dydt(26) = (+PGK -PGM)/Vcyto;         % pg3
 dydt(27) = (+PGM -EN)/Vcyto;         % pg2
-dydt(28) = (+EN -PK +v24 +v30)/Vcyto;   % pep
+dydt(28) = (+EN -PK +PEPCK +v30)/Vcyto;   % pep
 dydt(29) = (+PK -v27 -v29)/Vcyto;    % pyr
-dydt(30) = (-v24)/Vcyto;        % oaa
+dydt(30) = (-PEPCK)/Vcyto;        % oaa
 dydt(31) = (+v27 +v28)/Vcyto;   % lac
 
 dydt(32) = (-GLUT2)/Vext;   % glc_ext
 dydt(33) = (-v28)/Vext;  % lac_ext
 
-dydt(34) = (+v25 -v26 +v31)/Vmito;      % co2_mito
+dydt(34) = (+PEPCKM -v26 +v31)/Vmito;      % co2_mito
 dydt(35) = (+v26)/Vmito;                % p_mito
-dydt(36) = (-v25 +v26 -v32 +v34)/Vmito; % oaa_mito
-dydt(37) = (+v25 -v30)/Vmito;           % pep_mito
+dydt(36) = (-PEPCKM +v26 -v32 +v34)/Vmito; % oaa_mito
+dydt(37) = (+PEPCKM -v30)/Vmito;           % pep_mito
 dydt(38) = (+v31 -v32 -v35)/Vmito;      % acoa_mito
 dydt(39) = (-v26 +v29 -v31)/Vmito;      % pyr_mito
 dydt(40) = (+v32 -v36)/Vmito;           % cit_mito
 dydt(41) = (-v26 -v33)/Vmito;           % atp_mito
 dydt(42) = (+v26 +v33)/Vmito;           % adp_mito
-dydt(43) = (-v25 +v33)/Vmito;           % gtp_mito
-dydt(44) = (+v25 -v33)/Vmito;           % gdp_mito
+dydt(43) = (-PEPCKM +v33)/Vmito;           % gtp_mito
+dydt(44) = (+PEPCKM -v33)/Vmito;           % gdp_mito
 dydt(45) = (-v31 +v32)/Vmito;           % coa_mito
-dydt(46) = (+v25 +v31)/Vmito;           % nadh_mito
-dydt(47) = (-v25 -v31)/Vmito;           % nad_mito
-dydt(48) = (+v25 +v31)/Vmito;           % h_mito
+dydt(46) = (+v31)/Vmito;           % nadh_mito
+dydt(47) = (-v31)/Vmito;           % nad_mito
+dydt(48) = (+v31)/Vmito;           % h_mito
 dydt(49) = (-v32)/Vmito;                % h2o_mito
 
 %% constant metabolites
@@ -746,8 +739,8 @@ v  = [GLUT2   % v1
       PGM 
       EN 
       PK 
-      v24 
-      v25 
+      PEPCK 
+      PEPCKM 
       v26 
       v27 
       v28 

@@ -478,8 +478,25 @@ model *Koenig2014_hepatic_glucose()
   PK_phospho has mmol_per_s;
   PK has mmol_per_s;
 
-// 'PEPCK'      % v24
-// 'PEPCKMITO'      % v25
+
+  PEPCK is "PEPCK cyto";
+  PEPCK : oaa + gtp -> pep + gdp + co2;
+  PEPCK_keq = 3.369565215864287E2 dimensionless;
+  PEPCK_k_pep = 0.237 mM;
+  PEPCK_k_gdp = 0.0921 mM;
+  PEPCK_k_co2 = 25.5 mM;
+  PEPCK_k_oaa = 0.0055 mM;
+  PEPCK_k_gtp = 0.0222 mM;
+  PEPCK_Vmax = 0 mmol_per_s;
+  PEPCK = scale_gly * PEPCK_Vmax / (PEPCK_k_oaa * PEPCK_k_gtp) * (oaa*gtp - pep*gdp*co2/PEPCK_keq) / ( (1+oaa/PEPCK_k_oaa)*(1+gtp/PEPCK_k_gtp) + (1+pep/PEPCK_k_pep)*(1+gdp/PEPCK_k_gdp)*(1+co2/PEPCK_k_co2) - 1 );
+  PEPCK has mmol_per_s;
+ 
+  PEPCKM is "PEPCK mito";
+  PEPCKM : oaa_mito + gtp_mito -> pep_mito + gdp_mito + co2_mito;
+  PEPCKM_Vmax = 546 mmol_per_s;
+  PEPCKM = scale_gly * PEPCKM_Vmax / (PEPCK_k_oaa * PEPCK_k_gtp) * (oaa_mito*gtp_mito - pep_mito*gdp_mito*co2_mito/PEPCK_keq) / ( (1+oaa_mito/PEPCK_k_oaa)*(1+gtp_mito/PEPCK_k_gtp) + (1+pep_mito/PEPCK_k_pep)*(1+gdp_mito/PEPCK_k_gdp)*(1+co2_mito/PEPCK_k_co2) - 1 );
+  PEPCKM has mmol_per_s;
+
 // 'PC'              % v26
 // 'LDH'             % v27
 
