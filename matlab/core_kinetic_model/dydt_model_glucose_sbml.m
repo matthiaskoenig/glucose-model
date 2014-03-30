@@ -270,21 +270,16 @@ NDKUTP = scale_glyglc * NDKUTP_Vmax / (NDKUTP_km_atp * NDKUTP_km_udp) * (atp*udp
 
 
 % *********************************** %
-% v12 : ATP:AMP phosphotransferase (Adenylatkinase)
+% v12 : AK : ATP:AMP phosphotransferase (Adenylatkinase)
 % *********************************** %
-% v12	R00127_2.7.4.3_cyto	ATP:AMP phosphotransferase	C00002 + C00020 <=> 2 C00008
-% ATP + AMP -> 2 ADP
-%v12_deltag = 3.6;        % [kJ/mol]  
-%v12_keq = keq(v12_deltag); 
-%v12_td = (atp*amp - adp*adp/v12_keq);
-
-v12_keq = 0.247390074904985;
-v12_km_atp = 0.09;         % [mM]
-v12_km_amp = 0.08;         % [mM]
-v12_km_adp = 0.11;         % [mM]
-v12_Vmax = 0;
-
-v12 = scale_gly * v12_Vmax / (v12_km_atp * v12_km_amp) * (atp*amp - adp*adp/v12_keq) / ( (1+atp/v12_km_atp)*(1+amp/v12_km_amp) + (1+adp/v12_km_adp)*(1+adp/v12_km_adp) - 1); 
+% atp + amp <-> 2 adp
+AK_keq = 0.247390074904985;  % [-]
+AK_km_atp = 0.09;            % [mM]
+AK_km_amp = 0.08;            % [mM]
+AK_km_adp = 0.11;            % [mM]
+AK_Vmax = 0;                 % [mmol_per_s]
+AK = scale_gly * AK_Vmax / (AK_km_atp * AK_km_amp) * (atp*amp - adp*adp/AK_keq) / ( (1+atp/AK_km_atp)*(1+amp/AK_km_amp) + (1+adp/AK_km_adp)*(1+adp/AK_km_adp) - 1); 
+% [mmol_per_s]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   PFK / FBPase                      %
@@ -718,9 +713,9 @@ v36 = scale_gly * v36_Vmax;
 
 %%  Fluxes and concentration changes [mmol/s/litre]
 dydt = zeros(size(y));
-dydt(1) = (-GK -NDKGTP -NDKUTP -v12 -v13 -v15 +v20 +v23)/Vcyto;   % atp
-dydt(2) = (+GK +NDKGTP +NDKUTP +2*v12 +v13 +v15 -v20 -v23)/Vcyto; % adp
-dydt(3) = (-v12)/Vcyto;        % amp
+dydt(1) = (-GK -NDKGTP -NDKUTP -AK -v13 -v15 +v20 +v23)/Vcyto;   % atp
+dydt(2) = (+GK +NDKGTP +NDKUTP +2*AK +v13 +v15 -v20 -v23)/Vcyto; % adp
+dydt(3) = (-AK)/Vcyto;        % amp
 dydt(4) = (-UPGASE +NDKUTP)/Vcyto;    % utp
 dydt(5) = (+GS -NDKUTP)/Vcyto;    % udp
 dydt(6) = (+NDKGTP -v24)/Vcyto;   % gtp
@@ -807,7 +802,7 @@ v  = [GLUT2   % v1
       GP 
       NDKGTP 
       NDKUTP 
-      v12 
+      AK 
       v13 
       v14 
       v15 

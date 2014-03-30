@@ -299,7 +299,7 @@ model *Koenig2014_hepatic_glucose()
 
 
   NDKUTP is "Nucleoside-diphosphate kinase (ATP, UTP)";
-  NDKUTP : atp + udp <-> adp + utp;
+  NDKUTP : atp + udp -> adp + utp;
   NDKUTP_keq = 1 dimensionless;
   NDKUTP_km_atp = 1.33 mM;
   NDKUTP_km_adp = 0.042 mM;
@@ -310,7 +310,17 @@ model *Koenig2014_hepatic_glucose()
   NDKUTP has mmol_per_s;
 
 
-// 'AK'              % v12
+  AK is "ATPAMP phosphotransferase (Adenylatkinase)";
+  AK : atp + amp -> 2 adp;
+  AK_keq = 0.247390074904985 dimensionless; 
+  AK_km_atp = 0.09 mM;
+  AK_km_amp = 0.08 mM;
+  AK_km_adp = 0.11 mM;
+  AK_Vmax = 0 mmol_per_s;
+  AK = scale_gly * AK_Vmax / (AK_km_atp * AK_km_amp) * (atp*amp - adp*adp/AK_keq) / ( (1+atp/AK_km_atp)*(1+amp/AK_km_amp) + (1+adp/AK_km_adp)*(1+adp/AK_km_adp) - 1); 
+  AK has mmol_per_s;
+
+
 // 'PFK2'            % v13
 // 'FBP2'            % v14
 // 'PFK1'            % v15
@@ -326,12 +336,15 @@ model *Koenig2014_hepatic_glucose()
 // 'PEPCKMITO'      % v25
 // 'PC'              % v26
 // 'LDH'             % v27
+
 // 'LACT'            % v28
 // 'PYRT'            % v29
 // 'PEPT'            % v30
+
 // 'PDH'             % v31
 // 'CS'              % v32
 // 'NDKMITO'        % v33
+
 // 'oaa_{flx}'         % v34
 // 'acoa_{flx}'        % v35
 // 'vcit_{flx}'        % v36
