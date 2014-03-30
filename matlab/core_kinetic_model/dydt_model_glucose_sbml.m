@@ -106,7 +106,7 @@ gamma = 0.5 * (1 - ins/(ins+K_ins) + max(glu/(glu+K_glu), epi_f*epi/(epi+K_epi))
 %   Glucose import/export             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % *********************************** %
-% v1 : GLUT2 - Transporter
+% v1 : GLUT2 : Glucose Transporter
 % *********************************** %
 % glc_ext <-> glc
 GLUT2_keq = 1;      % [-]
@@ -119,7 +119,7 @@ GLUT2 = scale_gly * GLUT2_Vmax/GLUT2_km * (glc_ext - glc/GLUT2_keq)/(1 + glc_ext
 %   Glucokinase / G6Pase              %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % *********************************** %
-% v2 : Glucokinase
+% v2 : GK : Glucokinase
 % *********************************** %
 % glucose + atp => glucose_6P + adp 
 
@@ -139,7 +139,7 @@ GK = scale_gly * GK_Vmax * GK_gc_free * atp/(GK_km_atp + atp) * glc^GK_n/(glc^GK
 
 
 % *********************************** %
-% v3 : D-Glucose-6-phosphate Phosphatase
+% v3 : G6PASE : D-Glucose-6-phosphate Phosphatase
 % *********************************** %
 % glc6p + h2o => glc + phos
 G6PASE_km_glc6p = 2;    % [mM]
@@ -147,46 +147,23 @@ G6PASE_Vmax =  18.9;    % [mmol_per_s]
 G6PASE = scale_gly * G6PASE_Vmax * glc6p / (G6PASE_km_glc6p + glc6p);  % [mmol_per_s]
 
 % *********************************** %
-% v4 : D-Glucose-6-phosphate Isomerase
+% v4 : GPI : D-Glucose-6-phosphate Isomerase
 % *********************************** %
-% R00771_5.3.1.9_cyto	D-Glucose-6-phosphate ketol-isomerase	C00092 <=> C00085	
-% glucose_6P -> fructose_6P
-%v4_deltag = 1.7;                          % [kJ/mol]
-%v4_keq = keq(v4_deltag);                    
-%v4_td = (glc6p - fru6p/v4_keq);
-
-v4_keq = 0.517060817492925;
-v4_km_glc6p  = 0.182;   % [mM]
-v4_km_fru6p = 0.071;    % [mM]
-v4_Vmax = 420;
-
-v4 = scale_gly * v4_Vmax/v4_km_glc6p * (glc6p - fru6p/v4_keq) / (1 + glc6p/v4_km_glc6p + fru6p/v4_km_fru6p);
+% glc6p <-> fru6P
+GPI_keq = 0.517060817492925;  % [-]
+GPI_km_glc6p  = 0.182;        % [mM]
+GPI_km_fru6p = 0.071;         % [mM]
+GPI_Vmax = 420;               % [mmol/l]
+GPI = scale_gly * GPI_Vmax/GPI_km_glc6p * (glc6p - fru6p/GPI_keq) / (1 + glc6p/GPI_km_glc6p + fru6p/GPI_km_fru6p);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   Glycogen metabolism               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % *********************************** %
-% v5 : Glucose 1-phosphate 1,6-phosphomutase
+% v5 : G16PI : Glucose 1-phosphate 1,6-phosphomutase
 % *********************************** %
-% R00959_5.4.2.2_cyto	
-% alpha-D-Glucose 1-phosphate 1,6-phosphomutase	
-% 1 C00103 <=> 1 C00092
-% glucose_1p <-> glucose_6p
-%
-% Similar to other isomerases. Reversible only depending on Km for
-% substrate, product and the Keq of the reaction.
-% Find km values for the reaction !!!
-% [Quick1974]
-% The equilibrium lies strongly toward G6P (Keq ) 28
-%or Keq ) 25),5,6 and the reaction proceeds through a ping-pong
-%mechanism involving aspartyl-phosphoenzyme (PGMP) and
-%-glucose-1,6-bisphosphate (G16BP) intermediates 
-% [Kashiwaya1994]
-%v5_deltag = -7.1;                          % [kJ/mol]
-%v5_keq = keq(v5_deltag);                    
-%v5_td = (glc1p - glc6p/v5_keq);
-
+% glc1p <-> glc6p
 v5_keq = 15.717554082151441;
 v5_km_glc6p  = 0.67;       % [mM]
 v5_km_glc1p = 0.045;        % [mM]
@@ -805,8 +782,8 @@ dydt(15) = (-v5 -v6 +v9)/Vcyto; % glc1p
 dydt(16) = (+v6 -v8)/Vcyto;     % udpglc
 dydt(17) = (+v8 -v9)/Vcyto;     % glyglc
 dydt(18) = (+GLUT2 -GK +G6PASE)/Vcyto; % glc
-dydt(19) = (+GK -G6PASE -v4 +v5)/Vcyto;   % glc6p
-dydt(20) = (+v4 -v13 +v14 -v15 +v16)/Vcyto;   % fru6p
+dydt(19) = (+GK -G6PASE -GPI +v5)/Vcyto;   % glc6p
+dydt(20) = (+GPI -v13 +v14 -v15 +v16)/Vcyto;   % fru6p
 dydt(21) = (+v15 -v16 -v17)/Vcyto;    % fru16bp
 dydt(22) = (+v13 -v14)/Vcyto;         % fru26bp
 dydt(23) = (+v17 +v18 -v19)/Vcyto;    % grap
@@ -868,7 +845,7 @@ dydt(49) = 0; % h2o_mito
 v  = [GLUT2   % v1
       GK      % v2
       G6PASE  % v3
-      v4 
+      GPI 
       v5 
       v6 
       v7 

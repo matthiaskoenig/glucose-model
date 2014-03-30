@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 14:22 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 14:37 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -111,6 +111,7 @@
       </unitDefinition>
     </listOfUnitDefinitions>
     <listOfCompartments>
+      <compartment sboTerm="SBO:0000410" id="default_compartment" spatialDimensions="3" size="1" constant="true"/>
       <compartment id="extern" spatialDimensions="3" size="10" units="litre" constant="true"/>
       <compartment id="cyto" spatialDimensions="3" size="1" units="litre" constant="true"/>
       <compartment id="mito" spatialDimensions="3" size="5" units="litre" constant="true"/>
@@ -165,6 +166,7 @@
       <species id="nad_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="h2o_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="h_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="fru6P" compartment="default_compartment" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
       <parameter id="nadh_tot" units="mM" constant="false"/>
@@ -211,11 +213,10 @@
       <parameter id="GK_gc_free" units="dimensionless" constant="false"/>
       <parameter id="G6PASE_km_glc6p" value="2" units="mM" constant="true"/>
       <parameter id="G6PASE_Vmax" value="18" units="mmol_per_s" constant="true"/>
-      <parameter id="ATPS_keq" value="0" units="per_mM" constant="true"/>
-      <parameter id="ATPS_kadp" value="0" units="mM" constant="true"/>
-      <parameter id="ATPS_katp" value="0" units="mM" constant="true"/>
-      <parameter id="ATPS_kphos" value="0" units="mM" constant="true"/>
-      <parameter id="ATPS_Vmax" value="20" units="mmol_per_s" constant="true"/>
+      <parameter id="GPI_keq" value="0" units="dimensionless" constant="true"/>
+      <parameter id="GPI_km_glc6p" value="0" units="mM" constant="true"/>
+      <parameter id="GPI_km_fru6p" value="0" units="mM" constant="true"/>
+      <parameter id="GPI_Vmax" value="420" units="mmol_per_s" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="ins">
@@ -669,14 +670,16 @@
           </math>
         </kineticLaw>
       </reaction>
-      <reaction id="ATPS" name="ATP synthase" reversible="true" fast="false">
+      <reaction id="GPI" name="D-Glucose-6-phosphate Isomerase" reversible="true" fast="false">
         <listOfReactants>
-          <speciesReference species="adp" stoichiometry="1" constant="true"/>
-          <speciesReference species="phos" stoichiometry="1" constant="true"/>
+          <speciesReference species="glc6p" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="atp" stoichiometry="1" constant="true"/>
+          <speciesReference species="fru6P" stoichiometry="1" constant="true"/>
         </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="fru6p"/>
+        </listOfModifiers>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
@@ -685,59 +688,48 @@
                 <times/>
                 <apply>
                   <divide/>
-                  <ci> ATPS_Vmax </ci>
                   <apply>
                     <times/>
-                    <ci> ATPS_kadp </ci>
-                    <ci> ATPS_kphos </ci>
+                    <ci> scale_gly </ci>
+                    <ci> GPI_Vmax </ci>
                   </apply>
+                  <ci> GPI_km_glc6p </ci>
                 </apply>
                 <apply>
                   <minus/>
-                  <apply>
-                    <times/>
-                    <ci> adp </ci>
-                    <ci> phos </ci>
-                  </apply>
+                  <ci> glc6p </ci>
                   <apply>
                     <divide/>
-                    <ci> atp </ci>
-                    <ci> ATPS_keq </ci>
+                    <ci> fru6p </ci>
+                    <ci> GPI_keq </ci>
                   </apply>
                 </apply>
               </apply>
               <apply>
                 <plus/>
+                <cn type="integer"> 1 </cn>
                 <apply>
-                  <times/>
-                  <apply>
-                    <plus/>
-                    <cn type="integer"> 1 </cn>
-                    <apply>
-                      <divide/>
-                      <ci> adp </ci>
-                      <ci> ATPS_kadp </ci>
-                    </apply>
-                  </apply>
-                  <apply>
-                    <plus/>
-                    <cn type="integer"> 1 </cn>
-                    <apply>
-                      <divide/>
-                      <ci> phos </ci>
-                      <ci> ATPS_kphos </ci>
-                    </apply>
-                  </apply>
+                  <divide/>
+                  <ci> glc6p </ci>
+                  <ci> GPI_km_glc6p </ci>
                 </apply>
                 <apply>
                   <divide/>
-                  <ci> atp </ci>
-                  <ci> ATPS_katp </ci>
+                  <ci> fru6p </ci>
+                  <ci> GPI_km_fru6p </ci>
                 </apply>
               </apply>
             </apply>
           </math>
         </kineticLaw>
+      </reaction>
+      <reaction id="G16PI" name="Glucose 1-phosphate 1,6-phosphomutase" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="glc1p" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="glc6p" stoichiometry="1" constant="true"/>
+        </listOfProducts>
       </reaction>
     </listOfReactions>
   </model>

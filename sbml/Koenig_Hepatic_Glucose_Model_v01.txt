@@ -184,17 +184,50 @@ model *Koenig2014_hepatic_glucose()
   G6PASE_Vmax =  18.9 mmol_per_s;
   G6PASE = scale_gly * G6PASE_Vmax * glc6p / (G6PASE_km_glc6p + glc6p);
   G6PASE has mmol_per_s;
+ 
+  GPI is "D-Glucose-6-phosphate Isomerase";
+  GPI: glc6p -> fru6P;
+  GPI_keq = 0.517060817492925 dimensionless;
+  GPI_km_glc6p  = 0.182 mM;
+  GPI_km_fru6p = 0.071 mM;
+  GPI_Vmax = 420 mmol_per_s;
+  GPI = scale_gly * GPI_Vmax/GPI_km_glc6p * (glc6p - fru6p/GPI_keq) / (1 + glc6p/GPI_km_glc6p + fru6p/GPI_km_fru6p);
+  GPI has mmol_per_s;
 
-  ATPS is "ATP synthase";
-  ATPS: adp + phos -> atp;
-  ATPS has mmol_per_s;
-  
-  ATPS_keq = 0.58 per_mM;
-  ATPS_kadp = 0.1 mM;
-  ATPS_katp = 0.5 mM;
-  ATPS_kphos = 0.1 mM;
-  ATPS_Vmax = 20.0 mmol_per_s;
-  ATPS_Vmax has mmol_per_s;
-  ATPS = ATPS_Vmax/(ATPS_kadp*ATPS_kphos) *(adp*phos-atp/ATPS_keq)/((1+adp/ATPS_kadp)*(1+phos/ATPS_kphos) + atp/ATPS_katp);
+  G16PI is "Glucose 1-phosphate 1,6-phosphomutase";
+  G16PI : glc1p -> glc6p;
+  G16PI has mmol_per_s;
+
+// 'UPGase'           % v6
+// 'PPase'           % v7 
+// 'GS'              % v8 
+// 'GP'              % v9
+// 'NTK (GTP)'       % v10            
+// 'NTK (UTP)'       % v11
+// 'AK'              % v12
+// 'PFK2'            % v13
+// 'FBP2'            % v14
+// 'PFK1'            % v15
+// 'FBP1'            % v16
+// 'ALD'             % v17
+// 'TPI'             % v18
+// 'GAPDH'           % v19
+// 'PGK'             % v20
+// 'PGM'             % v21
+// 'EN'              % v22
+// 'PK'              % v23
+// 'PEPCK'      % v24
+// 'PEPCK_{mito}'      % v25
+// 'PC'              % v26
+// 'LDH'             % v27
+// 'LacT'            % v28
+// 'PyrT'            % v29
+// 'PepT'            % v30
+// 'PDH'             % v31
+// 'CS'              % v32
+// 'NDK_{mito}'        % v33
+// 'oaa_{flx}'         % v34
+// 'acoa_{flx}'        % v35
+// 'vcit_{flx}'        % v36
 
 end
