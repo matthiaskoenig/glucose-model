@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 15:31 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 15:37 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -282,6 +282,12 @@
       <parameter id="GP_native" units="mmol_per_s" constant="false"/>
       <parameter id="GP_vmax_phospho" units="mmol_per_s" constant="false"/>
       <parameter id="GP_phospho" units="mmol_per_s" constant="false"/>
+      <parameter id="NDKGTP_keq" value="1" units="dimensionless" constant="true"/>
+      <parameter id="NDKGTP_km_atp" value="1" units="mM" constant="true"/>
+      <parameter id="NDKGTP_km_adp" value="0" units="mM" constant="true"/>
+      <parameter id="NDKGTP_km_gtp" value="0" units="mM" constant="true"/>
+      <parameter id="NDKGTP_km_gdp" value="0" units="mM" constant="true"/>
+      <parameter id="NDKGTP_Vmax" value="0" units="mM" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="ins">
@@ -1345,6 +1351,105 @@
                 <times/>
                 <ci> gamma </ci>
                 <ci> GP_phospho </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="NDKGTP" name="Nucleoside-diphosphate kinase (ATP, GTP)" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="atp" stoichiometry="1" constant="true"/>
+          <speciesReference species="gdp" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="adp" stoichiometry="1" constant="true"/>
+          <speciesReference species="gtp" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> NDKGTP_Vmax </ci>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <ci> NDKGTP_km_atp </ci>
+                    <ci> NDKGTP_km_gdp </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <times/>
+                    <ci> atp </ci>
+                    <ci> gdp </ci>
+                  </apply>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <times/>
+                      <ci> adp </ci>
+                      <ci> gtp </ci>
+                    </apply>
+                    <ci> NDKGTP_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <minus/>
+                <apply>
+                  <plus/>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> atp </ci>
+                        <ci> NDKGTP_km_atp </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> gdp </ci>
+                        <ci> NDKGTP_km_gdp </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> adp </ci>
+                        <ci> NDKGTP_km_adp </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> gtp </ci>
+                        <ci> NDKGTP_km_gtp </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                </apply>
+                <cn type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>

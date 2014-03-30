@@ -243,41 +243,31 @@ GP_phospho = GP_vmax_phospho/(GP_k_glyc_phospho*GP_k_p_phospho) * (glyglc*phos -
 GP = (1-gamma) * GP_native + gamma*GP_phospho;  % [mmol_per_s]
 
 % *********************************** %
-% v10 : Nucleoside-diphosphate kinase (ATP, GTP)
+% v10 : NDKGTP : Nucleoside-diphosphate kinase (ATP, GTP)
 % *********************************** %
-% ATP + GDP <-> ADP + GTP
-% The concentrations of the nucleotides are coupled via the NDK reaction
-% [Fukuchi1994, Kimura1988, Lam1986]
-%v10_deltag = 0;        % [kJ/mol]  
-%v10_keq = keq(v10_deltag); 
-%v10_td = (atp*gdp - adp*gtp/v10_keq);
-
-v10_keq = 1;
-v10_km_atp = 1.33;       % [mM]
-v10_km_adp = 0.042;      % [mM]
-v10_km_gtp = 0.15;       % [mM]
-v10_km_gdp = 0.031;      % [mM]
-v10_Vmax = 0;
-
-v10 = scale_gly * v10_Vmax / (v10_km_atp * v10_km_gdp) * (atp*gdp - adp*gtp/v10_keq) / ( (1 + atp/v10_km_atp)*(1 + gdp/v10_km_gdp) + (1 + adp/v10_km_adp)*(1 + gtp/v10_km_gtp) - 1);
+% atp + gdp <-> adp + gtp
+NDKGTP_keq = 1;             % [-]
+NDKGTP_km_atp = 1.33;       % [mM]
+NDKGTP_km_adp = 0.042;      % [mM]
+NDKGTP_km_gtp = 0.15;       % [mM]
+NDKGTP_km_gdp = 0.031;      % [mM]
+NDKGTP_Vmax = 0;            % [mmol_per_s]
+NDKGTP = scale_gly * NDKGTP_Vmax / (NDKGTP_km_atp * NDKGTP_km_gdp) * (atp*gdp - adp*gtp/NDKGTP_keq) / ( (1 + atp/NDKGTP_km_atp)*(1 + gdp/NDKGTP_km_gdp) + (1 + adp/NDKGTP_km_adp)*(1 + gtp/NDKGTP_km_gtp) - 1);
+% [mmol_per_s]
 
 % *********************************** %
-% v11 : Nucleoside-diphosphate kinase (ATP, UTP)
+% v11 : NDKUTP : Nucleoside-diphosphate kinase (ATP, UTP)
 % *********************************** %
-% ATP + UDP <-> ADP + UTP
-% [Fukuchi1994, Kimura1988, Lam1986]
-%v11_deltag = 0;        % [kJ/mol]  
-%v11_keq = keq(v11_deltag); 
-%v11_td = (atp*udp - adp*utp/v11_keq);
+% atp + udp <-> adp + utp
+NDKUTP_keq = 1;            % [-]
+NDKUTP_km_atp = 1.33;      % [mM]
+NDKUTP_km_adp = 0.042;     % [mM]
+NDKUTP_km_utp = 16;        % [mM]
+NDKUTP_km_udp = 0.19;      % [mM]
+NDKUTP_Vmax = 2940;        % [mmol_per_s]
+NDKUTP = scale_glyglc * NDKUTP_Vmax / (NDKUTP_km_atp * NDKUTP_km_udp) * (atp*udp - adp*utp/NDKUTP_keq) / ( (1 + atp/NDKUTP_km_atp)*(1 + udp/NDKUTP_km_udp) + (1 + adp/NDKUTP_km_adp)*(1 + utp/NDKUTP_km_utp) - 1);
+% [mmol_per_s]
 
-v11_keq = 1;
-v11_km_atp = 1.33;      % [mM]
-v11_km_adp = 0.042;     % [mM]
-v11_km_utp = 16;        % [mM]
-v11_km_udp = 0.19;      % [mM]
-v11_Vmax = 2940;
-
-v11 = scale_glyglc * v11_Vmax / (v11_km_atp * v11_km_udp) * (atp*udp - adp*utp/v11_keq) / ( (1 + atp/v11_km_atp)*(1 + udp/v11_km_udp) + (1 + adp/v11_km_adp)*(1 + utp/v11_km_utp) - 1);
 
 % *********************************** %
 % v12 : ATP:AMP phosphotransferase (Adenylatkinase)
@@ -728,13 +718,13 @@ v36 = scale_gly * v36_Vmax;
 
 %%  Fluxes and concentration changes [mmol/s/litre]
 dydt = zeros(size(y));
-dydt(1) = (-GK -v10 -v11 -v12 -v13 -v15 +v20 +v23)/Vcyto;   % atp
-dydt(2) = (+GK +v10 +v11 +2*v12 +v13 +v15 -v20 -v23)/Vcyto; % adp
+dydt(1) = (-GK -NDKGTP -NDKUTP -v12 -v13 -v15 +v20 +v23)/Vcyto;   % atp
+dydt(2) = (+GK +NDKGTP +NDKUTP +2*v12 +v13 +v15 -v20 -v23)/Vcyto; % adp
 dydt(3) = (-v12)/Vcyto;        % amp
-dydt(4) = (-UPGASE +v11)/Vcyto;    % utp
-dydt(5) = (+GS -v11)/Vcyto;    % udp
-dydt(6) = (+v10 -v24)/Vcyto;   % gtp
-dydt(7) = (-v10 +v24)/Vcyto;   % gdp
+dydt(4) = (-UPGASE +NDKUTP)/Vcyto;    % utp
+dydt(5) = (+GS -NDKUTP)/Vcyto;    % udp
+dydt(6) = (+NDKGTP -v24)/Vcyto;   % gtp
+dydt(7) = (-NDKGTP +v24)/Vcyto;   % gdp
 dydt(8) = (-v19 +v27)/Vcyto;   % nad
 dydt(9) = (+v19 -v27)/Vcyto;   % nadh
 dydt(10) = (+G6PASE +2*PPASE -GP +v14 +v16 -v19)/Vcyto; % phos
@@ -815,8 +805,8 @@ v  = [GLUT2   % v1
       PPASE 
       GS 
       GP 
-      v10 
-      v11 
+      NDKGTP 
+      NDKUTP 
       v12 
       v13 
       v14 

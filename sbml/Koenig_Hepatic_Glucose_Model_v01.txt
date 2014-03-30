@@ -286,8 +286,30 @@ model *Koenig2014_hepatic_glucose()
   GP_phospho has mmol_per_s;
   GP has mmol_per_s;
 
-// 'NTK (GTP)'       % v10            
-// 'NTK (UTP)'       % v11
+  NDKGTP is "Nucleoside-diphosphate kinase (ATP, GTP)";
+  NDKGTP : atp + gdp -> adp + gtp;
+  NDKGTP_keq = 1 dimensionless;
+  NDKGTP_km_atp = 1.33 mM;
+  NDKGTP_km_adp = 0.042 mM;
+  NDKGTP_km_gtp = 0.15 mM;
+  NDKGTP_km_gdp = 0.031 mM;
+  NDKGTP_Vmax = 0 mM;
+  NDKGTP = scale_gly * NDKGTP_Vmax / (NDKGTP_km_atp * NDKGTP_km_gdp) * (atp*gdp - adp*gtp/NDKGTP_keq) / ( (1 + atp/NDKGTP_km_atp)*(1 + gdp/NDKGTP_km_gdp) + (1 + adp/NDKGTP_km_adp)*(1 + gtp/NDKGTP_km_gtp) - 1);
+  NDKGTP has mmol_per_s;
+
+
+  NDKUTP is "Nucleoside-diphosphate kinase (ATP, UTP)";
+  NDKUTP : atp + udp <-> adp + utp;
+  NDKUTP_keq = 1 dimensionless;
+  NDKUTP_km_atp = 1.33 mM;
+  NDKUTP_km_adp = 0.042 mM;
+  NDKUTP_km_utp = 16 mM;
+  NDKUTP_km_udp = 0.19 mM;
+  NDKUTP_Vmax = 2940 mmol_per_s;
+  NDKUTP = scale_glyglc * NDKUTP_Vmax / (NDKUTP_km_atp * NDKUTP_km_udp) * (atp*udp - adp*utp/NDKUTP_keq) / ( (1 + atp/NDKUTP_km_atp)*(1 + udp/NDKUTP_km_udp) + (1 + adp/NDKUTP_km_adp)*(1 + utp/NDKUTP_km_utp) - 1);
+  NDKUTP has mmol_per_s;
+
+
 // 'AK'              % v12
 // 'PFK2'            % v13
 // 'FBP2'            % v14
@@ -301,15 +323,15 @@ model *Koenig2014_hepatic_glucose()
 // 'EN'              % v22
 // 'PK'              % v23
 // 'PEPCK'      % v24
-// 'PEPCK_{mito}'      % v25
+// 'PEPCKMITO'      % v25
 // 'PC'              % v26
 // 'LDH'             % v27
-// 'LacT'            % v28
-// 'PyrT'            % v29
-// 'PepT'            % v30
+// 'LACT'            % v28
+// 'PYRT'            % v29
+// 'PEPT'            % v30
 // 'PDH'             % v31
 // 'CS'              % v32
-// 'NDK_{mito}'        % v33
+// 'NDKMITO'        % v33
 // 'oaa_{flx}'         % v34
 // 'acoa_{flx}'        % v35
 // 'vcit_{flx}'        % v36
