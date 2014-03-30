@@ -409,9 +409,36 @@ model *Koenig2014_hepatic_glucose()
   GAPDH has mmol_per_s;
 
 
-// 'PGK'             % v20
-// 'PGM'             % v21
-// 'EN'              % v22
+  PGK is "Phosphoglycerate Kinase";
+  PGK : adp + bpg13 -> atp + pg3;
+  PGK_keq = 6.958644052488538 dimensionless;
+  PGK_k_adp = 0.35 mM;
+  PGK_k_atp = 0.48 mM;
+  PGK_k_bpg13 = 0.002 mM;
+  PGK_k_pg3 = 1.2 mM;
+  PGK_Vmax = 420 mmol_per_s;
+  PGK = scale_gly * PGK_Vmax / (PGK_k_adp*PGK_k_bpg13) * (adp*bpg13 - atp*pg3/PGK_keq) / ((1 + adp/PGK_k_adp)*(1+bpg13/PGK_k_bpg13) + (1+atp/PGK_k_atp)*(1+pg3/PGK_k_pg3) - 1); 
+  PGK has mmol_per_s;
+
+  PGM is "2-Phospho-D-glycerate 2,3-phosphomutase";
+  PGM : pg3 -> pg2;
+  PGM_keq = 0.181375378837397 dimensionless;
+  PGM_k_pg3 = 5 mM;
+  PGM_k_pg2 = 1 mM;
+  PGM_Vmax = 420 mmol_per_s;
+  PGM = scale_gly * PGM_Vmax * (pg3 - pg2/PGM_keq) / (pg3 + PGM_k_pg3 *(1 + pg2/PGM_k_pg2));
+  PGM has mmol_per_s;
+
+  EN is "2-Phospho-D-glucerate hydro-lyase (enolase)";
+  EN : pg2 -> pep;
+  EN_keq = 0.054476985386756 dimensionless;
+  EN_k_pep = 1 mM;
+  EN_k_pg2 = 1 mM;
+  EN_Vmax = 35.994 mmol_per_s;
+  EN = scale_gly * EN_Vmax * (pg2 - pep/EN_keq) / (pg2 + EN_k_pg2 *(1 + pep/EN_k_pep));
+  EN has mmol_per_s;
+
+	
 // 'PK'              % v23
 // 'PEPCK'      % v24
 // 'PEPCKMITO'      % v25

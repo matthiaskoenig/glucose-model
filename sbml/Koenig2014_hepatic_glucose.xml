@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 18:53 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 19:01 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -342,6 +342,16 @@
       <parameter id="GAPDH_k_nadh" value="0" units="mM" constant="true"/>
       <parameter id="GAPDH_k_bpg13" value="0" units="mM" constant="true"/>
       <parameter id="GAPDH_Vmax" value="420" units="mmol_per_s" constant="true"/>
+      <parameter id="PGK_keq" value="6" units="dimensionless" constant="true"/>
+      <parameter id="PGK_k_adp" value="0" units="mM" constant="true"/>
+      <parameter id="PGK_k_atp" value="0" units="mM" constant="true"/>
+      <parameter id="PGK_k_bpg13" value="0" units="mM" constant="true"/>
+      <parameter id="PGK_k_pg3" value="1" units="mM" constant="true"/>
+      <parameter id="PGK_Vmax" value="420" units="mmol_per_s" constant="true"/>
+      <parameter id="PGM_keq" value="0" units="dimensionless" constant="true"/>
+      <parameter id="PGM_k_pg3" value="5" units="mM" constant="true"/>
+      <parameter id="PGM_k_pg2" value="1" units="mM" constant="true"/>
+      <parameter id="PGM_Vmax" value="420" units="mmol_per_s" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="ins">
@@ -2275,6 +2285,151 @@
                   </apply>
                 </apply>
                 <cn type="integer"> 1 </cn>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="PGK" name="Phosphoglycerate Kinase" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="adp" stoichiometry="1" constant="true"/>
+          <speciesReference species="bpg13" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="atp" stoichiometry="1" constant="true"/>
+          <speciesReference species="pg3" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> PGK_Vmax </ci>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <ci> PGK_k_adp </ci>
+                    <ci> PGK_k_bpg13 </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <times/>
+                    <ci> adp </ci>
+                    <ci> bpg13 </ci>
+                  </apply>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <times/>
+                      <ci> atp </ci>
+                      <ci> pg3 </ci>
+                    </apply>
+                    <ci> PGK_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <minus/>
+                <apply>
+                  <plus/>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> adp </ci>
+                        <ci> PGK_k_adp </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> bpg13 </ci>
+                        <ci> PGK_k_bpg13 </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> atp </ci>
+                        <ci> PGK_k_atp </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> pg3 </ci>
+                        <ci> PGK_k_pg3 </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                </apply>
+                <cn type="integer"> 1 </cn>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="PGM" name="2-Phospho-D-glycerate 2,3-phosphomutase" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="pg3" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="pg2" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <ci> scale_gly </ci>
+                <ci> PGM_Vmax </ci>
+                <apply>
+                  <minus/>
+                  <ci> pg3 </ci>
+                  <apply>
+                    <divide/>
+                    <ci> pg2 </ci>
+                    <ci> PGM_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <ci> pg3 </ci>
+                <apply>
+                  <times/>
+                  <ci> PGM_k_pg3 </ci>
+                  <apply>
+                    <plus/>
+                    <cn type="integer"> 1 </cn>
+                    <apply>
+                      <divide/>
+                      <ci> pg2 </ci>
+                      <ci> PGM_k_pg2 </ci>
+                    </apply>
+                  </apply>
+                </apply>
               </apply>
             </apply>
           </math>

@@ -336,7 +336,7 @@ PFK1 = scale_gly * PFK1_Vmax * (1 - 1/(1 + fru26bp/PFK1_ka_fru26bp)) * fru6p*atp
 % *********************************** %
 % v16 : FBP1 : D-Fructose-1,6-bisphosphate 1-phosphohydrolase
 % *********************************** %
-% fru16bp + h2o -> fru6p + p
+% fru16bp + h2o => fru6p + p
 FBP1_ki_fru26bp = 0.001;    % [mM]
 FBP1_km_fru16bp = 0.0013;   % [mM]
 FBP1_Vmax = 4.326;          % [mmol_per_s]
@@ -349,7 +349,7 @@ FBP1 = scale_gly * FBP1_Vmax / (1 + fru26bp/FBP1_ki_fru26bp) * fru16bp/(fru16bp 
 % *********************************** %
 % v17 : ALD : Aldolase
 % *********************************** %
-% fru16bp -> grap + dhap
+% fru16bp <-> grap + dhap
 ALD_keq = 9.762988973629690E-5;  % [per_mM]
 ALD_km_fru16bp = 0.0071;         % [mM]
 ALD_km_dhap = 0.0364;            % [mM]
@@ -387,58 +387,38 @@ GAPDH = scale_gly * GAPDH_Vmax / (GAPDH_k_nad*GAPDH_k_grap*GAPDH_k_p) * (nad*gra
 % [mmol_per_s]
 
 % *********************************** %
-% v20 : Phosphoglycerate Kinase (PGK) ATP:3-phospho-D-glycerate 1-phosphotransferase
+% v20 : PGK : Phosphoglycerate Kinase
 % *********************************** %
-% v20	R01512_2.7.2.3_cyto	ATP:3-phospho-D-glycerate 1-phosphotransferase	C00002 + C00197 <=> C00008 + C00236																																																																																																																																																																																																																																																												
-% adp + bpg13 -> atp + pg3
-%v20_deltag = -18.5;        % [kJ/mol]  
-%v20_deltag = -5;        % [kJ/mol]  
-%v20_keq = keq(v20_deltag); 
-%v20_keq = 1455;         % [mM] (1310)
-%v20_td = (adp*bpg13 - atp*pg3/v20_keq); 
-
-v20_keq = 6.958644052488538;
-v20_k_adp = 0.35;       %[mM]
-v20_k_atp = 0.48;       %[mM]
-v20_k_bpg13 = 0.002;    %[mM]
-v20_k_pg3 = 1.2;        %[mM]
-v20_Vmax = 420;
-
-v20 = scale_gly * v20_Vmax / (v20_k_adp*v20_k_bpg13) * (adp*bpg13 - atp*pg3/v20_keq) / ((1 + adp/v20_k_adp)*(1+bpg13/v20_k_bpg13) + (1+atp/v20_k_atp)*(1+pg3/v20_k_pg3) - 1); 
+% adp + bpg13 <-> atp + pg3
+PGK_keq = 6.958644052488538; % [-]
+PGK_k_adp = 0.35;            % [mM]
+PGK_k_atp = 0.48;            % [mM]
+PGK_k_bpg13 = 0.002;         % [mM]
+PGK_k_pg3 = 1.2;             % [mM]
+PGK_Vmax = 420;              % [mmol_per_s]
+PGK = scale_gly * PGK_Vmax / (PGK_k_adp*PGK_k_bpg13) * (adp*bpg13 - atp*pg3/PGK_keq) / ((1 + adp/PGK_k_adp)*(1+bpg13/PGK_k_bpg13) + (1+atp/PGK_k_atp)*(1+pg3/PGK_k_pg3) - 1); 
+% [mmol_per_s]
 
 % *********************************** %
-% v21 : 2-Phospho-D-glycerate 2,3-phosphomutase (PGM)
+% v21 : PGM : 2-Phospho-D-glycerate 2,3-phosphomutase
 % *********************************** %
-% v21	R01518_5.4.2.1_cyto	2-Phospho-D-glycerate 2,3-phosphomutase	C00631 <=> C00197																																																																																																																																																																																																																																																												
 % pg3 <-> pg2
-%v21_deltag = 4.4;        % [kJ/mol]  
-%v21_keq = keq(v21_deltag); 
-%v21_keq = 0.145;         % [mM] (0.1814)
-%v21_td = (pg3 - pg2/v21_keq); 
+PGM_keq = 0.181375378837397; % [-]
+PGM_k_pg3 = 5;      % [mM]
+PGM_k_pg2 = 1;      % [mM]
+PGM_Vmax = 420;     % [mmol_per_s]
+PGM = scale_gly * PGM_Vmax * (pg3 - pg2/PGM_keq) / (pg3 + PGM_k_pg3 *(1 + pg2/PGM_k_pg2));
 
-v21_keq = 0.181375378837397;
-v21_k_pg3 = 5;      % [mM]
-v21_k_pg2 = 1;      % [mM]
-v21_Vmax = 420;
-
-v21 = scale_gly * v21_Vmax * (pg3 - pg2/v21_keq) / (pg3 + v21_k_pg3 *(1 + pg2/v21_k_pg2));
 
 % *********************************** %
-% v22 : 2-Phospho-D-glucerate hydro-lyase (enolase)
+% v22 : EN : 2-Phospho-D-glucerate hydro-lyase (enolase)
 % *********************************** %
-% v22	R00658_4.2.1.11_cyto	2-Phospho-D-glucerate hydro-lyase	C00631 <=> C00074 + C00001
 % pg2 <-> pep
-%v22_deltag = 7.5;        % [kJ/mol]  
-%v22_keq = keq(v22_deltag); 
-%v22_keq = 1.7;         % (0.0545)
-%v22_td = (pg2 - pep/v22_keq); 
-
-v22_keq = 0.054476985386756;
+v22_keq = 0.054476985386756; % [-]
 v22_k_pep = 1;      % [mM]
 v22_k_pg2 = 1;      % [mM]
-v22_Vmax = 35.994;
-
-v22 = scale_gly * v22_Vmax * (pg2 - pep/v22_keq) / (pg2 + v22_k_pg2 *(1 + pep/v22_k_pep));
+v22_Vmax = 35.994;  % [mmol_per_s]
+v22 = scale_gly * v22_Vmax * (pg2 - pep/v22_keq) / (pg2 + v22_k_pg2 *(1 + pep/v22_k_pep)); % [mmol_per_s]
 
 % *********************************** %
 % v23 : Pyruvatkinase (PK)
@@ -667,8 +647,8 @@ v36 = scale_gly * v36_Vmax;
 
 %%  Fluxes and concentration changes [mmol/s/litre]
 dydt = zeros(size(y));
-dydt(1) = (-GK -NDKGTP -NDKUTP -AK -PFK2 -PFK1 +v20 +v23)/Vcyto;   % atp
-dydt(2) = (+GK +NDKGTP +NDKUTP +2*AK +PFK2 +PFK1 -v20 -v23)/Vcyto; % adp
+dydt(1) = (-GK -NDKGTP -NDKUTP -AK -PFK2 -PFK1 +PGK +v23)/Vcyto;   % atp
+dydt(2) = (+GK +NDKGTP +NDKUTP +2*AK +PFK2 +PFK1 -PGK -v23)/Vcyto; % adp
 dydt(3) = (-AK)/Vcyto;        % amp
 dydt(4) = (-UPGASE +NDKUTP)/Vcyto;    % utp
 dydt(5) = (+GS -NDKUTP)/Vcyto;    % udp
@@ -691,9 +671,9 @@ dydt(21) = (+PFK1 -FBP1 -ALD)/Vcyto;    % fru16bp
 dydt(22) = (+PFK2 -FBP2)/Vcyto;         % fru26bp
 dydt(23) = (+ALD +TPI -GAPDH)/Vcyto;    % grap
 dydt(24) = (+ALD -TPI)/Vcyto;         % dhap
-dydt(25) = (+GAPDH -v20)/Vcyto;         % bpg13
-dydt(26) = (+v20 -v21)/Vcyto;         % pg3
-dydt(27) = (+v21 -v22)/Vcyto;         % pg2
+dydt(25) = (+GAPDH -PGK)/Vcyto;         % bpg13
+dydt(26) = (+PGK -PGM)/Vcyto;         % pg3
+dydt(27) = (+PGM -v22)/Vcyto;         % pg2
 dydt(28) = (+v22 -v23 +v24 +v30)/Vcyto;   % pep
 dydt(29) = (+v23 -v27 -v29)/Vcyto;    % pyr
 dydt(30) = (-v24)/Vcyto;        % oaa
@@ -764,8 +744,8 @@ v  = [GLUT2   % v1
       ALD 
       TPI 
       GAPDH 
-      v20 
-      v21 
+      PGK 
+      PGM 
       v22 
       v23 
       v24 
