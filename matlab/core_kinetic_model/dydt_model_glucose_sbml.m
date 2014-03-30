@@ -187,78 +187,60 @@ UPGASE = scale_glyglc * UPGASE_Vmax/(UPGASE_km_utp*UPGASE_km_glc1p) * (utp*glc1p
 % *********************************** %
 % v7 : PPASE: Pyrophosphate phosphohydrolase
 % *********************************** %
-% pp + h2o => 2 p
+% pp + h2o => 2 phos
 PPASE_km_pp = 0.005;  % [mM]
 PPASE_Vmax = 2.4;     % [mmol_per_s]
 PPASE = scale_glyglc * PPASE_Vmax * pp/(pp + PPASE_km_pp);
 
 % *********************************** %
-% v8 : Glycogen synthase (GS)
+% v8 : GS : Glycogen synthase
 % *********************************** %
-% P0001_cyto
-% Glycogen synthase	
-% udpglc -> udp + glycogen
-% irreversible reaction
+% udpglc => udp + glyglc
 
-% x = [0 0.05 0.07 0.20 7.2] % mM glucose 6p
-% D = [33 0 20 8.9 0.3] % Km values for udpglc Synthase D
-% I = [1.5 1.1 0 0 0.2] % km values for udpglc Synthase I
+GS_C = 500;                 % [mM] maximal storage capacity for glycogen per volume liver
+GS_k1_max = 0.2;            % [-]
+GS_k1_nat = 0.224;          % [mMmM]
+GS_k2_nat = 0.1504;         % [mM]
+GS_k1_phospho = 3.003;      % [mMmM]
+GS_k2_phospho = 0.09029;    % [mM]
+GS_Vmax =  13.2;            % [mmol_per_s]
 
-% [1] hard glycogen capacity point
-% The storage capacity of the hepatocyte for glycogen is limited.
-% With increasing glycogen content the rate drops.
-%v8_keq = keq(0);    % ! no data found, assumption of 0
-%v8_td = (udpglc - udp*glyglc/v8_keq);
+GS_storage_factor = (1+GS_k1_max) * (GS_C - glyglc)/( (GS_C - glyglc) + GS_k1_max * GS_C); % [-]
 
-v8_C = 500;             % [mM] maximal storage capacity for glycogen per volume liver
-v8_k1_max = 0.2;
-v8_k1_nat = 0.224;
-v8_k2_nat = 0.1504;
-v8_k1_phospho = 3.003; 
-v8_k2_phospho = 0.09029;
-v8_Vmax =  13.2;
-
-v8_storage_factor = (1+v8_k1_max) * (v8_C - glyglc)/( (v8_C - glyglc) + v8_k1_max * v8_C);
-v8_k_udpglc_native = v8_k1_nat / (glc6p + v8_k2_nat);
-v8_k_udpglc_phospho = v8_k1_phospho / (glc6p + v8_k2_phospho);
-v8_native = scale_glyglc * v8_Vmax * v8_storage_factor * udpglc / (v8_k_udpglc_native + udpglc);
-v8_phospho = scale_glyglc * v8_Vmax * v8_storage_factor * udpglc / (v8_k_udpglc_phospho + udpglc); 
-v8 = (1 - gamma)* v8_native + gamma * v8_phospho;
+GS_k_udpglc_native = GS_k1_nat / (glc6p + GS_k2_nat);          % [mM]
+GS_k_udpglc_phospho = GS_k1_phospho / (glc6p + GS_k2_phospho); % [mM]
+GS_native = scale_glyglc * GS_Vmax * GS_storage_factor * udpglc / (GS_k_udpglc_native + udpglc); % [mmol_per_s]
+GS_phospho = scale_glyglc * GS_Vmax * GS_storage_factor * udpglc / (GS_k_udpglc_phospho + udpglc); % [mmol_per_s] 
+GS = (1-gamma)*GS_native + gamma*GS_phospho; % [mmol_per_s]
 
 % *********************************** %
-% v9 : Glykogen-Phosphorylase (GP)
+% v9 : GP : Glycogen-Phosphorylase
 % *********************************** %
-% v9	P0002_cyto	Glykogen-Phosphorylase	1 C90001 + 1 C00001 <=> 1 C00031																																																																																																																																																																																																																																																												
-% glycogen + P -> glucose_1P
-% Different regulation of the a Form (phosphorylated, active Form) and the 
-% unphosphorylated native b-Form.
-% [Lederer1976, Tan1975, Stalmans1981, Stalmans1975, Ercan-Fang2002,
-% Maddaiah1966 ]
-% v9_deltag = 4.0;                          % [kJ/mol]
-% v9_keq = keq(v9_deltag);                  % (0.21 - 0.14)                      
-% v9_td = (glyglc*p - glc1p/v9_keq);
+% glyglc + phos <-> glc1p
+GP_keq = 0.211826505793075; % [per_mM]
+GP_k_glyc_native = 4.8;     % [mM]  
+GP_k_glyc_phospho = 2.7;    % [mM]  
+GP_k_glc1p_native = 120;    % [mM]  
+GP_k_glc1p_phospho = 2;     % [mM]
+GP_k_p_native = 300;        % [mM]  
+GP_k_p_phospho = 5;         % [mM]
+GP_ki_glc_phospho = 5;      % [mM]
+GP_ka_amp_native = 1;       % [mM]
+GP_base_amp_native = 0.03;  % [mmol_per_s]
+GP_max_amp_native = 0.30;   % [mmol_per_s]
+GP_Vmax = 6.8;              % [mmol_per_s]
 
-v9_keq = 0.211826505793075;
-v9_k_glyc_native = 4.8;     % [mM]  
-v9_k_glyc_phospho = 2.7;    % [mM]  
-v9_k_glc1p_native = 120;    % [mM]  
-v9_k_glc1p_phospho = 2;     % [mM]
-v9_k_p_native = 300;        % [mM]  
-v9_k_p_phospho = 5;         % [mM]
-v9_ki_glc_phospho = 5;      % [mM]
-v9_ka_amp_native = 1;       % [mM]
-v9_base_amp_native = 0.03;
-v9_max_amp_native = 0.30;
-v9_Vmax = 6.8;
+GP_C = GS_C;                % [mM]
+GP_k1_max = GS_k1_max;      % [-]
+GP_fmax = (1+GP_k1_max) * glyglc /( glyglc + GP_k1_max * GP_C); % [-]
+GP_vmax_native = scale_glyglc * GP_Vmax * GP_fmax * (GP_base_amp_native + (GP_max_amp_native - GP_base_amp_native) *amp/(amp+GP_ka_amp_native));
+GP_native = GP_vmax_native/(GP_k_glyc_native*GP_k_p_native) * (glyglc*phos - glc1p/GP_keq) / ...
+        ( (1 + glyglc/GP_k_glyc_native)*(1 + phos/GP_k_p_native) + (1 + glc1p/GP_k_glc1p_native)  - 1 );  % [mmol_per_s]
 
-v9_C = v8_C;             
-v9_k1_max = v8_k1_max;
-v9_fmax = (1+v9_k1_max) * glyglc /( glyglc + v9_k1_max * v9_C);
-v9_vmax_native = scale_glyglc * v9_Vmax * v9_fmax * (v9_base_amp_native + (v9_max_amp_native - v9_base_amp_native) *amp/(amp+v9_ka_amp_native));
-v9_native = v9_vmax_native/(v9_k_glyc_native*v9_k_p_native) * (glyglc*phos - glc1p/v9_keq) / ( (1 + glyglc/v9_k_glyc_native)*(1 + phos/v9_k_p_native) + (1 + glc1p/v9_k_glc1p_native)  - 1 );
-v9_vmax_phospho = scale_glyglc * v9_Vmax * v9_fmax * exp(-log(2)/v9_ki_glc_phospho * glc);
-v9_phospho = v9_vmax_phospho/(v9_k_glyc_phospho*v9_k_p_phospho) * (glyglc*phos - glc1p/v9_keq) / ( (1 + glyglc/v9_k_glyc_phospho)*(1 + phos/v9_k_p_phospho) + (1 + glc1p/v9_k_glc1p_phospho)  - 1 );
-v9 = (1 - gamma) * v9_native + gamma * v9_phospho;
+GP_vmax_phospho = scale_glyglc * GP_Vmax * GP_fmax * exp(-log(2)/GP_ki_glc_phospho * glc);  % [mmol_per_s]
+GP_phospho = GP_vmax_phospho/(GP_k_glyc_phospho*GP_k_p_phospho) * (glyglc*phos - glc1p/GP_keq) / ...
+      ( (1 + glyglc/GP_k_glyc_phospho)*(1 + phos/GP_k_p_phospho) + (1 + glc1p/GP_k_glc1p_phospho)  - 1);  % [mmol_per_s]
+GP = (1-gamma) * GP_native + gamma*GP_phospho;  % [mmol_per_s]
 
 % *********************************** %
 % v10 : Nucleoside-diphosphate kinase (ATP, GTP)
@@ -750,19 +732,19 @@ dydt(1) = (-GK -v10 -v11 -v12 -v13 -v15 +v20 +v23)/Vcyto;   % atp
 dydt(2) = (+GK +v10 +v11 +2*v12 +v13 +v15 -v20 -v23)/Vcyto; % adp
 dydt(3) = (-v12)/Vcyto;        % amp
 dydt(4) = (-UPGASE +v11)/Vcyto;    % utp
-dydt(5) = (+v8 -v11)/Vcyto;    % udp
+dydt(5) = (+GS -v11)/Vcyto;    % udp
 dydt(6) = (+v10 -v24)/Vcyto;   % gtp
 dydt(7) = (-v10 +v24)/Vcyto;   % gdp
 dydt(8) = (-v19 +v27)/Vcyto;   % nad
 dydt(9) = (+v19 -v27)/Vcyto;   % nadh
-dydt(10) = (+G6PASE +2*PPASE -v9 +v14 +v16 -v19)/Vcyto; % p
+dydt(10) = (+G6PASE +2*PPASE -GP +v14 +v16 -v19)/Vcyto; % phos
 dydt(11) = (+UPGASE -PPASE)/Vcyto;    % pp
 dydt(12) = (-G6PASE -PPASE -v14 -v16 +v22)/Vcyto;  % h2o
 dydt(13) = (+v24)/Vcyto;        % co2
 dydt(14) = (+v19 -v27)/Vcyto;   % h
-dydt(15) = (-G16PI -UPGASE +v9)/Vcyto; % glc1p
-dydt(16) = (+UPGASE -v8)/Vcyto;     % udpglc
-dydt(17) = (+v8 -v9)/Vcyto;     % glyglc
+dydt(15) = (-G16PI -UPGASE +GP)/Vcyto; % glc1p
+dydt(16) = (+UPGASE -GS)/Vcyto;     % udpglc
+dydt(17) = (+GS -GP)/Vcyto;     % glyglc
 dydt(18) = (+GLUT2 -GK +G6PASE)/Vcyto; % glc
 dydt(19) = (+GK -G6PASE -GPI +G16PI)/Vcyto;   % glc6p
 dydt(20) = (+GPI -v13 +v14 -v15 +v16)/Vcyto;   % fru6p
@@ -831,8 +813,8 @@ v  = [GLUT2   % v1
       G16PI 
       UPGASE 
       PPASE 
-      v8 
-      v9 
+      GS 
+      GP 
       v10 
       v11 
       v12 

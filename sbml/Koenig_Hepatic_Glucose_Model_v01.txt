@@ -227,6 +227,7 @@ model *Koenig2014_hepatic_glucose()
   PPASE = scale_glyglc * PPASE_Vmax * pp/(pp + PPASE_km_pp);
   PPASE has mmol_per_s;   
 
+
   GS is "Glycogen synthase";
   GS : udpglc => udp + glyglc;
   GS_C = 500 mM;
@@ -251,7 +252,40 @@ model *Koenig2014_hepatic_glucose()
   GS_phospho has mmol_per_s;
   GS has mmol_per_s;
 
-// 'GP'              % v9
+ 
+  GP is "Glycogen-Phosphorylase";
+  GP : glyglc + phos -> glc1p;
+  GP_keq = 0.211826505793075 per_mM;
+  GP_k_glyc_native = 4.8 mM;
+  GP_k_glyc_phospho = 2.7 mM;
+  GP_k_glc1p_native = 120 mM;
+  GP_k_glc1p_phospho = 2 mM;
+  GP_k_p_native = 300 mM;
+  GP_k_p_phospho = 5 mM;
+  GP_ki_glc_phospho = 5 mM;
+  GP_ka_amp_native = 1 mM;
+  GP_base_amp_native = 0.03 mmol_per_s;
+  GP_max_amp_native = 0.30 mmol_per_s;
+  GP_Vmax = 6.8 mmol_per_s;
+  
+  GP_C = GS_C;
+  GP_k1_max = GS_k1_max;
+  GP_fmax = (1+GP_k1_max) * glyglc /( glyglc + GP_k1_max * GP_C);
+  GP_vmax_native = scale_glyglc * GP_Vmax * GP_fmax * (GP_base_amp_native + (GP_max_amp_native - GP_base_amp_native) *amp/(amp+GP_ka_amp_native));
+  GP_native = GP_vmax_native/(GP_k_glyc_native*GP_k_p_native) * (glyglc*phos - glc1p/GP_keq) / ( (1 + glyglc/GP_k_glyc_native)*(1 + phos/GP_k_p_native) + (1 + glc1p/GP_k_glc1p_native)  - 1 );
+  GP_vmax_phospho = scale_glyglc * GP_Vmax * GP_fmax * exp(-log(2)/GP_ki_glc_phospho * glc);
+  GP_phospho = GP_vmax_phospho/(GP_k_glyc_phospho*GP_k_p_phospho) * (glyglc*phos - glc1p/GP_keq) / ( (1 + glyglc/GP_k_glyc_phospho)*(1 + phos/GP_k_p_phospho) + (1 + glc1p/GP_k_glc1p_phospho)  - 1);
+  GP = (1-gamma) * GP_native + gamma*GP_phospho;
+
+  GP_C has mM;
+  GP_k1_max has dimensionless;
+  GP_fmax has dimensionless;
+  GP_vmax_native has mmol_per_s;
+  GP_native has mmol_per_s;
+  GP_vmax_phospho has mmol_per_s;
+  GP_phospho has mmol_per_s;
+  GP has mmol_per_s;
+
 // 'NTK (GTP)'       % v10            
 // 'NTK (UTP)'       % v11
 // 'AK'              % v12

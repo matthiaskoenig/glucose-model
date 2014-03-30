@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 15:14 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 15:31 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -263,6 +263,25 @@
       <parameter id="GS_k_udpglc_phospho" units="mM" constant="false"/>
       <parameter id="GS_native" units="mmol_per_s" constant="false"/>
       <parameter id="GS_phospho" units="mmol_per_s" constant="false"/>
+      <parameter id="GP_keq" value="0" units="per_mM" constant="true"/>
+      <parameter id="GP_k_glyc_native" value="4" units="mM" constant="true"/>
+      <parameter id="GP_k_glyc_phospho" value="2" units="mM" constant="true"/>
+      <parameter id="GP_k_glc1p_native" value="120" units="mM" constant="true"/>
+      <parameter id="GP_k_glc1p_phospho" value="2" units="mM" constant="true"/>
+      <parameter id="GP_k_p_native" value="300" units="mM" constant="true"/>
+      <parameter id="GP_k_p_phospho" value="5" units="mM" constant="true"/>
+      <parameter id="GP_ki_glc_phospho" value="5" units="mM" constant="true"/>
+      <parameter id="GP_ka_amp_native" value="1" units="mM" constant="true"/>
+      <parameter id="GP_base_amp_native" value="0" units="mmol_per_s" constant="true"/>
+      <parameter id="GP_max_amp_native" value="0" units="mmol_per_s" constant="true"/>
+      <parameter id="GP_Vmax" value="6" units="mmol_per_s" constant="true"/>
+      <parameter id="GP_C" units="mM" constant="true"/>
+      <parameter id="GP_k1_max" units="dimensionless" constant="true"/>
+      <parameter id="GP_fmax" units="dimensionless" constant="false"/>
+      <parameter id="GP_vmax_native" units="mmol_per_s" constant="false"/>
+      <parameter id="GP_native" units="mmol_per_s" constant="false"/>
+      <parameter id="GP_vmax_phospho" units="mmol_per_s" constant="false"/>
+      <parameter id="GP_phospho" units="mmol_per_s" constant="false"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="ins">
@@ -610,6 +629,232 @@
               <plus/>
               <ci> GS_k_udpglc_phospho </ci>
               <ci> udpglc </ci>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="GP_C">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> GS_C </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="GP_k1_max">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> GS_k1_max </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="GP_fmax">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <plus/>
+                <cn type="integer"> 1 </cn>
+                <ci> GP_k1_max </ci>
+              </apply>
+              <ci> glyglc </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> glyglc </ci>
+              <apply>
+                <times/>
+                <ci> GP_k1_max </ci>
+                <ci> GP_C </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="GP_vmax_native">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> scale_glyglc </ci>
+            <ci> GP_Vmax </ci>
+            <ci> GP_fmax </ci>
+            <apply>
+              <plus/>
+              <ci> GP_base_amp_native </ci>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <minus/>
+                    <ci> GP_max_amp_native </ci>
+                    <ci> GP_base_amp_native </ci>
+                  </apply>
+                  <ci> amp </ci>
+                </apply>
+                <apply>
+                  <plus/>
+                  <ci> amp </ci>
+                  <ci> GP_ka_amp_native </ci>
+                </apply>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="GP_native">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <divide/>
+                <ci> GP_vmax_native </ci>
+                <apply>
+                  <times/>
+                  <ci> GP_k_glyc_native </ci>
+                  <ci> GP_k_p_native </ci>
+                </apply>
+              </apply>
+              <apply>
+                <minus/>
+                <apply>
+                  <times/>
+                  <ci> glyglc </ci>
+                  <ci> phos </ci>
+                </apply>
+                <apply>
+                  <divide/>
+                  <ci> glc1p </ci>
+                  <ci> GP_keq </ci>
+                </apply>
+              </apply>
+            </apply>
+            <apply>
+              <minus/>
+              <apply>
+                <plus/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <cn type="integer"> 1 </cn>
+                    <apply>
+                      <divide/>
+                      <ci> glyglc </ci>
+                      <ci> GP_k_glyc_native </ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <cn type="integer"> 1 </cn>
+                    <apply>
+                      <divide/>
+                      <ci> phos </ci>
+                      <ci> GP_k_p_native </ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> glc1p </ci>
+                  <ci> GP_k_glc1p_native </ci>
+                </apply>
+              </apply>
+              <cn type="integer"> 1 </cn>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="GP_vmax_phospho">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> scale_glyglc </ci>
+            <ci> GP_Vmax </ci>
+            <ci> GP_fmax </ci>
+            <apply>
+              <exp/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <minus/>
+                    <apply>
+                      <ln/>
+                      <cn type="integer"> 2 </cn>
+                    </apply>
+                  </apply>
+                  <ci> GP_ki_glc_phospho </ci>
+                </apply>
+                <ci> glc </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="GP_phospho">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <divide/>
+                <ci> GP_vmax_phospho </ci>
+                <apply>
+                  <times/>
+                  <ci> GP_k_glyc_phospho </ci>
+                  <ci> GP_k_p_phospho </ci>
+                </apply>
+              </apply>
+              <apply>
+                <minus/>
+                <apply>
+                  <times/>
+                  <ci> glyglc </ci>
+                  <ci> phos </ci>
+                </apply>
+                <apply>
+                  <divide/>
+                  <ci> glc1p </ci>
+                  <ci> GP_keq </ci>
+                </apply>
+              </apply>
+            </apply>
+            <apply>
+              <minus/>
+              <apply>
+                <plus/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <cn type="integer"> 1 </cn>
+                    <apply>
+                      <divide/>
+                      <ci> glyglc </ci>
+                      <ci> GP_k_glyc_phospho </ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <cn type="integer"> 1 </cn>
+                    <apply>
+                      <divide/>
+                      <ci> phos </ci>
+                      <ci> GP_k_p_phospho </ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> glc1p </ci>
+                  <ci> GP_k_glc1p_phospho </ci>
+                </apply>
+              </apply>
+              <cn type="integer"> 1 </cn>
             </apply>
           </apply>
         </math>
@@ -1070,6 +1315,36 @@
                 <times/>
                 <ci> gamma </ci>
                 <ci> GS_phospho </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="GP" name="Glycogen-Phosphorylase" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="glyglc" stoichiometry="1" constant="true"/>
+          <speciesReference species="phos" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="glc1p" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <cn type="integer"> 1 </cn>
+                  <ci> gamma </ci>
+                </apply>
+                <ci> GP_native </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> gamma </ci>
+                <ci> GP_phospho </ci>
               </apply>
             </apply>
           </math>
