@@ -29,20 +29,20 @@ model *Koenig2014_hepatic_glucose()
   cyto = 1 litre;
   mito = 5 litre;
 
-  species $atp in cyto, $adp in cyto, amp in cyto, utp in cyto, udp in cyto;
+  species $atp in cyto, $adp in cyto, $amp in cyto, utp in cyto, udp in cyto;
   species gtp in cyto, gdp in cyto, $nad in cyto, $nadh in cyto;
-  species $phos in cyto, pp in cyto, $co2 in cyto;
+  species $phos in cyto, pp in cyto, $co2 in cyto, $h2o in cyto, $h in cyto;
   species glc1p in cyto, udpglc in cyto, glyglc in cyto, glc in cyto;
   species glc6p in cyto, fru6p in cyto, fru16bp in cyto, fru26bp in cyto;
   species grap in cyto, dhap in cyto, bpg13 in cyto, pg3 in cyto, pg2 in cyto;
   species pep in cyto, pyr in cyto, oaa in cyto, lac in cyto;
 
-  species glc_ext in extern, lac_ext in extern;
+  species $glc_ext in extern, $lac_ext in extern;
 
   species $co2_mito in mito, $phos_mito in mito, oaa_mito in mito, pep_mito in mito;
-  species acoa_mito in mito, pyr_mito in mito, cit_mito in mito;
-  species $atp_mito in mito, $adp_mito in mito, $gtp_mito in mito, $gdp_mito in mito;
-  species coa_mito in mito, $nadh_mito in mito, nad_mito in mito; 
+  species $acoa_mito in mito, pyr_mito in mito, $cit_mito in mito;
+  species $atp_mito in mito, $adp_mito in mito, gtp_mito in mito, gdp_mito in mito;
+  species $coa_mito in mito, $nadh_mito in mito, $nad_mito in mito, $h2o_mito in mito, $h_mito in mito; 
 
  // Species initializations:
   atp = 2.8000 mM;
@@ -57,6 +57,8 @@ model *Koenig2014_hepatic_glucose()
   phos = 5.0000 mM;
   pp = 0.0080 mM;
   co2 = 5.0000 mM;
+  h2o = 0 mM;
+  h = 0 mM;
   glc1p = 0.0120 mM;
   udpglc = 0.3800 mM;
   glyglc = 250.0000 mM;
@@ -92,6 +94,8 @@ model *Koenig2014_hepatic_glucose()
   coa_mito = 0.0550 mM;
   nadh_mito = 0.2400 mM;
   nad_mito = 0.9800 mM;
+  h_mito   = 0 mM;
+  h2o_mito = 0 mM;
 
   // Assignment rules for balances
   nadh_tot := nadh + nad;
@@ -159,7 +163,7 @@ model *Koenig2014_hepatic_glucose()
   GLUT2 has mmol_per_s;
 
   GK is "Glucokinase";
-  GK: glc + atp -> glc6p + adp;
+  GK: glc + atp => glc6p + adp;
   GK has mmol_per_s;
   GK_n_gkrp = 2 dimensionless;
   GK_km_glc1 = 15 mM;
@@ -174,7 +178,12 @@ model *Koenig2014_hepatic_glucose()
   GK_gc_free has dimensionless;
   GK has mmol_per_s;
 
-
+  G6PASE is "D-Glucose-6-phosphate Phosphatase";
+  G6PASE: glc6p + h2o => glc + phos;
+  G6PASE_km_glc6p = 2 mM;
+  G6PASE_Vmax =  18.9 mmol_per_s;
+  G6PASE = scale_gly * G6PASE_Vmax * glc6p / (G6PASE_km_glc6p + glc6p);
+  G6PASE has mmol_per_s;
 
   ATPS is "ATP synthase";
   ATPS: adp + phos -> atp;

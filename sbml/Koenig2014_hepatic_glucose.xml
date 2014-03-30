@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 13:13 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 14:22 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -118,7 +118,7 @@
     <listOfSpecies>
       <species id="atp" compartment="cyto" initialConcentration="2" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="adp" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="amp" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="amp" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="utp" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="udp" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="gtp" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
@@ -128,6 +128,8 @@
       <species id="phos" compartment="cyto" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="pp" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="co2" compartment="cyto" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="h2o" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="h" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="glc1p" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="udpglc" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="glyglc" compartment="cyto" initialConcentration="250" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
@@ -145,22 +147,24 @@
       <species id="pyr" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="oaa" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="lac" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="glc_ext" compartment="extern" initialConcentration="3" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="lac_ext" compartment="extern" initialConcentration="1" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="glc_ext" compartment="extern" initialConcentration="3" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="lac_ext" compartment="extern" initialConcentration="1" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="co2_mito" compartment="mito" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="phos_mito" compartment="mito" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="oaa_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="pep_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="acoa_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="acoa_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="pyr_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="cit_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="cit_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="atp_mito" compartment="mito" initialConcentration="2" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="adp_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="gtp_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="gdp_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="coa_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="gtp_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="gdp_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="coa_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="nadh_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="nad_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="nad_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="h2o_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="h_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
       <parameter id="nadh_tot" units="mM" constant="false"/>
@@ -174,23 +178,23 @@
       <parameter id="x_ins2" value="0" units="pmol_per_l" constant="true"/>
       <parameter id="x_ins3" value="8" units="mM" constant="true"/>
       <parameter id="x_ins4" value="4" units="dimensionless" constant="true"/>
-      <parameter id="ins" units="pmol_per_l" constant="false"/>
+      <parameter id="ins" units="pmol_per_l" constant="true"/>
       <parameter id="x_glu1" value="190" units="pmol_per_l" constant="true"/>
       <parameter id="x_glu2" value="37" units="pmol_per_l" constant="true"/>
       <parameter id="x_glu3" value="3" units="mM" constant="true"/>
       <parameter id="x_glu4" value="6" units="dimensionless" constant="true"/>
-      <parameter id="glu" units="pmol_per_l" constant="false"/>
+      <parameter id="glu" units="pmol_per_l" constant="true"/>
       <parameter id="x_epi1" value="6090" units="pmol_per_l" constant="true"/>
       <parameter id="x_epi2" value="100" units="pmol_per_l" constant="true"/>
       <parameter id="x_epi3" value="3" units="mM" constant="true"/>
       <parameter id="x_epi4" value="8" units="dimensionless" constant="true"/>
-      <parameter id="epi" units="pmol_per_l" constant="false"/>
+      <parameter id="epi" units="pmol_per_l" constant="true"/>
       <parameter id="K_val" value="0" units="dimensionless" constant="true"/>
       <parameter id="epi_f" value="0" units="dimensionless" constant="true"/>
       <parameter id="K_ins" units="pmol_per_l" constant="true"/>
       <parameter id="K_glu" units="pmol_per_l" constant="true"/>
       <parameter id="K_epi" units="pmol_per_l" constant="true"/>
-      <parameter id="gamma" units="dimensionless" constant="false"/>
+      <parameter id="gamma" units="dimensionless" constant="true"/>
       <parameter id="scale_gly" value="12" units="dimensionless" constant="true"/>
       <parameter id="scale_glyglc" value="12" units="dimensionless" constant="true"/>
       <parameter id="GLUT2_keq" value="1" units="dimensionless" constant="true"/>
@@ -205,6 +209,8 @@
       <parameter id="GK_km_atp" value="0" units="mM" constant="true"/>
       <parameter id="GK_Vmax" value="25" units="mmol_per_s" constant="true"/>
       <parameter id="GK_gc_free" units="dimensionless" constant="false"/>
+      <parameter id="G6PASE_km_glc6p" value="2" units="mM" constant="true"/>
+      <parameter id="G6PASE_Vmax" value="18" units="mmol_per_s" constant="true"/>
       <parameter id="ATPS_keq" value="0" units="per_mM" constant="true"/>
       <parameter id="ATPS_kadp" value="0" units="mM" constant="true"/>
       <parameter id="ATPS_katp" value="0" units="mM" constant="true"/>
@@ -582,7 +588,7 @@
           </math>
         </kineticLaw>
       </reaction>
-      <reaction id="GK" name="Glucokinase" reversible="true" fast="false">
+      <reaction id="GK" name="Glucokinase" reversible="false" fast="false">
         <listOfReactants>
           <speciesReference species="glc" stoichiometry="1" constant="true"/>
           <speciesReference species="atp" stoichiometry="1" constant="true"/>
@@ -630,6 +636,34 @@
                   <ci> GK_km_glc </ci>
                   <ci> GK_n </ci>
                 </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="G6PASE" name="D-Glucose-6-phosphate Phosphatase" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="glc6p" stoichiometry="1" constant="true"/>
+          <speciesReference species="h2o" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="glc" stoichiometry="1" constant="true"/>
+          <speciesReference species="phos" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <ci> scale_gly </ci>
+                <ci> G6PASE_Vmax </ci>
+                <ci> glc6p </ci>
+              </apply>
+              <apply>
+                <plus/>
+                <ci> G6PASE_km_glc6p </ci>
+                <ci> glc6p </ci>
               </apply>
             </apply>
           </math>

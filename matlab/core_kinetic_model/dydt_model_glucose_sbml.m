@@ -19,9 +19,9 @@ scale_gly = 12.5;
 scale_glyglc = 12.5;
 
 % Volumes of the compartments
-Vext = 10; % [litre]
-Vcyto = 1; % [litre]
-Vmito = 5; % [litre]
+Vext = 10;   % [litre]
+Vcyto = 1;   % [litre]
+Vmito = 0.2; % [litre]
 
 %% Concentrations [mM = mmole_per_litre]
 atp         = y(1);
@@ -33,7 +33,7 @@ gtp         = y(6);
 gdp         = y(7);
 nad         = y(8);
 nadh        = y(9);
-p           = y(10);
+phos        = y(10);
 pp          = y(11);
 co2         = y(13);
 glc1p       = y(15);
@@ -56,7 +56,7 @@ lac         = y(31);
 glc_ext     = y(32);
 lac_ext     = y(33);
 co2_mito    = y(34);
-p_mito      = y(35);
+phos_mito   = y(35);
 oaa_mito    = y(36);
 pep_mito    = y(37);
 acoa_mito   = y(38);
@@ -69,6 +69,8 @@ gdp_mito    = y(44);
 coa_mito    = y(45);
 nadh_mito   = y(46);
 nad_mito    = y(47);
+h_mito      = y(48);
+h2o_mito    = y(49);
 
 %% Hormonal response & phosphorylation state
 % insulin
@@ -93,7 +95,7 @@ x_epi4 = 8.40;  % [-]
 epi = max(0.0, (x_epi1-x_epi2) * (1 - glc_ext^x_epi4/(glc_ext^x_epi4 + x_epi3^x_glu4))); % [pmol/l]
 
 % gamma
-K_val = 0.1  % [-];
+K_val = 0.1;  % [-];
 epi_f = 0.8; % [-];
 K_ins = (x_ins1-x_ins2) * K_val; % [pmol/l];
 K_glu = (x_glu1-x_glu2) * K_val; % [pmol/l];
@@ -119,7 +121,7 @@ GLUT2 = scale_gly * GLUT2_Vmax/GLUT2_km * (glc_ext - glc/GLUT2_keq)/(1 + glc_ext
 % *********************************** %
 % v2 : Glucokinase
 % *********************************** %
-% glucose + atp -> glucose_6P + adp 
+% glucose + atp => glucose_6P + adp 
 
 % Inhibition by GCRP
 GK_n_gkrp = 2;           % [-]
@@ -139,19 +141,10 @@ GK = scale_gly * GK_Vmax * GK_gc_free * atp/(GK_km_atp + atp) * glc^GK_n/(glc^GK
 % *********************************** %
 % v3 : D-Glucose-6-phosphate Phosphatase
 % *********************************** %
-% R00303_3.1.3.9_cyto
-% D-Glucose-6-phosphate phosphohydrolase
-% C00092 + C00001 <=> C00031 + C00009
-% glucose_6P + H2O -> glucose + P
-% Pubmed: PMID: 11879177 intracellular glucose-6-p concentration 0.05 - 1
-% [Reczek1982, Arion1971, Nordlie1969]
-%v3_deltag = -13.8;                          % [kJ/mol]
-%v3_keq = keq(v3_deltag);                    
-%v3_td = (glc6p - glc*p/v3_keq);
-v3_km_glc6p = 2;    % [mM]
-v3_Vmax =  18.9;
-
-v3 = scale_gly * v3_Vmax * glc6p / (v3_km_glc6p + glc6p);
+% glc6p + h2o => glc + phos
+G6PASE_km_glc6p = 2;    % [mM]
+G6PASE_Vmax =  18.9;    % [mmol_per_s]
+G6PASE = scale_gly * G6PASE_Vmax * glc6p / (G6PASE_km_glc6p + glc6p);  % [mmol_per_s]
 
 % *********************************** %
 % v4 : D-Glucose-6-phosphate Isomerase
@@ -303,9 +296,9 @@ v9_C = v8_C;
 v9_k1_max = v8_k1_max;
 v9_fmax = (1+v9_k1_max) * glyglc /( glyglc + v9_k1_max * v9_C);
 v9_vmax_native = scale_glyglc * v9_Vmax * v9_fmax * (v9_base_amp_native + (v9_max_amp_native - v9_base_amp_native) *amp/(amp+v9_ka_amp_native));
-v9_native = v9_vmax_native/(v9_k_glyc_native*v9_k_p_native) * (glyglc*p - glc1p/v9_keq) / ( (1 + glyglc/v9_k_glyc_native)*(1 + p/v9_k_p_native) + (1 + glc1p/v9_k_glc1p_native)  - 1 );
+v9_native = v9_vmax_native/(v9_k_glyc_native*v9_k_p_native) * (glyglc*phos - glc1p/v9_keq) / ( (1 + glyglc/v9_k_glyc_native)*(1 + phos/v9_k_p_native) + (1 + glc1p/v9_k_glc1p_native)  - 1 );
 v9_vmax_phospho = scale_glyglc * v9_Vmax * v9_fmax * exp(-log(2)/v9_ki_glc_phospho * glc);
-v9_phospho = v9_vmax_phospho/(v9_k_glyc_phospho*v9_k_p_phospho) * (glyglc*p - glc1p/v9_keq) / ( (1 + glyglc/v9_k_glyc_phospho)*(1 + p/v9_k_p_phospho) + (1 + glc1p/v9_k_glc1p_phospho)  - 1 );
+v9_phospho = v9_vmax_phospho/(v9_k_glyc_phospho*v9_k_p_phospho) * (glyglc*phos - glc1p/v9_keq) / ( (1 + glyglc/v9_k_glyc_phospho)*(1 + phos/v9_k_p_phospho) + (1 + glc1p/v9_k_glc1p_phospho)  - 1 );
 v9 = (1 - gamma) * v9_native + gamma * v9_phospho;
 
 % *********************************** %
@@ -510,7 +503,8 @@ v19_k_nadh = 0.0083;     % [mM]
 v19_k_bpg13 = 0.0035;    % [mM]
 v19_Vmax = 420;
 
-v19 = scale_gly * v19_Vmax / (v19_k_nad*v19_k_grap*v19_k_p) * (nad*grap*p - bpg13*nadh/v19_keq) / ( (1 + nad/v19_k_nad) * (1+grap/v19_k_grap) * (1 + p/v19_k_p) + (1+nadh/v19_k_nadh)*(1+bpg13/v19_k_bpg13) - 1);
+v19 = scale_gly * v19_Vmax / (v19_k_nad*v19_k_grap*v19_k_p) * (nad*grap*phos - bpg13*nadh/v19_keq) / ...
+    ( (1 + nad/v19_k_nad) * (1+grap/v19_k_grap) * (1 + phos/v19_k_p) + (1+nadh/v19_k_nadh)*(1+bpg13/v19_k_bpg13) - 1);
 
 % *********************************** %
 % v20 : Phosphoglycerate Kinase (PGK) ATP:3-phospho-D-glycerate 1-phosphotransferase
@@ -791,88 +785,121 @@ v36_Vmax = 0;
 v36 = scale_gly * v36_Vmax;
 
 
-%%  Fluxes and concentration changes
+%%  Fluxes and concentration changes [mmol/s/litre]
 dydt = zeros(size(y));
-dydt(1) = 0;    % -v2 -v10 -v11 -v12 -v13 -v15 +v20 +v23;     %atp
-dydt(2) = 0;     % +v2 +v10 +v11 +2*v12 +v13 +v15 -v20 -v23;   %adp
-dydt(3) = 0;    % -v12;         %amp
-dydt(4) = -v6 +v11;     %utp
-dydt(5) = +v8 -v11;     %udp
-dydt(6) = +v10 -v24;    %gtp
-dydt(7) = -v10 +v24;    %gdp
-dydt(8) = 0;    % -v19 +v27;    %nad
-dydt(9) = 0;    % +v19 -v27;    %nadh
-dydt(10) = 0;   % +v3 +2*v7 -v9 +v14 +v16 -v19;   %p
-dydt(11) = +v6 -v7;     %pp
-dydt(12) = 0;   % -v3 -v7 -v14 -v16 +v22;   %h2o
-dydt(13) = 0;   % +v24;        %co2
-dydt(14) = 0;   % +v19 -v27;   %h
-dydt(15) = -v5 -v6 +v9; %glc1p
-dydt(16) = +v6 -v8;     %udpglc
-dydt(17) = +v8 -v9;     %glyglc
-dydt(18) = +v1 -v2 +v3; %glc
-dydt(19) = +v2 -v3 -v4 +v5;   %glc6p
-dydt(20) = +v4 -v13 +v14 -v15 +v16;   %fru6p
-dydt(21) = +v15 -v16 -v17;   %fru16bp
-dydt(22) = +v13 -v14;           %fru26bp
-dydt(23) = +v17 +v18 -v19;   %grap
-dydt(24) = +v17 -v18;   %dhap
-dydt(25) = +v19 -v20;   %bpg13
-dydt(26) = +v20 -v21;   %pg3
-dydt(27) = +v21 -v22;   %pg2
-dydt(28) = +v22 -v23 +v24 +v30;   %pep
-dydt(29) = +v23 -v27 -v29;   %pyr
-dydt(30) = -v24;   %oaa
-dydt(31) = +v27 +v28;   %lac
-dydt(32) = 0;   % -v1;   %glc_{ext}
-dydt(33) = 0;   % -v28;   %lac_{ext}
-dydt(34) = 0;   % +5*v25 -5*v26 +5*v31;   %co2_{mito}
-dydt(35) = 0;   % +5*v26;   %p_{mito}
-dydt(36) = -5*v25 +5*v26 -5*v32 +5*v34;   %oaa_{mito}
-dydt(37) = +5*v25 -5*v30;   %pep_{mito}
-dydt(38) = 0;   % +5*v31 -5*v32 -5*v35;   %acoa_{mito}
-dydt(39) = -5*v26 +5*v29 -5*v31;   %pyr_{mito}
-dydt(40) = 0;   % +5*v32 -5*v36;   %cit_{mito}
-dydt(41) = 0;   % -5*v26 -5*v33;   %atp_{mito}
-dydt(42) = 0;   % +5*v26 +5*v33;   %adp_{mito}
-dydt(43) = -5*v25 +5*v33;   %gtp_{mito}
-dydt(44) = +5*v25 -5*v33;   %gdp_{mito}
-dydt(45) = 0;   % -5*v31 +5*v32;   %coa_{mito}
-dydt(46) = 0;   % +5*v25 +5*v31;   %nadh_{mito}
-dydt(47) = 0;   % +5*v25 -5*v31;   %nad_{mito}
-dydt(48) = 0;   % +5*v25 +5*v31;   %h_{mito}
-dydt(49) = 0;   % -5*v32;   %h2o_{mito}
+dydt(1) = (-GK -v10 -v11 -v12 -v13 -v15 +v20 +v23)/Vcyto;   % atp
+dydt(2) = (+GK +v10 +v11 +2*v12 +v13 +v15 -v20 -v23)/Vcyto; % adp
+dydt(3) = (-v12)/Vcyto;        % amp
+dydt(4) = (-v6 +v11)/Vcyto;    % utp
+dydt(5) = (+v8 -v11)/Vcyto;    % udp
+dydt(6) = (+v10 -v24)/Vcyto;   % gtp
+dydt(7) = (-v10 +v24)/Vcyto;   % gdp
+dydt(8) = (-v19 +v27)/Vcyto;   % nad
+dydt(9) = (+v19 -v27)/Vcyto;   % nadh
+dydt(10) = (+G6PASE +2*v7 -v9 +v14 +v16 -v19)/Vcyto; % p
+dydt(11) = (+v6 -v7)/Vcyto;    % pp
+dydt(12) = (-G6PASE -v7 -v14 -v16 +v22)/Vcyto;  % h2o
+dydt(13) = (+v24)/Vcyto;        % co2
+dydt(14) = (+v19 -v27)/Vcyto;   % h
+dydt(15) = (-v5 -v6 +v9)/Vcyto; % glc1p
+dydt(16) = (+v6 -v8)/Vcyto;     % udpglc
+dydt(17) = (+v8 -v9)/Vcyto;     % glyglc
+dydt(18) = (+GLUT2 -GK +G6PASE)/Vcyto; % glc
+dydt(19) = (+GK -G6PASE -v4 +v5)/Vcyto;   % glc6p
+dydt(20) = (+v4 -v13 +v14 -v15 +v16)/Vcyto;   % fru6p
+dydt(21) = (+v15 -v16 -v17)/Vcyto;    % fru16bp
+dydt(22) = (+v13 -v14)/Vcyto;         % fru26bp
+dydt(23) = (+v17 +v18 -v19)/Vcyto;    % grap
+dydt(24) = (+v17 -v18)/Vcyto;         % dhap
+dydt(25) = (+v19 -v20)/Vcyto;         % bpg13
+dydt(26) = (+v20 -v21)/Vcyto;         % pg3
+dydt(27) = (+v21 -v22)/Vcyto;         % pg2
+dydt(28) = (+v22 -v23 +v24 +v30)/Vcyto;   % pep
+dydt(29) = (+v23 -v27 -v29)/Vcyto;    % pyr
+dydt(30) = (-v24)/Vcyto;        % oaa
+dydt(31) = (+v27 +v28)/Vcyto;   % lac
+
+dydt(32) = (-GLUT2)/Vext;   % glc_ext
+dydt(33) = (-v28)/Vext;  % lac_ext
+
+dydt(34) = (+v25 -v26 +v31)/Vmito;      % co2_mito
+dydt(35) = (+v26)/Vmito;                % p_mito
+dydt(36) = (-v25 +v26 -v32 +v34)/Vmito; % oaa_mito
+dydt(37) = (+v25 -v30)/Vmito;           % pep_mito
+dydt(38) = (+v31 -v32 -v35)/Vmito;      % acoa_mito
+dydt(39) = (-v26 +v29 -v31)/Vmito;      % pyr_mito
+dydt(40) = (+v32 -v36)/Vmito;           % cit_mito
+dydt(41) = (-v26 -v33)/Vmito;           % atp_mito
+dydt(42) = (+v26 +v33)/Vmito;           % adp_mito
+dydt(43) = (-v25 +v33)/Vmito;           % gtp_mito
+dydt(44) = (+v25 -v33)/Vmito;           % gdp_mito
+dydt(45) = (-v31 +v32)/Vmito;           % coa_mito
+dydt(46) = (+v25 +v31)/Vmito;           % nadh_mito
+dydt(47) = (-v25 -v31)/Vmito;           % nad_mito
+dydt(48) = (+v25 +v31)/Vmito;           % h_mito
+dydt(49) = (-v32)/Vmito;                % h2o_mito
+
+%% constant metabolites
+dydt(1) = 0;  % atp
+dydt(2) = 0;  % adp
+dydt(3) = 0;  % amp
+dydt(8) = 0;  % nad
+dydt(9) = 0;  % nadh
+dydt(10) = 0; % phos
+dydt(12) = 0; % h2o
+dydt(13) = 0; % co2
+dydt(14) = 0; % h
+dydt(32) = 0; % glc_ext
+dydt(33) = 0; % lac_ext
+dydt(34) = 0; % co2_mito
+dydt(35) = 0; % phos_mito
+dydt(38) = 0; % acoa_mito
+dydt(40) = 0; % cit_mito
+dydt(41) = 0; % atp_mito
+dydt(42) = 0; % adp_mito
+dydt(45) = 0; % coa_mito
+dydt(46) = 0; % nadh_mito
+dydt(47) = 0; % nad_mito
+dydt(48) = 0; % h_mito
+dydt(49) = 0; % h2o_mito
+
 
 %% Actual fluxes
-v  = [v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36]';
-%{
-stoichiometry = model_stoichiometry(); 
-dydt = stoichiometry * v;
-const = [
-    1       % 'atp'
-    2       % 'adp'
-    3       % 'amp'
-    8       % 'nad'
-    9       % 'nadh'
-    10      % 'p' 
-    12      % 'h20' 
-    13      % 'co2'
-    14      % 'h'   
-    17      % 'glyglc'   
-    32      % 'glc_ext'
-    33      % 'lac_ext'
-    34      % 'co2_mito' 
-    35      % 'p_mito'
-    38      % 'acoa_mito'
-    40      % 'cit_mito'
-    41      % 'atp_mito' 
-    42      % 'adp_mito'
-    45      % 'coa_mito'
-    46      % 'nadh_mito' 
-    47      % 'nad_mito' 
-    48      % 'h_mito'
-    49      % 'h2o_mito' 
-];
-dydt(const) = 0;
-%}
+v  = [GLUT2   % v1
+      GK      % v2
+      G6PASE  % v3
+      v4 
+      v5 
+      v6 
+      v7 
+      v8 
+      v9 
+      v10 
+      v11 
+      v12 
+      v13 
+      v14 
+      v15 
+      v16 
+      v17 
+      v18 
+      v19 
+      v20 
+      v21 
+      v22 
+      v23 
+      v24 
+      v25 
+      v26 
+      v27 
+      v28 
+      v29 
+      v30 
+      v31 
+      v32 
+      v33 
+      v34 
+      v35 
+      v36];
+
 

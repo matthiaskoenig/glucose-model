@@ -34,7 +34,7 @@ S0 = [
     0.1000  % S7 gdp
     1.2200  % S8 nad
     0.56E-3  % S9 nadh
-    5.0000  % S10 p
+    5.0000  % S10 phos
     0.0080  % S11 pp
          0  % S12 h20
     5.0000  % S13 co2
@@ -79,6 +79,7 @@ S0 = [
 % which model to integrate for comparison
 % name = 'core'
 name = 'core_sbml'
+%name = 'core'
 switch (name)
     case 'core'
         dydt_fun = @(t,y) dydt_model_glucose(t,y);

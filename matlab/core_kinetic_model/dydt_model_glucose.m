@@ -813,7 +813,7 @@ v36 = scale_gly * v36_Vmax;
 %%  Fluxes and concentration changes
 dydt = zeros(size(y));
 dydt(1) = 0;    % -v2 -v10 -v11 -v12 -v13 -v15 +v20 +v23;     %atp
-dydt(2) = 0;     % +v2 +v10 +v11 +2*v12 +v13 +v15 -v20 -v23;   %adp
+dydt(2) = 0;    % +v2 +v10 +v11 +2*v12 +v13 +v15 -v20 -v23;   %adp
 dydt(3) = 0;    % -v12;         %amp
 dydt(4) = -v6 +v11;     %utp
 dydt(5) = +v8 -v11;     %udp
