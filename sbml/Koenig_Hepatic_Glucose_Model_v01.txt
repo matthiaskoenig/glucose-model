@@ -143,9 +143,40 @@ model *Koenig2014_hepatic_glucose()
   K_epi has pmol_per_l;
   gamma has dimensionless;
 
-  // Reactions
-  ATPS is "ATP synthase";
 
+  // Scaling factors
+  scale_gly = 12.5 dimensionless;
+  scale_glyglc = 12.5 dimensionless;
+  
+  // Reactions
+  GLUT2 is "GLUT2 glucose transporter";
+  GLUT2: glc_ext -> glc;
+  GLUT2 has mmol_per_s;
+  GLUT2_keq = 1 dimensionless;
+  GLUT2_km = 42 mM;
+  GLUT2_Vmax = 420 mmol_per_s;
+  GLUT2 = scale_gly * GLUT2_Vmax/GLUT2_km * (glc_ext - glc/GLUT2_keq)/(1 + glc_ext/GLUT2_km + glc/GLUT2_km);
+  GLUT2 has mmol_per_s;
+
+  GK is "Glucokinase";
+  GK: glc + atp -> glc6p + adp;
+  GK has mmol_per_s;
+  GK_n_gkrp = 2 dimensionless;
+  GK_km_glc1 = 15 mM;
+  GK_km_fru6p = 0.010 mM;
+  GK_b = 0.7 dimensionless;
+  GK_n = 1.6 dimensionless;
+  GK_km_glc = 7.5 mM;
+  GK_km_atp = 0.26 mM;
+  GK_Vmax = 25.2 mmol_per_s;
+  GK_gc_free = (glc^GK_n_gkrp / (glc^GK_n_gkrp + GK_km_glc1^GK_n_gkrp) ) * (1 - GK_b*fru6p/(fru6p + GK_km_fru6p));
+  GK = scale_gly * GK_Vmax * GK_gc_free * atp/(GK_km_atp + atp) * glc^GK_n/(glc^GK_n + GK_km_glc^GK_n);
+  GK_gc_free has dimensionless;
+  GK has mmol_per_s;
+
+
+
+  ATPS is "ATP synthase";
   ATPS: adp + phos -> atp;
   ATPS has mmol_per_s;
   

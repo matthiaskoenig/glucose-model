@@ -18,6 +18,11 @@ function [dydt, v] = dydt_model_glucose_sbml(t, y)
 scale_gly = 12.5;
 scale_glyglc = 12.5;
 
+% Volumes of the compartments
+Vext = 10; % [litre]
+Vcyto = 1; % [litre]
+Vmito = 5; % [litre]
+
 %% Concentrations [mM = mmole_per_litre]
 atp         = y(1);
 adp         = y(2);
@@ -101,65 +106,35 @@ gamma = 0.5 * (1 - ins/(ins+K_ins) + max(glu/(glu+K_glu), epi_f*epi/(epi+K_epi))
 % *********************************** %
 % v1 : GLUT2 - Transporter
 % *********************************** %
-% T0011_cytoYext
-% GLUT 2
-% 1 C00031_ext -> 1 C00031_cyto
-% glucose_ext -> glucose
-% facilitated diffusion, low affinity, high-turnover transport system
-% Lebergue2009, Elliot1982, Gold1991, Ciaraldi1986, Thorens1996,
-% Nelson2008
-% reversibel Michaelis Menten Kinetics; symmetrical transport of glucose by
-% GLUT2
-%
-%v1_deltag = 0;                              % [kJ/mol]
-%v1_keq = keq(v1_deltag);                    % []
-%v1_td = (glc_ext - glc/v1_keq);
-
-v1_keq = 1;
-v1_km = 42;  % [mM]
-v1_Vmax = 420;
-v1 = (scale_gly*v1_Vmax)/v1_km * (glc_ext - glc/v1_keq)/(1 + glc_ext/v1_km + glc/v1_km);
+% glc_ext <-> glc
+GLUT2_keq = 1;      % [-]
+GLUT2_km = 42;      % [mM]
+GLUT2_Vmax = 420;   % [mmol_per_s]
+GLUT2 = scale_gly * GLUT2_Vmax/GLUT2_km * (glc_ext - glc/GLUT2_keq)/(1 + glc_ext/GLUT2_km + glc/GLUT2_km);
+% [mmole_per_s]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   Glucokinase / G6Pase              %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % *********************************** %
 % v2 : Glucokinase
 % *********************************** %
-% R00299_2.7.1.2_cyto
-% ATP:D-glucose 6-phosphotransferase
-% C00002 + C00031 <=> C00008 + C00092	
 % glucose + atp -> glucose_6P + adp 
-% Delta G0' = -16.7 kJ/mol 
-% Morito1994, Agius2008
-% GK has sigmoidal kinetics in glucose with high km for glucose with n
-% about 1.5 - 1.8.
-% Hyperobolic in the ATP response. 
-% In addition the activity is regulated by GKRP. The bound GKRP + GK has
-% lower affinity for glucose (14mM) and is translocated in the
-% nucleus.equation (glucokinase binding protein)
-% So only the free GK in the cytosol is active. The binding of GKRP and GK
-% is dependent on glucose, fructose and fructose-6p.
-% No product inhibition of glucose_6p to the GK.
-% Dependency on glucose and fructose_6p from 
-%v2_deltag = -16.7;                          % [kJ/mol]
-%v2_keq = keq(v2_deltag);                    
-%v2_td = (glc*atp - glc6p*adp / v2_keq);
 
 % Inhibition by GCRP
-v2_n_gkrp = 2;
-v2_km_glc1 = 15;         %[mM]
-v2_km_fru6p = 0.010;     %[mM]
-v2_b = 0.7;
+GK_n_gkrp = 2;           % [-]
+GK_km_glc1 = 15;         % [mM]
+GK_km_fru6p = 0.010;     % [mM]
+GK_b = 0.7;              % [-]
 
-v2_n = 1.6;
-v2_km_glc = 7.5;            % [mM]
-v2_km_atp = 0.26;           % [mM]
-v2_Vmax = 25.2;
+GK_n = 1.6;              % [-]
+GK_km_glc = 7.5;         % [mM]
+GK_km_atp = 0.26;        % [mM]
+GK_Vmax = 25.2;          % [mmol_per_s]
 
-v2_gc_free = (glc^v2_n_gkrp / (glc^v2_n_gkrp + v2_km_glc1^v2_n_gkrp) ) * (1 - v2_b*fru6p/(fru6p + v2_km_fru6p));
-v2 = scale_gly*v2_Vmax * v2_gc_free * atp/(v2_km_atp + atp) * glc^v2_n/(glc^v2_n + v2_km_glc^v2_n);
+GK_gc_free = (glc^GK_n_gkrp / (glc^GK_n_gkrp + GK_km_glc1^GK_n_gkrp) ) * (1 - GK_b*fru6p/(fru6p + GK_km_fru6p)); % [-]
+GK = scale_gly * GK_Vmax * GK_gc_free * atp/(GK_km_atp + atp) * glc^GK_n/(glc^GK_n + GK_km_glc^GK_n); % [mmol_per_s]
+
 
 % *********************************** %
 % v3 : D-Glucose-6-phosphate Phosphatase

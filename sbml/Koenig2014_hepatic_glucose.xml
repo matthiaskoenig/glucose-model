@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 12:51 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 13:13 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -191,6 +191,20 @@
       <parameter id="K_glu" units="pmol_per_l" constant="true"/>
       <parameter id="K_epi" units="pmol_per_l" constant="true"/>
       <parameter id="gamma" units="dimensionless" constant="false"/>
+      <parameter id="scale_gly" value="12" units="dimensionless" constant="true"/>
+      <parameter id="scale_glyglc" value="12" units="dimensionless" constant="true"/>
+      <parameter id="GLUT2_keq" value="1" units="dimensionless" constant="true"/>
+      <parameter id="GLUT2_km" value="42" units="mM" constant="true"/>
+      <parameter id="GLUT2_Vmax" value="420" units="mmol_per_s" constant="true"/>
+      <parameter id="GK_n_gkrp" value="2" units="dimensionless" constant="true"/>
+      <parameter id="GK_km_glc1" value="15" units="mM" constant="true"/>
+      <parameter id="GK_km_fru6p" value="0" units="mM" constant="true"/>
+      <parameter id="GK_b" value="0" units="dimensionless" constant="true"/>
+      <parameter id="GK_n" value="1" units="dimensionless" constant="true"/>
+      <parameter id="GK_km_glc" value="7" units="mM" constant="true"/>
+      <parameter id="GK_km_atp" value="0" units="mM" constant="true"/>
+      <parameter id="GK_Vmax" value="25" units="mmol_per_s" constant="true"/>
+      <parameter id="GK_gc_free" units="dimensionless" constant="false"/>
       <parameter id="ATPS_keq" value="0" units="per_mM" constant="true"/>
       <parameter id="ATPS_kadp" value="0" units="mM" constant="true"/>
       <parameter id="ATPS_katp" value="0" units="mM" constant="true"/>
@@ -405,6 +419,51 @@
           </apply>
         </math>
       </initialAssignment>
+      <initialAssignment symbol="GK_gc_free">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <apply>
+              <divide/>
+              <apply>
+                <power/>
+                <ci> glc </ci>
+                <ci> GK_n_gkrp </ci>
+              </apply>
+              <apply>
+                <plus/>
+                <apply>
+                  <power/>
+                  <ci> glc </ci>
+                  <ci> GK_n_gkrp </ci>
+                </apply>
+                <apply>
+                  <power/>
+                  <ci> GK_km_glc1 </ci>
+                  <ci> GK_n_gkrp </ci>
+                </apply>
+              </apply>
+            </apply>
+            <apply>
+              <minus/>
+              <cn type="integer"> 1 </cn>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <ci> GK_b </ci>
+                  <ci> fru6p </ci>
+                </apply>
+                <apply>
+                  <plus/>
+                  <ci> fru6p </ci>
+                  <ci> GK_km_fru6p </ci>
+                </apply>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
     </listOfInitialAssignments>
     <listOfRules>
       <assignmentRule variable="nadh_tot">
@@ -473,6 +532,109 @@
       </assignmentRule>
     </listOfRules>
     <listOfReactions>
+      <reaction id="GLUT2" name="GLUT2 glucose transporter" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="glc_ext" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="glc" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> GLUT2_Vmax </ci>
+                  </apply>
+                  <ci> GLUT2_km </ci>
+                </apply>
+                <apply>
+                  <minus/>
+                  <ci> glc_ext </ci>
+                  <apply>
+                    <divide/>
+                    <ci> glc </ci>
+                    <ci> GLUT2_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> glc_ext </ci>
+                  <ci> GLUT2_km </ci>
+                </apply>
+                <apply>
+                  <divide/>
+                  <ci> glc </ci>
+                  <ci> GLUT2_km </ci>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="GK" name="Glucokinase" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="glc" stoichiometry="1" constant="true"/>
+          <speciesReference species="atp" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="glc6p" stoichiometry="1" constant="true"/>
+          <speciesReference species="adp" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> GK_Vmax </ci>
+                    <ci> GK_gc_free </ci>
+                    <ci> atp </ci>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <ci> GK_km_atp </ci>
+                    <ci> atp </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <power/>
+                  <ci> glc </ci>
+                  <ci> GK_n </ci>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <apply>
+                  <power/>
+                  <ci> glc </ci>
+                  <ci> GK_n </ci>
+                </apply>
+                <apply>
+                  <power/>
+                  <ci> GK_km_glc </ci>
+                  <ci> GK_n </ci>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
       <reaction id="ATPS" name="ATP synthase" reversible="true" fast="false">
         <listOfReactants>
           <speciesReference species="adp" stoichiometry="1" constant="true"/>
