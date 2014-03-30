@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 14:37 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 14:51 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -167,6 +167,7 @@
       <species id="h2o_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="h_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="fru6P" compartment="default_compartment" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="glc1P" compartment="default_compartment" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
       <parameter id="nadh_tot" units="mM" constant="false"/>
@@ -217,6 +218,16 @@
       <parameter id="GPI_km_glc6p" value="0" units="mM" constant="true"/>
       <parameter id="GPI_km_fru6p" value="0" units="mM" constant="true"/>
       <parameter id="GPI_Vmax" value="420" units="mmol_per_s" constant="true"/>
+      <parameter id="G16PI_keq" value="15" units="dimensionless" constant="true"/>
+      <parameter id="G16PI_km_glc6p" value="0" units="mM" constant="true"/>
+      <parameter id="G16PI_km_glc1p" value="0" units="mM" constant="true"/>
+      <parameter id="G16PI_Vmax" value="100" units="mmol_per_s" constant="true"/>
+      <parameter id="UPGASE_keq" value="0" units="dimensionless" constant="true"/>
+      <parameter id="UPGASE_km_utp" value="0" units="mM" constant="true"/>
+      <parameter id="UPGASE_km_glc1p" value="0" units="mM" constant="true"/>
+      <parameter id="UPGASE_km_udpglc" value="0" units="mM" constant="true"/>
+      <parameter id="UPGASE_km_pp" value="0" units="mM" constant="true"/>
+      <parameter id="UPGASE_Vmax" value="80" units="mmol_per_s" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="ins">
@@ -730,6 +741,150 @@
         <listOfProducts>
           <speciesReference species="glc6p" stoichiometry="1" constant="true"/>
         </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_glyglc </ci>
+                    <ci> G16PI_Vmax </ci>
+                  </apply>
+                  <ci> G16PI_km_glc1p </ci>
+                </apply>
+                <apply>
+                  <minus/>
+                  <ci> glc1p </ci>
+                  <apply>
+                    <divide/>
+                    <ci> glc6p </ci>
+                    <ci> G16PI_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> glc1p </ci>
+                  <ci> G16PI_km_glc1p </ci>
+                </apply>
+                <apply>
+                  <divide/>
+                  <ci> glc6p </ci>
+                  <ci> G16PI_km_glc6p </ci>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="UPGASE" name="UTP:Glucose-1-phosphate uridylyltransferase" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="utp" stoichiometry="1" constant="true"/>
+          <speciesReference species="glc1P" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="udpglc" stoichiometry="1" constant="true"/>
+          <speciesReference species="pp" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="glc1p"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_glyglc </ci>
+                    <ci> UPGASE_Vmax </ci>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <ci> UPGASE_km_utp </ci>
+                    <ci> UPGASE_km_glc1p </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <times/>
+                    <ci> utp </ci>
+                    <ci> glc1p </ci>
+                  </apply>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <times/>
+                      <ci> udpglc </ci>
+                      <ci> pp </ci>
+                    </apply>
+                    <ci> UPGASE_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <minus/>
+                <apply>
+                  <plus/>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> utp </ci>
+                        <ci> UPGASE_km_utp </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> glc1p </ci>
+                        <ci> UPGASE_km_glc1p </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> udpglc </ci>
+                        <ci> UPGASE_km_udpglc </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> pp </ci>
+                        <ci> UPGASE_km_pp </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                </apply>
+                <cn type="integer"> 1 </cn>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
       </reaction>
     </listOfReactions>
   </model>

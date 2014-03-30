@@ -196,9 +196,24 @@ model *Koenig2014_hepatic_glucose()
 
   G16PI is "Glucose 1-phosphate 1,6-phosphomutase";
   G16PI : glc1p -> glc6p;
+  G16PI_keq = 15.717554082151441 dimensionless;
+  G16PI_km_glc6p  = 0.67 mM;
+  G16PI_km_glc1p = 0.045 mM;
+  G16PI_Vmax = 100 mmol_per_s;
+  G16PI = scale_glyglc * G16PI_Vmax/G16PI_km_glc1p * (glc1p - glc6p/G16PI_keq) / (1 + glc1p/G16PI_km_glc1p + glc6p/G16PI_km_glc6p);
   G16PI has mmol_per_s;
 
-// 'UPGase'           % v6
+  UPGASE is "UTP:Glucose-1-phosphate uridylyltransferase";
+  UPGASE : utp + glc1P -> udpglc + pp;
+  UPGASE_keq = 0.312237619153088 dimensionless;
+  UPGASE_km_utp = 0.563 mM;
+  UPGASE_km_glc1p = 0.172 mM;
+  UPGASE_km_udpglc = 0.049 mM;
+  UPGASE_km_pp = 0.166 mM;
+  UPGASE_Vmax = 80 mmol_per_s;
+  UPGASE = scale_glyglc * UPGASE_Vmax/(UPGASE_km_utp*UPGASE_km_glc1p) * (utp*glc1p - udpglc*pp/UPGASE_keq) / ( (1 + utp/UPGASE_km_utp)*(1 + glc1p/UPGASE_km_glc1p) + (1 + udpglc/UPGASE_km_udpglc)*(1 + pp/UPGASE_km_pp) - 1 );
+  UPGASE has mmol_per_s;
+
 // 'PPase'           % v7 
 // 'GS'              % v8 
 // 'GP'              % v9

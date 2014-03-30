@@ -164,33 +164,26 @@ GPI = scale_gly * GPI_Vmax/GPI_km_glc6p * (glc6p - fru6p/GPI_keq) / (1 + glc6p/G
 % v5 : G16PI : Glucose 1-phosphate 1,6-phosphomutase
 % *********************************** %
 % glc1p <-> glc6p
-v5_keq = 15.717554082151441;
-v5_km_glc6p  = 0.67;       % [mM]
-v5_km_glc1p = 0.045;        % [mM]
-v5_Vmax = 100;
-v5 = scale_glyglc * v5_Vmax/v5_km_glc1p * (glc1p - glc6p/v5_keq) / (1 + glc1p/v5_km_glc1p + glc6p/v5_km_glc6p);
+G16PI_keq = 15.717554082151441; % [-]
+G16PI_km_glc6p  = 0.67;         % [mM]
+G16PI_km_glc1p = 0.045;         % [mM]
+G16PI_Vmax = 100;               % [mmol_per_s]
+G16PI = scale_glyglc * G16PI_Vmax/G16PI_km_glc1p * (glc1p - glc6p/G16PI_keq) / ...
+        (1 + glc1p/G16PI_km_glc1p + glc6p/G16PI_km_glc6p);
 
 % *********************************** %
-% v6 : UTP:Glucose-1-phosphate uridylyltransferase (UPGase)
+% v6 : UPGASE : UTP:Glucose-1-phosphate uridylyltransferase (UPGase)
 % *********************************** %
-% R00289_2.7.7.9_cyto	
-% UTP:alpha-D-glucose-1-phosphate uridylyltransferase	
-% C00075 + C00103 <=> C00013 + C00029																																																																																																																																																																																																																																																												
-% UTP + glucose_1P <-> UDP_glucose + PP
-% Compare the different measurements; integrate the UTP inhibition.
-% [Chang1995, Enzymes of sugar activation, Turnquist1974]
-% v6_deltag = 3.0;                          % [kJ/mol]
-% v6_keq = keq(v6_deltag);                  % keq = 0.31 % 0.28 - 0.34                    
-% v6_td = (utp * glc1p - udpglc * pp/v6_keq);
-
-v6_keq = 0.312237619153088;
-v6_km_utp = 0.563;       % mM   [ 0.200, 0.048]
-v6_km_glc1p = 0.172;     % mM [0.050, 0.095]
-v6_km_udpglc = 0.049;    % mM [0.060, 0.048]
-v6_km_pp = 0.166;         % mM     [0.084, 0.210]
-v6_Vmax = 80;
-v6 = scale_glyglc * v6_Vmax/(v6_km_utp*v6_km_glc1p) * (utp * glc1p - udpglc * pp/v6_keq) / ( (1 + utp/v6_km_utp)*(1 + glc1p/v6_km_glc1p) + (1 + udpglc/v6_km_udpglc)*(1 + pp/v6_km_pp) - 1 );
-            
+% utp + glc1P <-> udpglc + pp
+UPGASE_keq = 0.312237619153088;  % [-]
+UPGASE_km_utp = 0.563;           % [mM] [ 0.200, 0.048]
+UPGASE_km_glc1p = 0.172;         % [mM] [0.050, 0.095]
+UPGASE_km_udpglc = 0.049;        % [mM] [0.060, 0.048]
+UPGASE_km_pp = 0.166;            % [mM] [0.084, 0.210]
+UPGASE_Vmax = 80;                % [mmol_per_s]
+UPGASE = scale_glyglc * UPGASE_Vmax/(UPGASE_km_utp*UPGASE_km_glc1p) * (utp*glc1p - udpglc*pp/UPGASE_keq) / ...
+    ( (1 + utp/UPGASE_km_utp)*(1 + glc1p/UPGASE_km_glc1p) + (1 + udpglc/UPGASE_km_udpglc)*(1 + pp/UPGASE_km_pp) - 1 );
+ 
 % *********************************** %
 % v7 : Pyrophosphate phosphohydrolase (PPase)
 % *********************************** %
@@ -767,22 +760,22 @@ dydt = zeros(size(y));
 dydt(1) = (-GK -v10 -v11 -v12 -v13 -v15 +v20 +v23)/Vcyto;   % atp
 dydt(2) = (+GK +v10 +v11 +2*v12 +v13 +v15 -v20 -v23)/Vcyto; % adp
 dydt(3) = (-v12)/Vcyto;        % amp
-dydt(4) = (-v6 +v11)/Vcyto;    % utp
+dydt(4) = (-UPGASE +v11)/Vcyto;    % utp
 dydt(5) = (+v8 -v11)/Vcyto;    % udp
 dydt(6) = (+v10 -v24)/Vcyto;   % gtp
 dydt(7) = (-v10 +v24)/Vcyto;   % gdp
 dydt(8) = (-v19 +v27)/Vcyto;   % nad
 dydt(9) = (+v19 -v27)/Vcyto;   % nadh
 dydt(10) = (+G6PASE +2*v7 -v9 +v14 +v16 -v19)/Vcyto; % p
-dydt(11) = (+v6 -v7)/Vcyto;    % pp
+dydt(11) = (+UPGASE -v7)/Vcyto;    % pp
 dydt(12) = (-G6PASE -v7 -v14 -v16 +v22)/Vcyto;  % h2o
 dydt(13) = (+v24)/Vcyto;        % co2
 dydt(14) = (+v19 -v27)/Vcyto;   % h
-dydt(15) = (-v5 -v6 +v9)/Vcyto; % glc1p
-dydt(16) = (+v6 -v8)/Vcyto;     % udpglc
+dydt(15) = (-G16PI -UPGASE +v9)/Vcyto; % glc1p
+dydt(16) = (+UPGASE -v8)/Vcyto;     % udpglc
 dydt(17) = (+v8 -v9)/Vcyto;     % glyglc
 dydt(18) = (+GLUT2 -GK +G6PASE)/Vcyto; % glc
-dydt(19) = (+GK -G6PASE -GPI +v5)/Vcyto;   % glc6p
+dydt(19) = (+GK -G6PASE -GPI +G16PI)/Vcyto;   % glc6p
 dydt(20) = (+GPI -v13 +v14 -v15 +v16)/Vcyto;   % fru6p
 dydt(21) = (+v15 -v16 -v17)/Vcyto;    % fru16bp
 dydt(22) = (+v13 -v14)/Vcyto;         % fru26bp
@@ -846,8 +839,8 @@ v  = [GLUT2   % v1
       GK      % v2
       G6PASE  % v3
       GPI 
-      v5 
-      v6 
+      G16PI 
+      UPGASE 
       v7 
       v8 
       v9 
