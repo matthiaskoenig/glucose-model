@@ -334,82 +334,57 @@ PFK1_Vmax = 7.182;                  % [mmol_per_s]
 PFK1 = scale_gly * PFK1_Vmax * (1 - 1/(1 + fru26bp/PFK1_ka_fru26bp)) * fru6p*atp/(PFK1_ki_fru6p*PFK1_km_atp + PFK1_km_fru6p*atp + PFK1_km_atp*fru6p + atp*fru6p);
 
 % *********************************** %
-% v16 : FBP1
+% v16 : FBP1 : D-Fructose-1,6-bisphosphate 1-phosphohydrolase
 % *********************************** %
-% v16	R00762_3.1.3.11_cyto	D-Fructose-1,6-bisphosphate 1-phosphohydrolase	C00354 + C00001 <=> C00085 + C00009																																																																																																																																																																																																																																																												
-% has to be controlled.
 % fru16bp + h2o -> fru6p + p
-%v16_deltag = -16.3;                          % [kJ/mol]
-%v16_keq = keq(v16_deltag);                    
-%v16_td = (fru16bp - fru6p*p/v16_keq);
-
-v16_ki_fru26bp = 0.001;               % [mM]
-v16_km_fru16bp = 0.0013;              % [mM]
-v16_Vmax = 4.326;
-v16 = scale_gly * v16_Vmax / (1 + fru26bp/v16_ki_fru26bp) * fru16bp/(fru16bp + v16_km_fru16bp);
+FBP1_ki_fru26bp = 0.001;    % [mM]
+FBP1_km_fru16bp = 0.0013;   % [mM]
+FBP1_Vmax = 4.326;          % [mmol_per_s]
+FBP1 = scale_gly * FBP1_Vmax / (1 + fru26bp/FBP1_ki_fru26bp) * fru16bp/(fru16bp + FBP1_km_fru16bp); % [mmol_per_s]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   Downstream PFK                    %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % *********************************** %
-% v17 : Aldolase
+% v17 : ALD : Aldolase
 % *********************************** %
-% v17	R01068_4.1.2.13_cyto	D-Fructose-1,6-bisphosphate D-glyceraldehyde-3-phosphate-lyase	C00354 <=> C00111 + C00118																																																																																																																																																																																																																																																												
 % fru16bp -> grap + dhap
-%v17_deltag = 23.8;                          % [kJ/mol]
-%v17_keq = keq(v17_deltag); 
-%v17_td = (fru16bp - grap*dhap/v17_keq);
-% keq = 0.114;                 %[mM] erythrocyte
-
-v17_keq = 9.762988973629690E-5;
-v17_km_fru16bp = 0.0071;         %[mM]
-v17_km_dhap = 0.0364;            %[mM]
-v17_km_grap = 0.0071;            %[mM]
-v17_ki1_grap = 0.0572;           %[mM]
-v17_ki2_grap = 0.176;            %[mM]
-v17_Vmax = 420;
-
-v17 = scale_gly * v17_Vmax/v17_km_fru16bp * (fru16bp - grap*dhap/v17_keq) /(1 + fru16bp/v17_km_fru16bp + grap/v17_ki1_grap + dhap*(grap + v17_km_grap)/(v17_km_dhap*v17_ki1_grap) + (fru16bp*grap)/(v17_km_fru16bp*v17_ki2_grap));
+ALD_keq = 9.762988973629690E-5;  % [per_mM]
+ALD_km_fru16bp = 0.0071;         % [mM]
+ALD_km_dhap = 0.0364;            % [mM]
+ALD_km_grap = 0.0071;            % [mM]
+ALD_ki1_grap = 0.0572;           % [mM]
+ALD_ki2_grap = 0.176;            % [mM]
+ALD_Vmax = 420;                  % [mmol_per_s]
+ALD = scale_gly * ALD_Vmax/ALD_km_fru16bp * (fru16bp - grap*dhap/ALD_keq) /(1 + fru16bp/ALD_km_fru16bp + grap/ALD_ki1_grap + dhap*(grap + ALD_km_grap)/(ALD_km_dhap*ALD_ki1_grap) + (fru16bp*grap)/(ALD_km_fru16bp*ALD_ki2_grap));
+% [mmol_per_s]
 
 % *********************************** %
-% v18 : Triosephosphate Isomerase
+% v18 : TPI : Triosephosphate Isomerase
 % *********************************** %
-% v18	R01015_5.3.1.1_cyto	D-Glyceraldehyde-3-phosphate ketol-isomerase	C00118 <=> C00111																																																																																																																																																																																																																																																												
-% equilibrium far on side of the dhap
 % dhap <-> grap
-%v18_deltag = 7.5;                          % [kJ/mol]
-% v18_keq = 0.0407;                %[mM] erythrocyte model
-%v18_keq = keq(v18_deltag); 
-%v18_td = (dhap - grap/v18_keq); 
-
-v18_keq = 0.054476985386756;
-v18_km_dhap = 0.59;             %[mM]
-v18_km_grap = 0.42;             %[mM]
-v18_Vmax = 420;
-
-v18 = scale_gly * v18_Vmax/v18_km_dhap * (dhap - grap/v18_keq) / (1 + dhap/v18_km_dhap + grap/v18_km_grap);
+TPI_keq = 0.054476985386756;  % [-]
+TPI_km_dhap = 0.59;  % [mM]
+TPI_km_grap = 0.42;  % [mM]
+TPI_Vmax = 420;      % [mmol_per_s]
+TPI = scale_gly * TPI_Vmax/TPI_km_dhap * (dhap - grap/TPI_keq) / (1 + dhap/TPI_km_dhap + grap/TPI_km_grap);
+% [mmol_per_s]
 
 % *********************************** %
-% v19 : D-Glyceraldehyde-3-phosphate:NAD+ oxidoreductase (GAPDH)
+% v19 : GAPDH : D-Glyceraldehyde-3-phosphate:NAD+ oxidoreductase
 % *********************************** %
-% v19	R01061_1.2.1.12_cyto	D-Glyceraldehyde-3-phosphate:NAD+ oxidoreductase(phosphorylating)	C00118 + C00009 + C00003 <=> C00236 + C00004 + C00080																																																																																																																																																																																																																																																												
 % grap + p + nad <-> bpg13 + nadh + h
-%v19_deltag = 6.3;        % [kJ/mol]  
-%v19_keq = keq(v19_deltag); 
-%v19_keq = 0.000192;         % [mM]
-%v19_td = ( nad * grap * p - bpg13*nadh/v19_keq); 
-
-v19_keq = 0.086779866194594;
-v19_k_nad = 0.05;        % [mM]
-v19_k_grap = 0.005;      % [mM]
-v19_k_p = 3.9;           % [mM]
-v19_k_nadh = 0.0083;     % [mM]
-v19_k_bpg13 = 0.0035;    % [mM]
-v19_Vmax = 420;
-
-v19 = scale_gly * v19_Vmax / (v19_k_nad*v19_k_grap*v19_k_p) * (nad*grap*phos - bpg13*nadh/v19_keq) / ...
-    ( (1 + nad/v19_k_nad) * (1+grap/v19_k_grap) * (1 + phos/v19_k_p) + (1+nadh/v19_k_nadh)*(1+bpg13/v19_k_bpg13) - 1);
+GAPDH_keq = 0.086779866194594; % [-]
+GAPDH_k_nad = 0.05;        % [mM]
+GAPDH_k_grap = 0.005;      % [mM]
+GAPDH_k_p = 3.9;           % [mM]
+GAPDH_k_nadh = 0.0083;     % [mM]
+GAPDH_k_bpg13 = 0.0035;    % [mM]
+GAPDH_Vmax = 420;          % [mmol_per_s]
+GAPDH = scale_gly * GAPDH_Vmax / (GAPDH_k_nad*GAPDH_k_grap*GAPDH_k_p) * (nad*grap*phos - bpg13*nadh/GAPDH_keq) / ...
+    ( (1 + nad/GAPDH_k_nad) * (1+grap/GAPDH_k_grap) * (1 + phos/GAPDH_k_p) + (1+nadh/GAPDH_k_nadh)*(1+bpg13/GAPDH_k_bpg13) - 1);
+% [mmol_per_s]
 
 % *********************************** %
 % v20 : Phosphoglycerate Kinase (PGK) ATP:3-phospho-D-glycerate 1-phosphotransferase
@@ -699,24 +674,24 @@ dydt(4) = (-UPGASE +NDKUTP)/Vcyto;    % utp
 dydt(5) = (+GS -NDKUTP)/Vcyto;    % udp
 dydt(6) = (+NDKGTP -v24)/Vcyto;   % gtp
 dydt(7) = (-NDKGTP +v24)/Vcyto;   % gdp
-dydt(8) = (-v19 +v27)/Vcyto;   % nad
-dydt(9) = (+v19 -v27)/Vcyto;   % nadh
-dydt(10) = (+G6PASE +2*PPASE -GP +FBP2 +v16 -v19)/Vcyto; % phos
+dydt(8) = (-GAPDH +v27)/Vcyto;   % nad
+dydt(9) = (+GAPDH -v27)/Vcyto;   % nadh
+dydt(10) = (+G6PASE +2*PPASE -GP +FBP2 +FBP1 -GAPDH)/Vcyto; % phos
 dydt(11) = (+UPGASE -PPASE)/Vcyto;    % pp
-dydt(12) = (-G6PASE -PPASE -FBP2 -v16 +v22)/Vcyto;  % h2o
+dydt(12) = (-G6PASE -PPASE -FBP2 -FBP1 +v22)/Vcyto;  % h2o
 dydt(13) = (+v24)/Vcyto;        % co2
-dydt(14) = (+v19 -v27)/Vcyto;   % h
+dydt(14) = (+GAPDH -v27)/Vcyto;   % h
 dydt(15) = (-G16PI -UPGASE +GP)/Vcyto; % glc1p
 dydt(16) = (+UPGASE -GS)/Vcyto;     % udpglc
 dydt(17) = (+GS -GP)/Vcyto;     % glyglc
 dydt(18) = (+GLUT2 -GK +G6PASE)/Vcyto; % glc
 dydt(19) = (+GK -G6PASE -GPI +G16PI)/Vcyto;   % glc6p
-dydt(20) = (+GPI -PFK2 +FBP2 -PFK1 +v16)/Vcyto;   % fru6p
-dydt(21) = (+PFK1 -v16 -v17)/Vcyto;    % fru16bp
+dydt(20) = (+GPI -PFK2 +FBP2 -PFK1 +FBP1)/Vcyto;   % fru6p
+dydt(21) = (+PFK1 -FBP1 -ALD)/Vcyto;    % fru16bp
 dydt(22) = (+PFK2 -FBP2)/Vcyto;         % fru26bp
-dydt(23) = (+v17 +v18 -v19)/Vcyto;    % grap
-dydt(24) = (+v17 -v18)/Vcyto;         % dhap
-dydt(25) = (+v19 -v20)/Vcyto;         % bpg13
+dydt(23) = (+ALD +TPI -GAPDH)/Vcyto;    % grap
+dydt(24) = (+ALD -TPI)/Vcyto;         % dhap
+dydt(25) = (+GAPDH -v20)/Vcyto;         % bpg13
 dydt(26) = (+v20 -v21)/Vcyto;         % pg3
 dydt(27) = (+v21 -v22)/Vcyto;         % pg2
 dydt(28) = (+v22 -v23 +v24 +v30)/Vcyto;   % pep
@@ -785,10 +760,10 @@ v  = [GLUT2   % v1
       PFK2 
       FBP2 
       PFK1 
-      v16 
-      v17 
-      v18 
-      v19 
+      FBP1 
+      ALD 
+      TPI 
+      GAPDH 
       v20 
       v21 
       v22 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 18:37 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 18:53 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -321,6 +321,27 @@
       <parameter id="PFK1_ki_fru6p" value="0" units="mM" constant="true"/>
       <parameter id="PFK1_ka_fru26bp" value="0" units="mM" constant="true"/>
       <parameter id="PFK1_Vmax" value="7" units="mmol_per_s" constant="true"/>
+      <parameter id="FBP1_ki_fru26bp" value="0" units="mM" constant="true"/>
+      <parameter id="FBP1_km_fru16bp" value="0" units="mM" constant="true"/>
+      <parameter id="FBP1_Vmax" value="4" units="mmol_per_s" constant="true"/>
+      <parameter id="ALD_keq" value="9" units="per_mM" constant="true"/>
+      <parameter id="ALD_km_fru16bp" value="0" units="mM" constant="true"/>
+      <parameter id="ALD_km_dhap" value="0" units="mM" constant="true"/>
+      <parameter id="ALD_km_grap" value="0" units="mM" constant="true"/>
+      <parameter id="ALD_ki1_grap" value="0" units="mM" constant="true"/>
+      <parameter id="ALD_ki2_grap" value="0" units="mM" constant="true"/>
+      <parameter id="ALD_Vmax" value="420" units="mmol_per_s" constant="true"/>
+      <parameter id="TPI_keq" value="0" units="dimensionless" constant="true"/>
+      <parameter id="TPI_km_dhap" value="0" units="mM" constant="true"/>
+      <parameter id="TPI_km_grap" value="0" units="mM" constant="true"/>
+      <parameter id="TPI_Vmax" value="420" units="mmol_per_s" constant="true"/>
+      <parameter id="GAPDH_keq" value="0" units="dimensionless" constant="true"/>
+      <parameter id="GAPDH_k_nad" value="0" units="mM" constant="true"/>
+      <parameter id="GAPDH_k_grap" value="0" units="mM" constant="true"/>
+      <parameter id="GAPDH_k_p" value="3" units="mM" constant="true"/>
+      <parameter id="GAPDH_k_nadh" value="0" units="mM" constant="true"/>
+      <parameter id="GAPDH_k_bpg13" value="0" units="mM" constant="true"/>
+      <parameter id="GAPDH_Vmax" value="420" units="mmol_per_s" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="ins">
@@ -1958,6 +1979,302 @@
                   <ci> atp </ci>
                   <ci> fru6p </ci>
                 </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="FBP1" name="D-Fructose-1,6-bisphosphate 1-phosphohydrolase" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="fru16bp" stoichiometry="1" constant="true"/>
+          <speciesReference species="h2o" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="fru6p" stoichiometry="1" constant="true"/>
+          <speciesReference species="p" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="fru26bp"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> FBP1_Vmax </ci>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <cn type="integer"> 1 </cn>
+                    <apply>
+                      <divide/>
+                      <ci> fru26bp </ci>
+                      <ci> FBP1_ki_fru26bp </ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <ci> fru16bp </ci>
+              </apply>
+              <apply>
+                <plus/>
+                <ci> fru16bp </ci>
+                <ci> FBP1_km_fru16bp </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="ALD" name="Aldolase" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="fru16bp" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="grap" stoichiometry="1" constant="true"/>
+          <speciesReference species="dhap" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> ALD_Vmax </ci>
+                  </apply>
+                  <ci> ALD_km_fru16bp </ci>
+                </apply>
+                <apply>
+                  <minus/>
+                  <ci> fru16bp </ci>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <times/>
+                      <ci> grap </ci>
+                      <ci> dhap </ci>
+                    </apply>
+                    <ci> ALD_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> fru16bp </ci>
+                  <ci> ALD_km_fru16bp </ci>
+                </apply>
+                <apply>
+                  <divide/>
+                  <ci> grap </ci>
+                  <ci> ALD_ki1_grap </ci>
+                </apply>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> dhap </ci>
+                    <apply>
+                      <plus/>
+                      <ci> grap </ci>
+                      <ci> ALD_km_grap </ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <ci> ALD_km_dhap </ci>
+                    <ci> ALD_ki1_grap </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> fru16bp </ci>
+                    <ci> grap </ci>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <ci> ALD_km_fru16bp </ci>
+                    <ci> ALD_ki2_grap </ci>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="TPI" name="Triosephosphate Isomerase" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="dhap" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="grap" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> TPI_Vmax </ci>
+                  </apply>
+                  <ci> TPI_km_dhap </ci>
+                </apply>
+                <apply>
+                  <minus/>
+                  <ci> dhap </ci>
+                  <apply>
+                    <divide/>
+                    <ci> grap </ci>
+                    <ci> TPI_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> dhap </ci>
+                  <ci> TPI_km_dhap </ci>
+                </apply>
+                <apply>
+                  <divide/>
+                  <ci> grap </ci>
+                  <ci> TPI_km_grap </ci>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="GAPDH" name="D-Glyceraldehyde-3-phosphate:NAD+ oxidoreductase" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="grap" stoichiometry="1" constant="true"/>
+          <speciesReference species="p" stoichiometry="1" constant="true"/>
+          <speciesReference species="nad" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="bpg13" stoichiometry="1" constant="true"/>
+          <speciesReference species="nadh" stoichiometry="1" constant="true"/>
+          <speciesReference species="h" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="phos"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> GAPDH_Vmax </ci>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <ci> GAPDH_k_nad </ci>
+                    <ci> GAPDH_k_grap </ci>
+                    <ci> GAPDH_k_p </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <times/>
+                    <ci> nad </ci>
+                    <ci> grap </ci>
+                    <ci> phos </ci>
+                  </apply>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <times/>
+                      <ci> bpg13 </ci>
+                      <ci> nadh </ci>
+                    </apply>
+                    <ci> GAPDH_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <minus/>
+                <apply>
+                  <plus/>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> nad </ci>
+                        <ci> GAPDH_k_nad </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> grap </ci>
+                        <ci> GAPDH_k_grap </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> phos </ci>
+                        <ci> GAPDH_k_p </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> nadh </ci>
+                        <ci> GAPDH_k_nadh </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> bpg13 </ci>
+                        <ci> GAPDH_k_bpg13 </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                </apply>
+                <cn type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>

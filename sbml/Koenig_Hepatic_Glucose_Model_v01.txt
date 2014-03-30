@@ -364,11 +364,51 @@ model *Koenig2014_hepatic_glucose()
   PFK1 = scale_gly * PFK1_Vmax * (1 - 1/(1 + fru26bp/PFK1_ka_fru26bp)) * fru6p*atp/(PFK1_ki_fru6p*PFK1_km_atp + PFK1_km_fru6p*atp + PFK1_km_atp*fru6p + atp*fru6p);
   PFK1 has mmol_per_s;
 
+  FBP1 is "D-Fructose-1,6-bisphosphate 1-phosphohydrolase";
+  FBP1 : fru16bp + h2o => fru6p + p;
+  FBP1_ki_fru26bp = 0.001 mM;
+  FBP1_km_fru16bp = 0.0013 mM;
+  FBP1_Vmax = 4.326 mmol_per_s;
+  FBP1 = scale_gly * FBP1_Vmax / (1 + fru26bp/FBP1_ki_fru26bp) * fru16bp/(fru16bp + FBP1_km_fru16bp);
+  FBP1 has mmol_per_s;
 
-// 'FBP1'            % v16
-// 'ALD'             % v17
-// 'TPI'             % v18
-// 'GAPDH'           % v19
+  
+  ALD is "Aldolase";
+  ALD : fru16bp -> grap + dhap;
+  ALD_keq = 9.762988973629690E-5 per_mM;
+  ALD_km_fru16bp = 0.0071 mM;
+  ALD_km_dhap = 0.0364 mM;
+  ALD_km_grap = 0.0071 mM;
+  ALD_ki1_grap = 0.0572 mM;
+  ALD_ki2_grap = 0.176 mM;
+  ALD_Vmax = 420 mmol_per_s;
+  ALD = scale_gly * ALD_Vmax/ALD_km_fru16bp * (fru16bp - grap*dhap/ALD_keq) /(1 + fru16bp/ALD_km_fru16bp + grap/ALD_ki1_grap + dhap*(grap + ALD_km_grap)/(ALD_km_dhap*ALD_ki1_grap) + (fru16bp*grap)/(ALD_km_fru16bp*ALD_ki2_grap));
+  ALD has mmol_per_s;
+ 
+
+  TPI is "Triosephosphate Isomerase";
+  TPI : dhap -> grap;
+  TPI_keq = 0.054476985386756 dimensionless;
+  TPI_km_dhap = 0.59 mM;
+  TPI_km_grap = 0.42 mM;
+  TPI_Vmax = 420 mmol_per_s;
+  TPI = scale_gly * TPI_Vmax/TPI_km_dhap * (dhap - grap/TPI_keq) / (1 + dhap/TPI_km_dhap + grap/TPI_km_grap);
+  TPI has mmol_per_s;
+
+
+  GAPDH is "D-Glyceraldehyde-3-phosphate:NAD+ oxidoreductase";
+  GAPDH : grap + p + nad -> bpg13 + nadh + h;
+  GAPDH_keq = 0.086779866194594 dimensionless;
+  GAPDH_k_nad = 0.05 mM;
+  GAPDH_k_grap = 0.005 mM;
+  GAPDH_k_p = 3.9 mM;
+  GAPDH_k_nadh = 0.0083 mM;
+  GAPDH_k_bpg13 = 0.0035 mM;
+  GAPDH_Vmax = 420 mmol_per_s;
+  GAPDH = scale_gly * GAPDH_Vmax / (GAPDH_k_nad*GAPDH_k_grap*GAPDH_k_p) * (nad*grap*phos - bpg13*nadh/GAPDH_keq) / ( (1 + nad/GAPDH_k_nad) * (1+grap/GAPDH_k_grap) * (1 + phos/GAPDH_k_p) + (1+nadh/GAPDH_k_nadh)*(1+bpg13/GAPDH_k_bpg13) - 1);
+  GAPDH has mmol_per_s;
+
+
 // 'PGK'             % v20
 // 'PGM'             % v21
 // 'EN'              % v22
