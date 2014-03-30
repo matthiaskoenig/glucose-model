@@ -504,71 +504,51 @@ LDH = scale_gly * LDH_Vmax / (LDH_k_pyr * LDH_k_nadh) * (pyr*nadh - lac*nad/LDH_
  % [mmol_per_s]
 
 % *********************************** %
-% v28 : Lactate Transport (import)
+% v28 : LACT : Lactate Transport (import)
 % *********************************** %
-% high capacity importer
-% lactate_ext -> lactate
-%v28_deltag = 0;
-%v28_keq = keq(v28_deltag);
-%v28_td = (lac_ext - lac/v28_keq);
-
-v28_keq = 1;
-v28_k_lac = 0.8;                % [mM]
-v28_Vmax = 5.418;
-
-v28 = scale_gly * v28_Vmax/v28_k_lac * (lac_ext - lac/v28_keq) / (1 + lac_ext/v28_k_lac + lac/v28_k_lac);
+% lac_ext <-> lac
+LACT_keq = 1;       % [-]
+LACT_k_lac = 0.8;   % [mM]
+LACT_Vmax = 5.418;  % [mmol_per_s]
+LACT = scale_gly * LACT_Vmax/LACT_k_lac * (lac_ext - lac/LACT_keq) / (1 + lac_ext/LACT_k_lac + lac/LACT_k_lac); % [mmol_per_s]
 
 % *********************************** %
-% v29 : Pyruvate Transport (import mito)
+% v29 : PYRT : Pyruvate Transport (import mito)
 % *********************************** %
-%v29_deltag = 0;
-%v29_keq = keq(v29_deltag);
-%v29_td = (pyr - pyr_mito/v29_keq);
-
-v29_keq = 1;
-v29_k_pyr = 0.1;                % [mM]
-v29_Vmax = 42;
-
-v29 = scale_gly * v29_Vmax/v29_k_pyr * (pyr - pyr_mito/v29_keq) / (1 + pyr/v29_k_pyr + pyr_mito/v29_k_pyr);
+% pyr <-> pyr_mito 
+PYRTM_keq = 1;        % [-]
+PYRTM_k_pyr = 0.1;    % [mM]
+PYRTM_Vmax = 42;      % [mmol_per_s]
+PYRTM = scale_gly * PYRTM_Vmax/PYRTM_k_pyr * (pyr - pyr_mito/PYRTM_keq) / (1 + pyr/PYRTM_k_pyr + pyr_mito/PYRTM_k_pyr); % [mmol_per_s]
 
 % *********************************** %
-% v30 : PEP Transport (export mito)
+% v30 : PEPTM : PEP Transport (export mito)
 % *********************************** %
-%v30_deltag = 0;
-%v30_keq = keq(v30_deltag);
-%v30_td = (pep_mito - pep/v30_keq);
+% pep_mito <-> pep
+PEPTM_keq = 1;          % [-]             
+PEPTM_k_pep = 0.1;      % [mM]
+PEPTM_Vmax = 33.6;      % [mmol_per_s]
+PEPTM = scale_gly * PEPTM_Vmax/PEPTM_k_pep * (pep_mito - pep/PEPTM_keq) / (1 + pep/PEPTM_k_pep + pep_mito/PEPTM_k_pep); % [mmol_per_s]
 
-v30_keq = 1;
-v30_k_pep = 0.1;                % [mM]
-v30_Vmax = 33.6;
-
-v30 = scale_gly * v30_Vmax/v30_k_pep * (pep_mito - pep/v30_keq) / (1 + pep/v30_k_pep + pep_mito/v30_k_pep);
 
 % *********************************** %
-% v31 : PDH
+% v31 : PDH : Pyruvate Dehydrogenase
 % *********************************** %
-% reaction is irreversibel
-% PDH regulated by phosphorylation, dephosphorylation mechanism
-% phosphorylated form is not very active
-% unphosphorylated form is more active
-% pyr + coa + nad -> acoa + co2 + nadh + h
-% [Hamada1975, Korotchkina2006, Kiselevsky1990, Holness1988]
-%v31_keq = 1;
-%v31_td = (pyr_mito*coa_mito*nad_mito - acoa_mito*co2_mito*nadh_mito/v31_keq);
+% pyr_mito + coa_mito + nad_mito => acoa_mito + co2_mito + nadh_mito +
+% h_mito
+PDH_k_pyr = 0.025;           % [mM] 
+PDH_k_coa = 0.013;           % [mM]
+PDH_k_nad = 0.050;           % [mM] 
+PDH_ki_acoa = 0.035;         % [mM]
+PDH_ki_nadh = 0.036;         % [mM]
+PDH_alpha_nat = 5;           % [-]
+PDH_alpha_p = 1;             % [-]
+PDH_Vmax = 13.44;            % [mmol_per_s]
 
-v31_k_pyr = 0.025;           % [mM] 
-v31_k_coa = 0.013;           % [mM]
-v31_k_nad = 0.050;           % [mM] 
-v31_ki_acoa = 0.035;         % [mM]
-v31_ki_nadh = 0.036;
-v31_alpha_nat = 5;
-v31_alpha_p = 1;
-v31_Vmax = 13.44;
-
-v31_base = scale_gly * v31_Vmax * pyr_mito/(pyr_mito + v31_k_pyr) * nad_mito/(nad_mito + v31_k_nad*(1 + nadh_mito/v31_ki_nadh)) * coa_mito/(coa_mito + v31_k_coa*(1+acoa_mito/v31_ki_acoa));
-v31_nat = v31_base * v31_alpha_nat;
-v31_p = v31_base * v31_alpha_p;
-v31 = (1 - gamma) * v31_nat + gamma * v31_p;
+PDH_base = scale_gly * PDH_Vmax * pyr_mito/(pyr_mito + PDH_k_pyr) * nad_mito/(nad_mito + PDH_k_nad*(1 + nadh_mito/PDH_ki_nadh)) * coa_mito/(coa_mito + PDH_k_coa*(1+acoa_mito/PDH_ki_acoa));
+PDH_nat = PDH_base * PDH_alpha_nat;  % [mmol_per_s] 
+PDH_p = PDH_base * PDH_alpha_p;      % [mmol_per_s]
+PDH = (1-gamma) * PDH_nat + gamma*PDH_p;  % [mmol_per_s]
 
 % *********************************** %
 % v32 : CS
@@ -656,29 +636,29 @@ dydt(24) = (+ALD -TPI)/Vcyto;         % dhap
 dydt(25) = (+GAPDH -PGK)/Vcyto;         % bpg13
 dydt(26) = (+PGK -PGM)/Vcyto;         % pg3
 dydt(27) = (+PGM -EN)/Vcyto;         % pg2
-dydt(28) = (+EN -PK +PEPCK +v30)/Vcyto;   % pep
-dydt(29) = (+PK -LDH -v29)/Vcyto;    % pyr
+dydt(28) = (+EN -PK +PEPCK +PEPTM)/Vcyto;   % pep
+dydt(29) = (+PK -LDH -PYRTM)/Vcyto;    % pyr
 dydt(30) = (-PEPCK)/Vcyto;        % oaa
-dydt(31) = (+LDH +v28)/Vcyto;   % lac
+dydt(31) = (+LDH +LACT)/Vcyto;   % lac
 
 dydt(32) = (-GLUT2)/Vext;   % glc_ext
-dydt(33) = (-v28)/Vext;  % lac_ext
+dydt(33) = (-LACT)/Vext;  % lac_ext
 
-dydt(34) = (+PEPCKM -PC +v31)/Vmito;      % co2_mito
+dydt(34) = (+PEPCKM -PC +PDH)/Vmito;      % co2_mito
 dydt(35) = (+PC)/Vmito;                % p_mito
 dydt(36) = (-PEPCKM +PC -v32 +v34)/Vmito; % oaa_mito
-dydt(37) = (+PEPCKM -v30)/Vmito;           % pep_mito
-dydt(38) = (+v31 -v32 -v35)/Vmito;      % acoa_mito
-dydt(39) = (-PC +v29 -v31)/Vmito;      % pyr_mito
+dydt(37) = (+PEPCKM -PEPTM)/Vmito;           % pep_mito
+dydt(38) = (+PDH -v32 -v35)/Vmito;      % acoa_mito
+dydt(39) = (-PC +PYRTM -PDH)/Vmito;      % pyr_mito
 dydt(40) = (+v32 -v36)/Vmito;           % cit_mito
 dydt(41) = (-PC -v33)/Vmito;           % atp_mito
 dydt(42) = (+PC +v33)/Vmito;           % adp_mito
 dydt(43) = (-PEPCKM +v33)/Vmito;           % gtp_mito
 dydt(44) = (+PEPCKM -v33)/Vmito;           % gdp_mito
-dydt(45) = (-v31 +v32)/Vmito;           % coa_mito
-dydt(46) = (+v31)/Vmito;           % nadh_mito
-dydt(47) = (-v31)/Vmito;           % nad_mito
-dydt(48) = (+v31)/Vmito;           % h_mito
+dydt(45) = (-PDH +v32)/Vmito;           % coa_mito
+dydt(46) = (+PDH)/Vmito;           % nadh_mito
+dydt(47) = (-PDH)/Vmito;           % nad_mito
+dydt(48) = (+PDH)/Vmito;           % h_mito
 dydt(49) = (-v32)/Vmito;                % h2o_mito
 
 %% constant metabolites
@@ -734,10 +714,10 @@ v  = [GLUT2   % v1
       PEPCKM 
       PC 
       LDH 
-      v28 
-      v29 
-      v30 
-      v31 
+      LACT 
+      PYRTM 
+      PEPTM 
+      PDH 
       v32 
       v33 
       v34 

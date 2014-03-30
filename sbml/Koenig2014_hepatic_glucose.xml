@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 19:36 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 19:52 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -400,6 +400,26 @@
       <parameter id="LDH_k_nad" value="0" units="mM" constant="true"/>
       <parameter id="LDH_k_nadh" value="0" units="mM" constant="true"/>
       <parameter id="LDH_Vmax" value="12" units="mmol_per_s" constant="true"/>
+      <parameter id="LACT_keq" value="1" units="dimensionless" constant="true"/>
+      <parameter id="LACT_k_lac" value="0" units="mM" constant="true"/>
+      <parameter id="LACT_Vmax" value="5" units="mmol_per_s" constant="true"/>
+      <parameter id="PYRTM_keq" value="1" units="dimensionless" constant="true"/>
+      <parameter id="PYRTM_k_pyr" value="0" units="mM" constant="true"/>
+      <parameter id="PYRTM_Vmax" value="42" units="mmol_per_s" constant="true"/>
+      <parameter id="PEPTM_keq" value="1" units="dimensionless" constant="true"/>
+      <parameter id="PEPTM_k_pep" value="0" units="mM" constant="true"/>
+      <parameter id="PEPTM_Vmax" value="33" units="mmol_per_s" constant="true"/>
+      <parameter id="PDH_k_pyr" value="0" units="mM" constant="true"/>
+      <parameter id="PDH_k_coa" value="0" units="mM" constant="true"/>
+      <parameter id="PDH_k_nad" value="0" units="mM" constant="true"/>
+      <parameter id="PDH_ki_acoa" value="0" units="mM" constant="true"/>
+      <parameter id="PDH_ki_nadh" value="0" units="mM" constant="true"/>
+      <parameter id="PDH_alpha_nat" value="5" units="dimensionless" constant="true"/>
+      <parameter id="PDH_alpha_p" value="1" units="dimensionless" constant="true"/>
+      <parameter id="PDH_Vmax" value="13" units="mmol_per_s" constant="true"/>
+      <parameter id="PDH_base" units="mmol_per_s" constant="false"/>
+      <parameter id="PDH_nat" units="mmol_per_s" constant="false"/>
+      <parameter id="PDH_p" units="mmol_per_s" constant="false"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="ins">
@@ -1376,6 +1396,90 @@
                 <ci> PK_f_p </ci>
               </apply>
             </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="PDH_base">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <times/>
+                      <ci> scale_gly </ci>
+                      <ci> PDH_Vmax </ci>
+                      <ci> pyr_mito </ci>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <ci> pyr_mito </ci>
+                      <ci> PDH_k_pyr </ci>
+                    </apply>
+                  </apply>
+                  <ci> nad_mito </ci>
+                </apply>
+                <apply>
+                  <plus/>
+                  <ci> nad_mito </ci>
+                  <apply>
+                    <times/>
+                    <ci> PDH_k_nad </ci>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> nadh_mito </ci>
+                        <ci> PDH_ki_nadh </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                </apply>
+              </apply>
+              <ci> coa_mito </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> coa_mito </ci>
+              <apply>
+                <times/>
+                <ci> PDH_k_coa </ci>
+                <apply>
+                  <plus/>
+                  <cn type="integer"> 1 </cn>
+                  <apply>
+                    <divide/>
+                    <ci> acoa_mito </ci>
+                    <ci> PDH_ki_acoa </ci>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="PDH_nat">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> PDH_base </ci>
+            <ci> PDH_alpha_nat </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="PDH_p">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> PDH_base </ci>
+            <ci> PDH_alpha_p </ci>
           </apply>
         </math>
       </initialAssignment>
@@ -3044,10 +3148,10 @@
           <speciesReference species="p" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <listOfModifiers>
-          <modifierSpeciesReference species="acoa_mito"/>
-          <modifierSpeciesReference species="pyr_mito"/>
-          <modifierSpeciesReference species="atp_mito"/>
           <modifierSpeciesReference species="co2_mito"/>
+          <modifierSpeciesReference species="atp_mito"/>
+          <modifierSpeciesReference species="pyr_mito"/>
+          <modifierSpeciesReference species="acoa_mito"/>
         </listOfModifiers>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -3210,6 +3314,190 @@
                   </apply>
                 </apply>
                 <cn type="integer"> 1 </cn>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="LACT" name="Lactate transport (import)" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="lac_ext" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="lac" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> LACT_Vmax </ci>
+                  </apply>
+                  <ci> LACT_k_lac </ci>
+                </apply>
+                <apply>
+                  <minus/>
+                  <ci> lac_ext </ci>
+                  <apply>
+                    <divide/>
+                    <ci> lac </ci>
+                    <ci> LACT_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> lac_ext </ci>
+                  <ci> LACT_k_lac </ci>
+                </apply>
+                <apply>
+                  <divide/>
+                  <ci> lac </ci>
+                  <ci> LACT_k_lac </ci>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="PYRTM" name="Pyruvate transport (mito)" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="pyr" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="pyr_mito" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> PYRTM_Vmax </ci>
+                  </apply>
+                  <ci> PYRTM_k_pyr </ci>
+                </apply>
+                <apply>
+                  <minus/>
+                  <ci> pyr </ci>
+                  <apply>
+                    <divide/>
+                    <ci> pyr_mito </ci>
+                    <ci> PYRTM_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> pyr </ci>
+                  <ci> PYRTM_k_pyr </ci>
+                </apply>
+                <apply>
+                  <divide/>
+                  <ci> pyr_mito </ci>
+                  <ci> PYRTM_k_pyr </ci>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="PEPTM" name="PEP Transport (export mito)" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="pep_mito" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="pep" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> PEPTM_Vmax </ci>
+                  </apply>
+                  <ci> PEPTM_k_pep </ci>
+                </apply>
+                <apply>
+                  <minus/>
+                  <ci> pep_mito </ci>
+                  <apply>
+                    <divide/>
+                    <ci> pep </ci>
+                    <ci> PEPTM_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> pep </ci>
+                  <ci> PEPTM_k_pep </ci>
+                </apply>
+                <apply>
+                  <divide/>
+                  <ci> pep_mito </ci>
+                  <ci> PEPTM_k_pep </ci>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="PDH" name="Pyruvate Dehydrogenase" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="pyr_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="coa_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="nad_mito" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="acoa_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="co2_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="nadh_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="h_mito" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <cn type="integer"> 1 </cn>
+                  <ci> gamma </ci>
+                </apply>
+                <ci> PDH_nat </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> gamma </ci>
+                <ci> PDH_p </ci>
               </apply>
             </apply>
           </math>

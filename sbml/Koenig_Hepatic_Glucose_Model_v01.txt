@@ -522,11 +522,54 @@ model *Koenig2014_hepatic_glucose()
   LDH has mmol_per_s;
 
 
-// 'LACT'            % v28
-// 'PYRT'            % v29
-// 'PEPT'            % v30
+  LACT is "Lactate transport (import)";
+  LACT : lac_ext -> lac;
+  LACT_keq = 1 dimensionless;
+  LACT_k_lac = 0.8 mM;
+  LACT_Vmax = 5.418 mmol_per_s;
+  LACT = scale_gly * LACT_Vmax/LACT_k_lac * (lac_ext - lac/LACT_keq) / (1 + lac_ext/LACT_k_lac + lac/LACT_k_lac);
+  LACT has mmol_per_s;
 
-// 'PDH'             % v31
+
+  PYRTM is "Pyruvate transport (mito)";
+  PYRTM : pyr -> pyr_mito;
+  PYRTM_keq = 1 dimensionless;
+  PYRTM_k_pyr = 0.1 mM;
+  PYRTM_Vmax = 42 mmol_per_s;
+  PYRTM = scale_gly * PYRTM_Vmax/PYRTM_k_pyr * (pyr - pyr_mito/PYRTM_keq) / (1 + pyr/PYRTM_k_pyr + pyr_mito/PYRTM_k_pyr);
+  PYRTM has mmol_per_s;
+
+
+  PEPTM is "PEP Transport (export mito)";
+  PEPTM : pep_mito -> pep;
+  PEPTM_keq = 1 dimensionless;
+  PEPTM_k_pep = 0.1 mM;
+  PEPTM_Vmax = 33.6 mmol_per_s;
+  PEPTM = scale_gly * PEPTM_Vmax/PEPTM_k_pep * (pep_mito - pep/PEPTM_keq) / (1 + pep/PEPTM_k_pep + pep_mito/PEPTM_k_pep);
+  PEPTM has mmol_per_s;
+
+
+  PDH is "Pyruvate Dehydrogenase";
+  PDH : pyr_mito + coa_mito + nad_mito => acoa_mito + co2_mito + nadh_mito +h_mito;
+  PDH_k_pyr = 0.025 mM;
+  PDH_k_coa = 0.013 mM;
+  PDH_k_nad = 0.050 mM;
+  PDH_ki_acoa = 0.035 mM;
+  PDH_ki_nadh = 0.036 mM;
+  PDH_alpha_nat = 5 dimensionless;
+  PDH_alpha_p = 1 dimensionless;
+  PDH_Vmax = 13.44 mmol_per_s;
+
+  PDH_base = scale_gly * PDH_Vmax * pyr_mito/(pyr_mito + PDH_k_pyr) * nad_mito/(nad_mito + PDH_k_nad*(1 + nadh_mito/PDH_ki_nadh)) * coa_mito/(coa_mito + PDH_k_coa*(1+acoa_mito/PDH_ki_acoa));
+  PDH_nat = PDH_base * PDH_alpha_nat;
+  PDH_p = PDH_base * PDH_alpha_p;
+  PDH = (1-gamma) * PDH_nat + gamma*PDH_p;
+  PDH_base has mmol_per_s;
+  PDH_nat has mmol_per_s;
+  PDH_p has mmol_per_s;
+  PDH has mmol_per_s;
+
+
 // 'CS'              % v32
 // 'NDKMITO'        % v33
 
