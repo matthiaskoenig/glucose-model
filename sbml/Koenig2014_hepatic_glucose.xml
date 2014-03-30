@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 18:25 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 18:37 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -189,6 +189,7 @@
       <species id="h_mito" compartment="mito" initialConcentration="0" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="fru6P" compartment="default_compartment" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="glc1P" compartment="default_compartment" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="p" compartment="default_compartment" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
       <parameter id="nadh_tot" units="mM" constant="false"/>
@@ -308,6 +309,18 @@
       <parameter id="PFK2_Vmax" value="0" units="mmol_per_s" constant="true"/>
       <parameter id="PFK2_native" units="mmol_per_s" constant="false"/>
       <parameter id="PFK2_phospho" units="mmol_per_s" constant="false"/>
+      <parameter id="FBP2_km_fru26bp_native" value="0" units="mM" constant="true"/>
+      <parameter id="FBP2_ki_fru6p_native" value="0" units="mM" constant="true"/>
+      <parameter id="FBP2_km_fru26bp_phospho" value="0" units="mM" constant="true"/>
+      <parameter id="FBP2_ki_fru6p_phospho" value="0" units="mM" constant="true"/>
+      <parameter id="FBP2_Vmax" value="0" units="mmol_per_s" constant="true"/>
+      <parameter id="FBP2_native" units="mmol_per_s" constant="false"/>
+      <parameter id="FBP2_phospho" units="mmol_per_s" constant="false"/>
+      <parameter id="PFK1_km_atp" value="0" units="mM" constant="true"/>
+      <parameter id="PFK1_km_fru6p" value="0" units="mM" constant="true"/>
+      <parameter id="PFK1_ki_fru6p" value="0" units="mM" constant="true"/>
+      <parameter id="PFK1_ka_fru26bp" value="0" units="mM" constant="true"/>
+      <parameter id="PFK1_Vmax" value="7" units="mmol_per_s" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="ins">
@@ -965,6 +978,72 @@
               <plus/>
               <ci> atp </ci>
               <ci> PFK2_k_atp_phospho </ci>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="FBP2_native">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <ci> scale_gly </ci>
+                  <ci> FBP2_Vmax </ci>
+                </apply>
+                <apply>
+                  <plus/>
+                  <cn type="integer"> 1 </cn>
+                  <apply>
+                    <divide/>
+                    <ci> fru6p </ci>
+                    <ci> FBP2_ki_fru6p_native </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <ci> fru26bp </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> FBP2_km_fru26bp_native </ci>
+              <ci> fru26bp </ci>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="FBP2_phospho">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <ci> scale_gly </ci>
+                  <ci> FBP2_Vmax </ci>
+                </apply>
+                <apply>
+                  <plus/>
+                  <cn type="integer"> 1 </cn>
+                  <apply>
+                    <divide/>
+                    <ci> fru6p </ci>
+                    <ci> FBP2_ki_fru6p_phospho </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <ci> fru26bp </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> FBP2_km_fru26bp_phospho </ci>
+              <ci> fru26bp </ci>
             </apply>
           </apply>
         </math>
@@ -1782,6 +1861,103 @@
                 <times/>
                 <ci> gamma </ci>
                 <ci> PFK2_phospho </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="FBP2" name="D-Fructose-2,6-bisphosphate 2-phosphohydrolase" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="fru26bp" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="fru6p" stoichiometry="1" constant="true"/>
+          <speciesReference species="p" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <cn type="integer"> 1 </cn>
+                  <ci> gamma </ci>
+                </apply>
+                <ci> FBP2_native </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> gamma </ci>
+                <ci> FBP2_phospho </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="PFK1" name="ATP:D-fructose-6-phosphate 1-phosphotransferase" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="fru6p" stoichiometry="1" constant="true"/>
+          <speciesReference species="atp" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="fru16bp" stoichiometry="1" constant="true"/>
+          <speciesReference species="adp" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="fru26bp"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <ci> scale_gly </ci>
+                <ci> PFK1_Vmax </ci>
+                <apply>
+                  <minus/>
+                  <cn type="integer"> 1 </cn>
+                  <apply>
+                    <divide/>
+                    <cn type="integer"> 1 </cn>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> fru26bp </ci>
+                        <ci> PFK1_ka_fru26bp </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                </apply>
+                <ci> fru6p </ci>
+                <ci> atp </ci>
+              </apply>
+              <apply>
+                <plus/>
+                <apply>
+                  <times/>
+                  <ci> PFK1_ki_fru6p </ci>
+                  <ci> PFK1_km_atp </ci>
+                </apply>
+                <apply>
+                  <times/>
+                  <ci> PFK1_km_fru6p </ci>
+                  <ci> atp </ci>
+                </apply>
+                <apply>
+                  <times/>
+                  <ci> PFK1_km_atp </ci>
+                  <ci> fru6p </ci>
+                </apply>
+                <apply>
+                  <times/>
+                  <ci> atp </ci>
+                  <ci> fru6p </ci>
+                </apply>
               </apply>
             </apply>
           </math>

@@ -339,8 +339,32 @@ model *Koenig2014_hepatic_glucose()
   PFK2 has mmol_per_s;
 
 
-// 'FBP2'            % v14
-// 'PFK1'            % v15
+  FBP2 is "D-Fructose-2,6-bisphosphate 2-phosphohydrolase";
+  FBP2 : fru26bp => fru6p + p;
+  FBP2_km_fru26bp_native = 0.010 mM;
+  FBP2_ki_fru6p_native = 0.0035 mM;
+  FBP2_km_fru26bp_phospho = 0.0005 mM;
+  FBP2_ki_fru6p_phospho = 0.010 mM;
+  FBP2_Vmax =  0.126 mmol_per_s;
+  
+  FBP2_native = scale_gly * FBP2_Vmax/(1 + fru6p/FBP2_ki_fru6p_native) * fru26bp / ( FBP2_km_fru26bp_native + fru26bp);
+  FBP2_phospho = scale_gly * FBP2_Vmax/(1 + fru6p/FBP2_ki_fru6p_phospho) * fru26bp / ( FBP2_km_fru26bp_phospho + fru26bp);
+  FBP2 = (1-gamma) * FBP2_native + gamma * FBP2_phospho;
+  FBP2_native has mmol_per_s;
+  FBP2_phospho has mmol_per_s;
+  FBP2 has mmol_per_s;
+
+  PFK1 is "ATP:D-fructose-6-phosphate 1-phosphotransferase";
+  PFK1 : fru6p + atp => fru16bp + adp;
+  PFK1_km_atp = 0.111 mM;
+  PFK1_km_fru6p = 0.077 mM;
+  PFK1_ki_fru6p = 0.012 mM;
+  PFK1_ka_fru26bp = 0.001 mM;
+  PFK1_Vmax = 7.182 mmol_per_s;
+  PFK1 = scale_gly * PFK1_Vmax * (1 - 1/(1 + fru26bp/PFK1_ka_fru26bp)) * fru6p*atp/(PFK1_ki_fru6p*PFK1_km_atp + PFK1_km_fru6p*atp + PFK1_km_atp*fru6p + atp*fru6p);
+  PFK1 has mmol_per_s;
+
+
 // 'FBP1'            % v16
 // 'ALD'             % v17
 // 'TPI'             % v18
