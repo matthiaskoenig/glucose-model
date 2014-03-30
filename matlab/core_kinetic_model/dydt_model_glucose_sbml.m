@@ -185,23 +185,12 @@ UPGASE = scale_glyglc * UPGASE_Vmax/(UPGASE_km_utp*UPGASE_km_glc1p) * (utp*glc1p
     ( (1 + utp/UPGASE_km_utp)*(1 + glc1p/UPGASE_km_glc1p) + (1 + udpglc/UPGASE_km_udpglc)*(1 + pp/UPGASE_km_pp) - 1 );
  
 % *********************************** %
-% v7 : Pyrophosphate phosphohydrolase (PPase)
+% v7 : PPASE: Pyrophosphate phosphohydrolase
 % *********************************** %
-% R00004_3.6.1.1_cyto	
-% Pyrophosphate phosphohydrolase	
-% C00013 + C00001 <=> 2 C00009
-% pp + h2o -> 2 p
-% Low km for pp for very low pp concentations in the cell.
-% much higher km value for human form 0.25 [Reichert1974]
-%v7_deltag = -19.1;                          % [kJ/mol] [-19.2 Guyn1974]
-%v7_keq = keq(v7_deltag);
-%v7_td = (pp - p*p/v7_keq);
-% Km [Tamura1980]
-
-v7_km_pp = 0.005;
-v7_Vmax = 2.4;
-
-v7 = scale_glyglc * v7_Vmax * pp/(pp + v7_km_pp);
+% pp + h2o => 2 p
+PPASE_km_pp = 0.005;  % [mM]
+PPASE_Vmax = 2.4;     % [mmol_per_s]
+PPASE = scale_glyglc * PPASE_Vmax * pp/(pp + PPASE_km_pp);
 
 % *********************************** %
 % v8 : Glycogen synthase (GS)
@@ -766,9 +755,9 @@ dydt(6) = (+v10 -v24)/Vcyto;   % gtp
 dydt(7) = (-v10 +v24)/Vcyto;   % gdp
 dydt(8) = (-v19 +v27)/Vcyto;   % nad
 dydt(9) = (+v19 -v27)/Vcyto;   % nadh
-dydt(10) = (+G6PASE +2*v7 -v9 +v14 +v16 -v19)/Vcyto; % p
-dydt(11) = (+UPGASE -v7)/Vcyto;    % pp
-dydt(12) = (-G6PASE -v7 -v14 -v16 +v22)/Vcyto;  % h2o
+dydt(10) = (+G6PASE +2*PPASE -v9 +v14 +v16 -v19)/Vcyto; % p
+dydt(11) = (+UPGASE -PPASE)/Vcyto;    % pp
+dydt(12) = (-G6PASE -PPASE -v14 -v16 +v22)/Vcyto;  % h2o
 dydt(13) = (+v24)/Vcyto;        % co2
 dydt(14) = (+v19 -v27)/Vcyto;   % h
 dydt(15) = (-G16PI -UPGASE +v9)/Vcyto; % glc1p
@@ -841,7 +830,7 @@ v  = [GLUT2   % v1
       GPI 
       G16PI 
       UPGASE 
-      v7 
+      PPASE 
       v8 
       v9 
       v10 

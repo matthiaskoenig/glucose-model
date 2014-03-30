@@ -15,12 +15,18 @@ model *Koenig2014_hepatic_glucose()
   unit volume = litre;
   unit area = metre^2; 
   unit length = metre;
-  unit mM = 1e-3 mole / litre;
-  unit per_mM = litre / 1e-3 mole;
-  unit mmol_per_s = 1e-3 mole / second;
+
   unit per_s = 1 / second;
+  unit minute = 60 second;  
   unit mmol = 1e-3 mole;
-  unit pmol_per_l = 1e-12 mole / litre;
+  unit mM = mmol / litre;
+  unit per_mM = 1 / mM;
+  unit mMmM = mM^2;
+  unit mmol_per_s = mmol / second;
+  
+  unit pmol = 1e-12 mole;
+  unit pmol_per_l = pmol / litre;
+  
 
 
   // Compartments and Species
@@ -213,9 +219,20 @@ model *Koenig2014_hepatic_glucose()
   UPGASE_Vmax = 80 mmol_per_s;
   UPGASE = scale_glyglc * UPGASE_Vmax/(UPGASE_km_utp*UPGASE_km_glc1p) * (utp*glc1p - udpglc*pp/UPGASE_keq) / ( (1 + utp/UPGASE_km_utp)*(1 + glc1p/UPGASE_km_glc1p) + (1 + udpglc/UPGASE_km_udpglc)*(1 + pp/UPGASE_km_pp) - 1 );
   UPGASE has mmol_per_s;
+  
+  PPASE is "Pyrophosphate phosphohydrolase";
+  PPASE : pp + h2o => 2 phos;
+  PPASE_km_pp = 0.005 mM;
+  PPASE_Vmax = 2.4 mmol_per_s;
+  PPASE = scale_glyglc * PPASE_Vmax * pp/(pp + PPASE_km_pp);
+  PPASE has mmol_per_s; 
+  
+  GS is "Glycogen synthase";
+  GS : udpglc => udp + glyglc;
+  
 
-// 'PPase'           % v7 
-// 'GS'              % v8 
+  GS has mmol_per_s;
+
 // 'GP'              % v9
 // 'NTK (GTP)'       % v10            
 // 'NTK (UTP)'       % v11
