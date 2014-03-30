@@ -439,7 +439,45 @@ model *Koenig2014_hepatic_glucose()
   EN has mmol_per_s;
 
 	
-// 'PK'              % v23
+  PK is "Pyruvatkinase";
+  PK : pep + adp => pyr + atp;
+  PK_n = 3.5 dimensionless;
+  PK_n_p = 3.5 dimensionless;
+  PK_n_fbp = 1.8 dimensionless;
+  PK_n_fbp_p = 1.8 dimensionless;
+  PK_alpha = 1.0 dimensionless;
+  PK_alpha_p = 1.1 dimensionless;
+  PK_alpha_end = 1.0 dimensionless;
+  PK_k_fbp = 0.16E-3 mM;
+  PK_k_fbp_p = 0.35E-3 mM;
+  PK_k_pep = 0.58 mM;
+  PK_k_pep_p = 1.10 mM;
+  PK_k_pep_end = 0.08 mM;
+  PK_k_adp = 2.3 mM;
+  PK_base_act = 0.08 mM;
+  PK_base_act_p = 0.04 mM;
+  PK_Vmax = 46.2 mmol_per_s;
+
+  PK_f = fru16bp^PK_n_fbp / (PK_k_fbp^PK_n_fbp + fru16bp^PK_n_fbp);          
+  PK_f_p = fru16bp^PK_n_fbp_p / (PK_k_fbp_p^PK_n_fbp_p + fru16bp^PK_n_fbp_p);
+  PK_alpha_inp = (1 - PK_f) * (PK_alpha - PK_alpha_end) + PK_alpha_end;      
+  PK_alpha_p_inp = (1 - PK_f_p) * (PK_alpha_p - PK_alpha_end) + PK_alpha_end;
+  PK_pep_inp = (1 - PK_f) * (PK_k_pep - PK_k_pep_end) + PK_k_pep_end;        
+  PK_pep_p_inp = (1 - PK_f_p) * (PK_k_pep_p - PK_k_pep_end) + PK_k_pep_end;
+  PK_native =  scale_gly * PK_Vmax * PK_alpha_inp * pep^PK_n/(PK_pep_inp^PK_n + pep^PK_n) * adp/(adp + PK_k_adp) * ( PK_base_act + (1-PK_base_act) *PK_f );
+  PK_phospho = scale_gly * PK_Vmax * PK_alpha_p_inp * pep^PK_n_p/(PK_pep_p_inp^PK_n_p + pep^PK_n_p) * adp/(adp + PK_k_adp) * ( PK_base_act_p + (1-PK_base_act_p) * PK_f_p );
+  PK = (1-gamma)* PK_native + gamma * PK_phospho;
+  
+  PK_f has dimensionless;
+  PK_f_p has dimensionless;
+  PK_alpha_inp has dimensionless;
+  PK_alpha_p_inp has dimensionless;
+  PK_pep_inp has mM;
+  PK_pep_p_inp has mM;
+  PK_native has mmol_per_s;
+  PK_phospho has mmol_per_s;
+  PK has mmol_per_s;
+
 // 'PEPCK'      % v24
 // 'PEPCKMITO'      % v25
 // 'PC'              % v26

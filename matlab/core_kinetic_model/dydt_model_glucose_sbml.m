@@ -414,46 +414,44 @@ PGM = scale_gly * PGM_Vmax * (pg3 - pg2/PGM_keq) / (pg3 + PGM_k_pg3 *(1 + pg2/PG
 % v22 : EN : 2-Phospho-D-glucerate hydro-lyase (enolase)
 % *********************************** %
 % pg2 <-> pep
-v22_keq = 0.054476985386756; % [-]
-v22_k_pep = 1;      % [mM]
-v22_k_pg2 = 1;      % [mM]
-v22_Vmax = 35.994;  % [mmol_per_s]
-v22 = scale_gly * v22_Vmax * (pg2 - pep/v22_keq) / (pg2 + v22_k_pg2 *(1 + pep/v22_k_pep)); % [mmol_per_s]
+EN_keq = 0.054476985386756; % [-]
+EN_k_pep = 1;      % [mM]
+EN_k_pg2 = 1;      % [mM]
+EN_Vmax = 35.994;  % [mmol_per_s]
+EN = scale_gly * EN_Vmax * (pg2 - pep/EN_keq) / (pg2 + EN_k_pg2 *(1 + pep/EN_k_pep)); % [mmol_per_s]
 
 % *********************************** %
-% v23 : Pyruvatkinase (PK)
+% v23 : PK : Pyruvatkinase
 % *********************************** %
-% v23	R00200_2.7.1.40_cyto	ATP:pyruvate O2-phosphotransferase	C00002 + C00022 <=> C00008 + C00074																																																																																																																																																																																																																																																												
-%v23_deltag = -31.4;        % [kJ/mol]  
-%v23_keq = keq(v23_deltag);
-%v23_td = (pep*adp - atp*pyr/v23_keq);            
+% pep + adp => pyr + atp
+PK_n = 3.5;         % [-]
+PK_n_p = 3.5;       % [-]
+PK_n_fbp = 1.8;     % [-]
+PK_n_fbp_p = 1.8;   % [-]
+PK_alpha = 1.0;     % [-]
+PK_alpha_p = 1.1;   % [-]
+PK_alpha_end = 1.0; % [-]
+PK_k_fbp = 0.16E-3;   % [mM]
+PK_k_fbp_p = 0.35E-3; % [mM]
+PK_k_pep = 0.58;      % [mM]
+PK_k_pep_p = 1.10;    % [mM]
+PK_k_pep_end = 0.08;  % [mM]
+PK_k_adp = 2.3;       % [mM]
+PK_base_act = 0.08;   % [-]
+PK_base_act_p = 0.04; % [-]
+PK_Vmax = 46.2;       % [mmol_per_s]
 
-v23_n = 3.5;
-v23_n_p = 3.5;
-v23_n_fbp = 1.8;
-v23_n_fbp_p = 1.8;
-v23_alpha = 1.0;  
-v23_alpha_p = 1.1;
-v23_alpha_end = 1.0;
-v23_k_fbp = 0.16E-3;
-v23_k_fbp_p = 0.35E-3;
-v23_k_pep = 0.58;
-v23_k_pep_p = 1.10;
-v23_k_pep_end = 0.08;
-v23_k_adp = 2.3;        % [mM]
-v23_base_act = 0.08;
-v23_base_act_p = 0.04;
-v23_Vmax = 46.2;
+PK_f = fru16bp^PK_n_fbp / (PK_k_fbp^PK_n_fbp + fru16bp^PK_n_fbp);           % [-]
+PK_f_p = fru16bp^PK_n_fbp_p / (PK_k_fbp_p^PK_n_fbp_p + fru16bp^PK_n_fbp_p); % [-]
+PK_alpha_inp = (1 - PK_f) * (PK_alpha - PK_alpha_end) + PK_alpha_end;       % [-]
+PK_alpha_p_inp = (1 - PK_f_p) * (PK_alpha_p - PK_alpha_end) + PK_alpha_end; % [-]
+PK_pep_inp = (1 - PK_f) * (PK_k_pep - PK_k_pep_end) + PK_k_pep_end;         % [mM]
+PK_pep_p_inp = (1 - PK_f_p) * (PK_k_pep_p - PK_k_pep_end) + PK_k_pep_end;   % [mM]
 
-v23_f = fru16bp^v23_n_fbp / (v23_k_fbp^v23_n_fbp + fru16bp^v23_n_fbp);
-v23_f_p = fru16bp^v23_n_fbp_p / (v23_k_fbp_p^v23_n_fbp_p + fru16bp^v23_n_fbp_p);
-v23_alpha_inp = (1 - v23_f) * (v23_alpha - v23_alpha_end) + v23_alpha_end;
-v23_alpha_p_inp = (1 - v23_f_p) * (v23_alpha_p - v23_alpha_end) + v23_alpha_end;
-v23_pep_inp = (1 - v23_f) * (v23_k_pep - v23_k_pep_end) + v23_k_pep_end;
-v23_pep_p_inp = (1 - v23_f_p) * (v23_k_pep_p - v23_k_pep_end) + v23_k_pep_end;
-v23_native =  scale_gly * v23_Vmax * v23_alpha_inp * pep^v23_n/(v23_pep_inp.^v23_n + pep^v23_n) * adp/(adp + v23_k_adp) * ( v23_base_act + (1-v23_base_act) *v23_f );
-v23_phospho = scale_gly * v23_Vmax * v23_alpha_p_inp * pep^v23_n_p/(v23_pep_p_inp.^v23_n_p + pep^v23_n_p) * adp/(adp + v23_k_adp) * ( v23_base_act_p + (1-v23_base_act_p) * v23_f_p );
-v23 = (1-gamma)* v23_native + gamma * v23_phospho;
+PK_native =  scale_gly * PK_Vmax * PK_alpha_inp * pep^PK_n/(PK_pep_inp^PK_n + pep^PK_n) * adp/(adp + PK_k_adp) * ( PK_base_act + (1-PK_base_act) *PK_f );
+PK_phospho = scale_gly * PK_Vmax * PK_alpha_p_inp * pep^PK_n_p/(PK_pep_p_inp^PK_n_p + pep^PK_n_p) * adp/(adp + PK_k_adp) * ( PK_base_act_p + (1-PK_base_act_p) * PK_f_p );
+PK = (1-gamma)* PK_native + gamma * PK_phospho;  % [mmol_per_s]
+
 
 % *********************************** %
 % v24 : PEPCK
@@ -647,8 +645,8 @@ v36 = scale_gly * v36_Vmax;
 
 %%  Fluxes and concentration changes [mmol/s/litre]
 dydt = zeros(size(y));
-dydt(1) = (-GK -NDKGTP -NDKUTP -AK -PFK2 -PFK1 +PGK +v23)/Vcyto;   % atp
-dydt(2) = (+GK +NDKGTP +NDKUTP +2*AK +PFK2 +PFK1 -PGK -v23)/Vcyto; % adp
+dydt(1) = (-GK -NDKGTP -NDKUTP -AK -PFK2 -PFK1 +PGK +PK)/Vcyto;   % atp
+dydt(2) = (+GK +NDKGTP +NDKUTP +2*AK +PFK2 +PFK1 -PGK -PK)/Vcyto; % adp
 dydt(3) = (-AK)/Vcyto;        % amp
 dydt(4) = (-UPGASE +NDKUTP)/Vcyto;    % utp
 dydt(5) = (+GS -NDKUTP)/Vcyto;    % udp
@@ -658,7 +656,7 @@ dydt(8) = (-GAPDH +v27)/Vcyto;   % nad
 dydt(9) = (+GAPDH -v27)/Vcyto;   % nadh
 dydt(10) = (+G6PASE +2*PPASE -GP +FBP2 +FBP1 -GAPDH)/Vcyto; % phos
 dydt(11) = (+UPGASE -PPASE)/Vcyto;    % pp
-dydt(12) = (-G6PASE -PPASE -FBP2 -FBP1 +v22)/Vcyto;  % h2o
+dydt(12) = (-G6PASE -PPASE -FBP2 -FBP1 +EN)/Vcyto;  % h2o
 dydt(13) = (+v24)/Vcyto;        % co2
 dydt(14) = (+GAPDH -v27)/Vcyto;   % h
 dydt(15) = (-G16PI -UPGASE +GP)/Vcyto; % glc1p
@@ -673,9 +671,9 @@ dydt(23) = (+ALD +TPI -GAPDH)/Vcyto;    % grap
 dydt(24) = (+ALD -TPI)/Vcyto;         % dhap
 dydt(25) = (+GAPDH -PGK)/Vcyto;         % bpg13
 dydt(26) = (+PGK -PGM)/Vcyto;         % pg3
-dydt(27) = (+PGM -v22)/Vcyto;         % pg2
-dydt(28) = (+v22 -v23 +v24 +v30)/Vcyto;   % pep
-dydt(29) = (+v23 -v27 -v29)/Vcyto;    % pyr
+dydt(27) = (+PGM -EN)/Vcyto;         % pg2
+dydt(28) = (+EN -PK +v24 +v30)/Vcyto;   % pep
+dydt(29) = (+PK -v27 -v29)/Vcyto;    % pyr
 dydt(30) = (-v24)/Vcyto;        % oaa
 dydt(31) = (+v27 +v28)/Vcyto;   % lac
 
@@ -746,8 +744,8 @@ v  = [GLUT2   % v1
       GAPDH 
       PGK 
       PGM 
-      v22 
-      v23 
+      EN 
+      PK 
       v24 
       v25 
       v26 

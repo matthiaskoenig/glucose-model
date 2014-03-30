@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 19:01 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 19:19 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -352,6 +352,34 @@
       <parameter id="PGM_k_pg3" value="5" units="mM" constant="true"/>
       <parameter id="PGM_k_pg2" value="1" units="mM" constant="true"/>
       <parameter id="PGM_Vmax" value="420" units="mmol_per_s" constant="true"/>
+      <parameter id="EN_keq" value="0" units="dimensionless" constant="true"/>
+      <parameter id="EN_k_pep" value="1" units="mM" constant="true"/>
+      <parameter id="EN_k_pg2" value="1" units="mM" constant="true"/>
+      <parameter id="EN_Vmax" value="35" units="mmol_per_s" constant="true"/>
+      <parameter id="PK_n" value="3" units="dimensionless" constant="true"/>
+      <parameter id="PK_n_p" value="3" units="dimensionless" constant="true"/>
+      <parameter id="PK_n_fbp" value="1" units="dimensionless" constant="true"/>
+      <parameter id="PK_n_fbp_p" value="1" units="dimensionless" constant="true"/>
+      <parameter id="PK_alpha" value="1" units="dimensionless" constant="true"/>
+      <parameter id="PK_alpha_p" value="1" units="dimensionless" constant="true"/>
+      <parameter id="PK_alpha_end" value="1" units="dimensionless" constant="true"/>
+      <parameter id="PK_k_fbp" value="0" units="mM" constant="true"/>
+      <parameter id="PK_k_fbp_p" value="0" units="mM" constant="true"/>
+      <parameter id="PK_k_pep" value="0" units="mM" constant="true"/>
+      <parameter id="PK_k_pep_p" value="1" units="mM" constant="true"/>
+      <parameter id="PK_k_pep_end" value="0" units="mM" constant="true"/>
+      <parameter id="PK_k_adp" value="2" units="mM" constant="true"/>
+      <parameter id="PK_base_act" value="0" units="mM" constant="true"/>
+      <parameter id="PK_base_act_p" value="0" units="mM" constant="true"/>
+      <parameter id="PK_Vmax" value="46" units="mmol_per_s" constant="true"/>
+      <parameter id="PK_f" units="dimensionless" constant="false"/>
+      <parameter id="PK_f_p" units="dimensionless" constant="false"/>
+      <parameter id="PK_alpha_inp" units="dimensionless" constant="false"/>
+      <parameter id="PK_alpha_p_inp" units="dimensionless" constant="false"/>
+      <parameter id="PK_pep_inp" units="mM" constant="false"/>
+      <parameter id="PK_pep_p_inp" units="mM" constant="false"/>
+      <parameter id="PK_native" units="mmol_per_s" constant="false"/>
+      <parameter id="PK_phospho" units="mmol_per_s" constant="false"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="ins">
@@ -1075,6 +1103,258 @@
               <plus/>
               <ci> FBP2_km_fru26bp_phospho </ci>
               <ci> fru26bp </ci>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="PK_f">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <power/>
+              <ci> fru16bp </ci>
+              <ci> PK_n_fbp </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <apply>
+                <power/>
+                <ci> PK_k_fbp </ci>
+                <ci> PK_n_fbp </ci>
+              </apply>
+              <apply>
+                <power/>
+                <ci> fru16bp </ci>
+                <ci> PK_n_fbp </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="PK_f_p">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <power/>
+              <ci> fru16bp </ci>
+              <ci> PK_n_fbp_p </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <apply>
+                <power/>
+                <ci> PK_k_fbp_p </ci>
+                <ci> PK_n_fbp_p </ci>
+              </apply>
+              <apply>
+                <power/>
+                <ci> fru16bp </ci>
+                <ci> PK_n_fbp_p </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="PK_alpha_inp">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <apply>
+              <times/>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <ci> PK_f </ci>
+              </apply>
+              <apply>
+                <minus/>
+                <ci> PK_alpha </ci>
+                <ci> PK_alpha_end </ci>
+              </apply>
+            </apply>
+            <ci> PK_alpha_end </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="PK_alpha_p_inp">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <apply>
+              <times/>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <ci> PK_f_p </ci>
+              </apply>
+              <apply>
+                <minus/>
+                <ci> PK_alpha_p </ci>
+                <ci> PK_alpha_end </ci>
+              </apply>
+            </apply>
+            <ci> PK_alpha_end </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="PK_pep_inp">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <apply>
+              <times/>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <ci> PK_f </ci>
+              </apply>
+              <apply>
+                <minus/>
+                <ci> PK_k_pep </ci>
+                <ci> PK_k_pep_end </ci>
+              </apply>
+            </apply>
+            <ci> PK_k_pep_end </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="PK_pep_p_inp">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <apply>
+              <times/>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <ci> PK_f_p </ci>
+              </apply>
+              <apply>
+                <minus/>
+                <ci> PK_k_pep_p </ci>
+                <ci> PK_k_pep_end </ci>
+              </apply>
+            </apply>
+            <ci> PK_k_pep_end </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="PK_native">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> PK_Vmax </ci>
+                    <ci> PK_alpha_inp </ci>
+                    <apply>
+                      <power/>
+                      <ci> pep </ci>
+                      <ci> PK_n </ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <apply>
+                      <power/>
+                      <ci> PK_pep_inp </ci>
+                      <ci> PK_n </ci>
+                    </apply>
+                    <apply>
+                      <power/>
+                      <ci> pep </ci>
+                      <ci> PK_n </ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <ci> adp </ci>
+              </apply>
+              <apply>
+                <plus/>
+                <ci> adp </ci>
+                <ci> PK_k_adp </ci>
+              </apply>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> PK_base_act </ci>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <cn type="integer"> 1 </cn>
+                  <ci> PK_base_act </ci>
+                </apply>
+                <ci> PK_f </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="PK_phospho">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> PK_Vmax </ci>
+                    <ci> PK_alpha_p_inp </ci>
+                    <apply>
+                      <power/>
+                      <ci> pep </ci>
+                      <ci> PK_n_p </ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <apply>
+                      <power/>
+                      <ci> PK_pep_p_inp </ci>
+                      <ci> PK_n_p </ci>
+                    </apply>
+                    <apply>
+                      <power/>
+                      <ci> pep </ci>
+                      <ci> PK_n_p </ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <ci> adp </ci>
+              </apply>
+              <apply>
+                <plus/>
+                <ci> adp </ci>
+                <ci> PK_k_adp </ci>
+              </apply>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> PK_base_act_p </ci>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <cn type="integer"> 1 </cn>
+                  <ci> PK_base_act_p </ci>
+                </apply>
+                <ci> PK_f_p </ci>
+              </apply>
             </apply>
           </apply>
         </math>
@@ -2430,6 +2710,83 @@
                     </apply>
                   </apply>
                 </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="EN" name="2-Phospho-D-glucerate hydro-lyase (enolase)" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="pg2" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="pep" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <ci> scale_gly </ci>
+                <ci> EN_Vmax </ci>
+                <apply>
+                  <minus/>
+                  <ci> pg2 </ci>
+                  <apply>
+                    <divide/>
+                    <ci> pep </ci>
+                    <ci> EN_keq </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <ci> pg2 </ci>
+                <apply>
+                  <times/>
+                  <ci> EN_k_pg2 </ci>
+                  <apply>
+                    <plus/>
+                    <cn type="integer"> 1 </cn>
+                    <apply>
+                      <divide/>
+                      <ci> pep </ci>
+                      <ci> EN_k_pep </ci>
+                    </apply>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="PK" name="Pyruvatkinase" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="pep" stoichiometry="1" constant="true"/>
+          <speciesReference species="adp" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="pyr" stoichiometry="1" constant="true"/>
+          <speciesReference species="atp" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <cn type="integer"> 1 </cn>
+                  <ci> gamma </ci>
+                </apply>
+                <ci> PK_native </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> gamma </ci>
+                <ci> PK_phospho </ci>
               </apply>
             </apply>
           </math>
