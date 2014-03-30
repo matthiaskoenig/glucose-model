@@ -310,7 +310,7 @@ model *Koenig2014_hepatic_glucose()
   NDKUTP has mmol_per_s;
 
 
-  AK is "ATPAMP phosphotransferase (Adenylatkinase)";
+  AK is "ATP:AMP phosphotransferase (Adenylatkinase)";
   AK : atp + amp -> 2 adp;
   AK_keq = 0.247390074904985 dimensionless; 
   AK_km_atp = 0.09 mM;
@@ -321,7 +321,24 @@ model *Koenig2014_hepatic_glucose()
   AK has mmol_per_s;
 
 
-// 'PFK2'            % v13
+  PFK2 is "ATP:D-fructose-6-phosphate 2-phosphotransferase";
+  PFK2 : fru6p + atp => fru26bp + adp;
+  PFK2_n_native = 1.3 dimensionless;       
+  PFK2_n_phospho = 2.1 dimensionless;
+  PFK2_k_fru6p_native = 0.016 mM; 
+  PFK2_k_fru6p_phospho = 0.050 mM;
+  PFK2_k_atp_native = 0.28 mM;
+  PFK2_k_atp_phospho = 0.65 mM;
+  PFK2_Vmax =  0.0042 mmol_per_s;
+
+  PFK2_native = scale_gly * PFK2_Vmax * fru6p^PFK2_n_native / (fru6p^PFK2_n_native + PFK2_k_fru6p_native^PFK2_n_native) * atp/(atp + PFK2_k_atp_native);
+  PFK2_phospho = scale_gly * PFK2_Vmax * fru6p^PFK2_n_phospho / (fru6p^PFK2_n_phospho + PFK2_k_fru6p_phospho^PFK2_n_phospho) * atp/(atp + PFK2_k_atp_phospho);
+  PFK2 = (1-gamma) * PFK2_native + gamma*PFK2_phospho;
+  PFK2_native has mmol_per_s;
+  PFK2_phospho has mmol_per_s;
+  PFK2 has mmol_per_s;
+
+
 // 'FBP2'            % v14
 // 'PFK1'            % v15
 // 'FBP1'            % v16

@@ -293,28 +293,20 @@ AK = scale_gly * AK_Vmax / (AK_km_atp * AK_km_amp) * (atp*amp - adp*adp/AK_keq) 
 %   phosphorylation state of the enzyme.
 
 % *********************************** %
-% v13 : PFK2
+% v13 : PFK2 : ATP:D-fructose-6-phosphate 2-phosphotransferase
 % *********************************** %
-% v13	R02732_2.7.1.105_cyto	ATP:D-fructose-6-phosphate 2-phosphotransferase	1 C00002 + 1 C00085 <=> 1 C00008 + 1 C00665																																																																																																																																																																																																																																																												
-% very sensitive to fructose6p, ATP not so important
 % fru6p + atp -> fru26bp + adp
-% Flux is combination of the both kinetics depending on the phosphorylation
-% state
-%v13_deltag = -14.2;                          % [kJ/mol]
-%v13_keq = keq(v13_deltag);                    
-%v13_td = (fru6p * atp - fru26bp * adp/v13_keq);
+PFK2_n_native = 1.3;              % [-]
+PFK2_n_phospho = 2.1;             % [-]
+PFK2_k_fru6p_native = 0.016;      % [mM]
+PFK2_k_fru6p_phospho = 0.050;     % [mM]
+PFK2_k_atp_native = 0.28;         % [mM]
+PFK2_k_atp_phospho = 0.65;        % [mM]
+PFK2_Vmax =  0.0042;              % [mmol_per_s]
 
-v13_n_native = 1.3;  
-v13_n_phospho = 2.1;             
-v13_k_fru6p_native = 0.016;      % [mM]
-v13_k_fru6p_phospho = 0.050;     % [mM]
-v13_k_atp_native = 0.28;         % [mM]
-v13_k_atp_phospho = 0.65;        % [mM]
-v13_Vmax =  0.0042;
-
-v13_native = scale_gly * v13_Vmax * power(fru6p, v13_n_native) / (power(fru6p, v13_n_native) + power(v13_k_fru6p_native, v13_n_native)) * (atp / (atp + v13_k_atp_native));
-v13_phospho = scale_gly * v13_Vmax * power(fru6p, v13_n_phospho) / (power(fru6p, v13_n_phospho) + power(v13_k_fru6p_phospho, v13_n_phospho)) * (atp / (atp + v13_k_atp_phospho));
-v13 = (1 - gamma) * v13_native + gamma * v13_phospho;
+PFK2_native = scale_gly * PFK2_Vmax * fru6p^PFK2_n_native / (fru6p^PFK2_n_native + PFK2_k_fru6p_native^PFK2_n_native) * atp/(atp + PFK2_k_atp_native);
+PFK2_phospho = scale_gly * PFK2_Vmax * fru6p^PFK2_n_phospho / (fru6p^PFK2_n_phospho + PFK2_k_fru6p_phospho^PFK2_n_phospho) * atp/(atp + PFK2_k_atp_phospho);
+PFK2 = (1-gamma) * PFK2_native + gamma*PFK2_phospho; % [mmol_per_s]
 
 % *********************************** %
 % v14 : FBPase2
@@ -713,8 +705,8 @@ v36 = scale_gly * v36_Vmax;
 
 %%  Fluxes and concentration changes [mmol/s/litre]
 dydt = zeros(size(y));
-dydt(1) = (-GK -NDKGTP -NDKUTP -AK -v13 -v15 +v20 +v23)/Vcyto;   % atp
-dydt(2) = (+GK +NDKGTP +NDKUTP +2*AK +v13 +v15 -v20 -v23)/Vcyto; % adp
+dydt(1) = (-GK -NDKGTP -NDKUTP -AK -PFK2 -v15 +v20 +v23)/Vcyto;   % atp
+dydt(2) = (+GK +NDKGTP +NDKUTP +2*AK +PFK2 +v15 -v20 -v23)/Vcyto; % adp
 dydt(3) = (-AK)/Vcyto;        % amp
 dydt(4) = (-UPGASE +NDKUTP)/Vcyto;    % utp
 dydt(5) = (+GS -NDKUTP)/Vcyto;    % udp
@@ -732,9 +724,9 @@ dydt(16) = (+UPGASE -GS)/Vcyto;     % udpglc
 dydt(17) = (+GS -GP)/Vcyto;     % glyglc
 dydt(18) = (+GLUT2 -GK +G6PASE)/Vcyto; % glc
 dydt(19) = (+GK -G6PASE -GPI +G16PI)/Vcyto;   % glc6p
-dydt(20) = (+GPI -v13 +v14 -v15 +v16)/Vcyto;   % fru6p
+dydt(20) = (+GPI -PFK2 +v14 -v15 +v16)/Vcyto;   % fru6p
 dydt(21) = (+v15 -v16 -v17)/Vcyto;    % fru16bp
-dydt(22) = (+v13 -v14)/Vcyto;         % fru26bp
+dydt(22) = (+PFK2 -v14)/Vcyto;         % fru26bp
 dydt(23) = (+v17 +v18 -v19)/Vcyto;    % grap
 dydt(24) = (+v17 -v18)/Vcyto;         % dhap
 dydt(25) = (+v19 -v20)/Vcyto;         % bpg13
@@ -803,7 +795,7 @@ v  = [GLUT2   % v1
       NDKGTP 
       NDKUTP 
       AK 
-      v13 
+      PFK2 
       v14 
       v15 
       v16 
