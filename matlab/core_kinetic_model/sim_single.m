@@ -113,4 +113,4 @@ ref_fname = strcat(results_folder, '/', 'standard.mat')
 compare_timecourses(sim_fname, ref_fname) 
 
 %% Create figure
-% fig_single(t, c, v);
+fig_single(t, c, v);
