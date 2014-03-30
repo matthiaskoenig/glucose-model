@@ -192,7 +192,7 @@ model *Koenig2014_hepatic_glucose()
   G6PASE has mmol_per_s;
  
   GPI is "D-Glucose-6-phosphate Isomerase";
-  GPI: glc6p -> fru6P;
+  GPI: glc6p -> fru6p;
   GPI_keq = 0.517060817492925 dimensionless;
   GPI_km_glc6p  = 0.182 mM;
   GPI_km_fru6p = 0.071 mM;
@@ -210,7 +210,7 @@ model *Koenig2014_hepatic_glucose()
   G16PI has mmol_per_s;
 
   UPGASE is "UTP:Glucose-1-phosphate uridylyltransferase";
-  UPGASE : utp + glc1P -> udpglc + pp;
+  UPGASE : utp + glc1p -> udpglc + pp;
   UPGASE_keq = 0.312237619153088 dimensionless;
   UPGASE_km_utp = 0.563 mM;
   UPGASE_km_glc1p = 0.172 mM;
@@ -340,7 +340,7 @@ model *Koenig2014_hepatic_glucose()
 
 
   FBP2 is "D-Fructose-2,6-bisphosphate 2-phosphohydrolase";
-  FBP2 : fru26bp => fru6p + p;
+  FBP2 : fru26bp => fru6p + phos;
   FBP2_km_fru26bp_native = 0.010 mM;
   FBP2_ki_fru6p_native = 0.0035 mM;
   FBP2_km_fru26bp_phospho = 0.0005 mM;
@@ -365,7 +365,7 @@ model *Koenig2014_hepatic_glucose()
   PFK1 has mmol_per_s;
 
   FBP1 is "D-Fructose-1,6-bisphosphate 1-phosphohydrolase";
-  FBP1 : fru16bp + h2o => fru6p + p;
+  FBP1 : fru16bp + h2o => fru6p + phos;
   FBP1_ki_fru26bp = 0.001 mM;
   FBP1_km_fru16bp = 0.0013 mM;
   FBP1_Vmax = 4.326 mmol_per_s;
@@ -397,7 +397,7 @@ model *Koenig2014_hepatic_glucose()
 
 
   GAPDH is "D-Glyceraldehyde-3-phosphate:NAD+ oxidoreductase";
-  GAPDH : grap + p + nad -> bpg13 + nadh + h;
+  GAPDH : grap + phos + nad -> bpg13 + nadh + h;
   GAPDH_keq = 0.086779866194594 dimensionless;
   GAPDH_k_nad = 0.05 mM;
   GAPDH_k_grap = 0.005 mM;
@@ -499,7 +499,7 @@ model *Koenig2014_hepatic_glucose()
 
 
   PC is "Pyruvate Carboxylase";
-  PC : atp + pyr + co2 => oaa + adp + p;
+  PC : atp + pyr + co2 => oaa + adp + phos;
   PC_k_atp = 0.22 mM;
   PC_k_pyr = 0.22 mM;
   PC_k_co2 = 3.2 mM;

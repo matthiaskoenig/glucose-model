@@ -149,7 +149,7 @@ G6PASE = scale_gly * G6PASE_Vmax * glc6p / (G6PASE_km_glc6p + glc6p);  % [mmol_p
 % *********************************** %
 % v4 : GPI : D-Glucose-6-phosphate Isomerase
 % *********************************** %
-% glc6p <-> fru6P
+% glc6p <-> fru6p
 GPI_keq = 0.517060817492925;  % [-]
 GPI_km_glc6p  = 0.182;        % [mM]
 GPI_km_fru6p = 0.071;         % [mM]
@@ -174,7 +174,7 @@ G16PI = scale_glyglc * G16PI_Vmax/G16PI_km_glc1p * (glc1p - glc6p/G16PI_keq) / .
 % *********************************** %
 % v6 : UPGASE : UTP:Glucose-1-phosphate uridylyltransferase (UPGase)
 % *********************************** %
-% utp + glc1P <-> udpglc + pp
+% utp + glc1p <-> udpglc + pp
 UPGASE_keq = 0.312237619153088;  % [-]
 UPGASE_km_utp = 0.563;           % [mM] [ 0.200, 0.048]
 UPGASE_km_glc1p = 0.172;         % [mM] [0.050, 0.095]
@@ -311,7 +311,7 @@ PFK2 = (1-gamma) * PFK2_native + gamma*PFK2_phospho; % [mmol_per_s]
 % *********************************** %
 % v14 : FBP2 : D-Fructose-2,6-bisphosphate 2-phosphohydrolase
 % *********************************** %
-% fru26bp => fru6p + p 
+% fru26bp => fru6p + phos
 FBP2_km_fru26bp_native = 0.010;     % [mM]
 FBP2_ki_fru6p_native = 0.0035;      % [mM]
 FBP2_km_fru26bp_phospho = 0.0005;   % [mM]
@@ -336,7 +336,7 @@ PFK1 = scale_gly * PFK1_Vmax * (1 - 1/(1 + fru26bp/PFK1_ka_fru26bp)) * fru6p*atp
 % *********************************** %
 % v16 : FBP1 : D-Fructose-1,6-bisphosphate 1-phosphohydrolase
 % *********************************** %
-% fru16bp + h2o => fru6p + p
+% fru16bp + h2o => fru6p + phos
 FBP1_ki_fru26bp = 0.001;    % [mM]
 FBP1_km_fru16bp = 0.0013;   % [mM]
 FBP1_Vmax = 4.326;          % [mmol_per_s]
@@ -374,7 +374,7 @@ TPI = scale_gly * TPI_Vmax/TPI_km_dhap * (dhap - grap/TPI_keq) / (1 + dhap/TPI_k
 % *********************************** %
 % v19 : GAPDH : D-Glyceraldehyde-3-phosphate:NAD+ oxidoreductase
 % *********************************** %
-% grap + p + nad <-> bpg13 + nadh + h
+% grap + phos + nad <-> bpg13 + nadh + h
 GAPDH_keq = 0.086779866194594; % [-]
 GAPDH_k_nad = 0.05;        % [mM]
 GAPDH_k_grap = 0.005;      % [mM]
@@ -478,7 +478,7 @@ PEPCKM = scale_gly * PEPCKM_Vmax / (PEPCK_k_oaa * PEPCK_k_gtp) * (oaa_mito*gtp_m
 % *********************************** %
 % v26 : PC : Pyruvate Carboxylase
 % *********************************** %
-% atp + pyr + co2 => oaa + adp + p
+% atp + pyr + co2 => oaa + adp + phos
 PC_k_atp = 0.22;  % [mM]
 PC_k_pyr = 0.22;  % [mM]
 PC_k_co2 = 3.2;   % [mM]
