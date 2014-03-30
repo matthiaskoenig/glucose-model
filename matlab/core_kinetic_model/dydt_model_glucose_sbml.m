@@ -1,17 +1,24 @@
 function [dydt, v] = dydt_model_glucose_sbml(t, y)
-% MODEL_GLYCOLYSIS
+% DYDT_MODEL_GLUCOSE_SBML
 %   author: Matthias Koenig 
 %           Charite Berlin
 %           Computational Systems Biochemistry Berlin
 %           matthias.koenig@charite.de
-%   date:   121203
+%   date:   2014-03-30
+%
+%  Some model transformation to make the model structure
+%  compatible with the SBML format. 
+%  Especially: All fluxes are now in [amount/time] and the compartments
+%              are represented by volumes which are used to calculate
+%              respective changes in concentration in the different 
+%              compartments.
 %
 
 %% Scaling hepatic glucose metablism
 scale_gly = 12.5;
 scale_glyglc = 12.5;
 
-%% Concentrations
+%% Concentrations [mM = mmole_per_litre]
 atp         = y(1);
 adp         = y(2);
 amp         = y(3);
@@ -60,34 +67,33 @@ nad_mito    = y(47);
 
 %% Hormonal response & phosphorylation state
 % insulin
-x_ins1 = 818.9; %[pmol/l]
-x_ins2 = 0;
-x_ins3 = 8.6;
-x_ins4 = 4.2;
-ins = max(0.0, (x_ins1-x_ins2) * glc_ext^x_ins4/(glc_ext^x_ins4 + x_ins3^x_ins4));
-% ins = max(0.0, ins-x_ins2);
+x_ins1 = 818.9; % [pmol/l]
+x_ins2 = 0;     % [pmol/l]
+x_ins3 = 8.6;   % [mM]
+x_ins4 = 4.2;   % [-]
+ins = max(0.0, (x_ins1-x_ins2) * glc_ext^x_ins4/(glc_ext^x_ins4 + x_ins3^x_ins4)); % [pmol/l]
 
 % glucagon
-x_glu1 = 190;
-x_glu2 = 37.9;
-x_glu3 = 3.01;
-x_glu4 = 6.40;
-glu = max(0.0, (x_glu1-x_glu2)*(1 - glc_ext^x_glu4/(glc_ext^x_glu4 + x_glu3^x_glu4)));
+x_glu1 = 190;  % [pmol/l]
+x_glu2 = 37.9; % [pmol/l]
+x_glu3 = 3.01; % [mM]
+x_glu4 = 6.40; % [-]
+glu = max(0.0, (x_glu1-x_glu2)*(1 - glc_ext^x_glu4/(glc_ext^x_glu4 + x_glu3^x_glu4))); % [pmol/l]
 
 % epinephrine
-x_epi1 = 6090;
-x_epi2 = 100;
-x_epi3 = 3.10;
-x_epi4 = 8.40;
-epi = max(0.0, (x_epi1-x_epi2) * (1 - glc_ext^x_epi4/(glc_ext^x_epi4 + x_epi3^x_glu4)));
+x_epi1 = 6090;  % [pmol/l]
+x_epi2 = 100;   % [pmol/l]
+x_epi3 = 3.10;  % [mM]
+x_epi4 = 8.40;  % [-]
+epi = max(0.0, (x_epi1-x_epi2) * (1 - glc_ext^x_epi4/(glc_ext^x_epi4 + x_epi3^x_glu4))); % [pmol/l]
 
 % gamma
-K_val = 0.1;
-epi_f = 0.8;
-K_ins = (x_ins1-x_ins2) * K_val;
-K_glu = (x_glu1-x_glu2) * K_val;
-K_epi = (x_epi1-x_epi2) * K_val;
-gamma = 0.5 * (1 - ins/(ins+K_ins) + max(glu/(glu+K_glu), epi_f*epi/(epi+K_epi)) );
+K_val = 0.1  % [-];
+epi_f = 0.8; % [-];
+K_ins = (x_ins1-x_ins2) * K_val; % [pmol/l];
+K_glu = (x_glu1-x_glu2) * K_val; % [pmol/l];
+K_epi = (x_epi1-x_epi2) * K_val; % [pmol/l];
+gamma = 0.5 * (1 - ins/(ins+K_ins) + max(glu/(glu+K_glu), epi_f*epi/(epi+K_epi)) ); % [-]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   Glucose import/export             %

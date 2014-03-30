@@ -23,7 +23,6 @@ model *Koenig2014_hepatic_glucose()
   unit pmol_per_l = 1e-12 mole / litre;
 
 
-
   // Compartments and Species
   const compartment extern, cyto, mito;
   extern = 10 litre;
@@ -40,7 +39,7 @@ model *Koenig2014_hepatic_glucose()
 
   species glc_ext in extern, lac_ext in extern;
 
-  species $co2_mito in mito, $phos_mito in mito, pep_mito in mito;
+  species $co2_mito in mito, $phos_mito in mito, oaa_mito in mito, pep_mito in mito;
   species acoa_mito in mito, pyr_mito in mito, cit_mito in mito;
   species $atp_mito in mito, $adp_mito in mito, $gtp_mito in mito, $gdp_mito in mito;
   species coa_mito in mito, $nadh_mito in mito, nad_mito in mito; 
@@ -103,32 +102,46 @@ model *Koenig2014_hepatic_glucose()
   atp_mito_tot := atp_mito + adp_mito;
   gtp_mito_tot := gtp_mito + gdp_mito; 
 
+  nadh_tot has mM;
+  atp_tot has mM;
+  utp_tot has mM;
+  gtp_tot has mM;
+  nadh_mito_tot has mM;
+  atp_mito_tot has mM;
+  gtp_mito_tot has mM;
+
   // hormonal regulation
-  x_ins1 = 818.9;
-  x_ins2 = 0;
-  x_ins3 = 8.6;
-  x_ins4 = 4.2;
+  x_ins1 = 818.9 pmol_per_l;
+  x_ins2 = 0 pmol_per_l;
+  x_ins3 = 8.6 mM;
+  x_ins4 = 4.2 dimensionless;
   ins = max(0.0, (x_ins1-x_ins2) * glc_ext^x_ins4/(glc_ext^x_ins4 + x_ins3^x_ins4));
+  ins has pmol_per_l;
 
-  x_glu1 = 190;
-  x_glu2 = 37.9;
-  x_glu3 = 3.01;
-  x_glu4 = 6.40;
+  x_glu1 = 190 pmol_per_l;
+  x_glu2 = 37.9 pmol_per_l;
+  x_glu3 = 3.01 mM;
+  x_glu4 = 6.40 dimensionless;
   glu = max(0.0, (x_glu1-x_glu2)*(1 - glc_ext^x_glu4/(glc_ext^x_glu4 + x_glu3^x_glu4)));
+  glu has pmol_per_l;
 
-  x_epi1 = 6090;
-  x_epi2 = 100;
-  x_epi3 = 3.10;
-  x_epi4 = 8.40;
+  x_epi1 = 6090 pmol_per_l;
+  x_epi2 = 100 pmol_per_l;
+  x_epi3 = 3.10 mM;
+  x_epi4 = 8.40 dimensionless;
   epi = max(0.0, (x_epi1-x_epi2) * (1 - glc_ext^x_epi4/(glc_ext^x_epi4 + x_epi3^x_glu4)));
+  epi has pmol_per_l;
 
-  K_val = 0.1;
-  epi_f = 0.8;
+  K_val = 0.1 dimensionless;
+  epi_f = 0.8 dimensionless;
   K_ins = (x_ins1-x_ins2) * K_val;
   K_glu = (x_glu1-x_glu2) * K_val;
   K_epi = (x_epi1-x_epi2) * K_val;
   gamma = 0.5 * (1 - ins/(ins+K_ins) + max(glu/(glu+K_glu), epi_f*epi/(epi+K_epi)) );
-
+  K_ins has pmol_per_l;
+  K_glu has pmol_per_l;
+  K_epi has pmol_per_l;
+  gamma has dimensionless;
 
   // Reactions
   ATPS is "ATP synthase";

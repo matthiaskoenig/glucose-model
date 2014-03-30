@@ -76,24 +76,35 @@ S0 = [
     0
 ];  
 
+% which model to integrate for comparison
+% name = 'core'
+name = 'core_sbml'
+switch (name)
+    case 'core'
+        dydt_fun = @(t,y) dydt_model_glucose(t,y);
+    case 'core_sbml'
+        dydt_fun = @(t,y) dydt_model_glucose_sbml(t,y);
+end
+func2str(dydt_fun)
+
 % Integration
 tspan = 0:1:2000;
-[t,c] = ode15s(@(t,y) dydt_model_glucose(t, y), tspan , S0, odeset('RelTol', 1e-8));
+[t,c] = ode15s(dydt_fun, tspan , S0, odeset('RelTol', 1e-8));
 
 % Calculate fluxes
-[~, vtmp] = dydt_model_glucose(0, S0);
+[~, vtmp] = dydt_fun(0, S0);
 Nv = numel(vtmp);
 Nt = numel(t);
 v  = zeros(Nt, Nv);
 for k=1:Nt
-    [~, v(k, :)] = dydt_model_glucose(t(k), c(k, :));
+    [~, v(k, :)] = dydt_fun(t(k), c(k, :));
 end
 
 % Save data for comparison
 res.v = v;
 res.c = c;
 res.t = t;
-sim_fname = strcat(results_folder, '/', 'core_kinetic.mat')
+sim_fname = strcat(results_folder, '/', name, '.mat')
 save(sim_fname, 'res');
 
 %% Compare the results to reference implementation from
@@ -101,4 +112,4 @@ ref_fname = strcat(results_folder, '/', 'standard.mat')
 compare_timecourses(sim_fname, ref_fname) 
 
 %% Create figure
-fig_single(t, c, v);
+% fig_single(t, c, v);

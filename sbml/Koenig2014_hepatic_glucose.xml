@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-28 19:10 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 12:51 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -149,6 +149,7 @@
       <species id="lac_ext" compartment="extern" initialConcentration="1" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="co2_mito" compartment="mito" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="phos_mito" compartment="mito" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="oaa_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="pep_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="acoa_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="pyr_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
@@ -162,35 +163,34 @@
       <species id="nad_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
-      <parameter id="oaa_mito" value="0" units="mM" constant="true"/>
-      <parameter id="nadh_tot" constant="false"/>
-      <parameter id="atp_tot" constant="false"/>
-      <parameter id="utp_tot" constant="false"/>
-      <parameter id="gtp_tot" constant="false"/>
-      <parameter id="nadh_mito_tot" constant="false"/>
-      <parameter id="atp_mito_tot" constant="false"/>
-      <parameter id="gtp_mito_tot" constant="false"/>
-      <parameter id="x_ins1" value="818" constant="true"/>
-      <parameter id="x_ins2" value="0" constant="true"/>
-      <parameter id="x_ins3" value="8" constant="true"/>
-      <parameter id="x_ins4" value="4" constant="true"/>
-      <parameter id="ins" constant="false"/>
-      <parameter id="x_glu1" value="190" constant="true"/>
-      <parameter id="x_glu2" value="37" constant="true"/>
-      <parameter id="x_glu3" value="3" constant="true"/>
-      <parameter id="x_glu4" value="6" constant="true"/>
-      <parameter id="glu" constant="false"/>
-      <parameter id="x_epi1" value="6090" constant="true"/>
-      <parameter id="x_epi2" value="100" constant="true"/>
-      <parameter id="x_epi3" value="3" constant="true"/>
-      <parameter id="x_epi4" value="8" constant="true"/>
-      <parameter id="epi" constant="false"/>
-      <parameter id="K_val" value="0" constant="true"/>
-      <parameter id="epi_f" value="0" constant="true"/>
-      <parameter id="K_ins" constant="true"/>
-      <parameter id="K_glu" constant="true"/>
-      <parameter id="K_epi" constant="true"/>
-      <parameter id="gamma" constant="false"/>
+      <parameter id="nadh_tot" units="mM" constant="false"/>
+      <parameter id="atp_tot" units="mM" constant="false"/>
+      <parameter id="utp_tot" units="mM" constant="false"/>
+      <parameter id="gtp_tot" units="mM" constant="false"/>
+      <parameter id="nadh_mito_tot" units="mM" constant="false"/>
+      <parameter id="atp_mito_tot" units="mM" constant="false"/>
+      <parameter id="gtp_mito_tot" units="mM" constant="false"/>
+      <parameter id="x_ins1" value="818" units="pmol_per_l" constant="true"/>
+      <parameter id="x_ins2" value="0" units="pmol_per_l" constant="true"/>
+      <parameter id="x_ins3" value="8" units="mM" constant="true"/>
+      <parameter id="x_ins4" value="4" units="dimensionless" constant="true"/>
+      <parameter id="ins" units="pmol_per_l" constant="false"/>
+      <parameter id="x_glu1" value="190" units="pmol_per_l" constant="true"/>
+      <parameter id="x_glu2" value="37" units="pmol_per_l" constant="true"/>
+      <parameter id="x_glu3" value="3" units="mM" constant="true"/>
+      <parameter id="x_glu4" value="6" units="dimensionless" constant="true"/>
+      <parameter id="glu" units="pmol_per_l" constant="false"/>
+      <parameter id="x_epi1" value="6090" units="pmol_per_l" constant="true"/>
+      <parameter id="x_epi2" value="100" units="pmol_per_l" constant="true"/>
+      <parameter id="x_epi3" value="3" units="mM" constant="true"/>
+      <parameter id="x_epi4" value="8" units="dimensionless" constant="true"/>
+      <parameter id="epi" units="pmol_per_l" constant="false"/>
+      <parameter id="K_val" value="0" units="dimensionless" constant="true"/>
+      <parameter id="epi_f" value="0" units="dimensionless" constant="true"/>
+      <parameter id="K_ins" units="pmol_per_l" constant="true"/>
+      <parameter id="K_glu" units="pmol_per_l" constant="true"/>
+      <parameter id="K_epi" units="pmol_per_l" constant="true"/>
+      <parameter id="gamma" units="dimensionless" constant="false"/>
       <parameter id="ATPS_keq" value="0" units="per_mM" constant="true"/>
       <parameter id="ATPS_kadp" value="0" units="mM" constant="true"/>
       <parameter id="ATPS_katp" value="0" units="mM" constant="true"/>
