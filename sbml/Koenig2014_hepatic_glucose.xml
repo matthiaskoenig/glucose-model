@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 19:59 with libSBML version 5.9.2. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-30 20:09 with libSBML version 5.9.2. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
     <listOfFunctionDefinitions>
@@ -432,6 +432,9 @@
       <parameter id="NDKGTPM_k_gtp" value="0" units="mM" constant="true"/>
       <parameter id="NDKGTPM_k_gdp" value="0" units="mM" constant="true"/>
       <parameter id="NDKGTPM_Vmax" value="420" units="mmol_per_s" constant="true"/>
+      <parameter id="OAAFLX_Vmax" value="0" units="mmol_per_s" constant="true"/>
+      <parameter id="ACOAFLX_Vmax" value="0" units="mmol_per_s" constant="true"/>
+      <parameter id="CITFLX_Vmax" value="0" units="mmol_per_s" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="ins">
@@ -3160,10 +3163,10 @@
           <speciesReference species="p" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <listOfModifiers>
-          <modifierSpeciesReference species="atp_mito"/>
-          <modifierSpeciesReference species="co2_mito"/>
-          <modifierSpeciesReference species="acoa_mito"/>
           <modifierSpeciesReference species="pyr_mito"/>
+          <modifierSpeciesReference species="acoa_mito"/>
+          <modifierSpeciesReference species="co2_mito"/>
+          <modifierSpeciesReference species="atp_mito"/>
         </listOfModifiers>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -3710,6 +3713,48 @@
                 </apply>
                 <cn type="integer"> 1 </cn>
               </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="OAAFLX" name="oxalacetate influx" reversible="false" fast="false">
+        <listOfProducts>
+          <speciesReference species="oaa_mito" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> scale_gly </ci>
+              <ci> OAAFLX_Vmax </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="ACOAFLX" name="acetyl-coa efflux" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="acoa_mito" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> scale_gly </ci>
+              <ci> ACOAFLX_Vmax </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="CITFLX" name="citrate efflux" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="cit_mito" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> scale_gly </ci>
+              <ci> CITFLX_Vmax </ci>
             </apply>
           </math>
         </kineticLaw>

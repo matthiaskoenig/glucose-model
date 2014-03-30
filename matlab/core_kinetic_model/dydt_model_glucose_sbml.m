@@ -576,22 +576,25 @@ NDKGTPM_Vmax = 420;         % [mmol_per_s]
 NDKGTPM = scale_gly * NDKGTPM_Vmax / (NDKGTPM_k_atp * NDKGTPM_k_gdp) * (atp_mito*gdp_mito - adp_mito*gtp_mito/NDKGTPM_keq) / ( (1 + atp_mito/NDKGTPM_k_atp)*(1 + gdp_mito/NDKGTPM_k_gdp) + (1 + adp_mito/NDKGTPM_k_adp)*(1 + gtp_mito/NDKGTPM_k_gtp) - 1) ;
 
 % *********************************** %
-% v34 : OAA influx
+% v34 : OAAFLX : oxalacetate influx
 % *********************************** %
-v34_Vmax = 0;
-v34 = scale_gly * v34_Vmax;
+%  => oaa_mito
+OAAFLX_Vmax = 0;                   % [mmol_per_s]
+OAAFLX = scale_gly * OAAFLX_Vmax;  % [mmol_per_s]
 
 % *********************************** %
-% v35 : Acetyl-CoA efflux
+% v35 : ACOAFLX : acetyl-CoA efflux
 % *********************************** %
-v35_Vmax = 0;
-v35 = scale_gly * v35_Vmax;
+% acoa_mito => 
+ACOAFLX_Vmax = 0;                   % [mmol_per_s]
+ACOAFLX = scale_gly * ACOAFLX_Vmax; % [mmol_per_s]
 
 % *********************************** %
-% v36 : Citrate efflux
+% v36 : CITFLX : Citrate efflux
 % *********************************** %
-v36_Vmax = 0;
-v36 = scale_gly * v36_Vmax;
+% cit_mito =>
+CITFLX_Vmax = 0;                    % [mmol_per_s]
+CITFLX = scale_gly * CITFLX_Vmax;   % [mmol_per_s]
 
 
 %%  Fluxes and concentration changes [mmol/s/litre]
@@ -633,11 +636,11 @@ dydt(33) = (-LACT)/Vext;  % lac_ext
 
 dydt(34) = (+PEPCKM -PC +PDH)/Vmito;      % co2_mito
 dydt(35) = (+PC)/Vmito;                % p_mito
-dydt(36) = (-PEPCKM +PC -CS +v34)/Vmito; % oaa_mito
+dydt(36) = (-PEPCKM +PC -CS +OAAFLX)/Vmito; % oaa_mito
 dydt(37) = (+PEPCKM -PEPTM)/Vmito;           % pep_mito
-dydt(38) = (+PDH -CS -v35)/Vmito;      % acoa_mito
+dydt(38) = (+PDH -CS -ACOAFLX)/Vmito;      % acoa_mito
 dydt(39) = (-PC +PYRTM -PDH)/Vmito;      % pyr_mito
-dydt(40) = (+CS -v36)/Vmito;           % cit_mito
+dydt(40) = (+CS -CITFLX)/Vmito;           % cit_mito
 dydt(41) = (-PC -NDKGTPM)/Vmito;           % atp_mito
 dydt(42) = (+PC +NDKGTPM)/Vmito;           % adp_mito
 dydt(43) = (-PEPCKM +NDKGTPM)/Vmito;           % gtp_mito
@@ -707,8 +710,8 @@ v  = [GLUT2   % v1
       PDH 
       CS 
       NDKGTPM 
-      v34 
-      v35 
-      v36];
+      OAAFLX 
+      ACOAFLX 
+      CITFLX];
 
 

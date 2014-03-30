@@ -593,8 +593,22 @@ model *Koenig2014_hepatic_glucose()
   NDKGTPM = scale_gly * NDKGTPM_Vmax / (NDKGTPM_k_atp * NDKGTPM_k_gdp) * (atp_mito*gdp_mito - adp_mito*gtp_mito/NDKGTPM_keq) / ( (1 + atp_mito/NDKGTPM_k_atp)*(1 + gdp_mito/NDKGTPM_k_gdp) + (1 + adp_mito/NDKGTPM_k_adp)*(1 + gtp_mito/NDKGTPM_k_gtp) - 1) ;
   NDKGTPM has mmol_per_s;
 
-// 'oaa_{flx}'         % v34
-// 'acoa_{flx}'        % v35
-// 'vcit_{flx}'        % v36
+  OAAFLX is "oxalacetate influx";
+  OAAFLX : => oaa_mito;
+  OAAFLX_Vmax = 0 mmol_per_s;
+  OAAFLX = scale_gly * OAAFLX_Vmax;
+  OAAFLX has mmol_per_s;
+  
+  ACOAFLX is "acetyl-coa efflux";
+  ACOAFLX : acoa_mito =>;
+  ACOAFLX_Vmax = 0 mmol_per_s;
+  ACOAFLX = scale_gly * ACOAFLX_Vmax;
+  ACOAFLX has mmol_per_s;
+
+  CITFLX is "citrate efflux";
+  CITFLX : cit_mito =>;
+  CITFLX_Vmax = 0 mmol_per_s;
+  CITFLX = scale_gly * CITFLX_Vmax;
+  CITFLX has mmol_per_s;
 
 end
