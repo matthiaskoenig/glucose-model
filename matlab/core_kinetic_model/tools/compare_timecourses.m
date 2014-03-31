@@ -1,4 +1,4 @@
-function [] = compare_timecourses(sim_fname, ref_fname)
+function [] = compare_timecourses(sim_fname, ref_fname, scale)
 % Control class to check that different model implementations
 % give the same timecourse and flux results.
 % Compare the integration results provided in the two files.
@@ -25,7 +25,7 @@ fprintf('\n* Difference v *\n');
 fprintf('----------------\n');
 fprintf('v(0)  v(end)\n');
 fprintf('----------------\n');
-delta_v = [(s.v(1,:) - x.v(1,:))' (s.v(end,:) - x.v(end,:))']
+delta_v = [(s.v(1,:) - x.v(1,:)*scale)' (s.v(end,:) - x.v(end,:)*scale)']
 
 disp('******************************');
 disp('* Delta c > 1E-6 *');

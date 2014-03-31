@@ -16,9 +16,11 @@ function [dydt, v, hormones] = dydt_model_glucose_sbml(t, y)
 
 %% Scaling hepatic glucose metablism
 % scale = 1/60;
-scale = 1;
-scale_gly = 12.5 * scale;    
-scale_glyglc = 12.5 * scale;
+% time [sec]
+
+scale = 1/60;                 % [-]
+scale_gly = 12.5 * scale;     % [-]
+scale_glyglc = 12.5 * scale;  % [-]
 
 % Volumes of the compartments
 Vext = 10;   % [litre]
