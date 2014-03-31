@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-30 20:21 with libSBML version 5.9.1. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-31 15:12 with libSBML version 5.9.1. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" xmlns:comp="http://www.sbml.org/sbml/level3/version1/comp/version1" level="3" version="1" comp:required="true">
-  <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length">
+  <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length" extentUnits="extent">
     <listOfFunctionDefinitions>
-      <functionDefinition id="max">
+      <functionDefinition id="maximum">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <lambda>
             <bvar>
@@ -28,7 +28,7 @@
           </lambda>
         </math>
       </functionDefinition>
-      <functionDefinition id="min">
+      <functionDefinition id="minimum">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <lambda>
             <bvar>
@@ -55,26 +55,6 @@
       </functionDefinition>
     </listOfFunctionDefinitions>
     <listOfUnitDefinitions>
-      <unitDefinition id="substance">
-        <listOfUnits>
-          <unit kind="mole" exponent="1" scale="-3" multiplier="1"/>
-        </listOfUnits>
-      </unitDefinition>
-      <unitDefinition id="volume">
-        <listOfUnits>
-          <unit kind="litre" exponent="1" scale="0" multiplier="1"/>
-        </listOfUnits>
-      </unitDefinition>
-      <unitDefinition id="area">
-        <listOfUnits>
-          <unit kind="metre" exponent="2" scale="0" multiplier="1"/>
-        </listOfUnits>
-      </unitDefinition>
-      <unitDefinition id="length">
-        <listOfUnits>
-          <unit kind="metre" exponent="1" scale="0" multiplier="1"/>
-        </listOfUnits>
-      </unitDefinition>
       <unitDefinition id="per_s">
         <listOfUnits>
           <unit kind="second" exponent="-1" scale="0" multiplier="1"/>
@@ -83,6 +63,11 @@
       <unitDefinition id="minute">
         <listOfUnits>
           <unit kind="second" exponent="1" scale="1" multiplier="6"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="per_minute">
+        <listOfUnits>
+          <unit kind="second" exponent="-1" scale="1" multiplier="6"/>
         </listOfUnits>
       </unitDefinition>
       <unitDefinition id="mmol">
@@ -125,7 +110,27 @@
           <unit kind="litre" exponent="-1" scale="0" multiplier="1"/>
         </listOfUnits>
       </unitDefinition>
-      <unitDefinition id="mM_litre">
+      <unitDefinition id="substance">
+        <listOfUnits>
+          <unit kind="mole" exponent="1" scale="-3" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="volume">
+        <listOfUnits>
+          <unit kind="litre" exponent="1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="area">
+        <listOfUnits>
+          <unit kind="metre" exponent="2" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="length">
+        <listOfUnits>
+          <unit kind="metre" exponent="1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="extent">
         <listOfUnits>
           <unit kind="mole" exponent="1" scale="-3" multiplier="1"/>
         </listOfUnits>
@@ -134,58 +139,58 @@
     <listOfCompartments>
       <compartment id="extern" spatialDimensions="3" size="10" units="litre" constant="true"/>
       <compartment id="cyto" spatialDimensions="3" size="1" units="litre" constant="true"/>
-      <compartment id="mito" spatialDimensions="3" size="5" units="litre" constant="true"/>
+      <compartment id="mito" spatialDimensions="3" size="0.2" units="litre" constant="true"/>
     </listOfCompartments>
     <listOfSpecies>
-      <species id="atp" compartment="cyto" initialConcentration="2.8" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="adp" compartment="cyto" initialConcentration="0.8" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="amp" compartment="cyto" initialConcentration="0.16" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="utp" compartment="cyto" initialConcentration="0.27" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="udp" compartment="cyto" initialConcentration="0.09" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="gtp" compartment="cyto" initialConcentration="0.29" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="gdp" compartment="cyto" initialConcentration="0.1" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="nad" compartment="cyto" initialConcentration="1.22" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="nadh" compartment="cyto" initialConcentration="0.00056" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="phos" compartment="cyto" initialConcentration="5" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="pp" compartment="cyto" initialConcentration="0.008" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="co2" compartment="cyto" initialConcentration="5" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="h2o" compartment="cyto" initialConcentration="0" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="h" compartment="cyto" initialConcentration="0" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="glc1p" compartment="cyto" initialConcentration="0.012" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="udpglc" compartment="cyto" initialConcentration="0.38" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="glyglc" compartment="cyto" initialConcentration="250" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="glc" compartment="cyto" initialConcentration="5" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="glc6p" compartment="cyto" initialConcentration="0.12" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="fru6p" compartment="cyto" initialConcentration="0.05" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="fru16bp" compartment="cyto" initialConcentration="0.02" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="fru26bp" compartment="cyto" initialConcentration="0.004" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="grap" compartment="cyto" initialConcentration="0.1" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="dhap" compartment="cyto" initialConcentration="0.03" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="bpg13" compartment="cyto" initialConcentration="0.3" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="pg3" compartment="cyto" initialConcentration="0.27" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="pg2" compartment="cyto" initialConcentration="0.03" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="pep" compartment="cyto" initialConcentration="0.15" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="pyr" compartment="cyto" initialConcentration="0.1" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="oaa" compartment="cyto" initialConcentration="0.01" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="lac" compartment="cyto" initialConcentration="0.5" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="glc_ext" compartment="extern" initialConcentration="3" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="lac_ext" compartment="extern" initialConcentration="1.2" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="co2_mito" compartment="mito" initialConcentration="5" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="phos_mito" compartment="mito" initialConcentration="5" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="oaa_mito" compartment="mito" initialConcentration="0.01" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="pep_mito" compartment="mito" initialConcentration="0.15" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="acoa_mito" compartment="mito" initialConcentration="0.04" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="pyr_mito" compartment="mito" initialConcentration="0.1" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="cit_mito" compartment="mito" initialConcentration="0.32" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="atp_mito" compartment="mito" initialConcentration="2.8" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="adp_mito" compartment="mito" initialConcentration="0.8" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="gtp_mito" compartment="mito" initialConcentration="0.29" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="gdp_mito" compartment="mito" initialConcentration="0.1" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="coa_mito" compartment="mito" initialConcentration="0.055" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="nadh_mito" compartment="mito" initialConcentration="0.24" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="nad_mito" compartment="mito" initialConcentration="0.98" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="h2o_mito" compartment="mito" initialConcentration="0" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="h_mito" compartment="mito" initialConcentration="0" substanceUnits="mM_litre" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="atp" compartment="cyto" initialConcentration="2.8" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="adp" compartment="cyto" initialConcentration="0.8" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="amp" compartment="cyto" initialConcentration="0.16" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="utp" compartment="cyto" initialConcentration="0.27" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="udp" compartment="cyto" initialConcentration="0.09" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="gtp" compartment="cyto" initialConcentration="0.29" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="gdp" compartment="cyto" initialConcentration="0.1" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="nad" compartment="cyto" initialConcentration="1.22" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="nadh" compartment="cyto" initialConcentration="0.00056" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="phos" compartment="cyto" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="pp" compartment="cyto" initialConcentration="0.008" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="co2" compartment="cyto" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="h2o" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="h" compartment="cyto" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="glc1p" compartment="cyto" initialConcentration="0.012" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="udpglc" compartment="cyto" initialConcentration="0.38" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="glyglc" compartment="cyto" initialConcentration="250" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="glc" compartment="cyto" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="glc6p" compartment="cyto" initialConcentration="0.12" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="fru6p" compartment="cyto" initialConcentration="0.05" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="fru16bp" compartment="cyto" initialConcentration="0.02" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="fru26bp" compartment="cyto" initialConcentration="0.004" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="grap" compartment="cyto" initialConcentration="0.1" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="dhap" compartment="cyto" initialConcentration="0.03" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="bpg13" compartment="cyto" initialConcentration="0.3" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="pg3" compartment="cyto" initialConcentration="0.27" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="pg2" compartment="cyto" initialConcentration="0.03" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="pep" compartment="cyto" initialConcentration="0.15" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="pyr" compartment="cyto" initialConcentration="0.1" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="oaa" compartment="cyto" initialConcentration="0.01" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="lac" compartment="cyto" initialConcentration="0.5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="glc_ext" compartment="extern" initialConcentration="3" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="lac_ext" compartment="extern" initialConcentration="1.2" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="co2_mito" compartment="mito" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="phos_mito" compartment="mito" initialConcentration="5" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="oaa_mito" compartment="mito" initialConcentration="0.01" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="pep_mito" compartment="mito" initialConcentration="0.15" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="acoa_mito" compartment="mito" initialConcentration="0.04" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="pyr_mito" compartment="mito" initialConcentration="0.1" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="cit_mito" compartment="mito" initialConcentration="0.32" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="atp_mito" compartment="mito" initialConcentration="2.8" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="adp_mito" compartment="mito" initialConcentration="0.8" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="gtp_mito" compartment="mito" initialConcentration="0.29" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="gdp_mito" compartment="mito" initialConcentration="0.1" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="coa_mito" compartment="mito" initialConcentration="0.055" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="nadh_mito" compartment="mito" initialConcentration="0.24" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="nad_mito" compartment="mito" initialConcentration="0.98" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="h2o_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="h_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
       <parameter id="nadh_tot" units="mM" constant="false"/>
@@ -200,16 +205,19 @@
       <parameter id="x_ins3" value="8.6" units="mM" constant="true"/>
       <parameter id="x_ins4" value="4.2" units="dimensionless" constant="true"/>
       <parameter id="ins" units="pmol_per_l" constant="true"/>
+      <parameter id="ins_norm" units="pmol_per_l" constant="true"/>
       <parameter id="x_glu1" value="190" units="pmol_per_l" constant="true"/>
       <parameter id="x_glu2" value="37.9" units="pmol_per_l" constant="true"/>
       <parameter id="x_glu3" value="3.01" units="mM" constant="true"/>
       <parameter id="x_glu4" value="6.4" units="dimensionless" constant="true"/>
       <parameter id="glu" units="pmol_per_l" constant="true"/>
+      <parameter id="glu_norm" units="pmol_per_l" constant="true"/>
       <parameter id="x_epi1" value="6090" units="pmol_per_l" constant="true"/>
       <parameter id="x_epi2" value="100" units="pmol_per_l" constant="true"/>
       <parameter id="x_epi3" value="3.1" units="mM" constant="true"/>
       <parameter id="x_epi4" value="8.4" units="dimensionless" constant="true"/>
       <parameter id="epi" units="pmol_per_l" constant="true"/>
+      <parameter id="epi_norm" units="pmol_per_l" constant="true"/>
       <parameter id="K_val" value="0.1" units="dimensionless" constant="true"/>
       <parameter id="epi_f" value="0.8" units="dimensionless" constant="true"/>
       <parameter id="K_ins" units="pmol_per_l" constant="true"/>
@@ -284,7 +292,7 @@
       <parameter id="NDKGTP_km_adp" value="0.042" units="mM" constant="true"/>
       <parameter id="NDKGTP_km_gtp" value="0.15" units="mM" constant="true"/>
       <parameter id="NDKGTP_km_gdp" value="0.031" units="mM" constant="true"/>
-      <parameter id="NDKGTP_Vmax" value="0" units="mM" constant="true"/>
+      <parameter id="NDKGTP_Vmax" value="0" units="mmol_per_s" constant="true"/>
       <parameter id="NDKUTP_keq" value="1" units="dimensionless" constant="true"/>
       <parameter id="NDKUTP_km_atp" value="1.33" units="mM" constant="true"/>
       <parameter id="NDKUTP_km_adp" value="0.042" units="mM" constant="true"/>
@@ -320,7 +328,7 @@
       <parameter id="FBP1_ki_fru26bp" value="0.001" units="mM" constant="true"/>
       <parameter id="FBP1_km_fru16bp" value="0.0013" units="mM" constant="true"/>
       <parameter id="FBP1_Vmax" value="4.326" units="mmol_per_s" constant="true"/>
-      <parameter id="ALD_keq" value="9.76298897362969e-005" units="per_mM" constant="true"/>
+      <parameter id="ALD_keq" value="9.76298897362969e-005" units="mM" constant="true"/>
       <parameter id="ALD_km_fru16bp" value="0.0071" units="mM" constant="true"/>
       <parameter id="ALD_km_dhap" value="0.0364" units="mM" constant="true"/>
       <parameter id="ALD_km_grap" value="0.0071" units="mM" constant="true"/>
@@ -331,7 +339,7 @@
       <parameter id="TPI_km_dhap" value="0.59" units="mM" constant="true"/>
       <parameter id="TPI_km_grap" value="0.42" units="mM" constant="true"/>
       <parameter id="TPI_Vmax" value="420" units="mmol_per_s" constant="true"/>
-      <parameter id="GAPDH_keq" value="0.086779866194594" units="dimensionless" constant="true"/>
+      <parameter id="GAPDH_keq" value="0.086779866194594" units="per_mM" constant="true"/>
       <parameter id="GAPDH_k_nad" value="0.05" units="mM" constant="true"/>
       <parameter id="GAPDH_k_grap" value="0.005" units="mM" constant="true"/>
       <parameter id="GAPDH_k_p" value="3.9" units="mM" constant="true"/>
@@ -376,7 +384,7 @@
       <parameter id="PK_pep_p_inp" units="mM" constant="false"/>
       <parameter id="PK_native" units="mmol_per_s" constant="false"/>
       <parameter id="PK_phospho" units="mmol_per_s" constant="false"/>
-      <parameter id="PEPCK_keq" value="336.956521586429" units="dimensionless" constant="true"/>
+      <parameter id="PEPCK_keq" value="336.956521586429" units="mM" constant="true"/>
       <parameter id="PEPCK_k_pep" value="0.237" units="mM" constant="true"/>
       <parameter id="PEPCK_k_gdp" value="0.0921" units="mM" constant="true"/>
       <parameter id="PEPCK_k_co2" value="25.5" units="mM" constant="true"/>
@@ -436,8 +444,8 @@
       <initialAssignment symbol="ins">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
-            <ci> max </ci>
-            <cn type="integer"> 0 </cn>
+            <plus/>
+            <ci> x_ins2 </ci>
             <apply>
               <divide/>
               <apply>
@@ -470,11 +478,24 @@
           </apply>
         </math>
       </initialAssignment>
+      <initialAssignment symbol="ins_norm">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <ci> maximum </ci>
+            <cn type="integer"> 0 </cn>
+            <apply>
+              <minus/>
+              <ci> ins </ci>
+              <ci> x_ins2 </ci>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
       <initialAssignment symbol="glu">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
-            <ci> max </ci>
-            <cn type="integer"> 0 </cn>
+            <plus/>
+            <ci> x_glu2 </ci>
             <apply>
               <times/>
               <apply>
@@ -511,11 +532,24 @@
           </apply>
         </math>
       </initialAssignment>
+      <initialAssignment symbol="glu_norm">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <ci> maximum </ci>
+            <cn type="integer"> 0 </cn>
+            <apply>
+              <minus/>
+              <ci> glu </ci>
+              <ci> x_glu2 </ci>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
       <initialAssignment symbol="epi">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
-            <ci> max </ci>
-            <cn type="integer"> 0 </cn>
+            <plus/>
+            <ci> x_epi2 </ci>
             <apply>
               <times/>
               <apply>
@@ -543,11 +577,24 @@
                     <apply>
                       <power/>
                       <ci> x_epi3 </ci>
-                      <ci> x_glu4 </ci>
+                      <ci> x_epi4 </ci>
                     </apply>
                   </apply>
                 </apply>
               </apply>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="epi_norm">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <ci> maximum </ci>
+            <cn type="integer"> 0 </cn>
+            <apply>
+              <minus/>
+              <ci> epi </ci>
+              <ci> x_epi2 </ci>
             </apply>
           </apply>
         </math>
@@ -603,22 +650,22 @@
                 <cn type="integer"> 1 </cn>
                 <apply>
                   <divide/>
-                  <ci> ins </ci>
+                  <ci> ins_norm </ci>
                   <apply>
                     <plus/>
-                    <ci> ins </ci>
+                    <ci> ins_norm </ci>
                     <ci> K_ins </ci>
                   </apply>
                 </apply>
               </apply>
               <apply>
-                <ci> max </ci>
+                <ci> maximum </ci>
                 <apply>
                   <divide/>
-                  <ci> glu </ci>
+                  <ci> glu_norm </ci>
                   <apply>
                     <plus/>
-                    <ci> glu </ci>
+                    <ci> glu_norm </ci>
                     <ci> K_glu </ci>
                   </apply>
                 </apply>
@@ -627,11 +674,11 @@
                   <apply>
                     <times/>
                     <ci> epi_f </ci>
-                    <ci> epi </ci>
+                    <ci> epi_norm </ci>
                   </apply>
                   <apply>
                     <plus/>
-                    <ci> epi </ci>
+                    <ci> epi_norm </ci>
                     <ci> K_epi </ci>
                   </apply>
                 </apply>
@@ -1989,7 +2036,7 @@
           <speciesReference species="gtp" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -2033,7 +2080,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> atp </ci>
@@ -2042,7 +2089,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> gdp </ci>
@@ -2054,7 +2101,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> adp </ci>
@@ -2063,7 +2110,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> gtp </ci>
@@ -2072,7 +2119,7 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>
@@ -2088,7 +2135,7 @@
           <speciesReference species="utp" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -2132,7 +2179,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> atp </ci>
@@ -2141,7 +2188,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> udp </ci>
@@ -2153,7 +2200,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> adp </ci>
@@ -2162,7 +2209,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> utp </ci>
@@ -2171,7 +2218,7 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>
@@ -2458,7 +2505,7 @@
           <speciesReference species="dhap" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -2488,7 +2535,7 @@
               </apply>
               <apply>
                 <plus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <apply>
                   <divide/>
                   <ci> fru16bp </ci>
@@ -2929,7 +2976,7 @@
           <speciesReference species="co2" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -2974,7 +3021,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> oaa </ci>
@@ -2983,7 +3030,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> gtp </ci>
@@ -2995,7 +3042,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> pep </ci>
@@ -3004,7 +3051,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> gdp </ci>
@@ -3013,7 +3060,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> co2 </ci>
@@ -3022,7 +3069,7 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>
@@ -3039,7 +3086,7 @@
           <speciesReference species="co2_mito" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -3084,7 +3131,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> oaa_mito </ci>
@@ -3093,7 +3140,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> gtp_mito </ci>
@@ -3105,7 +3152,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> pep_mito </ci>
@@ -3114,7 +3161,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> gdp_mito </ci>
@@ -3123,7 +3170,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> co2_mito </ci>
@@ -3132,7 +3179,7 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>

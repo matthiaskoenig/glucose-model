@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" xmlns:comp="http://www.sbml.org/sbml/level3/version1/comp/version1" comp:required="true" version="1">
-  <model id="Koenig2014_hepatic_glucose_annotated" areaUnits="area" name="Koenig2014_hepatic_glucose" lengthUnits="length" substanceUnits="substance" volumeUnits="volume">
+  <model id="Koenig2014_hepatic_glucose_annotated" areaUnits="area" name="Koenig2014_hepatic_glucose" lengthUnits="length" extentUnits="extent" substanceUnits="substance" volumeUnits="volume">
     <listOfFunctionDefinitions>
-      <functionDefinition id="max">
+      <functionDefinition id="maximum">
         <math xmlns="http://www.w3.org/1998/Math/MathML">        
           <lambda>
             <bvar>
@@ -27,7 +27,7 @@
           </lambda>
         </math>
             </functionDefinition>
-      <functionDefinition id="min">
+      <functionDefinition id="minimum">
         <math xmlns="http://www.w3.org/1998/Math/MathML">        
           <lambda>
             <bvar>
@@ -54,26 +54,6 @@
             </functionDefinition>
     </listOfFunctionDefinitions>
     <listOfUnitDefinitions>
-      <unitDefinition id="substance">
-        <listOfUnits>
-          <unit scale="-3" exponent="1" multiplier="1" kind="mole"/>
-        </listOfUnits>
-      </unitDefinition>
-      <unitDefinition id="volume">
-        <listOfUnits>
-          <unit scale="0" exponent="1" multiplier="1" kind="litre"/>
-        </listOfUnits>
-      </unitDefinition>
-      <unitDefinition id="area">
-        <listOfUnits>
-          <unit scale="0" exponent="2" multiplier="1" kind="metre"/>
-        </listOfUnits>
-      </unitDefinition>
-      <unitDefinition id="length">
-        <listOfUnits>
-          <unit scale="0" exponent="1" multiplier="1" kind="metre"/>
-        </listOfUnits>
-      </unitDefinition>
       <unitDefinition id="per_s">
         <listOfUnits>
           <unit scale="0" exponent="-1" multiplier="1" kind="second"/>
@@ -82,6 +62,11 @@
       <unitDefinition id="minute">
         <listOfUnits>
           <unit scale="1" exponent="1" multiplier="6" kind="second"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="per_minute">
+        <listOfUnits>
+          <unit scale="1" exponent="-1" multiplier="6" kind="second"/>
         </listOfUnits>
       </unitDefinition>
       <unitDefinition id="mmol">
@@ -124,7 +109,27 @@
           <unit scale="0" exponent="-1" multiplier="1" kind="litre"/>
         </listOfUnits>
       </unitDefinition>
-      <unitDefinition id="mM_litre">
+      <unitDefinition id="substance">
+        <listOfUnits>
+          <unit scale="-3" exponent="1" multiplier="1" kind="mole"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="volume">
+        <listOfUnits>
+          <unit scale="0" exponent="1" multiplier="1" kind="litre"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="area">
+        <listOfUnits>
+          <unit scale="0" exponent="2" multiplier="1" kind="metre"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="length">
+        <listOfUnits>
+          <unit scale="0" exponent="1" multiplier="1" kind="metre"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="extent">
         <listOfUnits>
           <unit scale="-3" exponent="1" multiplier="1" kind="mole"/>
         </listOfUnits>
@@ -133,13 +138,13 @@
     <listOfCompartments>
       <compartment id="extern" constant="true" spatialDimensions="3" units="litre" size="10"/>
       <compartment id="cyto" constant="true" spatialDimensions="3" units="litre" size="1"/>
-      <compartment id="mito" constant="true" spatialDimensions="3" units="litre" size="5"/>
+      <compartment id="mito" constant="true" spatialDimensions="3" units="litre" size="0.2"/>
     </listOfCompartments>
     <listOfSpecies>
-      <species id="atp" initialConcentration="2.8" constant="false" hasOnlySubstanceUnits="false" metaid="_128a4840-eee6-4c1c-ac6e-6a4782f24441" boundaryCondition="true" substanceUnits="mM_litre" compartment="cyto">
+      <species id="atp" initialConcentration="2.8" constant="false" hasOnlySubstanceUnits="false" metaid="a3ad8cb2-94ef-4dbc-b886-1884bfd96503" boundaryCondition="true" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_128a4840-eee6-4c1c-ac6e-6a4782f24441">
+	<rdf:Description rdf:about="#a3ad8cb2-94ef-4dbc-b886-1884bfd96503">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00002"/>
@@ -155,10 +160,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="adp" initialConcentration="0.8" constant="false" hasOnlySubstanceUnits="false" metaid="b71555c1-44d8-46b4-81be-60154637b6ec" boundaryCondition="true" substanceUnits="mM_litre" compartment="cyto">
+      <species id="adp" initialConcentration="0.8" constant="false" hasOnlySubstanceUnits="false" metaid="a7b55965-0170-461e-a0dd-93cb5ee21f58" boundaryCondition="true" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#b71555c1-44d8-46b4-81be-60154637b6ec">
+	<rdf:Description rdf:about="#a7b55965-0170-461e-a0dd-93cb5ee21f58">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00008"/>
@@ -174,10 +179,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="amp" initialConcentration="0.16" constant="false" hasOnlySubstanceUnits="false" metaid="_8f170ae5-fe6c-439d-ac51-2445d0e6fadb" boundaryCondition="true" substanceUnits="mM_litre" compartment="cyto">
+      <species id="amp" initialConcentration="0.16" constant="false" hasOnlySubstanceUnits="false" metaid="b19824bd-0547-40a8-9761-58af08e54a15" boundaryCondition="true" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_8f170ae5-fe6c-439d-ac51-2445d0e6fadb">
+	<rdf:Description rdf:about="#b19824bd-0547-40a8-9761-58af08e54a15">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00020"/>
@@ -193,10 +198,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="utp" initialConcentration="0.27" constant="false" hasOnlySubstanceUnits="false" metaid="d61f820d-2ae8-4103-8e0a-637080941825" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="utp" initialConcentration="0.27" constant="false" hasOnlySubstanceUnits="false" metaid="b055ae24-c47e-4cd7-8a90-14393bb56dd1" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#d61f820d-2ae8-4103-8e0a-637080941825">
+	<rdf:Description rdf:about="#b055ae24-c47e-4cd7-8a90-14393bb56dd1">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00075"/>
@@ -212,10 +217,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="udp" initialConcentration="0.09" constant="false" hasOnlySubstanceUnits="false" metaid="f0a19c34-fe77-4050-90c8-0f2ce901488d" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="udp" initialConcentration="0.09" constant="false" hasOnlySubstanceUnits="false" metaid="c2384897-245e-4035-a88a-779816f8f455" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#f0a19c34-fe77-4050-90c8-0f2ce901488d">
+	<rdf:Description rdf:about="#c2384897-245e-4035-a88a-779816f8f455">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00015"/>
@@ -231,10 +236,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="gtp" initialConcentration="0.29" constant="false" hasOnlySubstanceUnits="false" metaid="_10dbd9b3-4919-49ba-80b2-523cd7f5a403" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="gtp" initialConcentration="0.29" constant="false" hasOnlySubstanceUnits="false" metaid="f2cba4a8-4201-4e14-a0a7-ae9490745a3b" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_10dbd9b3-4919-49ba-80b2-523cd7f5a403">
+	<rdf:Description rdf:about="#f2cba4a8-4201-4e14-a0a7-ae9490745a3b">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00044"/>
@@ -250,10 +255,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="gdp" initialConcentration="0.1" constant="false" hasOnlySubstanceUnits="false" metaid="_882a2f55-a39c-4ec2-886f-72eeb67c1b9a" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="gdp" initialConcentration="0.1" constant="false" hasOnlySubstanceUnits="false" metaid="_6a6bff6d-8689-40e6-95b2-17fce2c5deec" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_882a2f55-a39c-4ec2-886f-72eeb67c1b9a">
+	<rdf:Description rdf:about="#_6a6bff6d-8689-40e6-95b2-17fce2c5deec">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00035"/>
@@ -269,10 +274,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="nad" initialConcentration="1.22" constant="false" hasOnlySubstanceUnits="false" metaid="_00b16543-2784-4383-9a8e-a66a594ff8b4" boundaryCondition="true" substanceUnits="mM_litre" compartment="cyto">
+      <species id="nad" initialConcentration="1.22" constant="false" hasOnlySubstanceUnits="false" metaid="d225e194-38d9-45a8-ab49-232012d93822" boundaryCondition="true" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_00b16543-2784-4383-9a8e-a66a594ff8b4">
+	<rdf:Description rdf:about="#d225e194-38d9-45a8-ab49-232012d93822">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00003"/>
@@ -288,10 +293,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="nadh" initialConcentration="0.00056" constant="false" hasOnlySubstanceUnits="false" metaid="bb73abc7-6ec2-4d9f-96f7-9a675d7dbe20" boundaryCondition="true" substanceUnits="mM_litre" compartment="cyto">
+      <species id="nadh" initialConcentration="0.00056" constant="false" hasOnlySubstanceUnits="false" metaid="dfbac075-a59d-4cb6-846b-9cc64dd7ee98" boundaryCondition="true" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#bb73abc7-6ec2-4d9f-96f7-9a675d7dbe20">
+	<rdf:Description rdf:about="#dfbac075-a59d-4cb6-846b-9cc64dd7ee98">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00004"/>
@@ -307,10 +312,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="phos" initialConcentration="5" constant="false" hasOnlySubstanceUnits="false" metaid="ee9f6698-5f26-471b-b862-3fb89ba6ccc9" boundaryCondition="true" substanceUnits="mM_litre" compartment="cyto">
+      <species id="phos" initialConcentration="5" constant="false" hasOnlySubstanceUnits="false" metaid="_99e757a3-5ee6-40ba-9061-0a0a06283276" boundaryCondition="true" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#ee9f6698-5f26-471b-b862-3fb89ba6ccc9">
+	<rdf:Description rdf:about="#_99e757a3-5ee6-40ba-9061-0a0a06283276">
 	<bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00009"/>
@@ -320,10 +325,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="pp" initialConcentration="0.008" constant="false" hasOnlySubstanceUnits="false" metaid="f2bd2164-318c-4da4-a09a-cc38e15d309c" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="pp" initialConcentration="0.008" constant="false" hasOnlySubstanceUnits="false" metaid="_108fb8de-54be-41a5-b839-4c787a69d706" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#f2bd2164-318c-4da4-a09a-cc38e15d309c">
+	<rdf:Description rdf:about="#_108fb8de-54be-41a5-b839-4c787a69d706">
 	<bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00013"/>
@@ -333,10 +338,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="co2" initialConcentration="5" constant="false" hasOnlySubstanceUnits="false" metaid="dbc71d48-de71-4f69-b97f-b8978cf29f19" boundaryCondition="true" substanceUnits="mM_litre" compartment="cyto">
+      <species id="co2" initialConcentration="5" constant="false" hasOnlySubstanceUnits="false" metaid="cb096b57-8a32-4a51-a23c-4de6cf9b06bc" boundaryCondition="true" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#dbc71d48-de71-4f69-b97f-b8978cf29f19">
+	<rdf:Description rdf:about="#cb096b57-8a32-4a51-a23c-4de6cf9b06bc">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00011"/>
@@ -352,10 +357,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="h2o" initialConcentration="0" constant="false" hasOnlySubstanceUnits="false" metaid="e45e8465-cd4a-4d8a-affb-ec209d61140c" boundaryCondition="true" substanceUnits="mM_litre" compartment="cyto">
+      <species id="h2o" initialConcentration="0" constant="false" hasOnlySubstanceUnits="false" metaid="_1aaf7a66-106e-4fbb-8076-9d1eb305212e" boundaryCondition="true" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#e45e8465-cd4a-4d8a-affb-ec209d61140c">
+	<rdf:Description rdf:about="#_1aaf7a66-106e-4fbb-8076-9d1eb305212e">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00001"/>
@@ -371,10 +376,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="h" initialConcentration="0" constant="false" hasOnlySubstanceUnits="false" metaid="_3a51ab81-7f8d-4dd0-b09b-69bdbc9d4d9f" boundaryCondition="true" substanceUnits="mM_litre" compartment="cyto">
+      <species id="h" initialConcentration="0" constant="false" hasOnlySubstanceUnits="false" metaid="_5970c973-9d50-47b2-a583-e5dfee51e91d" boundaryCondition="true" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_3a51ab81-7f8d-4dd0-b09b-69bdbc9d4d9f">
+	<rdf:Description rdf:about="#_5970c973-9d50-47b2-a583-e5dfee51e91d">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00080"/>
@@ -390,10 +395,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="glc1p" initialConcentration="0.012" constant="false" hasOnlySubstanceUnits="false" metaid="_7e5375ad-3676-40b1-b8b5-93d2194aa784" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="glc1p" initialConcentration="0.012" constant="false" hasOnlySubstanceUnits="false" metaid="ff7ef99b-2960-4f6b-bb00-c7451f2c563d" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_7e5375ad-3676-40b1-b8b5-93d2194aa784">
+	<rdf:Description rdf:about="#ff7ef99b-2960-4f6b-bb00-c7451f2c563d">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00103"/>
@@ -409,10 +414,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="udpglc" initialConcentration="0.38" constant="false" hasOnlySubstanceUnits="false" metaid="e48b6824-3229-4c87-91df-e6e3ef915553" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="udpglc" initialConcentration="0.38" constant="false" hasOnlySubstanceUnits="false" metaid="_024828dc-2867-4ec5-a761-ac62e634bb66" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#e48b6824-3229-4c87-91df-e6e3ef915553">
+	<rdf:Description rdf:about="#_024828dc-2867-4ec5-a761-ac62e634bb66">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00029"/>
@@ -428,10 +433,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="glyglc" initialConcentration="250" constant="false" hasOnlySubstanceUnits="false" metaid="fcebffdc-fd63-4f0b-aa7a-9ccc0682a46f" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="glyglc" initialConcentration="250" constant="false" hasOnlySubstanceUnits="false" metaid="_30486adf-1583-4368-9a20-a44de6ba1feb" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#fcebffdc-fd63-4f0b-aa7a-9ccc0682a46f">
+	<rdf:Description rdf:about="#_30486adf-1583-4368-9a20-a44de6ba1feb">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00182"/>
@@ -447,10 +452,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="glc" initialConcentration="5" constant="false" hasOnlySubstanceUnits="false" metaid="_114934ec-23b8-4ef6-9457-5c96ed8b5e81" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="glc" initialConcentration="5" constant="false" hasOnlySubstanceUnits="false" metaid="_0cb21d76-ed42-4da5-aee1-7ce9e775c9c8" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_114934ec-23b8-4ef6-9457-5c96ed8b5e81">
+	<rdf:Description rdf:about="#_0cb21d76-ed42-4da5-aee1-7ce9e775c9c8">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00031"/>
@@ -466,10 +471,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="glc6p" initialConcentration="0.12" constant="false" hasOnlySubstanceUnits="false" metaid="_6d9dc803-195e-4379-bc4c-35b4349e3cef" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="glc6p" initialConcentration="0.12" constant="false" hasOnlySubstanceUnits="false" metaid="_29ea82bc-0759-4cc1-9763-7413a9149a27" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_6d9dc803-195e-4379-bc4c-35b4349e3cef">
+	<rdf:Description rdf:about="#_29ea82bc-0759-4cc1-9763-7413a9149a27">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00092"/>
@@ -485,10 +490,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="fru6p" initialConcentration="0.05" constant="false" hasOnlySubstanceUnits="false" metaid="f3ea63e1-df47-490a-848f-b4045ef2647b" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="fru6p" initialConcentration="0.05" constant="false" hasOnlySubstanceUnits="false" metaid="ef77231c-855d-4a53-b9db-e860ba4ab341" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#f3ea63e1-df47-490a-848f-b4045ef2647b">
+	<rdf:Description rdf:about="#ef77231c-855d-4a53-b9db-e860ba4ab341">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00085"/>
@@ -504,10 +509,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="fru16bp" initialConcentration="0.02" constant="false" hasOnlySubstanceUnits="false" metaid="_4550fde5-72c1-4054-b6e9-76e647e91e8d" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="fru16bp" initialConcentration="0.02" constant="false" hasOnlySubstanceUnits="false" metaid="_80f579ee-0e4f-40f2-9c53-a87b2bf6019b" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_4550fde5-72c1-4054-b6e9-76e647e91e8d">
+	<rdf:Description rdf:about="#_80f579ee-0e4f-40f2-9c53-a87b2bf6019b">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00354"/>
@@ -523,10 +528,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="fru26bp" initialConcentration="0.004" constant="false" hasOnlySubstanceUnits="false" metaid="_0baa9aed-9a8c-4f1e-bbf1-18a2d42f6458" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="fru26bp" initialConcentration="0.004" constant="false" hasOnlySubstanceUnits="false" metaid="_62dc81b1-3420-452f-8291-69bbef407f3f" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_0baa9aed-9a8c-4f1e-bbf1-18a2d42f6458">
+	<rdf:Description rdf:about="#_62dc81b1-3420-452f-8291-69bbef407f3f">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00665"/>
@@ -542,10 +547,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="grap" initialConcentration="0.1" constant="false" hasOnlySubstanceUnits="false" metaid="a891773e-d3f8-4b79-b2d1-60dc111c5cc6" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="grap" initialConcentration="0.1" constant="false" hasOnlySubstanceUnits="false" metaid="_75f3d180-51e4-4530-9f52-507145b1e42b" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#a891773e-d3f8-4b79-b2d1-60dc111c5cc6">
+	<rdf:Description rdf:about="#_75f3d180-51e4-4530-9f52-507145b1e42b">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00118"/>
@@ -561,10 +566,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="dhap" initialConcentration="0.03" constant="false" hasOnlySubstanceUnits="false" metaid="_43bea42a-ad2c-4eb5-9fba-fc7cceef971c" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="dhap" initialConcentration="0.03" constant="false" hasOnlySubstanceUnits="false" metaid="_912d1be1-c112-4c36-8dba-7d99b2f070ca" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_43bea42a-ad2c-4eb5-9fba-fc7cceef971c">
+	<rdf:Description rdf:about="#_912d1be1-c112-4c36-8dba-7d99b2f070ca">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00111"/>
@@ -580,10 +585,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="bpg13" initialConcentration="0.3" constant="false" hasOnlySubstanceUnits="false" metaid="_8af29445-4e2e-4f31-9459-058b78880da7" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="bpg13" initialConcentration="0.3" constant="false" hasOnlySubstanceUnits="false" metaid="_7197340b-08e9-4281-bbd4-04a7a53dd297" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_8af29445-4e2e-4f31-9459-058b78880da7">
+	<rdf:Description rdf:about="#_7197340b-08e9-4281-bbd4-04a7a53dd297">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00236"/>
@@ -599,10 +604,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="pg3" initialConcentration="0.27" constant="false" hasOnlySubstanceUnits="false" metaid="fcfb3d98-e3b5-4b74-8e89-9daeccbfa8d4" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="pg3" initialConcentration="0.27" constant="false" hasOnlySubstanceUnits="false" metaid="_1f0dc83b-fa7a-4ff8-a2d8-a5fbe17e9636" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#fcfb3d98-e3b5-4b74-8e89-9daeccbfa8d4">
+	<rdf:Description rdf:about="#_1f0dc83b-fa7a-4ff8-a2d8-a5fbe17e9636">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00197"/>
@@ -618,10 +623,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="pg2" initialConcentration="0.03" constant="false" hasOnlySubstanceUnits="false" metaid="d97ffdb0-8be8-48db-9894-6f15f4e23145" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="pg2" initialConcentration="0.03" constant="false" hasOnlySubstanceUnits="false" metaid="fddf9482-3527-4c40-b69c-df490e3cddad" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#d97ffdb0-8be8-48db-9894-6f15f4e23145">
+	<rdf:Description rdf:about="#fddf9482-3527-4c40-b69c-df490e3cddad">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00631"/>
@@ -637,10 +642,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="pep" initialConcentration="0.15" constant="false" hasOnlySubstanceUnits="false" metaid="fba1e92c-d1ef-4d85-94b6-8f1295a2a360" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="pep" initialConcentration="0.15" constant="false" hasOnlySubstanceUnits="false" metaid="b26153b6-8bea-499a-ae5e-e4e3b492a3e2" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#fba1e92c-d1ef-4d85-94b6-8f1295a2a360">
+	<rdf:Description rdf:about="#b26153b6-8bea-499a-ae5e-e4e3b492a3e2">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00074"/>
@@ -656,10 +661,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="pyr" initialConcentration="0.1" constant="false" hasOnlySubstanceUnits="false" metaid="d061e113-e868-408a-bb90-90cd7215be4b" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="pyr" initialConcentration="0.1" constant="false" hasOnlySubstanceUnits="false" metaid="d80d062c-ccf9-4104-8b2d-342ce638c848" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#d061e113-e868-408a-bb90-90cd7215be4b">
+	<rdf:Description rdf:about="#d80d062c-ccf9-4104-8b2d-342ce638c848">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00022"/>
@@ -675,10 +680,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="oaa" initialConcentration="0.01" constant="false" hasOnlySubstanceUnits="false" metaid="_07d4781f-e80e-497b-b2a9-86c92ffb0a58" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="oaa" initialConcentration="0.01" constant="false" hasOnlySubstanceUnits="false" metaid="_6bf926fd-4e1e-47ff-b37a-e719ca1d5a44" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_07d4781f-e80e-497b-b2a9-86c92ffb0a58">
+	<rdf:Description rdf:about="#_6bf926fd-4e1e-47ff-b37a-e719ca1d5a44">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00036"/>
@@ -694,10 +699,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="lac" initialConcentration="0.5" constant="false" hasOnlySubstanceUnits="false" metaid="b1d0e6f0-2b94-4542-bd1f-946cae3f4bad" boundaryCondition="false" substanceUnits="mM_litre" compartment="cyto">
+      <species id="lac" initialConcentration="0.5" constant="false" hasOnlySubstanceUnits="false" metaid="bb5b75ad-19a0-4323-925c-d6cc1b603cf1" boundaryCondition="false" substanceUnits="substance" compartment="cyto">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#b1d0e6f0-2b94-4542-bd1f-946cae3f4bad">
+	<rdf:Description rdf:about="#bb5b75ad-19a0-4323-925c-d6cc1b603cf1">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00186"/>
@@ -713,10 +718,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="glc_ext" initialConcentration="3" constant="false" hasOnlySubstanceUnits="false" metaid="_5ab1aa0d-2a9e-4185-9afd-8d81a511ee83" boundaryCondition="true" substanceUnits="mM_litre" compartment="extern">
+      <species id="glc_ext" initialConcentration="3" constant="false" hasOnlySubstanceUnits="false" metaid="_7da526d8-81d5-4e22-a6ff-5df836981577" boundaryCondition="true" substanceUnits="substance" compartment="extern">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_5ab1aa0d-2a9e-4185-9afd-8d81a511ee83">
+	<rdf:Description rdf:about="#_7da526d8-81d5-4e22-a6ff-5df836981577">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00031"/>
@@ -732,10 +737,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="lac_ext" initialConcentration="1.2" constant="false" hasOnlySubstanceUnits="false" metaid="bcfd78d0-6732-4410-8c66-163c9ff0e25d" boundaryCondition="true" substanceUnits="mM_litre" compartment="extern">
+      <species id="lac_ext" initialConcentration="1.2" constant="false" hasOnlySubstanceUnits="false" metaid="c994de3c-0ccd-4f2b-b54f-823c9bf61e3a" boundaryCondition="true" substanceUnits="substance" compartment="extern">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#bcfd78d0-6732-4410-8c66-163c9ff0e25d">
+	<rdf:Description rdf:about="#c994de3c-0ccd-4f2b-b54f-823c9bf61e3a">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00186"/>
@@ -751,10 +756,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="co2_mito" initialConcentration="5" constant="false" hasOnlySubstanceUnits="false" metaid="_608ca265-2c48-46f6-9a9f-fca863fea517" boundaryCondition="true" substanceUnits="mM_litre" compartment="mito">
+      <species id="co2_mito" initialConcentration="5" constant="false" hasOnlySubstanceUnits="false" metaid="_4cbf896a-1671-4d7d-9e61-35c456a76b4f" boundaryCondition="true" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_608ca265-2c48-46f6-9a9f-fca863fea517">
+	<rdf:Description rdf:about="#_4cbf896a-1671-4d7d-9e61-35c456a76b4f">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00011"/>
@@ -770,10 +775,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="phos_mito" initialConcentration="5" constant="false" hasOnlySubstanceUnits="false" metaid="b14ad24d-9b1b-4261-86a7-7e6ba48c902b" boundaryCondition="true" substanceUnits="mM_litre" compartment="mito">
+      <species id="phos_mito" initialConcentration="5" constant="false" hasOnlySubstanceUnits="false" metaid="_7461e5de-885e-451b-81d1-55d90322160a" boundaryCondition="true" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#b14ad24d-9b1b-4261-86a7-7e6ba48c902b">
+	<rdf:Description rdf:about="#_7461e5de-885e-451b-81d1-55d90322160a">
 	<bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00009"/>
@@ -783,10 +788,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="oaa_mito" initialConcentration="0.01" constant="false" hasOnlySubstanceUnits="false" metaid="_9e52153e-0697-4b34-a4ef-fd71577146e0" boundaryCondition="false" substanceUnits="mM_litre" compartment="mito">
+      <species id="oaa_mito" initialConcentration="0.01" constant="false" hasOnlySubstanceUnits="false" metaid="af81a439-d36e-49c0-bbd6-6fd364fd1359" boundaryCondition="false" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_9e52153e-0697-4b34-a4ef-fd71577146e0">
+	<rdf:Description rdf:about="#af81a439-d36e-49c0-bbd6-6fd364fd1359">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00036"/>
@@ -802,10 +807,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="pep_mito" initialConcentration="0.15" constant="false" hasOnlySubstanceUnits="false" metaid="cb8c1752-db4f-4cb7-a194-f303d7518c78" boundaryCondition="false" substanceUnits="mM_litre" compartment="mito">
+      <species id="pep_mito" initialConcentration="0.15" constant="false" hasOnlySubstanceUnits="false" metaid="_3e870508-dc0e-4aef-9c77-bf44d9d03fe7" boundaryCondition="false" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#cb8c1752-db4f-4cb7-a194-f303d7518c78">
+	<rdf:Description rdf:about="#_3e870508-dc0e-4aef-9c77-bf44d9d03fe7">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00074"/>
@@ -821,10 +826,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="acoa_mito" initialConcentration="0.04" constant="false" hasOnlySubstanceUnits="false" metaid="_3c300c99-dbd0-4070-be14-584e677c5fbd" boundaryCondition="true" substanceUnits="mM_litre" compartment="mito">
+      <species id="acoa_mito" initialConcentration="0.04" constant="false" hasOnlySubstanceUnits="false" metaid="b9db63c0-8de3-47a6-99d6-dc9ea6c52789" boundaryCondition="true" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_3c300c99-dbd0-4070-be14-584e677c5fbd">
+	<rdf:Description rdf:about="#b9db63c0-8de3-47a6-99d6-dc9ea6c52789">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00024"/>
@@ -840,10 +845,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="pyr_mito" initialConcentration="0.1" constant="false" hasOnlySubstanceUnits="false" metaid="_04000177-17d6-4503-ac36-24bc6d456440" boundaryCondition="false" substanceUnits="mM_litre" compartment="mito">
+      <species id="pyr_mito" initialConcentration="0.1" constant="false" hasOnlySubstanceUnits="false" metaid="_689cba95-4d79-4be5-9423-e2fba7259b98" boundaryCondition="false" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_04000177-17d6-4503-ac36-24bc6d456440">
+	<rdf:Description rdf:about="#_689cba95-4d79-4be5-9423-e2fba7259b98">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00022"/>
@@ -859,10 +864,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="cit_mito" initialConcentration="0.32" constant="false" hasOnlySubstanceUnits="false" metaid="_7ad15e0f-0e26-41b6-9dbd-85038d1ec41d" boundaryCondition="true" substanceUnits="mM_litre" compartment="mito">
+      <species id="cit_mito" initialConcentration="0.32" constant="false" hasOnlySubstanceUnits="false" metaid="_92c29d69-6808-4b8e-916c-e370187a808f" boundaryCondition="true" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_7ad15e0f-0e26-41b6-9dbd-85038d1ec41d">
+	<rdf:Description rdf:about="#_92c29d69-6808-4b8e-916c-e370187a808f">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00158"/>
@@ -878,10 +883,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="atp_mito" initialConcentration="2.8" constant="false" hasOnlySubstanceUnits="false" metaid="_12c1d8c2-3af0-496b-9d2a-5b93ee1ef24c" boundaryCondition="true" substanceUnits="mM_litre" compartment="mito">
+      <species id="atp_mito" initialConcentration="2.8" constant="false" hasOnlySubstanceUnits="false" metaid="_42839a1b-0681-4a04-a1a6-046678cdd57d" boundaryCondition="true" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_12c1d8c2-3af0-496b-9d2a-5b93ee1ef24c">
+	<rdf:Description rdf:about="#_42839a1b-0681-4a04-a1a6-046678cdd57d">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00002"/>
@@ -897,10 +902,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="adp_mito" initialConcentration="0.8" constant="false" hasOnlySubstanceUnits="false" metaid="ae152e43-50c4-471a-b7a9-7b3d9c4d951d" boundaryCondition="true" substanceUnits="mM_litre" compartment="mito">
+      <species id="adp_mito" initialConcentration="0.8" constant="false" hasOnlySubstanceUnits="false" metaid="f73b9b20-c972-43b1-b15d-b6501abd38bd" boundaryCondition="true" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#ae152e43-50c4-471a-b7a9-7b3d9c4d951d">
+	<rdf:Description rdf:about="#f73b9b20-c972-43b1-b15d-b6501abd38bd">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00008"/>
@@ -916,10 +921,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="gtp_mito" initialConcentration="0.29" constant="false" hasOnlySubstanceUnits="false" metaid="e13ae761-5a04-4a94-bf9a-66dcb3cb2e8c" boundaryCondition="false" substanceUnits="mM_litre" compartment="mito">
+      <species id="gtp_mito" initialConcentration="0.29" constant="false" hasOnlySubstanceUnits="false" metaid="_96534dc8-71c3-487d-a61c-b5b93d56751b" boundaryCondition="false" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#e13ae761-5a04-4a94-bf9a-66dcb3cb2e8c">
+	<rdf:Description rdf:about="#_96534dc8-71c3-487d-a61c-b5b93d56751b">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00044"/>
@@ -935,10 +940,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="gdp_mito" initialConcentration="0.1" constant="false" hasOnlySubstanceUnits="false" metaid="_1eea2ce5-c2f6-4e80-81cf-5d5b5c61c073" boundaryCondition="false" substanceUnits="mM_litre" compartment="mito">
+      <species id="gdp_mito" initialConcentration="0.1" constant="false" hasOnlySubstanceUnits="false" metaid="a3e2786f-7651-4fa6-ad0e-ff73e10d103b" boundaryCondition="false" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_1eea2ce5-c2f6-4e80-81cf-5d5b5c61c073">
+	<rdf:Description rdf:about="#a3e2786f-7651-4fa6-ad0e-ff73e10d103b">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00035"/>
@@ -954,10 +959,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="coa_mito" initialConcentration="0.055" constant="false" hasOnlySubstanceUnits="false" metaid="d0122585-d54c-464e-ad92-6d31336d3fd8" boundaryCondition="true" substanceUnits="mM_litre" compartment="mito">
+      <species id="coa_mito" initialConcentration="0.055" constant="false" hasOnlySubstanceUnits="false" metaid="_7be90946-3a51-49b1-b8f0-0dfabea8ad64" boundaryCondition="true" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#d0122585-d54c-464e-ad92-6d31336d3fd8">
+	<rdf:Description rdf:about="#_7be90946-3a51-49b1-b8f0-0dfabea8ad64">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00010"/>
@@ -973,10 +978,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="nadh_mito" initialConcentration="0.24" constant="false" hasOnlySubstanceUnits="false" metaid="bc0db803-5340-486d-83e1-e159222752ca" boundaryCondition="true" substanceUnits="mM_litre" compartment="mito">
+      <species id="nadh_mito" initialConcentration="0.24" constant="false" hasOnlySubstanceUnits="false" metaid="_4145072c-968c-4294-8b6c-9477006ae140" boundaryCondition="true" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#bc0db803-5340-486d-83e1-e159222752ca">
+	<rdf:Description rdf:about="#_4145072c-968c-4294-8b6c-9477006ae140">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00004"/>
@@ -992,10 +997,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="nad_mito" initialConcentration="0.98" constant="false" hasOnlySubstanceUnits="false" metaid="_56912f37-b32e-4d44-a6c7-07e660defb03" boundaryCondition="true" substanceUnits="mM_litre" compartment="mito">
+      <species id="nad_mito" initialConcentration="0.98" constant="false" hasOnlySubstanceUnits="false" metaid="_31a58dcc-e798-4b24-b18b-02b5d1000932" boundaryCondition="true" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_56912f37-b32e-4d44-a6c7-07e660defb03">
+	<rdf:Description rdf:about="#_31a58dcc-e798-4b24-b18b-02b5d1000932">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00003"/>
@@ -1011,10 +1016,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="h2o_mito" initialConcentration="0" constant="false" hasOnlySubstanceUnits="false" metaid="_3733b91c-ed8e-4fa5-91e5-e22d47844044" boundaryCondition="true" substanceUnits="mM_litre" compartment="mito">
+      <species id="h2o_mito" initialConcentration="0" constant="false" hasOnlySubstanceUnits="false" metaid="_3d39fb6b-ab81-4362-82b8-64c357c280bc" boundaryCondition="true" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_3733b91c-ed8e-4fa5-91e5-e22d47844044">
+	<rdf:Description rdf:about="#_3d39fb6b-ab81-4362-82b8-64c357c280bc">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00080"/>
@@ -1030,10 +1035,10 @@
 	</rdf:RDF>
 	</annotation>
             </species>
-      <species id="h_mito" initialConcentration="0" constant="false" hasOnlySubstanceUnits="false" metaid="a7b25fa3-35bc-4e93-ad7c-0d5a6454c6dd" boundaryCondition="true" substanceUnits="mM_litre" compartment="mito">
+      <species id="h_mito" initialConcentration="0" constant="false" hasOnlySubstanceUnits="false" metaid="_550b5b89-7bd4-4d22-902c-f9677e0c6014" boundaryCondition="true" substanceUnits="substance" compartment="mito">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#a7b25fa3-35bc-4e93-ad7c-0d5a6454c6dd">
+	<rdf:Description rdf:about="#_550b5b89-7bd4-4d22-902c-f9677e0c6014">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00011"/>
@@ -1062,10 +1067,10 @@
       <parameter id="x_ins2" constant="true" value="0" units="pmol_per_l"/>
       <parameter id="x_ins3" constant="true" value="8.6" units="mM"/>
       <parameter id="x_ins4" constant="true" value="4.2" units="dimensionless"/>
-      <parameter id="ins" constant="true" metaid="_0a730afc-bbcf-4be8-a460-0953f33064c8" units="pmol_per_l">
+      <parameter id="ins" constant="true" metaid="_22ce155d-f311-4f2f-bf2e-83179a99d238" units="pmol_per_l">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_0a730afc-bbcf-4be8-a460-0953f33064c8">
+	<rdf:Description rdf:about="#_22ce155d-f311-4f2f-bf2e-83179a99d238">
 	<bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00723"/>
@@ -1075,14 +1080,15 @@
 	</rdf:RDF>
 	</annotation>
             </parameter>
+      <parameter id="ins_norm" constant="true" units="pmol_per_l"/>
       <parameter id="x_glu1" constant="true" value="190" units="pmol_per_l"/>
       <parameter id="x_glu2" constant="true" value="37.9" units="pmol_per_l"/>
       <parameter id="x_glu3" constant="true" value="3.01" units="mM"/>
       <parameter id="x_glu4" constant="true" value="6.4" units="dimensionless"/>
-      <parameter id="glu" constant="true" metaid="_8a115b28-b8bb-41bf-8bed-ae32945c3732" units="pmol_per_l">
+      <parameter id="glu" constant="true" metaid="e056c0ea-1156-407d-b8ef-ae95b1d53ee9" units="pmol_per_l">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_8a115b28-b8bb-41bf-8bed-ae32945c3732">
+	<rdf:Description rdf:about="#e056c0ea-1156-407d-b8ef-ae95b1d53ee9">
 	<bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C01501"/>
@@ -1092,14 +1098,15 @@
 	</rdf:RDF>
 	</annotation>
             </parameter>
+      <parameter id="glu_norm" constant="true" units="pmol_per_l"/>
       <parameter id="x_epi1" constant="true" value="6090" units="pmol_per_l"/>
       <parameter id="x_epi2" constant="true" value="100" units="pmol_per_l"/>
       <parameter id="x_epi3" constant="true" value="3.1" units="mM"/>
       <parameter id="x_epi4" constant="true" value="8.4" units="dimensionless"/>
-      <parameter id="epi" constant="true" metaid="ff71a57d-7486-4223-81f4-d5d5d2d25a56" units="pmol_per_l">
+      <parameter id="epi" constant="true" metaid="_0b6d15ab-5a94-4e23-93af-1b3bb3714c62" units="pmol_per_l">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#ff71a57d-7486-4223-81f4-d5d5d2d25a56">
+	<rdf:Description rdf:about="#_0b6d15ab-5a94-4e23-93af-1b3bb3714c62">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:kegg.compound:C00547"/>
@@ -1115,6 +1122,7 @@
 	</rdf:RDF>
 	</annotation>
             </parameter>
+      <parameter id="epi_norm" constant="true" units="pmol_per_l"/>
       <parameter id="K_val" constant="true" value="0.1" units="dimensionless"/>
       <parameter id="epi_f" constant="true" value="0.8" units="dimensionless"/>
       <parameter id="K_ins" constant="true" units="pmol_per_l"/>
@@ -1189,7 +1197,7 @@
       <parameter id="NDKGTP_km_adp" constant="true" value="0.042" units="mM"/>
       <parameter id="NDKGTP_km_gtp" constant="true" value="0.15" units="mM"/>
       <parameter id="NDKGTP_km_gdp" constant="true" value="0.031" units="mM"/>
-      <parameter id="NDKGTP_Vmax" constant="true" value="0" units="mM"/>
+      <parameter id="NDKGTP_Vmax" constant="true" value="0" units="mmol_per_s"/>
       <parameter id="NDKUTP_keq" constant="true" value="1" units="dimensionless"/>
       <parameter id="NDKUTP_km_atp" constant="true" value="1.33" units="mM"/>
       <parameter id="NDKUTP_km_adp" constant="true" value="0.042" units="mM"/>
@@ -1225,7 +1233,7 @@
       <parameter id="FBP1_ki_fru26bp" constant="true" value="0.001" units="mM"/>
       <parameter id="FBP1_km_fru16bp" constant="true" value="0.0013" units="mM"/>
       <parameter id="FBP1_Vmax" constant="true" value="4.326" units="mmol_per_s"/>
-      <parameter id="ALD_keq" constant="true" value="9.76298897362969E-5" units="per_mM"/>
+      <parameter id="ALD_keq" constant="true" value="9.76298897362969E-5" units="mM"/>
       <parameter id="ALD_km_fru16bp" constant="true" value="0.0071" units="mM"/>
       <parameter id="ALD_km_dhap" constant="true" value="0.0364" units="mM"/>
       <parameter id="ALD_km_grap" constant="true" value="0.0071" units="mM"/>
@@ -1236,7 +1244,7 @@
       <parameter id="TPI_km_dhap" constant="true" value="0.59" units="mM"/>
       <parameter id="TPI_km_grap" constant="true" value="0.42" units="mM"/>
       <parameter id="TPI_Vmax" constant="true" value="420" units="mmol_per_s"/>
-      <parameter id="GAPDH_keq" constant="true" value="0.086779866194594" units="dimensionless"/>
+      <parameter id="GAPDH_keq" constant="true" value="0.086779866194594" units="per_mM"/>
       <parameter id="GAPDH_k_nad" constant="true" value="0.05" units="mM"/>
       <parameter id="GAPDH_k_grap" constant="true" value="0.005" units="mM"/>
       <parameter id="GAPDH_k_p" constant="true" value="3.9" units="mM"/>
@@ -1281,7 +1289,7 @@
       <parameter id="PK_pep_p_inp" constant="false" units="mM"/>
       <parameter id="PK_native" constant="false" units="mmol_per_s"/>
       <parameter id="PK_phospho" constant="false" units="mmol_per_s"/>
-      <parameter id="PEPCK_keq" constant="true" value="336.956521586429" units="dimensionless"/>
+      <parameter id="PEPCK_keq" constant="true" value="336.956521586429" units="mM"/>
       <parameter id="PEPCK_k_pep" constant="true" value="0.237" units="mM"/>
       <parameter id="PEPCK_k_gdp" constant="true" value="0.0921" units="mM"/>
       <parameter id="PEPCK_k_co2" constant="true" value="25.5" units="mM"/>
@@ -1341,8 +1349,8 @@
       <initialAssignment symbol="ins">
         <math xmlns="http://www.w3.org/1998/Math/MathML">        
           <apply>
-            <ci> max </ci>
-            <cn type="integer"> 0 </cn>
+            <plus/>
+            <ci> x_ins2 </ci>
             <apply>
               <divide/>
               <apply>
@@ -1375,11 +1383,24 @@
           </apply>
         </math>
             </initialAssignment>
+      <initialAssignment symbol="ins_norm">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">        
+          <apply>
+            <ci> maximum </ci>
+            <cn type="integer"> 0 </cn>
+            <apply>
+              <minus/>
+              <ci> ins </ci>
+              <ci> x_ins2 </ci>
+            </apply>
+          </apply>
+        </math>
+            </initialAssignment>
       <initialAssignment symbol="glu">
         <math xmlns="http://www.w3.org/1998/Math/MathML">        
           <apply>
-            <ci> max </ci>
-            <cn type="integer"> 0 </cn>
+            <plus/>
+            <ci> x_glu2 </ci>
             <apply>
               <times/>
               <apply>
@@ -1416,11 +1437,24 @@
           </apply>
         </math>
             </initialAssignment>
+      <initialAssignment symbol="glu_norm">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">        
+          <apply>
+            <ci> maximum </ci>
+            <cn type="integer"> 0 </cn>
+            <apply>
+              <minus/>
+              <ci> glu </ci>
+              <ci> x_glu2 </ci>
+            </apply>
+          </apply>
+        </math>
+            </initialAssignment>
       <initialAssignment symbol="epi">
         <math xmlns="http://www.w3.org/1998/Math/MathML">        
           <apply>
-            <ci> max </ci>
-            <cn type="integer"> 0 </cn>
+            <plus/>
+            <ci> x_epi2 </ci>
             <apply>
               <times/>
               <apply>
@@ -1448,11 +1482,24 @@
                     <apply>
                       <power/>
                       <ci> x_epi3 </ci>
-                      <ci> x_glu4 </ci>
+                      <ci> x_epi4 </ci>
                     </apply>
                   </apply>
                 </apply>
               </apply>
+            </apply>
+          </apply>
+        </math>
+            </initialAssignment>
+      <initialAssignment symbol="epi_norm">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">        
+          <apply>
+            <ci> maximum </ci>
+            <cn type="integer"> 0 </cn>
+            <apply>
+              <minus/>
+              <ci> epi </ci>
+              <ci> x_epi2 </ci>
             </apply>
           </apply>
         </math>
@@ -1508,22 +1555,22 @@
                 <cn type="integer"> 1 </cn>
                 <apply>
                   <divide/>
-                  <ci> ins </ci>
+                  <ci> ins_norm </ci>
                   <apply>
                     <plus/>
-                    <ci> ins </ci>
+                    <ci> ins_norm </ci>
                     <ci> K_ins </ci>
                   </apply>
                 </apply>
               </apply>
               <apply>
-                <ci> max </ci>
+                <ci> maximum </ci>
                 <apply>
                   <divide/>
-                  <ci> glu </ci>
+                  <ci> glu_norm </ci>
                   <apply>
                     <plus/>
-                    <ci> glu </ci>
+                    <ci> glu_norm </ci>
                     <ci> K_glu </ci>
                   </apply>
                 </apply>
@@ -1532,11 +1579,11 @@
                   <apply>
                     <times/>
                     <ci> epi_f </ci>
-                    <ci> epi </ci>
+                    <ci> epi_norm </ci>
                   </apply>
                   <apply>
                     <plus/>
-                    <ci> epi </ci>
+                    <ci> epi_norm </ci>
                     <ci> K_epi </ci>
                   </apply>
                 </apply>
@@ -2517,10 +2564,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="GK" name="Glucokinase" metaid="_3af8c079-7e3f-42a9-bcff-0eec7f5d298f" reversible="false" fast="false">
+      <reaction id="GK" name="Glucokinase" metaid="_4020910f-b697-4efd-9370-07f02dff36d4" reversible="false" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_3af8c079-7e3f-42a9-bcff-0eec7f5d298f">
+	<rdf:Description rdf:about="#_4020910f-b697-4efd-9370-07f02dff36d4">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:2.7.1.2"/>
@@ -2587,10 +2634,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="G6PASE" name="D-Glucose-6-phosphate Phosphatase" metaid="_0a7a2d8a-9901-4da6-b28a-e654f572bf5e" reversible="false" fast="false">
+      <reaction id="G6PASE" name="D-Glucose-6-phosphate Phosphatase" metaid="_998b2a1d-e862-417a-8ffb-b721c0e89458" reversible="false" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_0a7a2d8a-9901-4da6-b28a-e654f572bf5e">
+	<rdf:Description rdf:about="#_998b2a1d-e862-417a-8ffb-b721c0e89458">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:3.1.3.9"/>
@@ -2632,10 +2679,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="GPI" name="D-Glucose-6-phosphate Isomerase" metaid="_45149c64-fdda-4e1c-b24a-f4b9427ff567" reversible="true" fast="false">
+      <reaction id="GPI" name="D-Glucose-6-phosphate Isomerase" metaid="_0456ee50-6df3-49f5-aaa3-4ed95e3c8763" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_45149c64-fdda-4e1c-b24a-f4b9427ff567">
+	<rdf:Description rdf:about="#_0456ee50-6df3-49f5-aaa3-4ed95e3c8763">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:5.3.1.9"/>
@@ -2699,10 +2746,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="G16PI" name="Glucose 1-phosphate 1,6-phosphomutase" metaid="e9b44319-5581-4586-b37f-2cfc93d97a8a" reversible="true" fast="false">
+      <reaction id="G16PI" name="Glucose 1-phosphate 1,6-phosphomutase" metaid="fcd8d805-8ab2-4b99-91c9-6fa3dec27eca" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#e9b44319-5581-4586-b37f-2cfc93d97a8a">
+	<rdf:Description rdf:about="#fcd8d805-8ab2-4b99-91c9-6fa3dec27eca">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:5.4.2.2"/>
@@ -2766,10 +2813,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="UPGASE" name="UTP:Glucose-1-phosphate uridylyltransferase" metaid="_8f29b6ea-6b2e-43e2-883c-97bf1cfeaeb8" reversible="true" fast="false">
+      <reaction id="UPGASE" name="UTP:Glucose-1-phosphate uridylyltransferase" metaid="_01845096-f39f-481e-a982-6fa6e62a09cc" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_8f29b6ea-6b2e-43e2-883c-97bf1cfeaeb8">
+	<rdf:Description rdf:about="#_01845096-f39f-481e-a982-6fa6e62a09cc">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:2.7.7.9"/>
@@ -2882,10 +2929,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="PPASE" name="Pyrophosphate phosphohydrolase" metaid="_82e77971-af52-4d10-b355-52fd1d3cc417" reversible="false" fast="false">
+      <reaction id="PPASE" name="Pyrophosphate phosphohydrolase" metaid="_0886fff0-2597-4194-a818-7466c0bde4de" reversible="false" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_82e77971-af52-4d10-b355-52fd1d3cc417">
+	<rdf:Description rdf:about="#_0886fff0-2597-4194-a818-7466c0bde4de">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:3.6.1.1"/>
@@ -2986,10 +3033,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="NDKGTP" name="Nucleoside-diphosphate kinase (ATP, GTP)" metaid="_96844d77-c6ee-45d0-a7cc-00e5f8892ddb" reversible="true" fast="false">
+      <reaction id="NDKGTP" name="Nucleoside-diphosphate kinase (ATP, GTP)" metaid="f675dfc0-4275-4b27-a2ce-4e7f1394ec3c" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_96844d77-c6ee-45d0-a7cc-00e5f8892ddb">
+	<rdf:Description rdf:about="#f675dfc0-4275-4b27-a2ce-4e7f1394ec3c">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:2.7.4.6"/>
@@ -3012,8 +3059,8 @@
           <speciesReference constant="true" species="adp" stoichiometry="1"/>
           <speciesReference constant="true" species="gtp" stoichiometry="1"/>
         </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+        <kineticLaw xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">          
             <apply>
               <divide/>
               <apply>
@@ -3057,7 +3104,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> atp </ci>
@@ -3066,7 +3113,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> gdp </ci>
@@ -3078,7 +3125,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> adp </ci>
@@ -3087,7 +3134,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> gtp </ci>
@@ -3096,16 +3143,16 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn type="integer" sbml:units="dimensionless"> 1 </cn>
               </apply>
             </apply>
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="NDKUTP" name="Nucleoside-diphosphate kinase (ATP, UTP)" metaid="dfc6442a-8a78-4a5e-b9c5-8efe8bed7211" reversible="true" fast="false">
+      <reaction id="NDKUTP" name="Nucleoside-diphosphate kinase (ATP, UTP)" metaid="_792f4548-a7eb-4e0d-adcf-d4310171c28d" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#dfc6442a-8a78-4a5e-b9c5-8efe8bed7211">
+	<rdf:Description rdf:about="#_792f4548-a7eb-4e0d-adcf-d4310171c28d">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:2.7.4.6"/>
@@ -3128,8 +3175,8 @@
           <speciesReference constant="true" species="adp" stoichiometry="1"/>
           <speciesReference constant="true" species="utp" stoichiometry="1"/>
         </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+        <kineticLaw xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">          
             <apply>
               <divide/>
               <apply>
@@ -3173,7 +3220,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> atp </ci>
@@ -3182,7 +3229,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> udp </ci>
@@ -3194,7 +3241,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> adp </ci>
@@ -3203,7 +3250,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> utp </ci>
@@ -3212,16 +3259,16 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn type="integer" sbml:units="dimensionless"> 1 </cn>
               </apply>
             </apply>
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="AK" name="ATP:AMP phosphotransferase (Adenylatkinase)" metaid="_1fa75b81-0265-4e84-9724-de7b3b8d5243" reversible="true" fast="false">
+      <reaction id="AK" name="ATP:AMP phosphotransferase (Adenylatkinase)" metaid="f8cf9da4-5c31-434d-a3f2-45214eb22fe0" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_1fa75b81-0265-4e84-9724-de7b3b8d5243">
+	<rdf:Description rdf:about="#f8cf9da4-5c31-434d-a3f2-45214eb22fe0">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:2.7.4.3"/>
@@ -3333,10 +3380,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="PFK2" name="ATP:D-fructose-6-phosphate 2-phosphotransferase" metaid="_1e4751af-b6bb-4fa4-8f8b-6fb04444929d" reversible="false" fast="false">
+      <reaction id="PFK2" name="ATP:D-fructose-6-phosphate 2-phosphotransferase" metaid="bd09dbf0-b667-46a4-8a30-22b0da02dfe9" reversible="false" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_1e4751af-b6bb-4fa4-8f8b-6fb04444929d">
+	<rdf:Description rdf:about="#bd09dbf0-b667-46a4-8a30-22b0da02dfe9">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:2.7.1.105"/>
@@ -3381,10 +3428,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="FBP2" name="D-Fructose-2,6-bisphosphate 2-phosphohydrolase" metaid="_5300d6a6-a89b-4311-abcd-4c5fedb4c103" reversible="false" fast="false">
+      <reaction id="FBP2" name="D-Fructose-2,6-bisphosphate 2-phosphohydrolase" metaid="_5d18bc68-8c84-45bd-bd56-ec0017eda091" reversible="false" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_5300d6a6-a89b-4311-abcd-4c5fedb4c103">
+	<rdf:Description rdf:about="#_5d18bc68-8c84-45bd-bd56-ec0017eda091">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:3.1.3.46"/>
@@ -3428,10 +3475,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="PFK1" name="ATP:D-fructose-6-phosphate 1-phosphotransferase" metaid="aed60582-8bd5-4204-9d0c-13b6fb9b39a5" reversible="false" fast="false">
+      <reaction id="PFK1" name="ATP:D-fructose-6-phosphate 1-phosphotransferase" metaid="_67904b6f-1dca-455a-add6-9b011dde8de6" reversible="false" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#aed60582-8bd5-4204-9d0c-13b6fb9b39a5">
+	<rdf:Description rdf:about="#_67904b6f-1dca-455a-add6-9b011dde8de6">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:2.7.1.11"/>
@@ -3512,10 +3559,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="FBP1" name="D-Fructose-1,6-bisphosphate 1-phosphohydrolase" metaid="_46b9fce9-1dae-442d-a370-6bc5a730a5b6" reversible="false" fast="false">
+      <reaction id="FBP1" name="D-Fructose-1,6-bisphosphate 1-phosphohydrolase" metaid="_584c5a0d-b73a-47bf-ab93-11d182cc32c8" reversible="false" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_46b9fce9-1dae-442d-a370-6bc5a730a5b6">
+	<rdf:Description rdf:about="#_584c5a0d-b73a-47bf-ab93-11d182cc32c8">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:3.1.3.11"/>
@@ -3575,10 +3622,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="ALD" name="Aldolase" metaid="_916d7341-624a-4e19-bfbf-7af19f81104a" reversible="true" fast="false">
+      <reaction id="ALD" name="Aldolase" metaid="cf64ad17-731c-48b2-ae58-8334c5db9e32" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_916d7341-624a-4e19-bfbf-7af19f81104a">
+	<rdf:Description rdf:about="#cf64ad17-731c-48b2-ae58-8334c5db9e32">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:4.1.2.13"/>
@@ -3600,8 +3647,8 @@
           <speciesReference constant="true" species="grap" stoichiometry="1"/>
           <speciesReference constant="true" species="dhap" stoichiometry="1"/>
         </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+        <kineticLaw xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">          
             <apply>
               <divide/>
               <apply>
@@ -3631,7 +3678,7 @@
               </apply>
               <apply>
                 <plus/>
-                <cn type="integer"> 1 </cn>
+                <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                 <apply>
                   <divide/>
                   <ci> fru16bp </ci>
@@ -3677,10 +3724,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="TPI" name="Triosephosphate Isomerase" metaid="a0677e76-4288-4139-8e23-c7e1e81f91be" reversible="true" fast="false">
+      <reaction id="TPI" name="Triosephosphate Isomerase" metaid="f9b971d3-63fc-43ab-90b6-f563cc753d0b" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#a0677e76-4288-4139-8e23-c7e1e81f91be">
+	<rdf:Description rdf:about="#f9b971d3-63fc-43ab-90b6-f563cc753d0b">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:5.3.1.1"/>
@@ -3744,10 +3791,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="GAPDH" name="D-Glyceraldehyde-3-phosphate:NAD+ oxidoreductase" metaid="_89cc7f9f-8bd2-4790-9036-5155c23667f2" reversible="true" fast="false">
+      <reaction id="GAPDH" name="D-Glyceraldehyde-3-phosphate:NAD+ oxidoreductase" metaid="cea25ce8-4750-44aa-a8c1-82e7422b4656" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_89cc7f9f-8bd2-4790-9036-5155c23667f2">
+	<rdf:Description rdf:about="#cea25ce8-4750-44aa-a8c1-82e7422b4656">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:1.2.1.12"/>
@@ -3873,10 +3920,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="PGK" name="Phosphoglycerate Kinase" metaid="af53fe73-094d-478a-b4ab-11e262d88d89" reversible="true" fast="false">
+      <reaction id="PGK" name="Phosphoglycerate Kinase" metaid="ac7efb31-cc5e-4adf-9014-289fb9254bf2" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#af53fe73-094d-478a-b4ab-11e262d88d89">
+	<rdf:Description rdf:about="#ac7efb31-cc5e-4adf-9014-289fb9254bf2">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:2.7.2.3"/>
@@ -3989,10 +4036,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="PGM" name="2-Phospho-D-glycerate 2,3-phosphomutase" metaid="_324196a2-9617-4733-a09c-e48d8f582899" reversible="true" fast="false">
+      <reaction id="PGM" name="2-Phospho-D-glycerate 2,3-phosphomutase" metaid="_5337d048-7971-4bbb-a606-ba8b4b107f57" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_324196a2-9617-4733-a09c-e48d8f582899">
+	<rdf:Description rdf:about="#_5337d048-7971-4bbb-a606-ba8b4b107f57">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:5.4.2.1"/>
@@ -4052,10 +4099,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="EN" name="2-Phospho-D-glucerate hydro-lyase (enolase)" metaid="_720ad38e-28cb-4286-bd1f-9d0de03c243c" reversible="true" fast="false">
+      <reaction id="EN" name="2-Phospho-D-glucerate hydro-lyase (enolase)" metaid="_5b2d287a-f556-4044-b2d2-546ed6ad391e" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_720ad38e-28cb-4286-bd1f-9d0de03c243c">
+	<rdf:Description rdf:about="#_5b2d287a-f556-4044-b2d2-546ed6ad391e">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:4.2.1.11"/>
@@ -4115,10 +4162,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="PK" name="Pyruvatkinase" metaid="_9cb032cb-3189-4ae5-ab66-0475172232a4" reversible="false" fast="false">
+      <reaction id="PK" name="Pyruvatkinase" metaid="_8feeb334-1582-4ec7-be89-9c58937bcd27" reversible="false" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_9cb032cb-3189-4ae5-ab66-0475172232a4">
+	<rdf:Description rdf:about="#_8feeb334-1582-4ec7-be89-9c58937bcd27">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:2.7.1.40"/>
@@ -4163,10 +4210,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="PEPCK" name="PEPCK cyto" metaid="ee38f10a-87bc-48ea-9daa-9e83e27f5ddf" reversible="true" fast="false">
+      <reaction id="PEPCK" name="PEPCK cyto" metaid="_0065ca46-b458-40c6-af99-4f3fc37db81d" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#ee38f10a-87bc-48ea-9daa-9e83e27f5ddf">
+	<rdf:Description rdf:about="#_0065ca46-b458-40c6-af99-4f3fc37db81d">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:4.1.1.32"/>
@@ -4190,8 +4237,8 @@
           <speciesReference constant="true" species="gdp" stoichiometry="1"/>
           <speciesReference constant="true" species="co2" stoichiometry="1"/>
         </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+        <kineticLaw xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">          
             <apply>
               <divide/>
               <apply>
@@ -4236,7 +4283,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> oaa </ci>
@@ -4245,7 +4292,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> gtp </ci>
@@ -4257,7 +4304,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> pep </ci>
@@ -4266,7 +4313,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> gdp </ci>
@@ -4275,7 +4322,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> co2 </ci>
@@ -4284,16 +4331,16 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn type="integer" sbml:units="dimensionless"> 1 </cn>
               </apply>
             </apply>
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="PEPCKM" name="PEPCK mito" metaid="_63abaf61-2058-4e70-9d7e-23804d8e66b9" reversible="true" fast="false">
+      <reaction id="PEPCKM" name="PEPCK mito" metaid="_474228d8-1ee6-4c09-9393-29587baec06f" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_63abaf61-2058-4e70-9d7e-23804d8e66b9">
+	<rdf:Description rdf:about="#_474228d8-1ee6-4c09-9393-29587baec06f">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:4.1.1.32"/>
@@ -4317,8 +4364,8 @@
           <speciesReference constant="true" species="gdp_mito" stoichiometry="1"/>
           <speciesReference constant="true" species="co2_mito" stoichiometry="1"/>
         </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+        <kineticLaw xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">          
             <apply>
               <divide/>
               <apply>
@@ -4363,7 +4410,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> oaa_mito </ci>
@@ -4372,7 +4419,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> gtp_mito </ci>
@@ -4384,7 +4431,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> pep_mito </ci>
@@ -4393,7 +4440,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> gdp_mito </ci>
@@ -4402,7 +4449,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn type="integer" sbml:units="dimensionless"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> co2_mito </ci>
@@ -4411,16 +4458,16 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn type="integer" sbml:units="dimensionless"> 1 </cn>
               </apply>
             </apply>
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="PC" name="Pyruvate Carboxylase" metaid="_4ea0aa13-811a-4f01-96be-b80448c0c05f" reversible="false" fast="false">
+      <reaction id="PC" name="Pyruvate Carboxylase" metaid="_44cb593b-2c3e-4fee-8e22-45a65d2bdda9" reversible="false" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_4ea0aa13-811a-4f01-96be-b80448c0c05f">
+	<rdf:Description rdf:about="#_44cb593b-2c3e-4fee-8e22-45a65d2bdda9">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:6.4.1.1"/>
@@ -4518,10 +4565,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="LDH" name="Lactate Dehydrogenase" metaid="_605b1748-d954-4652-91bf-9396b15daa07" reversible="true" fast="false">
+      <reaction id="LDH" name="Lactate Dehydrogenase" metaid="_9a1a5045-2768-44b0-84f8-05a808514ea3" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_605b1748-d954-4652-91bf-9396b15daa07">
+	<rdf:Description rdf:about="#_9a1a5045-2768-44b0-84f8-05a808514ea3">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:1.1.1.27"/>
@@ -4784,10 +4831,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="PDH" name="Pyruvate Dehydrogenase" metaid="_070e6ce2-3deb-43db-bf62-b0837f7abd07" reversible="false" fast="false">
+      <reaction id="PDH" name="Pyruvate Dehydrogenase" metaid="d1d0e362-729d-4e74-a89c-64d0558f5a8e" reversible="false" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_070e6ce2-3deb-43db-bf62-b0837f7abd07">
+	<rdf:Description rdf:about="#d1d0e362-729d-4e74-a89c-64d0558f5a8e">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:1.2.4.1"/>
@@ -4835,10 +4882,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="CS" name="Citrate Synthase" metaid="fea615b9-b189-422f-ab86-60a8559e4a80" reversible="true" fast="false">
+      <reaction id="CS" name="Citrate Synthase" metaid="_5d5268c8-1020-408f-8755-53a5baf1e972" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#fea615b9-b189-422f-ab86-60a8559e4a80">
+	<rdf:Description rdf:about="#_5d5268c8-1020-408f-8755-53a5baf1e972">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:2.3.3.1"/>
@@ -4952,10 +4999,10 @@
           </math>
                 </kineticLaw>
       </reaction>
-      <reaction id="NDKGTPM" name="Nucleoside-diphosphate kinase (ATP, GTP) mito" metaid="_2f59812e-924e-406c-8d6d-42d9e19fb533" reversible="true" fast="false">
+      <reaction id="NDKGTPM" name="Nucleoside-diphosphate kinase (ATP, GTP) mito" metaid="a4c51669-8870-4dca-813a-1b4f74efdce7" reversible="true" fast="false">
         <annotation>
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
-	<rdf:Description rdf:about="#_2f59812e-924e-406c-8d6d-42d9e19fb533">
+	<rdf:Description rdf:about="#a4c51669-8870-4dca-813a-1b4f74efdce7">
               <bqbiol:is>
 	<rdf:Bag>
 	<rdf:li rdf:resource="urn:miriam:ec-code:2.7.4.6"/>

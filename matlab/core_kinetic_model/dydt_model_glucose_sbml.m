@@ -364,7 +364,7 @@ FBP1 = scale_gly * FBP1_Vmax / (1 + fru26bp/FBP1_ki_fru26bp) * fru16bp/(fru16bp 
 % v17 : ALD : Aldolase
 % *********************************** %
 % fru16bp <-> grap + dhap
-ALD_keq = 9.762988973629690E-5;  % [per_mM]
+ALD_keq = 9.762988973629690E-5;  % [mM]
 ALD_km_fru16bp = 0.0071;         % [mM]
 ALD_km_dhap = 0.0364;            % [mM]
 ALD_km_grap = 0.0071;            % [mM]
@@ -389,7 +389,7 @@ TPI = scale_gly * TPI_Vmax/TPI_km_dhap * (dhap - grap/TPI_keq) / (1 + dhap/TPI_k
 % v19 : GAPDH : D-Glyceraldehyde-3-phosphate:NAD+ oxidoreductase
 % *********************************** %
 % grap + phos + nad <-> bpg13 + nadh + h
-GAPDH_keq = 0.086779866194594; % [-]
+GAPDH_keq = 0.086779866194594; % [per_mM]
 GAPDH_k_nad = 0.05;        % [mM]
 GAPDH_k_grap = 0.005;      % [mM]
 GAPDH_k_p = 3.9;           % [mM]
@@ -471,7 +471,7 @@ PK = (1-gamma)* PK_native + gamma * PK_phospho;  % [mmol_per_s]
 % v24 : PEPCK : PEPCK cyto
 % *********************************** %
 % oaa + gtp <-> pep + gdp + co2
-PEPCK_keq = 3.369565215864287E2; % [-]
+PEPCK_keq = 3.369565215864287E2; % [mM]
 PEPCK_k_pep = 0.237;      % [mM]
 PEPCK_k_gdp = 0.0921;     % [mM]
 PEPCK_k_co2 = 25.5;       % [mM]

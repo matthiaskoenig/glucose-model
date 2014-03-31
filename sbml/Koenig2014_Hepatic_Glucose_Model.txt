@@ -1,23 +1,20 @@
 
 // helper functions
-function max(x,y)
+function maximum(x,y)
   piecewise(x,gt(x,y),y)
 end
 
-function min(x,y)
+function minimum(x,y)
   piecewise(x,lt(x,y),y) 
 end
 
 
 model *Koenig2014_hepatic_glucose()
   // Units
-  unit substance = 1e-3 mole;
-  unit volume = litre;
-  unit area = metre^2; 
-  unit length = metre;
-
   unit per_s = 1 / second;
-  unit minute = 60 second;  
+  unit minute = 60 second;
+  unit per_minute = 1 / minute;  
+
   unit mmol = 1e-3 mole;
   unit mM = mmol / litre;
   unit per_mM = 1 / mM;
@@ -26,14 +23,20 @@ model *Koenig2014_hepatic_glucose()
   
   unit pmol = 1e-12 mole;
   unit pmol_per_l = pmol / litre;
-  
+
+  unit substance = mmol;
+  unit volume = litre;
+  unit area = metre^2; 
+  unit length = metre;
+  unit extent = mmol;
+  //unit time = second;
 
 
   // Compartments and Species
   const compartment extern, cyto, mito;
   extern = 10 litre;
   cyto = 1 litre;
-  mito = 5 litre;
+  mito = 0.2 litre;
 
   species $atp in cyto, $adp in cyto, $amp in cyto, utp in cyto, udp in cyto;
   species gtp in cyto, gdp in cyto, $nad in cyto, $nadh in cyto;
@@ -125,34 +128,39 @@ model *Koenig2014_hepatic_glucose()
   x_ins2 = 0 pmol_per_l;
   x_ins3 = 8.6 mM;
   x_ins4 = 4.2 dimensionless;
-  ins = max(0.0, (x_ins1-x_ins2) * glc_ext^x_ins4/(glc_ext^x_ins4 + x_ins3^x_ins4));
+  ins = x_ins2 + (x_ins1-x_ins2) * glc_ext^x_ins4/(glc_ext^x_ins4 + x_ins3^x_ins4);
+  ins_norm = maximum(0.0, ins-x_ins2);
   ins has pmol_per_l;
+  ins_norm has pmol_per_l;
 
   x_glu1 = 190 pmol_per_l;
   x_glu2 = 37.9 pmol_per_l;
   x_glu3 = 3.01 mM;
   x_glu4 = 6.40 dimensionless;
-  glu = max(0.0, (x_glu1-x_glu2)*(1 - glc_ext^x_glu4/(glc_ext^x_glu4 + x_glu3^x_glu4)));
+  glu = x_glu2 + (x_glu1-x_glu2)*(1 - glc_ext^x_glu4/(glc_ext^x_glu4 + x_glu3^x_glu4));
+  glu_norm = maximum(0.0, glu-x_glu2);
   glu has pmol_per_l;
+  glu_norm has pmol_per_l;
 
   x_epi1 = 6090 pmol_per_l;
   x_epi2 = 100 pmol_per_l;
   x_epi3 = 3.10 mM;
   x_epi4 = 8.40 dimensionless;
-  epi = max(0.0, (x_epi1-x_epi2) * (1 - glc_ext^x_epi4/(glc_ext^x_epi4 + x_epi3^x_glu4)));
+  epi = x_epi2 + (x_epi1-x_epi2) * (1 - glc_ext^x_epi4/(glc_ext^x_epi4 + x_epi3^x_epi4));
+  epi_norm = maximum(0.0, epi-x_epi2);
   epi has pmol_per_l;
+  epi_norm has pmol_per_l;
 
   K_val = 0.1 dimensionless;
   epi_f = 0.8 dimensionless;
   K_ins = (x_ins1-x_ins2) * K_val;
   K_glu = (x_glu1-x_glu2) * K_val;
   K_epi = (x_epi1-x_epi2) * K_val;
-  gamma = 0.5 * (1 - ins/(ins+K_ins) + max(glu/(glu+K_glu), epi_f*epi/(epi+K_epi)) );
+  gamma = 0.5 * (1 - ins_norm/(ins_norm+K_ins) + maximum(glu_norm/(glu_norm+K_glu), epi_f*epi_norm/(epi_norm+K_epi)) );
   K_ins has pmol_per_l;
   K_glu has pmol_per_l;
   K_epi has pmol_per_l;
   gamma has dimensionless;
-
 
   // Scaling factors
   scale_gly = 12.5 dimensionless;
@@ -293,8 +301,8 @@ model *Koenig2014_hepatic_glucose()
   NDKGTP_km_adp = 0.042 mM;
   NDKGTP_km_gtp = 0.15 mM;
   NDKGTP_km_gdp = 0.031 mM;
-  NDKGTP_Vmax = 0 mM;
-  NDKGTP = scale_gly * NDKGTP_Vmax / (NDKGTP_km_atp * NDKGTP_km_gdp) * (atp*gdp - adp*gtp/NDKGTP_keq) / ( (1 + atp/NDKGTP_km_atp)*(1 + gdp/NDKGTP_km_gdp) + (1 + adp/NDKGTP_km_adp)*(1 + gtp/NDKGTP_km_gtp) - 1);
+  NDKGTP_Vmax = 0 mmol_per_s;
+  NDKGTP = scale_gly * NDKGTP_Vmax/(NDKGTP_km_atp*NDKGTP_km_gdp) * (atp*gdp - adp*gtp/NDKGTP_keq) / ( (1 dimensionless + atp/NDKGTP_km_atp)*(1 dimensionless + gdp/NDKGTP_km_gdp) + (1 dimensionless + adp/NDKGTP_km_adp)*(1 dimensionless + gtp/NDKGTP_km_gtp) - 1 dimensionless);
   NDKGTP has mmol_per_s;
 
 
@@ -306,7 +314,7 @@ model *Koenig2014_hepatic_glucose()
   NDKUTP_km_utp = 16 mM;
   NDKUTP_km_udp = 0.19 mM;
   NDKUTP_Vmax = 2940 mmol_per_s;
-  NDKUTP = scale_glyglc * NDKUTP_Vmax / (NDKUTP_km_atp * NDKUTP_km_udp) * (atp*udp - adp*utp/NDKUTP_keq) / ( (1 + atp/NDKUTP_km_atp)*(1 + udp/NDKUTP_km_udp) + (1 + adp/NDKUTP_km_adp)*(1 + utp/NDKUTP_km_utp) - 1);
+  NDKUTP = scale_glyglc * NDKUTP_Vmax / (NDKUTP_km_atp * NDKUTP_km_udp) * (atp*udp - adp*utp/NDKUTP_keq) / ( (1 dimensionless + atp/NDKUTP_km_atp)*(1 dimensionless + udp/NDKUTP_km_udp) + (1 dimensionless + adp/NDKUTP_km_adp)*(1 dimensionless + utp/NDKUTP_km_utp) - 1 dimensionless);
   NDKUTP has mmol_per_s;
 
 
@@ -375,14 +383,14 @@ model *Koenig2014_hepatic_glucose()
   
   ALD is "Aldolase";
   ALD : fru16bp -> grap + dhap;
-  ALD_keq = 9.762988973629690E-5 per_mM;
+  ALD_keq = 9.762988973629690E-5 mM;
   ALD_km_fru16bp = 0.0071 mM;
   ALD_km_dhap = 0.0364 mM;
   ALD_km_grap = 0.0071 mM;
   ALD_ki1_grap = 0.0572 mM;
   ALD_ki2_grap = 0.176 mM;
   ALD_Vmax = 420 mmol_per_s;
-  ALD = scale_gly * ALD_Vmax/ALD_km_fru16bp * (fru16bp - grap*dhap/ALD_keq) /(1 + fru16bp/ALD_km_fru16bp + grap/ALD_ki1_grap + dhap*(grap + ALD_km_grap)/(ALD_km_dhap*ALD_ki1_grap) + (fru16bp*grap)/(ALD_km_fru16bp*ALD_ki2_grap));
+  ALD = scale_gly * ALD_Vmax/ALD_km_fru16bp * (fru16bp - grap*dhap/ALD_keq) / (1 dimensionless + fru16bp/ALD_km_fru16bp + grap/ALD_ki1_grap + dhap*(grap + ALD_km_grap)/(ALD_km_dhap*ALD_ki1_grap) + (fru16bp*grap)/(ALD_km_fru16bp*ALD_ki2_grap));
   ALD has mmol_per_s;
  
 
@@ -398,7 +406,7 @@ model *Koenig2014_hepatic_glucose()
 
   GAPDH is "D-Glyceraldehyde-3-phosphate:NAD+ oxidoreductase";
   GAPDH : grap + phos + nad -> bpg13 + nadh + h;
-  GAPDH_keq = 0.086779866194594 dimensionless;
+  GAPDH_keq = 0.086779866194594 per_mM;
   GAPDH_k_nad = 0.05 mM;
   GAPDH_k_grap = 0.005 mM;
   GAPDH_k_p = 3.9 mM;
@@ -481,20 +489,20 @@ model *Koenig2014_hepatic_glucose()
 
   PEPCK is "PEPCK cyto";
   PEPCK : oaa + gtp -> pep + gdp + co2;
-  PEPCK_keq = 3.369565215864287E2 dimensionless;
+  PEPCK_keq = 3.369565215864287E2 mM;
   PEPCK_k_pep = 0.237 mM;
   PEPCK_k_gdp = 0.0921 mM;
   PEPCK_k_co2 = 25.5 mM;
   PEPCK_k_oaa = 0.0055 mM;
   PEPCK_k_gtp = 0.0222 mM;
   PEPCK_Vmax = 0 mmol_per_s;
-  PEPCK = scale_gly * PEPCK_Vmax / (PEPCK_k_oaa * PEPCK_k_gtp) * (oaa*gtp - pep*gdp*co2/PEPCK_keq) / ( (1+oaa/PEPCK_k_oaa)*(1+gtp/PEPCK_k_gtp) + (1+pep/PEPCK_k_pep)*(1+gdp/PEPCK_k_gdp)*(1+co2/PEPCK_k_co2) - 1 );
+  PEPCK = scale_gly * PEPCK_Vmax / (PEPCK_k_oaa * PEPCK_k_gtp) * (oaa*gtp - pep*gdp*co2/PEPCK_keq) / ( (1 dimensionless + oaa/PEPCK_k_oaa)*(1 dimensionless +gtp/PEPCK_k_gtp) + (1 dimensionless + pep/PEPCK_k_pep)*(1 dimensionless + gdp/PEPCK_k_gdp)*(1 dimensionless +co2/PEPCK_k_co2) - 1 dimensionless);
   PEPCK has mmol_per_s;
  
   PEPCKM is "PEPCK mito";
   PEPCKM : oaa_mito + gtp_mito -> pep_mito + gdp_mito + co2_mito;
   PEPCKM_Vmax = 546 mmol_per_s;
-  PEPCKM = scale_gly * PEPCKM_Vmax / (PEPCK_k_oaa * PEPCK_k_gtp) * (oaa_mito*gtp_mito - pep_mito*gdp_mito*co2_mito/PEPCK_keq) / ( (1+oaa_mito/PEPCK_k_oaa)*(1+gtp_mito/PEPCK_k_gtp) + (1+pep_mito/PEPCK_k_pep)*(1+gdp_mito/PEPCK_k_gdp)*(1+co2_mito/PEPCK_k_co2) - 1 );
+  PEPCKM = scale_gly * PEPCKM_Vmax / (PEPCK_k_oaa * PEPCK_k_gtp) * (oaa_mito*gtp_mito - pep_mito*gdp_mito*co2_mito/PEPCK_keq) / ( (1 dimensionless + oaa_mito/PEPCK_k_oaa)*(1 dimensionless + gtp_mito/PEPCK_k_gtp) + (1 dimensionless + pep_mito/PEPCK_k_pep)*(1 dimensionless + gdp_mito/PEPCK_k_gdp)*(1 dimensionless +co2_mito/PEPCK_k_co2) - 1 dimensionless );
   PEPCKM has mmol_per_s;
 
 
