@@ -5,7 +5,7 @@ GPI,reaction,RDF,5.3.1.9,is,urn:miriam:ec-code
 G16PI,reaction,RDF,5.4.2.2,is,urn:miriam:ec-code
 UPGASE,reaction,RDF,2.7.7.9,is,urn:miriam:ec-code
 PPASE,reaction,RDF,3.6.1.1,is,urn:miriam:ec-code
-NTKGTP,reaction,RDF,2.7.4.6,is,urn:miriam:ec-code
+NDKGTP,reaction,RDF,2.7.4.6,is,urn:miriam:ec-code
 NDKUTP,reaction,RDF,2.7.4.6,is,urn:miriam:ec-code
 AK,reaction,RDF,2.7.4.3,is,urn:miriam:ec-code
 PFK2,reaction,RDF,2.7.1.105,is,urn:miriam:ec-code
@@ -33,7 +33,7 @@ GPI,reaction,RDF,R00771,is,urn:miriam:kegg.reaction
 G16PI,reaction,RDF,R00959,is,urn:miriam:kegg.reaction
 UPGASE,reaction,RDF,R00289,is,urn:miriam:kegg.reaction
 PPASE,reaction,RDF,R00004,is,urn:miriam:kegg.reaction
-NTKGTP,reaction,RDF,R00330,is,urn:miriam:kegg.reaction
+NDKGTP,reaction,RDF,R00330,is,urn:miriam:kegg.reaction
 NDKUTP,reaction,RDF,R00156,is,urn:miriam:kegg.reaction
 AK,reaction,RDF,R00127,is,urn:miriam:kegg.reaction
 PFK2,reaction,RDF,R02732,is,urn:miriam:kegg.reaction
