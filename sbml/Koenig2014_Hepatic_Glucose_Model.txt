@@ -109,7 +109,7 @@ model *Koenig2014_hepatic_glucose()
   // Assignment rules for balances
   nadh_tot := nadh + nad;
   atp_tot := atp + adp + amp;
-  utp_tot := utp + udp;
+  utp_tot := utp + udp + udpglc;
   gtp_tot := gtp + gdp;
   nadh_mito_tot := nadh_mito + nad_mito;
   atp_mito_tot := atp_mito + adp_mito;
@@ -163,8 +163,11 @@ model *Koenig2014_hepatic_glucose()
   gamma has dimensionless;
 
   // Scaling factors
-  scale_gly = 12.5 dimensionless;
-  scale_glyglc = 12.5 dimensionless;
+  scale = 1/60 dimensionless
+  scale_gly = 12.5 * scale;
+  scale_glyglc = 12.5 * scale;
+  scale_gly has dimensionless;
+  scale_glyglc has dimensionless;
   
   // Reactions
   GLUT2 is "GLUT2 glucose transporter";
@@ -507,7 +510,7 @@ model *Koenig2014_hepatic_glucose()
 
 
   PC is "Pyruvate Carboxylase";
-  PC : atp + pyr + co2 => oaa + adp + phos;
+  PC : atp_mito + pyr_mito + co2_mito => oaa_mito + adp_mito + phos_mito;
   PC_k_atp = 0.22 mM;
   PC_k_pyr = 0.22 mM;
   PC_k_co2 = 3.2 mM;

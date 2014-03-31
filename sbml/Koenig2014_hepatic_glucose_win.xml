@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-31 15:12 with libSBML version 5.9.1. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-31 16:55 with libSBML version 5.9.1. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" xmlns:comp="http://www.sbml.org/sbml/level3/version1/comp/version1" level="3" version="1" comp:required="true">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length" extentUnits="extent">
     <listOfFunctionDefinitions>
@@ -224,8 +224,9 @@
       <parameter id="K_glu" units="pmol_per_l" constant="true"/>
       <parameter id="K_epi" units="pmol_per_l" constant="true"/>
       <parameter id="gamma" units="dimensionless" constant="true"/>
-      <parameter id="scale_gly" value="12.5" units="dimensionless" constant="true"/>
-      <parameter id="scale_glyglc" value="12.5" units="dimensionless" constant="true"/>
+      <parameter id="scale" constant="true"/>
+      <parameter id="scale_gly" units="dimensionless" constant="true"/>
+      <parameter id="scale_glyglc" units="dimensionless" constant="true"/>
       <parameter id="GLUT2_keq" value="1" units="dimensionless" constant="true"/>
       <parameter id="GLUT2_km" value="42" units="mM" constant="true"/>
       <parameter id="GLUT2_Vmax" value="420" units="mmol_per_s" constant="true"/>
@@ -684,6 +685,33 @@
                 </apply>
               </apply>
             </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="scale">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
+          <apply>
+            <divide/>
+            <cn type="integer"> 1 </cn>
+            <cn sbml:units="dimensionless" type="integer"> 60 </cn>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="scale_gly">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <cn> 12.5 </cn>
+            <ci> scale </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="scale_glyglc">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <cn> 12.5 </cn>
+            <ci> scale </ci>
           </apply>
         </math>
       </initialAssignment>
@@ -1568,6 +1596,7 @@
             <plus/>
             <ci> utp </ci>
             <ci> udp </ci>
+            <ci> udpglc </ci>
           </apply>
         </math>
       </assignmentRule>
@@ -3187,20 +3216,17 @@
       </reaction>
       <reaction id="PC" name="Pyruvate Carboxylase" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="atp" stoichiometry="1" constant="true"/>
-          <speciesReference species="pyr" stoichiometry="1" constant="true"/>
-          <speciesReference species="co2" stoichiometry="1" constant="true"/>
+          <speciesReference species="atp_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="pyr_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="co2_mito" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="oaa" stoichiometry="1" constant="true"/>
-          <speciesReference species="adp" stoichiometry="1" constant="true"/>
-          <speciesReference species="phos" stoichiometry="1" constant="true"/>
+          <speciesReference species="oaa_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="adp_mito" stoichiometry="1" constant="true"/>
+          <speciesReference species="phos_mito" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <listOfModifiers>
-          <modifierSpeciesReference species="co2_mito"/>
           <modifierSpeciesReference species="acoa_mito"/>
-          <modifierSpeciesReference species="pyr_mito"/>
-          <modifierSpeciesReference species="atp_mito"/>
         </listOfModifiers>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">

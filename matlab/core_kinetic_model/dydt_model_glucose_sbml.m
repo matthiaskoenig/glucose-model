@@ -494,7 +494,7 @@ PEPCKM = scale_gly * PEPCKM_Vmax / (PEPCK_k_oaa * PEPCK_k_gtp) * (oaa_mito*gtp_m
 % *********************************** %
 % v26 : PC : Pyruvate Carboxylase
 % *********************************** %
-% atp + pyr + co2 => oaa + adp + phos
+% atp_mito + pyr_mito + co2_mito => oaa_mito + adp_mito + phos_mito
 PC_k_atp = 0.22;  % [mM]
 PC_k_pyr = 0.22;  % [mM]
 PC_k_co2 = 3.2;   % [mM]
