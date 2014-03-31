@@ -1,4 +1,4 @@
-function [dydt, v] = dydt_model_glucose(t, y)
+function [dydt, v, hormones] = dydt_model_glucose(t, y)
 % MODEL_GLYCOLYSIS
 %   author: Matthias Koenig 
 %           Charite Berlin
@@ -60,34 +60,45 @@ nad_mito    = y(47);
 
 %% Hormonal response & phosphorylation state
 % insulin
-x_ins1 = 818.9; %[
-x_ins2 = 0;
-x_ins3 = 8.6;
-x_ins4 = 4.2;
-ins = max(0.0, (x_ins1-x_ins2) * glc_ext^x_ins4/(glc_ext^x_ins4 + x_ins3^x_ins4));
-% ins = max(0.0, ins-x_ins2);
+x_ins1 = 818.9; % [pmol/l]
+x_ins2 = 0;     % [pmol/l]
+x_ins3 = 8.6;   % [mM]
+x_ins4 = 4.2;   % [-]
+ins = x_ins2 + (x_ins1-x_ins2) * glc_ext^x_ins4/(glc_ext^x_ins4 + x_ins3^x_ins4); % [pmol/l]
+ins_norm = max(0.0, ins-x_ins2);
 
 % glucagon
-x_glu1 = 190;
-x_glu2 = 37.9;
-x_glu3 = 3.01;
-x_glu4 = 6.40;
-glu = max(0.0, (x_glu1-x_glu2)*(1 - glc_ext^x_glu4/(glc_ext^x_glu4 + x_glu3^x_glu4)));
+x_glu1 = 190;  % [pmol/l]
+x_glu2 = 37.9; % [pmol/l]
+x_glu3 = 3.01; % [mM]
+x_glu4 = 6.40; % [-]
+glu = x_glu2 + (x_glu1-x_glu2)*(1 - glc_ext^x_glu4/(glc_ext^x_glu4 + x_glu3^x_glu4)); % [pmol/l]
+glu_norm = max(0.0, glu-x_glu2); 
 
 % epinephrine
-x_epi1 = 6090;
-x_epi2 = 100;
-x_epi3 = 3.10;
-x_epi4 = 8.40;
-epi = max(0.0, (x_epi1-x_epi2) * (1 - glc_ext^x_epi4/(glc_ext^x_epi4 + x_epi3^x_glu4)));
+x_epi1 = 6090;  % [pmol/l]
+x_epi2 = 100;   % [pmol/l]
+x_epi3 = 3.10;  % [mM]
+x_epi4 = 8.40;  % [-]
+epi = x_epi2 + (x_epi1-x_epi2) * (1 - glc_ext^x_epi4/(glc_ext^x_epi4 + x_epi3^x_epi4)); % [pmol/l]
+epi_norm = max(0.0, epi-x_epi2);
 
 % gamma
-K_val = 0.1;
-epi_f = 0.8;
-K_ins = (x_ins1-x_ins2) * K_val;
-K_glu = (x_glu1-x_glu2) * K_val;
-K_epi = (x_epi1-x_epi2) * K_val;
-gamma = 0.5 * (1 - ins/(ins+K_ins) + max(glu/(glu+K_glu), epi_f*epi/(epi+K_epi)) );
+K_val = 0.1;  % [-];
+epi_f = 0.8; % [-];
+K_ins = (x_ins1-x_ins2) * K_val; % [pmol/l];
+K_glu = (x_glu1-x_glu2) * K_val; % [pmol/l];
+K_epi = (x_epi1-x_epi2) * K_val; % [pmol/l];
+gamma = 0.5 * (1 - ins_norm/(ins_norm+K_ins) + max(glu_norm/(glu_norm+K_glu), epi_f*epi_norm/(epi_norm+K_epi)) ); % [-]
+
+% store the hormone response for analysis
+hormones.ins = ins;
+hormones.ins_norm = ins_norm;
+hormones.glu = glu;
+hormones.glu_norm = glu_norm;
+hormones.epi = epi;
+hormones.epi_norm = epi_norm;
+hormones.gamma = gamma;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   Glucose import/export             %
