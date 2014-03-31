@@ -9,13 +9,15 @@ function [] = fig_single(t, c, v)
 
 
 %% Offset to not show initial large variations
-offset = 5;
-offset_ind = find(t>offset);
+offset = 0;  % offset in time units
+offset_ind = find(t>=offset);
 if numel(offset_ind) == 0
     offset = 1;
 else
     offset = offset_ind(1);
 end
+
+timelabel = 'time [units]';
 
 %% Create figures
 s_name = names_c();
@@ -52,7 +54,7 @@ for k=1:( length(v_name)-3 )
     subplot(5,7,k)  
     plot(t(offset:end), y(offset:end, :)), 
     title(v_name{k}, 'FontWeight', 'bold')
-    %xlabel('time [min]')
+    %xlabel('timelabel')
     %ylabel(v_name{k}, 'FontWeight', 'bold')
 end
 
@@ -66,7 +68,7 @@ for p=1:length(s_interest)
     plot(t(offset:end), y(offset:end, :))
     %ylabel(strcat(s_name{k},' [mM]'), 'FontWeight', 'bold')
     title(s_name{k}, 'FontWeight', 'bold')
-    %xlabel('time [min]')
+    %xlabel(timelabel)
 end
 
 % Switch analysis
@@ -76,7 +78,7 @@ y = [v(:, 2), v(:,3), (v(:,2)-v(:,3))];
 plot(t(offset:end), y(offset:end, :))
 title('Glucose switch')
 legend('GK', 'G6Pase', 'GK-G6Pase')
-xlabel('time [min]')
+xlabel(timelabel)
 ylabel('v')
 grid
 
@@ -85,7 +87,7 @@ y = [v(:, 8) v(:,9), v(:,8)-v(:,9)];
 plot(t(offset:end), y(offset:end, :))
 title('Glycogen switch')
 legend('GS', 'GP', 'GS-GP')
-xlabel('time [min]')
+xlabel(timelabel)
 ylabel('v')
 grid
 
@@ -94,7 +96,7 @@ y = [v(:, 15) v(:,16), v(:,15)-v(:,16)];
 plot(t(offset:end), y(offset:end, :)), 
 title('PFK switch'), 
 legend('PFK1', 'FBP1', 'PFK1-FBP1')
-xlabel('time [min]')
+xlabel(timelabel)
 ylabel('v')
 grid
 
@@ -103,6 +105,6 @@ y = [v(:, 23) v(:,25), v(:,23)-v(:,25)];
 plot(t(offset:end), y(offset:end, :)), 
 title('PK - PEPCK switch'), 
 legend('PK', 'PEPCK', 'PK-PEPCK')
-xlabel('time [min]')
+xlabel(timelabel)
 ylabel('v')
 grid

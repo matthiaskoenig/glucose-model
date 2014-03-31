@@ -42,7 +42,7 @@ end
 func2str(dydt_fun)
 
 % Integration
-[t,c] = ode15s(dydt_fun, tspan , x0, odeset('RelTol', 1e-9));
+[t,c] = ode15s(dydt_fun, tspan , x0, odeset('RelTol', 1e-9, 'AbsTol', 1e-9));
 
 % Calculate fluxes
 [~, vtmp, ~] = dydt_fun(0, x0);

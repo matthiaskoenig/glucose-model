@@ -1134,7 +1134,7 @@
 </table>
 </span>
 <span id="Parameters">
-<h1>Parameters [246]</h1>
+<h1>Parameters [247]</h1>
 <table id="table_parameters">
 	<caption>Parameters</caption>
     <thead>
@@ -1289,7 +1289,7 @@
 					  FALSE  					">NaN</td>
 				<td>pmol_per_l</td>
 				<td class="
-					 TRUE  					">true</td>
+					  FALSE  					">false</td>
 				<td></td>
 				<td></td>					
 				<td><pre></pre></td>
@@ -1301,7 +1301,7 @@
 					  FALSE  					">NaN</td>
 				<td>pmol_per_l</td>
 				<td class="
-					 TRUE  					">true</td>
+					  FALSE  					">false</td>
 				<td></td>
 				<td></td>					
 				<td><pre></pre></td>
@@ -1361,7 +1361,7 @@
 					  FALSE  					">NaN</td>
 				<td>pmol_per_l</td>
 				<td class="
-					 TRUE  					">true</td>
+					  FALSE  					">false</td>
 				<td></td>
 				<td></td>					
 				<td><pre></pre></td>
@@ -1373,7 +1373,7 @@
 					  FALSE  					">NaN</td>
 				<td>pmol_per_l</td>
 				<td class="
-					 TRUE  					">true</td>
+					  FALSE  					">false</td>
 				<td></td>
 				<td></td>					
 				<td><pre></pre></td>
@@ -1433,7 +1433,7 @@
 					  FALSE  					">NaN</td>
 				<td>pmol_per_l</td>
 				<td class="
-					 TRUE  					">true</td>
+					  FALSE  					">false</td>
 				<td></td>
 				<td></td>					
 				<td><pre></pre></td>
@@ -1445,7 +1445,7 @@
 					  FALSE  					">NaN</td>
 				<td>pmol_per_l</td>
 				<td class="
-					 TRUE  					">true</td>
+					  FALSE  					">false</td>
 				<td></td>
 				<td></td>					
 				<td><pre></pre></td>
@@ -1517,6 +1517,18 @@
 					  FALSE  					">NaN</td>
 				<td>dimensionless</td>
 				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>scale</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td></td>
+				<td class="
 					 TRUE  					">true</td>
 				<td></td>
 				<td></td>					
@@ -1526,7 +1538,7 @@
     			<td>scale_gly</td>
     			<td></td>
     			<td class="
-					   					">12.5</td>
+					  FALSE  					">NaN</td>
 				<td>dimensionless</td>
 				<td class="
 					 TRUE  					">true</td>
@@ -1538,7 +1550,7 @@
     			<td>scale_glyglc</td>
     			<td></td>
     			<td class="
-					   					">12.5</td>
+					  FALSE  					">NaN</td>
 				<td>dimensionless</td>
 				<td class="
 					 TRUE  					">true</td>
@@ -4106,7 +4118,7 @@
 </table>
 </span>
 <span id="InitialAssignments">
-<h1>InitialAssignments [38]</h1>
+<h1>InitialAssignments [8]</h1>
 <table id="table_assignments">
 	<caption>InitialAssignments</caption>
     <thead>
@@ -4120,48 +4132,6 @@
     </thead>
     <tbody>
     	    		<tr>
-    			<td>ins</td>
-    			<td>=</td>
-    			<td>x_ins2+(x_ins1-x_ins2)*glc_ext^x_ins4/(glc_ext^x_ins4+x_ins3^x_ins4)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>ins_norm</td>
-    			<td>=</td>
-    			<td>maximum(0, ins-x_ins2)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>glu</td>
-    			<td>=</td>
-    			<td>x_glu2+(x_glu1-x_glu2)*(1-glc_ext^x_glu4/(glc_ext^x_glu4+x_glu3^x_glu4))</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>glu_norm</td>
-    			<td>=</td>
-    			<td>maximum(0, glu-x_glu2)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>epi</td>
-    			<td>=</td>
-    			<td>x_epi2+(x_epi1-x_epi2)*(1-glc_ext^x_epi4/(glc_ext^x_epi4+x_epi3^x_epi4))</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>epi_norm</td>
-    			<td>=</td>
-    			<td>maximum(0, epi-x_epi2)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
     			<td>K_ins</td>
     			<td>=</td>
     			<td>(x_ins1-x_ins2)*K_val</td>
@@ -4183,51 +4153,23 @@
 				<td></td>	
     						</tr>
 		    		<tr>
-    			<td>gamma</td>
+    			<td>scale</td>
     			<td>=</td>
-    			<td>0.5*(1-ins_norm/(ins_norm+K_ins)+maximum(glu_norm/(glu_norm+K_glu), epi_f*epi_norm/(epi_norm+K_epi)))</td>
+    			<td>1/60</td>
 				<td></td>
 				<td></td>	
     						</tr>
 		    		<tr>
-    			<td>GK_gc_free</td>
+    			<td>scale_gly</td>
     			<td>=</td>
-    			<td>glc^GK_n_gkrp/(glc^GK_n_gkrp+GK_km_glc1^GK_n_gkrp)*(1-GK_b*fru6p/(fru6p+GK_km_fru6p))</td>
+    			<td>12.5*scale</td>
 				<td></td>
 				<td></td>	
     						</tr>
 		    		<tr>
-    			<td>GS_storage_factor</td>
+    			<td>scale_glyglc</td>
     			<td>=</td>
-    			<td>(1+GS_k1_max)*(GS_C-glyglc)/(GS_C-glyglc+GS_k1_max*GS_C)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>GS_k_udpglc_native</td>
-    			<td>=</td>
-    			<td>GS_k1_nat/(glc6p+GS_k2_nat)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>GS_k_udpglc_phospho</td>
-    			<td>=</td>
-    			<td>GS_k1_phospho/(glc6p+GS_k2_phospho)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>GS_native</td>
-    			<td>=</td>
-    			<td>scale_glyglc*GS_Vmax*GS_storage_factor*udpglc/(GS_k_udpglc_native+udpglc)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>GS_phospho</td>
-    			<td>=</td>
-    			<td>scale_glyglc*GS_Vmax*GS_storage_factor*udpglc/(GS_k_udpglc_phospho+udpglc)</td>
+    			<td>12.5*scale</td>
 				<td></td>
 				<td></td>	
     						</tr>
@@ -4245,151 +4187,11 @@
 				<td></td>
 				<td></td>	
     						</tr>
-		    		<tr>
-    			<td>GP_fmax</td>
-    			<td>=</td>
-    			<td>(1+GP_k1_max)*glyglc/(glyglc+GP_k1_max*GP_C)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>GP_vmax_native</td>
-    			<td>=</td>
-    			<td>scale_glyglc*GP_Vmax*GP_fmax*(GP_base_amp_native+(GP_max_amp_native-GP_base_amp_native)*amp/(amp+GP_ka_amp_native))</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>GP_native</td>
-    			<td>=</td>
-    			<td>GP_vmax_native/(GP_k_glyc_native*GP_k_p_native)*(glyglc*phos-glc1p/GP_keq)/((1+glyglc/GP_k_glyc_native)*(1+phos/GP_k_p_native)+1+glc1p/GP_k_glc1p_native-1)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>GP_vmax_phospho</td>
-    			<td>=</td>
-    			<td>scale_glyglc*GP_Vmax*GP_fmax*exp((-log(2))/GP_ki_glc_phospho*glc)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>GP_phospho</td>
-    			<td>=</td>
-    			<td>GP_vmax_phospho/(GP_k_glyc_phospho*GP_k_p_phospho)*(glyglc*phos-glc1p/GP_keq)/((1+glyglc/GP_k_glyc_phospho)*(1+phos/GP_k_p_phospho)+1+glc1p/GP_k_glc1p_phospho-1)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>PFK2_native</td>
-    			<td>=</td>
-    			<td>scale_gly*PFK2_Vmax*fru6p^PFK2_n_native/(fru6p^PFK2_n_native+PFK2_k_fru6p_native^PFK2_n_native)*atp/(atp+PFK2_k_atp_native)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>PFK2_phospho</td>
-    			<td>=</td>
-    			<td>scale_gly*PFK2_Vmax*fru6p^PFK2_n_phospho/(fru6p^PFK2_n_phospho+PFK2_k_fru6p_phospho^PFK2_n_phospho)*atp/(atp+PFK2_k_atp_phospho)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>FBP2_native</td>
-    			<td>=</td>
-    			<td>scale_gly*FBP2_Vmax/(1+fru6p/FBP2_ki_fru6p_native)*fru26bp/(FBP2_km_fru26bp_native+fru26bp)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>FBP2_phospho</td>
-    			<td>=</td>
-    			<td>scale_gly*FBP2_Vmax/(1+fru6p/FBP2_ki_fru6p_phospho)*fru26bp/(FBP2_km_fru26bp_phospho+fru26bp)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>PK_f</td>
-    			<td>=</td>
-    			<td>fru16bp^PK_n_fbp/(PK_k_fbp^PK_n_fbp+fru16bp^PK_n_fbp)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>PK_f_p</td>
-    			<td>=</td>
-    			<td>fru16bp^PK_n_fbp_p/(PK_k_fbp_p^PK_n_fbp_p+fru16bp^PK_n_fbp_p)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>PK_alpha_inp</td>
-    			<td>=</td>
-    			<td>(1-PK_f)*(PK_alpha-PK_alpha_end)+PK_alpha_end</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>PK_alpha_p_inp</td>
-    			<td>=</td>
-    			<td>(1-PK_f_p)*(PK_alpha_p-PK_alpha_end)+PK_alpha_end</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>PK_pep_inp</td>
-    			<td>=</td>
-    			<td>(1-PK_f)*(PK_k_pep-PK_k_pep_end)+PK_k_pep_end</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>PK_pep_p_inp</td>
-    			<td>=</td>
-    			<td>(1-PK_f_p)*(PK_k_pep_p-PK_k_pep_end)+PK_k_pep_end</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>PK_native</td>
-    			<td>=</td>
-    			<td>scale_gly*PK_Vmax*PK_alpha_inp*pep^PK_n/(PK_pep_inp^PK_n+pep^PK_n)*adp/(adp+PK_k_adp)*(PK_base_act+(1-PK_base_act)*PK_f)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>PK_phospho</td>
-    			<td>=</td>
-    			<td>scale_gly*PK_Vmax*PK_alpha_p_inp*pep^PK_n_p/(PK_pep_p_inp^PK_n_p+pep^PK_n_p)*adp/(adp+PK_k_adp)*(PK_base_act_p+(1-PK_base_act_p)*PK_f_p)</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>PDH_base</td>
-    			<td>=</td>
-    			<td>scale_gly*PDH_Vmax*pyr_mito/(pyr_mito+PDH_k_pyr)*nad_mito/(nad_mito+PDH_k_nad*(1+nadh_mito/PDH_ki_nadh))*coa_mito/(coa_mito+PDH_k_coa*(1+acoa_mito/PDH_ki_acoa))</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>PDH_nat</td>
-    			<td>=</td>
-    			<td>PDH_base*PDH_alpha_nat</td>
-				<td></td>
-				<td></td>	
-    						</tr>
-		    		<tr>
-    			<td>PDH_p</td>
-    			<td>=</td>
-    			<td>PDH_base*PDH_alpha_p</td>
-				<td></td>
-				<td></td>	
-    						</tr>
 			</tbody>
 </table>
 </span>
 <span id="Rules">
-<h1>Rules [7]</h1>
+<h1>Rules [40]</h1>
 <table id="table_rules">
 	<caption>Rules</caption>
     <thead>
@@ -4419,7 +4221,7 @@
 		    		<tr>
     			<td>utp_tot</td>
     			<td>=</td>
-    			<td>utp+udp</td>
+    			<td>utp+udp+udpglc</td>
     			<td></td>
 				<td></td>	
     						</tr>
@@ -4448,6 +4250,237 @@
     			<td>gtp_mito_tot</td>
     			<td>=</td>
     			<td>gtp_mito+gdp_mito</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>ins</td>
+    			<td>=</td>
+    			<td>x_ins2+(x_ins1-x_ins2)*glc_ext^x_ins4/(glc_ext^x_ins4+x_ins3^x_ins4)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>ins_norm</td>
+    			<td>=</td>
+    			<td>maximum(0, ins-x_ins2)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>glu</td>
+    			<td>=</td>
+    			<td>x_glu2+(x_glu1-x_glu2)*(1-glc_ext^x_glu4/(glc_ext^x_glu4+x_glu3^x_glu4))</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>glu_norm</td>
+    			<td>=</td>
+    			<td>maximum(0, glu-x_glu2)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>epi</td>
+    			<td>=</td>
+    			<td>x_epi2+(x_epi1-x_epi2)*(1-glc_ext^x_epi4/(glc_ext^x_epi4+x_epi3^x_epi4))</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>epi_norm</td>
+    			<td>=</td>
+    			<td>maximum(0, epi-x_epi2)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>gamma</td>
+    			<td>=</td>
+    			<td>0.5*(1-ins_norm/(ins_norm+K_ins)+maximum(glu_norm/(glu_norm+K_glu), epi_f*epi_norm/(epi_norm+K_epi)))</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GK_gc_free</td>
+    			<td>=</td>
+    			<td>glc^GK_n_gkrp/(glc^GK_n_gkrp+GK_km_glc1^GK_n_gkrp)*(1-GK_b*fru6p/(fru6p+GK_km_fru6p))</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GS_storage_factor</td>
+    			<td>=</td>
+    			<td>(1+GS_k1_max)*(GS_C-glyglc)/(GS_C-glyglc+GS_k1_max*GS_C)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GS_k_udpglc_native</td>
+    			<td>=</td>
+    			<td>GS_k1_nat/(glc6p+GS_k2_nat)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GS_k_udpglc_phospho</td>
+    			<td>=</td>
+    			<td>GS_k1_phospho/(glc6p+GS_k2_phospho)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GS_native</td>
+    			<td>=</td>
+    			<td>scale_glyglc*GS_Vmax*GS_storage_factor*udpglc/(GS_k_udpglc_native+udpglc)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GS_phospho</td>
+    			<td>=</td>
+    			<td>scale_glyglc*GS_Vmax*GS_storage_factor*udpglc/(GS_k_udpglc_phospho+udpglc)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GP_fmax</td>
+    			<td>=</td>
+    			<td>(1+GP_k1_max)*glyglc/(glyglc+GP_k1_max*GP_C)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GP_vmax_native</td>
+    			<td>=</td>
+    			<td>scale_glyglc*GP_Vmax*GP_fmax*(GP_base_amp_native+(GP_max_amp_native-GP_base_amp_native)*amp/(amp+GP_ka_amp_native))</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GP_native</td>
+    			<td>=</td>
+    			<td>GP_vmax_native/(GP_k_glyc_native*GP_k_p_native)*(glyglc*phos-glc1p/GP_keq)/((1+glyglc/GP_k_glyc_native)*(1+phos/GP_k_p_native)+1+glc1p/GP_k_glc1p_native-1)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GP_vmax_phospho</td>
+    			<td>=</td>
+    			<td>scale_glyglc*GP_Vmax*GP_fmax*exp((-log(2))/GP_ki_glc_phospho*glc)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GP_phospho</td>
+    			<td>=</td>
+    			<td>GP_vmax_phospho/(GP_k_glyc_phospho*GP_k_p_phospho)*(glyglc*phos-glc1p/GP_keq)/((1+glyglc/GP_k_glyc_phospho)*(1+phos/GP_k_p_phospho)+1+glc1p/GP_k_glc1p_phospho-1)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PFK2_native</td>
+    			<td>=</td>
+    			<td>scale_gly*PFK2_Vmax*fru6p^PFK2_n_native/(fru6p^PFK2_n_native+PFK2_k_fru6p_native^PFK2_n_native)*atp/(atp+PFK2_k_atp_native)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PFK2_phospho</td>
+    			<td>=</td>
+    			<td>scale_gly*PFK2_Vmax*fru6p^PFK2_n_phospho/(fru6p^PFK2_n_phospho+PFK2_k_fru6p_phospho^PFK2_n_phospho)*atp/(atp+PFK2_k_atp_phospho)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>FBP2_native</td>
+    			<td>=</td>
+    			<td>scale_gly*FBP2_Vmax/(1+fru6p/FBP2_ki_fru6p_native)*fru26bp/(FBP2_km_fru26bp_native+fru26bp)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>FBP2_phospho</td>
+    			<td>=</td>
+    			<td>scale_gly*FBP2_Vmax/(1+fru6p/FBP2_ki_fru6p_phospho)*fru26bp/(FBP2_km_fru26bp_phospho+fru26bp)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_f</td>
+    			<td>=</td>
+    			<td>fru16bp^PK_n_fbp/(PK_k_fbp^PK_n_fbp+fru16bp^PK_n_fbp)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_f_p</td>
+    			<td>=</td>
+    			<td>fru16bp^PK_n_fbp_p/(PK_k_fbp_p^PK_n_fbp_p+fru16bp^PK_n_fbp_p)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_alpha_inp</td>
+    			<td>=</td>
+    			<td>(1-PK_f)*(PK_alpha-PK_alpha_end)+PK_alpha_end</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_alpha_p_inp</td>
+    			<td>=</td>
+    			<td>(1-PK_f_p)*(PK_alpha_p-PK_alpha_end)+PK_alpha_end</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_pep_inp</td>
+    			<td>=</td>
+    			<td>(1-PK_f)*(PK_k_pep-PK_k_pep_end)+PK_k_pep_end</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_pep_p_inp</td>
+    			<td>=</td>
+    			<td>(1-PK_f_p)*(PK_k_pep_p-PK_k_pep_end)+PK_k_pep_end</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_native</td>
+    			<td>=</td>
+    			<td>scale_gly*PK_Vmax*PK_alpha_inp*pep^PK_n/(PK_pep_inp^PK_n+pep^PK_n)*adp/(adp+PK_k_adp)*(PK_base_act+(1-PK_base_act)*PK_f)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_phospho</td>
+    			<td>=</td>
+    			<td>scale_gly*PK_Vmax*PK_alpha_p_inp*pep^PK_n_p/(PK_pep_p_inp^PK_n_p+pep^PK_n_p)*adp/(adp+PK_k_adp)*(PK_base_act_p+(1-PK_base_act_p)*PK_f_p)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PDH_base</td>
+    			<td>=</td>
+    			<td>scale_gly*PDH_Vmax*pyr_mito/(pyr_mito+PDH_k_pyr)*nad_mito/(nad_mito+PDH_k_nad*(1+nadh_mito/PDH_ki_nadh))*coa_mito/(coa_mito+PDH_k_coa*(1+acoa_mito/PDH_ki_acoa))</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PDH_nat</td>
+    			<td>=</td>
+    			<td>PDH_base*PDH_alpha_nat</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PDH_p</td>
+    			<td>=</td>
+    			<td>PDH_base*PDH_alpha_p</td>
     			<td></td>
 				<td></td>	
     						</tr>
@@ -4779,11 +4812,8 @@
 				<td>Pyruvate Carboxylase</td>
 				<td class="
 					  FALSE  					">false</td>
-				<td> atp + pyr + co2 &rarr; oaa + adp + phos</td>
-				<td>					co2_mito<br />
-										acoa_mito<br />
-										pyr_mito<br />
-										atp_mito<br />
+				<td> atp_mito + pyr_mito + co2_mito &rarr; oaa_mito + adp_mito + phos_mito</td>
+				<td>					acoa_mito<br />
 									</td>
 				<td>mmol_per_s</td>
 				<td>scale_gly*PC_Vmax*atp_mito/(PC_k_atp+atp_mito)*pyr_mito/(PC_k_pyr+pyr_mito)*co2_mito/(PC_k_co2+co2_mito)*acoa_mito^PC_n/(acoa_mito^PC_n+PC_k_acoa^PC_n)</td>

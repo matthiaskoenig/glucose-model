@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-31 16:55 with libSBML version 5.9.1. -->
+<!-- Created by libAntimony version v2.5 on 2014-03-31 18:16 with libSBML version 5.9.1. -->
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" xmlns:comp="http://www.sbml.org/sbml/level3/version1/comp/version1" level="3" version="1" comp:required="true">
   <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length" extentUnits="extent">
     <listOfFunctionDefinitions>
@@ -204,26 +204,26 @@
       <parameter id="x_ins2" value="0" units="pmol_per_l" constant="true"/>
       <parameter id="x_ins3" value="8.6" units="mM" constant="true"/>
       <parameter id="x_ins4" value="4.2" units="dimensionless" constant="true"/>
-      <parameter id="ins" units="pmol_per_l" constant="true"/>
-      <parameter id="ins_norm" units="pmol_per_l" constant="true"/>
+      <parameter id="ins" units="pmol_per_l" constant="false"/>
+      <parameter id="ins_norm" units="pmol_per_l" constant="false"/>
       <parameter id="x_glu1" value="190" units="pmol_per_l" constant="true"/>
       <parameter id="x_glu2" value="37.9" units="pmol_per_l" constant="true"/>
       <parameter id="x_glu3" value="3.01" units="mM" constant="true"/>
       <parameter id="x_glu4" value="6.4" units="dimensionless" constant="true"/>
-      <parameter id="glu" units="pmol_per_l" constant="true"/>
-      <parameter id="glu_norm" units="pmol_per_l" constant="true"/>
+      <parameter id="glu" units="pmol_per_l" constant="false"/>
+      <parameter id="glu_norm" units="pmol_per_l" constant="false"/>
       <parameter id="x_epi1" value="6090" units="pmol_per_l" constant="true"/>
       <parameter id="x_epi2" value="100" units="pmol_per_l" constant="true"/>
       <parameter id="x_epi3" value="3.1" units="mM" constant="true"/>
       <parameter id="x_epi4" value="8.4" units="dimensionless" constant="true"/>
-      <parameter id="epi" units="pmol_per_l" constant="true"/>
-      <parameter id="epi_norm" units="pmol_per_l" constant="true"/>
+      <parameter id="epi" units="pmol_per_l" constant="false"/>
+      <parameter id="epi_norm" units="pmol_per_l" constant="false"/>
       <parameter id="K_val" value="0.1" units="dimensionless" constant="true"/>
       <parameter id="epi_f" value="0.8" units="dimensionless" constant="true"/>
       <parameter id="K_ins" units="pmol_per_l" constant="true"/>
       <parameter id="K_glu" units="pmol_per_l" constant="true"/>
       <parameter id="K_epi" units="pmol_per_l" constant="true"/>
-      <parameter id="gamma" units="dimensionless" constant="true"/>
+      <parameter id="gamma" units="dimensionless" constant="false"/>
       <parameter id="scale" constant="true"/>
       <parameter id="scale_gly" units="dimensionless" constant="true"/>
       <parameter id="scale_glyglc" units="dimensionless" constant="true"/>
@@ -442,164 +442,6 @@
       <parameter id="CITFLX_Vmax" value="0" units="mmol_per_s" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
-      <initialAssignment symbol="ins">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <plus/>
-            <ci> x_ins2 </ci>
-            <apply>
-              <divide/>
-              <apply>
-                <times/>
-                <apply>
-                  <minus/>
-                  <ci> x_ins1 </ci>
-                  <ci> x_ins2 </ci>
-                </apply>
-                <apply>
-                  <power/>
-                  <ci> glc_ext </ci>
-                  <ci> x_ins4 </ci>
-                </apply>
-              </apply>
-              <apply>
-                <plus/>
-                <apply>
-                  <power/>
-                  <ci> glc_ext </ci>
-                  <ci> x_ins4 </ci>
-                </apply>
-                <apply>
-                  <power/>
-                  <ci> x_ins3 </ci>
-                  <ci> x_ins4 </ci>
-                </apply>
-              </apply>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="ins_norm">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <ci> maximum </ci>
-            <cn type="integer"> 0 </cn>
-            <apply>
-              <minus/>
-              <ci> ins </ci>
-              <ci> x_ins2 </ci>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="glu">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <plus/>
-            <ci> x_glu2 </ci>
-            <apply>
-              <times/>
-              <apply>
-                <minus/>
-                <ci> x_glu1 </ci>
-                <ci> x_glu2 </ci>
-              </apply>
-              <apply>
-                <minus/>
-                <cn type="integer"> 1 </cn>
-                <apply>
-                  <divide/>
-                  <apply>
-                    <power/>
-                    <ci> glc_ext </ci>
-                    <ci> x_glu4 </ci>
-                  </apply>
-                  <apply>
-                    <plus/>
-                    <apply>
-                      <power/>
-                      <ci> glc_ext </ci>
-                      <ci> x_glu4 </ci>
-                    </apply>
-                    <apply>
-                      <power/>
-                      <ci> x_glu3 </ci>
-                      <ci> x_glu4 </ci>
-                    </apply>
-                  </apply>
-                </apply>
-              </apply>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="glu_norm">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <ci> maximum </ci>
-            <cn type="integer"> 0 </cn>
-            <apply>
-              <minus/>
-              <ci> glu </ci>
-              <ci> x_glu2 </ci>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="epi">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <plus/>
-            <ci> x_epi2 </ci>
-            <apply>
-              <times/>
-              <apply>
-                <minus/>
-                <ci> x_epi1 </ci>
-                <ci> x_epi2 </ci>
-              </apply>
-              <apply>
-                <minus/>
-                <cn type="integer"> 1 </cn>
-                <apply>
-                  <divide/>
-                  <apply>
-                    <power/>
-                    <ci> glc_ext </ci>
-                    <ci> x_epi4 </ci>
-                  </apply>
-                  <apply>
-                    <plus/>
-                    <apply>
-                      <power/>
-                      <ci> glc_ext </ci>
-                      <ci> x_epi4 </ci>
-                    </apply>
-                    <apply>
-                      <power/>
-                      <ci> x_epi3 </ci>
-                      <ci> x_epi4 </ci>
-                    </apply>
-                  </apply>
-                </apply>
-              </apply>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="epi_norm">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <ci> maximum </ci>
-            <cn type="integer"> 0 </cn>
-            <apply>
-              <minus/>
-              <ci> epi </ci>
-              <ci> x_epi2 </ci>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
       <initialAssignment symbol="K_ins">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
@@ -639,55 +481,6 @@
           </apply>
         </math>
       </initialAssignment>
-      <initialAssignment symbol="gamma">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <times/>
-            <cn> 0.5 </cn>
-            <apply>
-              <plus/>
-              <apply>
-                <minus/>
-                <cn type="integer"> 1 </cn>
-                <apply>
-                  <divide/>
-                  <ci> ins_norm </ci>
-                  <apply>
-                    <plus/>
-                    <ci> ins_norm </ci>
-                    <ci> K_ins </ci>
-                  </apply>
-                </apply>
-              </apply>
-              <apply>
-                <ci> maximum </ci>
-                <apply>
-                  <divide/>
-                  <ci> glu_norm </ci>
-                  <apply>
-                    <plus/>
-                    <ci> glu_norm </ci>
-                    <ci> K_glu </ci>
-                  </apply>
-                </apply>
-                <apply>
-                  <divide/>
-                  <apply>
-                    <times/>
-                    <ci> epi_f </ci>
-                    <ci> epi_norm </ci>
-                  </apply>
-                  <apply>
-                    <plus/>
-                    <ci> epi_norm </ci>
-                    <ci> K_epi </ci>
-                  </apply>
-                </apply>
-              </apply>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
       <initialAssignment symbol="scale">
         <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
@@ -715,148 +508,6 @@
           </apply>
         </math>
       </initialAssignment>
-      <initialAssignment symbol="GK_gc_free">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <times/>
-            <apply>
-              <divide/>
-              <apply>
-                <power/>
-                <ci> glc </ci>
-                <ci> GK_n_gkrp </ci>
-              </apply>
-              <apply>
-                <plus/>
-                <apply>
-                  <power/>
-                  <ci> glc </ci>
-                  <ci> GK_n_gkrp </ci>
-                </apply>
-                <apply>
-                  <power/>
-                  <ci> GK_km_glc1 </ci>
-                  <ci> GK_n_gkrp </ci>
-                </apply>
-              </apply>
-            </apply>
-            <apply>
-              <minus/>
-              <cn type="integer"> 1 </cn>
-              <apply>
-                <divide/>
-                <apply>
-                  <times/>
-                  <ci> GK_b </ci>
-                  <ci> fru6p </ci>
-                </apply>
-                <apply>
-                  <plus/>
-                  <ci> fru6p </ci>
-                  <ci> GK_km_fru6p </ci>
-                </apply>
-              </apply>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="GS_storage_factor">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <apply>
-              <times/>
-              <apply>
-                <plus/>
-                <cn type="integer"> 1 </cn>
-                <ci> GS_k1_max </ci>
-              </apply>
-              <apply>
-                <minus/>
-                <ci> GS_C </ci>
-                <ci> glyglc </ci>
-              </apply>
-            </apply>
-            <apply>
-              <plus/>
-              <apply>
-                <minus/>
-                <ci> GS_C </ci>
-                <ci> glyglc </ci>
-              </apply>
-              <apply>
-                <times/>
-                <ci> GS_k1_max </ci>
-                <ci> GS_C </ci>
-              </apply>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="GS_k_udpglc_native">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <ci> GS_k1_nat </ci>
-            <apply>
-              <plus/>
-              <ci> glc6p </ci>
-              <ci> GS_k2_nat </ci>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="GS_k_udpglc_phospho">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <ci> GS_k1_phospho </ci>
-            <apply>
-              <plus/>
-              <ci> glc6p </ci>
-              <ci> GS_k2_phospho </ci>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="GS_native">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <apply>
-              <times/>
-              <ci> scale_glyglc </ci>
-              <ci> GS_Vmax </ci>
-              <ci> GS_storage_factor </ci>
-              <ci> udpglc </ci>
-            </apply>
-            <apply>
-              <plus/>
-              <ci> GS_k_udpglc_native </ci>
-              <ci> udpglc </ci>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="GS_phospho">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <apply>
-              <times/>
-              <ci> scale_glyglc </ci>
-              <ci> GS_Vmax </ci>
-              <ci> GS_storage_factor </ci>
-              <ci> udpglc </ci>
-            </apply>
-            <apply>
-              <plus/>
-              <ci> GS_k_udpglc_phospho </ci>
-              <ci> udpglc </ci>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
       <initialAssignment symbol="GP_C">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> GS_C </ci>
@@ -865,708 +516,6 @@
       <initialAssignment symbol="GP_k1_max">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> GS_k1_max </ci>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="GP_fmax">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <apply>
-              <times/>
-              <apply>
-                <plus/>
-                <cn type="integer"> 1 </cn>
-                <ci> GP_k1_max </ci>
-              </apply>
-              <ci> glyglc </ci>
-            </apply>
-            <apply>
-              <plus/>
-              <ci> glyglc </ci>
-              <apply>
-                <times/>
-                <ci> GP_k1_max </ci>
-                <ci> GP_C </ci>
-              </apply>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="GP_vmax_native">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <times/>
-            <ci> scale_glyglc </ci>
-            <ci> GP_Vmax </ci>
-            <ci> GP_fmax </ci>
-            <apply>
-              <plus/>
-              <ci> GP_base_amp_native </ci>
-              <apply>
-                <divide/>
-                <apply>
-                  <times/>
-                  <apply>
-                    <minus/>
-                    <ci> GP_max_amp_native </ci>
-                    <ci> GP_base_amp_native </ci>
-                  </apply>
-                  <ci> amp </ci>
-                </apply>
-                <apply>
-                  <plus/>
-                  <ci> amp </ci>
-                  <ci> GP_ka_amp_native </ci>
-                </apply>
-              </apply>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="GP_native">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <apply>
-              <times/>
-              <apply>
-                <divide/>
-                <ci> GP_vmax_native </ci>
-                <apply>
-                  <times/>
-                  <ci> GP_k_glyc_native </ci>
-                  <ci> GP_k_p_native </ci>
-                </apply>
-              </apply>
-              <apply>
-                <minus/>
-                <apply>
-                  <times/>
-                  <ci> glyglc </ci>
-                  <ci> phos </ci>
-                </apply>
-                <apply>
-                  <divide/>
-                  <ci> glc1p </ci>
-                  <ci> GP_keq </ci>
-                </apply>
-              </apply>
-            </apply>
-            <apply>
-              <minus/>
-              <apply>
-                <plus/>
-                <apply>
-                  <times/>
-                  <apply>
-                    <plus/>
-                    <cn type="integer"> 1 </cn>
-                    <apply>
-                      <divide/>
-                      <ci> glyglc </ci>
-                      <ci> GP_k_glyc_native </ci>
-                    </apply>
-                  </apply>
-                  <apply>
-                    <plus/>
-                    <cn type="integer"> 1 </cn>
-                    <apply>
-                      <divide/>
-                      <ci> phos </ci>
-                      <ci> GP_k_p_native </ci>
-                    </apply>
-                  </apply>
-                </apply>
-                <cn type="integer"> 1 </cn>
-                <apply>
-                  <divide/>
-                  <ci> glc1p </ci>
-                  <ci> GP_k_glc1p_native </ci>
-                </apply>
-              </apply>
-              <cn type="integer"> 1 </cn>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="GP_vmax_phospho">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <times/>
-            <ci> scale_glyglc </ci>
-            <ci> GP_Vmax </ci>
-            <ci> GP_fmax </ci>
-            <apply>
-              <exp/>
-              <apply>
-                <times/>
-                <apply>
-                  <divide/>
-                  <apply>
-                    <minus/>
-                    <apply>
-                      <ln/>
-                      <cn type="integer"> 2 </cn>
-                    </apply>
-                  </apply>
-                  <ci> GP_ki_glc_phospho </ci>
-                </apply>
-                <ci> glc </ci>
-              </apply>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="GP_phospho">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <apply>
-              <times/>
-              <apply>
-                <divide/>
-                <ci> GP_vmax_phospho </ci>
-                <apply>
-                  <times/>
-                  <ci> GP_k_glyc_phospho </ci>
-                  <ci> GP_k_p_phospho </ci>
-                </apply>
-              </apply>
-              <apply>
-                <minus/>
-                <apply>
-                  <times/>
-                  <ci> glyglc </ci>
-                  <ci> phos </ci>
-                </apply>
-                <apply>
-                  <divide/>
-                  <ci> glc1p </ci>
-                  <ci> GP_keq </ci>
-                </apply>
-              </apply>
-            </apply>
-            <apply>
-              <minus/>
-              <apply>
-                <plus/>
-                <apply>
-                  <times/>
-                  <apply>
-                    <plus/>
-                    <cn type="integer"> 1 </cn>
-                    <apply>
-                      <divide/>
-                      <ci> glyglc </ci>
-                      <ci> GP_k_glyc_phospho </ci>
-                    </apply>
-                  </apply>
-                  <apply>
-                    <plus/>
-                    <cn type="integer"> 1 </cn>
-                    <apply>
-                      <divide/>
-                      <ci> phos </ci>
-                      <ci> GP_k_p_phospho </ci>
-                    </apply>
-                  </apply>
-                </apply>
-                <cn type="integer"> 1 </cn>
-                <apply>
-                  <divide/>
-                  <ci> glc1p </ci>
-                  <ci> GP_k_glc1p_phospho </ci>
-                </apply>
-              </apply>
-              <cn type="integer"> 1 </cn>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="PFK2_native">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <apply>
-              <times/>
-              <apply>
-                <divide/>
-                <apply>
-                  <times/>
-                  <ci> scale_gly </ci>
-                  <ci> PFK2_Vmax </ci>
-                  <apply>
-                    <power/>
-                    <ci> fru6p </ci>
-                    <ci> PFK2_n_native </ci>
-                  </apply>
-                </apply>
-                <apply>
-                  <plus/>
-                  <apply>
-                    <power/>
-                    <ci> fru6p </ci>
-                    <ci> PFK2_n_native </ci>
-                  </apply>
-                  <apply>
-                    <power/>
-                    <ci> PFK2_k_fru6p_native </ci>
-                    <ci> PFK2_n_native </ci>
-                  </apply>
-                </apply>
-              </apply>
-              <ci> atp </ci>
-            </apply>
-            <apply>
-              <plus/>
-              <ci> atp </ci>
-              <ci> PFK2_k_atp_native </ci>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="PFK2_phospho">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <apply>
-              <times/>
-              <apply>
-                <divide/>
-                <apply>
-                  <times/>
-                  <ci> scale_gly </ci>
-                  <ci> PFK2_Vmax </ci>
-                  <apply>
-                    <power/>
-                    <ci> fru6p </ci>
-                    <ci> PFK2_n_phospho </ci>
-                  </apply>
-                </apply>
-                <apply>
-                  <plus/>
-                  <apply>
-                    <power/>
-                    <ci> fru6p </ci>
-                    <ci> PFK2_n_phospho </ci>
-                  </apply>
-                  <apply>
-                    <power/>
-                    <ci> PFK2_k_fru6p_phospho </ci>
-                    <ci> PFK2_n_phospho </ci>
-                  </apply>
-                </apply>
-              </apply>
-              <ci> atp </ci>
-            </apply>
-            <apply>
-              <plus/>
-              <ci> atp </ci>
-              <ci> PFK2_k_atp_phospho </ci>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="FBP2_native">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <apply>
-              <times/>
-              <apply>
-                <divide/>
-                <apply>
-                  <times/>
-                  <ci> scale_gly </ci>
-                  <ci> FBP2_Vmax </ci>
-                </apply>
-                <apply>
-                  <plus/>
-                  <cn type="integer"> 1 </cn>
-                  <apply>
-                    <divide/>
-                    <ci> fru6p </ci>
-                    <ci> FBP2_ki_fru6p_native </ci>
-                  </apply>
-                </apply>
-              </apply>
-              <ci> fru26bp </ci>
-            </apply>
-            <apply>
-              <plus/>
-              <ci> FBP2_km_fru26bp_native </ci>
-              <ci> fru26bp </ci>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="FBP2_phospho">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <apply>
-              <times/>
-              <apply>
-                <divide/>
-                <apply>
-                  <times/>
-                  <ci> scale_gly </ci>
-                  <ci> FBP2_Vmax </ci>
-                </apply>
-                <apply>
-                  <plus/>
-                  <cn type="integer"> 1 </cn>
-                  <apply>
-                    <divide/>
-                    <ci> fru6p </ci>
-                    <ci> FBP2_ki_fru6p_phospho </ci>
-                  </apply>
-                </apply>
-              </apply>
-              <ci> fru26bp </ci>
-            </apply>
-            <apply>
-              <plus/>
-              <ci> FBP2_km_fru26bp_phospho </ci>
-              <ci> fru26bp </ci>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="PK_f">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <apply>
-              <power/>
-              <ci> fru16bp </ci>
-              <ci> PK_n_fbp </ci>
-            </apply>
-            <apply>
-              <plus/>
-              <apply>
-                <power/>
-                <ci> PK_k_fbp </ci>
-                <ci> PK_n_fbp </ci>
-              </apply>
-              <apply>
-                <power/>
-                <ci> fru16bp </ci>
-                <ci> PK_n_fbp </ci>
-              </apply>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="PK_f_p">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <apply>
-              <power/>
-              <ci> fru16bp </ci>
-              <ci> PK_n_fbp_p </ci>
-            </apply>
-            <apply>
-              <plus/>
-              <apply>
-                <power/>
-                <ci> PK_k_fbp_p </ci>
-                <ci> PK_n_fbp_p </ci>
-              </apply>
-              <apply>
-                <power/>
-                <ci> fru16bp </ci>
-                <ci> PK_n_fbp_p </ci>
-              </apply>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="PK_alpha_inp">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <plus/>
-            <apply>
-              <times/>
-              <apply>
-                <minus/>
-                <cn type="integer"> 1 </cn>
-                <ci> PK_f </ci>
-              </apply>
-              <apply>
-                <minus/>
-                <ci> PK_alpha </ci>
-                <ci> PK_alpha_end </ci>
-              </apply>
-            </apply>
-            <ci> PK_alpha_end </ci>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="PK_alpha_p_inp">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <plus/>
-            <apply>
-              <times/>
-              <apply>
-                <minus/>
-                <cn type="integer"> 1 </cn>
-                <ci> PK_f_p </ci>
-              </apply>
-              <apply>
-                <minus/>
-                <ci> PK_alpha_p </ci>
-                <ci> PK_alpha_end </ci>
-              </apply>
-            </apply>
-            <ci> PK_alpha_end </ci>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="PK_pep_inp">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <plus/>
-            <apply>
-              <times/>
-              <apply>
-                <minus/>
-                <cn type="integer"> 1 </cn>
-                <ci> PK_f </ci>
-              </apply>
-              <apply>
-                <minus/>
-                <ci> PK_k_pep </ci>
-                <ci> PK_k_pep_end </ci>
-              </apply>
-            </apply>
-            <ci> PK_k_pep_end </ci>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="PK_pep_p_inp">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <plus/>
-            <apply>
-              <times/>
-              <apply>
-                <minus/>
-                <cn type="integer"> 1 </cn>
-                <ci> PK_f_p </ci>
-              </apply>
-              <apply>
-                <minus/>
-                <ci> PK_k_pep_p </ci>
-                <ci> PK_k_pep_end </ci>
-              </apply>
-            </apply>
-            <ci> PK_k_pep_end </ci>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="PK_native">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <times/>
-            <apply>
-              <divide/>
-              <apply>
-                <times/>
-                <apply>
-                  <divide/>
-                  <apply>
-                    <times/>
-                    <ci> scale_gly </ci>
-                    <ci> PK_Vmax </ci>
-                    <ci> PK_alpha_inp </ci>
-                    <apply>
-                      <power/>
-                      <ci> pep </ci>
-                      <ci> PK_n </ci>
-                    </apply>
-                  </apply>
-                  <apply>
-                    <plus/>
-                    <apply>
-                      <power/>
-                      <ci> PK_pep_inp </ci>
-                      <ci> PK_n </ci>
-                    </apply>
-                    <apply>
-                      <power/>
-                      <ci> pep </ci>
-                      <ci> PK_n </ci>
-                    </apply>
-                  </apply>
-                </apply>
-                <ci> adp </ci>
-              </apply>
-              <apply>
-                <plus/>
-                <ci> adp </ci>
-                <ci> PK_k_adp </ci>
-              </apply>
-            </apply>
-            <apply>
-              <plus/>
-              <ci> PK_base_act </ci>
-              <apply>
-                <times/>
-                <apply>
-                  <minus/>
-                  <cn type="integer"> 1 </cn>
-                  <ci> PK_base_act </ci>
-                </apply>
-                <ci> PK_f </ci>
-              </apply>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="PK_phospho">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <times/>
-            <apply>
-              <divide/>
-              <apply>
-                <times/>
-                <apply>
-                  <divide/>
-                  <apply>
-                    <times/>
-                    <ci> scale_gly </ci>
-                    <ci> PK_Vmax </ci>
-                    <ci> PK_alpha_p_inp </ci>
-                    <apply>
-                      <power/>
-                      <ci> pep </ci>
-                      <ci> PK_n_p </ci>
-                    </apply>
-                  </apply>
-                  <apply>
-                    <plus/>
-                    <apply>
-                      <power/>
-                      <ci> PK_pep_p_inp </ci>
-                      <ci> PK_n_p </ci>
-                    </apply>
-                    <apply>
-                      <power/>
-                      <ci> pep </ci>
-                      <ci> PK_n_p </ci>
-                    </apply>
-                  </apply>
-                </apply>
-                <ci> adp </ci>
-              </apply>
-              <apply>
-                <plus/>
-                <ci> adp </ci>
-                <ci> PK_k_adp </ci>
-              </apply>
-            </apply>
-            <apply>
-              <plus/>
-              <ci> PK_base_act_p </ci>
-              <apply>
-                <times/>
-                <apply>
-                  <minus/>
-                  <cn type="integer"> 1 </cn>
-                  <ci> PK_base_act_p </ci>
-                </apply>
-                <ci> PK_f_p </ci>
-              </apply>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="PDH_base">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <apply>
-              <times/>
-              <apply>
-                <divide/>
-                <apply>
-                  <times/>
-                  <apply>
-                    <divide/>
-                    <apply>
-                      <times/>
-                      <ci> scale_gly </ci>
-                      <ci> PDH_Vmax </ci>
-                      <ci> pyr_mito </ci>
-                    </apply>
-                    <apply>
-                      <plus/>
-                      <ci> pyr_mito </ci>
-                      <ci> PDH_k_pyr </ci>
-                    </apply>
-                  </apply>
-                  <ci> nad_mito </ci>
-                </apply>
-                <apply>
-                  <plus/>
-                  <ci> nad_mito </ci>
-                  <apply>
-                    <times/>
-                    <ci> PDH_k_nad </ci>
-                    <apply>
-                      <plus/>
-                      <cn type="integer"> 1 </cn>
-                      <apply>
-                        <divide/>
-                        <ci> nadh_mito </ci>
-                        <ci> PDH_ki_nadh </ci>
-                      </apply>
-                    </apply>
-                  </apply>
-                </apply>
-              </apply>
-              <ci> coa_mito </ci>
-            </apply>
-            <apply>
-              <plus/>
-              <ci> coa_mito </ci>
-              <apply>
-                <times/>
-                <ci> PDH_k_coa </ci>
-                <apply>
-                  <plus/>
-                  <cn type="integer"> 1 </cn>
-                  <apply>
-                    <divide/>
-                    <ci> acoa_mito </ci>
-                    <ci> PDH_ki_acoa </ci>
-                  </apply>
-                </apply>
-              </apply>
-            </apply>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="PDH_nat">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <times/>
-            <ci> PDH_base </ci>
-            <ci> PDH_alpha_nat </ci>
-          </apply>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="PDH_p">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <times/>
-            <ci> PDH_base </ci>
-            <ci> PDH_alpha_p </ci>
-          </apply>
         </math>
       </initialAssignment>
     </listOfInitialAssignments>
@@ -1633,6 +582,1057 @@
             <plus/>
             <ci> gtp_mito </ci>
             <ci> gdp_mito </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="ins">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> x_ins2 </ci>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> x_ins1 </ci>
+                  <ci> x_ins2 </ci>
+                </apply>
+                <apply>
+                  <power/>
+                  <ci> glc_ext </ci>
+                  <ci> x_ins4 </ci>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <apply>
+                  <power/>
+                  <ci> glc_ext </ci>
+                  <ci> x_ins4 </ci>
+                </apply>
+                <apply>
+                  <power/>
+                  <ci> x_ins3 </ci>
+                  <ci> x_ins4 </ci>
+                </apply>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="ins_norm">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <ci> maximum </ci>
+            <cn type="integer"> 0 </cn>
+            <apply>
+              <minus/>
+              <ci> ins </ci>
+              <ci> x_ins2 </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="glu">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> x_glu2 </ci>
+            <apply>
+              <times/>
+              <apply>
+                <minus/>
+                <ci> x_glu1 </ci>
+                <ci> x_glu2 </ci>
+              </apply>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <power/>
+                    <ci> glc_ext </ci>
+                    <ci> x_glu4 </ci>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <apply>
+                      <power/>
+                      <ci> glc_ext </ci>
+                      <ci> x_glu4 </ci>
+                    </apply>
+                    <apply>
+                      <power/>
+                      <ci> x_glu3 </ci>
+                      <ci> x_glu4 </ci>
+                    </apply>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="glu_norm">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <ci> maximum </ci>
+            <cn type="integer"> 0 </cn>
+            <apply>
+              <minus/>
+              <ci> glu </ci>
+              <ci> x_glu2 </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="epi">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> x_epi2 </ci>
+            <apply>
+              <times/>
+              <apply>
+                <minus/>
+                <ci> x_epi1 </ci>
+                <ci> x_epi2 </ci>
+              </apply>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <power/>
+                    <ci> glc_ext </ci>
+                    <ci> x_epi4 </ci>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <apply>
+                      <power/>
+                      <ci> glc_ext </ci>
+                      <ci> x_epi4 </ci>
+                    </apply>
+                    <apply>
+                      <power/>
+                      <ci> x_epi3 </ci>
+                      <ci> x_epi4 </ci>
+                    </apply>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="epi_norm">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <ci> maximum </ci>
+            <cn type="integer"> 0 </cn>
+            <apply>
+              <minus/>
+              <ci> epi </ci>
+              <ci> x_epi2 </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="gamma">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <cn> 0.5 </cn>
+            <apply>
+              <plus/>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> ins_norm </ci>
+                  <apply>
+                    <plus/>
+                    <ci> ins_norm </ci>
+                    <ci> K_ins </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <ci> maximum </ci>
+                <apply>
+                  <divide/>
+                  <ci> glu_norm </ci>
+                  <apply>
+                    <plus/>
+                    <ci> glu_norm </ci>
+                    <ci> K_glu </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> epi_f </ci>
+                    <ci> epi_norm </ci>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <ci> epi_norm </ci>
+                    <ci> K_epi </ci>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="GK_gc_free">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <apply>
+              <divide/>
+              <apply>
+                <power/>
+                <ci> glc </ci>
+                <ci> GK_n_gkrp </ci>
+              </apply>
+              <apply>
+                <plus/>
+                <apply>
+                  <power/>
+                  <ci> glc </ci>
+                  <ci> GK_n_gkrp </ci>
+                </apply>
+                <apply>
+                  <power/>
+                  <ci> GK_km_glc1 </ci>
+                  <ci> GK_n_gkrp </ci>
+                </apply>
+              </apply>
+            </apply>
+            <apply>
+              <minus/>
+              <cn type="integer"> 1 </cn>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <ci> GK_b </ci>
+                  <ci> fru6p </ci>
+                </apply>
+                <apply>
+                  <plus/>
+                  <ci> fru6p </ci>
+                  <ci> GK_km_fru6p </ci>
+                </apply>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="GS_storage_factor">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <plus/>
+                <cn type="integer"> 1 </cn>
+                <ci> GS_k1_max </ci>
+              </apply>
+              <apply>
+                <minus/>
+                <ci> GS_C </ci>
+                <ci> glyglc </ci>
+              </apply>
+            </apply>
+            <apply>
+              <plus/>
+              <apply>
+                <minus/>
+                <ci> GS_C </ci>
+                <ci> glyglc </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> GS_k1_max </ci>
+                <ci> GS_C </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="GS_k_udpglc_native">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> GS_k1_nat </ci>
+            <apply>
+              <plus/>
+              <ci> glc6p </ci>
+              <ci> GS_k2_nat </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="GS_k_udpglc_phospho">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> GS_k1_phospho </ci>
+            <apply>
+              <plus/>
+              <ci> glc6p </ci>
+              <ci> GS_k2_phospho </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="GS_native">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <ci> scale_glyglc </ci>
+              <ci> GS_Vmax </ci>
+              <ci> GS_storage_factor </ci>
+              <ci> udpglc </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> GS_k_udpglc_native </ci>
+              <ci> udpglc </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="GS_phospho">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <ci> scale_glyglc </ci>
+              <ci> GS_Vmax </ci>
+              <ci> GS_storage_factor </ci>
+              <ci> udpglc </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> GS_k_udpglc_phospho </ci>
+              <ci> udpglc </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="GP_fmax">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <plus/>
+                <cn type="integer"> 1 </cn>
+                <ci> GP_k1_max </ci>
+              </apply>
+              <ci> glyglc </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> glyglc </ci>
+              <apply>
+                <times/>
+                <ci> GP_k1_max </ci>
+                <ci> GP_C </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="GP_vmax_native">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> scale_glyglc </ci>
+            <ci> GP_Vmax </ci>
+            <ci> GP_fmax </ci>
+            <apply>
+              <plus/>
+              <ci> GP_base_amp_native </ci>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <minus/>
+                    <ci> GP_max_amp_native </ci>
+                    <ci> GP_base_amp_native </ci>
+                  </apply>
+                  <ci> amp </ci>
+                </apply>
+                <apply>
+                  <plus/>
+                  <ci> amp </ci>
+                  <ci> GP_ka_amp_native </ci>
+                </apply>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="GP_native">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <divide/>
+                <ci> GP_vmax_native </ci>
+                <apply>
+                  <times/>
+                  <ci> GP_k_glyc_native </ci>
+                  <ci> GP_k_p_native </ci>
+                </apply>
+              </apply>
+              <apply>
+                <minus/>
+                <apply>
+                  <times/>
+                  <ci> glyglc </ci>
+                  <ci> phos </ci>
+                </apply>
+                <apply>
+                  <divide/>
+                  <ci> glc1p </ci>
+                  <ci> GP_keq </ci>
+                </apply>
+              </apply>
+            </apply>
+            <apply>
+              <minus/>
+              <apply>
+                <plus/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <cn type="integer"> 1 </cn>
+                    <apply>
+                      <divide/>
+                      <ci> glyglc </ci>
+                      <ci> GP_k_glyc_native </ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <cn type="integer"> 1 </cn>
+                    <apply>
+                      <divide/>
+                      <ci> phos </ci>
+                      <ci> GP_k_p_native </ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> glc1p </ci>
+                  <ci> GP_k_glc1p_native </ci>
+                </apply>
+              </apply>
+              <cn type="integer"> 1 </cn>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="GP_vmax_phospho">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> scale_glyglc </ci>
+            <ci> GP_Vmax </ci>
+            <ci> GP_fmax </ci>
+            <apply>
+              <exp/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <minus/>
+                    <apply>
+                      <ln/>
+                      <cn type="integer"> 2 </cn>
+                    </apply>
+                  </apply>
+                  <ci> GP_ki_glc_phospho </ci>
+                </apply>
+                <ci> glc </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="GP_phospho">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <divide/>
+                <ci> GP_vmax_phospho </ci>
+                <apply>
+                  <times/>
+                  <ci> GP_k_glyc_phospho </ci>
+                  <ci> GP_k_p_phospho </ci>
+                </apply>
+              </apply>
+              <apply>
+                <minus/>
+                <apply>
+                  <times/>
+                  <ci> glyglc </ci>
+                  <ci> phos </ci>
+                </apply>
+                <apply>
+                  <divide/>
+                  <ci> glc1p </ci>
+                  <ci> GP_keq </ci>
+                </apply>
+              </apply>
+            </apply>
+            <apply>
+              <minus/>
+              <apply>
+                <plus/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <plus/>
+                    <cn type="integer"> 1 </cn>
+                    <apply>
+                      <divide/>
+                      <ci> glyglc </ci>
+                      <ci> GP_k_glyc_phospho </ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <cn type="integer"> 1 </cn>
+                    <apply>
+                      <divide/>
+                      <ci> phos </ci>
+                      <ci> GP_k_p_phospho </ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <divide/>
+                  <ci> glc1p </ci>
+                  <ci> GP_k_glc1p_phospho </ci>
+                </apply>
+              </apply>
+              <cn type="integer"> 1 </cn>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PFK2_native">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <ci> scale_gly </ci>
+                  <ci> PFK2_Vmax </ci>
+                  <apply>
+                    <power/>
+                    <ci> fru6p </ci>
+                    <ci> PFK2_n_native </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <plus/>
+                  <apply>
+                    <power/>
+                    <ci> fru6p </ci>
+                    <ci> PFK2_n_native </ci>
+                  </apply>
+                  <apply>
+                    <power/>
+                    <ci> PFK2_k_fru6p_native </ci>
+                    <ci> PFK2_n_native </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <ci> atp </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> atp </ci>
+              <ci> PFK2_k_atp_native </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PFK2_phospho">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <ci> scale_gly </ci>
+                  <ci> PFK2_Vmax </ci>
+                  <apply>
+                    <power/>
+                    <ci> fru6p </ci>
+                    <ci> PFK2_n_phospho </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <plus/>
+                  <apply>
+                    <power/>
+                    <ci> fru6p </ci>
+                    <ci> PFK2_n_phospho </ci>
+                  </apply>
+                  <apply>
+                    <power/>
+                    <ci> PFK2_k_fru6p_phospho </ci>
+                    <ci> PFK2_n_phospho </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <ci> atp </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> atp </ci>
+              <ci> PFK2_k_atp_phospho </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="FBP2_native">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <ci> scale_gly </ci>
+                  <ci> FBP2_Vmax </ci>
+                </apply>
+                <apply>
+                  <plus/>
+                  <cn type="integer"> 1 </cn>
+                  <apply>
+                    <divide/>
+                    <ci> fru6p </ci>
+                    <ci> FBP2_ki_fru6p_native </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <ci> fru26bp </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> FBP2_km_fru26bp_native </ci>
+              <ci> fru26bp </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="FBP2_phospho">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <ci> scale_gly </ci>
+                  <ci> FBP2_Vmax </ci>
+                </apply>
+                <apply>
+                  <plus/>
+                  <cn type="integer"> 1 </cn>
+                  <apply>
+                    <divide/>
+                    <ci> fru6p </ci>
+                    <ci> FBP2_ki_fru6p_phospho </ci>
+                  </apply>
+                </apply>
+              </apply>
+              <ci> fru26bp </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> FBP2_km_fru26bp_phospho </ci>
+              <ci> fru26bp </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PK_f">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <power/>
+              <ci> fru16bp </ci>
+              <ci> PK_n_fbp </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <apply>
+                <power/>
+                <ci> PK_k_fbp </ci>
+                <ci> PK_n_fbp </ci>
+              </apply>
+              <apply>
+                <power/>
+                <ci> fru16bp </ci>
+                <ci> PK_n_fbp </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PK_f_p">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <power/>
+              <ci> fru16bp </ci>
+              <ci> PK_n_fbp_p </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <apply>
+                <power/>
+                <ci> PK_k_fbp_p </ci>
+                <ci> PK_n_fbp_p </ci>
+              </apply>
+              <apply>
+                <power/>
+                <ci> fru16bp </ci>
+                <ci> PK_n_fbp_p </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PK_alpha_inp">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <apply>
+              <times/>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <ci> PK_f </ci>
+              </apply>
+              <apply>
+                <minus/>
+                <ci> PK_alpha </ci>
+                <ci> PK_alpha_end </ci>
+              </apply>
+            </apply>
+            <ci> PK_alpha_end </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PK_alpha_p_inp">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <apply>
+              <times/>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <ci> PK_f_p </ci>
+              </apply>
+              <apply>
+                <minus/>
+                <ci> PK_alpha_p </ci>
+                <ci> PK_alpha_end </ci>
+              </apply>
+            </apply>
+            <ci> PK_alpha_end </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PK_pep_inp">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <apply>
+              <times/>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <ci> PK_f </ci>
+              </apply>
+              <apply>
+                <minus/>
+                <ci> PK_k_pep </ci>
+                <ci> PK_k_pep_end </ci>
+              </apply>
+            </apply>
+            <ci> PK_k_pep_end </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PK_pep_p_inp">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <apply>
+              <times/>
+              <apply>
+                <minus/>
+                <cn type="integer"> 1 </cn>
+                <ci> PK_f_p </ci>
+              </apply>
+              <apply>
+                <minus/>
+                <ci> PK_k_pep_p </ci>
+                <ci> PK_k_pep_end </ci>
+              </apply>
+            </apply>
+            <ci> PK_k_pep_end </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PK_native">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> PK_Vmax </ci>
+                    <ci> PK_alpha_inp </ci>
+                    <apply>
+                      <power/>
+                      <ci> pep </ci>
+                      <ci> PK_n </ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <apply>
+                      <power/>
+                      <ci> PK_pep_inp </ci>
+                      <ci> PK_n </ci>
+                    </apply>
+                    <apply>
+                      <power/>
+                      <ci> pep </ci>
+                      <ci> PK_n </ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <ci> adp </ci>
+              </apply>
+              <apply>
+                <plus/>
+                <ci> adp </ci>
+                <ci> PK_k_adp </ci>
+              </apply>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> PK_base_act </ci>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <cn type="integer"> 1 </cn>
+                  <ci> PK_base_act </ci>
+                </apply>
+                <ci> PK_f </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PK_phospho">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <ci> scale_gly </ci>
+                    <ci> PK_Vmax </ci>
+                    <ci> PK_alpha_p_inp </ci>
+                    <apply>
+                      <power/>
+                      <ci> pep </ci>
+                      <ci> PK_n_p </ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <apply>
+                      <power/>
+                      <ci> PK_pep_p_inp </ci>
+                      <ci> PK_n_p </ci>
+                    </apply>
+                    <apply>
+                      <power/>
+                      <ci> pep </ci>
+                      <ci> PK_n_p </ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <ci> adp </ci>
+              </apply>
+              <apply>
+                <plus/>
+                <ci> adp </ci>
+                <ci> PK_k_adp </ci>
+              </apply>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> PK_base_act_p </ci>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <cn type="integer"> 1 </cn>
+                  <ci> PK_base_act_p </ci>
+                </apply>
+                <ci> PK_f_p </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PDH_base">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <times/>
+                      <ci> scale_gly </ci>
+                      <ci> PDH_Vmax </ci>
+                      <ci> pyr_mito </ci>
+                    </apply>
+                    <apply>
+                      <plus/>
+                      <ci> pyr_mito </ci>
+                      <ci> PDH_k_pyr </ci>
+                    </apply>
+                  </apply>
+                  <ci> nad_mito </ci>
+                </apply>
+                <apply>
+                  <plus/>
+                  <ci> nad_mito </ci>
+                  <apply>
+                    <times/>
+                    <ci> PDH_k_nad </ci>
+                    <apply>
+                      <plus/>
+                      <cn type="integer"> 1 </cn>
+                      <apply>
+                        <divide/>
+                        <ci> nadh_mito </ci>
+                        <ci> PDH_ki_nadh </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                </apply>
+              </apply>
+              <ci> coa_mito </ci>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> coa_mito </ci>
+              <apply>
+                <times/>
+                <ci> PDH_k_coa </ci>
+                <apply>
+                  <plus/>
+                  <cn type="integer"> 1 </cn>
+                  <apply>
+                    <divide/>
+                    <ci> acoa_mito </ci>
+                    <ci> PDH_ki_acoa </ci>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PDH_nat">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> PDH_base </ci>
+            <ci> PDH_alpha_nat </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PDH_p">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> PDH_base </ci>
+            <ci> PDH_alpha_p </ci>
           </apply>
         </math>
       </assignmentRule>
