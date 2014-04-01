@@ -1,4 +1,4 @@
-%% FIG_GLYCOGEN_METABOLISM - Plot glycogen time courses.
+%% fig_glycogen_metabolism - Plot glycogen time courses.
 % The glucose dependency data has to be calculated first.
 %
 %   Matthias Koenig (matthias.koenig@charite.de)

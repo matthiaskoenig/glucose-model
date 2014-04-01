@@ -1,4 +1,4 @@
-%% create_paper_figures - Reproduce the simulation results of the 
+%% create_figures_from_paper - Reproduce the simulation results of the 
 % Plos Computational Biology Paper.
 %
 %   Matthias Koenig (matthias.koenig@charite.de)
@@ -8,8 +8,10 @@
 % Figure 2 - Create the hormone dose response curves
 sim_hormone_response();
 
-% Figure 3 - HGP, GNG and GLY contributions
+% Create data for figure 3 and 4
 sim_glucose_dependency();
+
+% Figure 3 - HGP, GNG and GLY contributions
 fig_short_term_fasting;
 
 % Figure 4 - Glycogen metabolism

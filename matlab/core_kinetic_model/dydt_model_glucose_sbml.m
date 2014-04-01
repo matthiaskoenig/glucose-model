@@ -691,6 +691,11 @@ dydt(47) = 0; % nad_mito
 dydt(48) = 0; % h_mito
 dydt(49) = 0; % h2o_mito
 
+global glycogen_constant
+if (exist('glycogen_constant', 'var') && isequal(glycogen_constant,1) )
+    dydt(17) = 0;
+end
+
 
 %% Actual fluxes
 v  = [GLUT2   % v1

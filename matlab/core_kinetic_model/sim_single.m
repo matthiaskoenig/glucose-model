@@ -22,6 +22,9 @@ results_folder = '../../results';
 % Initial concentrations
 x0 = initial_concentrations();
 
+%global glycogen_constant;
+%glycogen_constant = 1;
+
 % Model to integrate: core is the classic implentation used for the
 % publication whereas the sbml version gives the same results but is
 % rewritten to represent the model properly in SBML.
