@@ -15,7 +15,7 @@ glc_ext = 2.0:0.2:12; % [mM]
 % Model to integrate: core is the classic implentation used for the
 % publication whereas the sbml version gives the same results but is
 % rewritten to represent the model properly in SBML.
-tspan = 0:10:70*60;   % [min] 70h
+tspan = (0:10:70)*60;   % [min] 70h
 % name = 'core'
 name = 'core_sbml'
 switch (name)
