@@ -66,5 +66,5 @@ for ks=1:Nsim
 end
 clear ks
 
-save(res_file, 'c_full', 'v_full', 'glc_ext', 'tspan', '-v7.3')
+save(res_file, 'c_full', 'v_full', 'glc_ext', 'tspan', 'name', '-v7.3')
 
