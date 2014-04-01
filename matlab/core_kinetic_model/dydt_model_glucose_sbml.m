@@ -18,14 +18,15 @@ function [dydt, v, hormones] = dydt_model_glucose_sbml(t, y)
 % scale = 1/60;
 % time [sec]
 
-scale = 1/60;                 % [-]
-scale_gly = 12.5 * scale;     % [-]
-scale_glyglc = 12.5 * scale;  % [-]
+scale = 1/60 * 5.4012e-05;    % [-]
+scale_gly = scale;     % [-]
+scale_glyglc = scale;  % [-]
 
-% Volumes of the compartments
-Vext = 10;   % [litre]
-Vcyto = 1;   % [litre]
-Vmito = 0.2; % [litre]
+% Volumes of the compartments. These are the simulation volumes
+% TODO: bring in SBML
+Vcyto = 1;           % [litre]
+Vmito = 0.2*Vcyto;   % [litre]
+Vext  = 10 *Vcyto;   % [litre] arbitrary (depends on coupled external environment)
 
 %% Concentrations [mM = mmole_per_litre]
 atp         = y(1);
