@@ -14,8 +14,15 @@ name = 'core_sbml'
 % Varying glucose and glycogen concentrations
 glc_ext     = 2:0.5:20;                                      % [mM]
 tmp = logspace(0, 1, 8)-1;
-glycogen =  [tmp linspace(10, 490, 40)  500-tmp(end:-1:1)];  % [mM]
+glycogen =  [tmp linspace(10, 490, 10)  500-tmp(end:-1:1)];  % [mM]
 clear tmp
+
+% glc_ext     = 2:2:20;                                      % [mM]
+% tmp = logspace(0, 1, 5)-1;
+% glycogen =  [tmp linspace(10, 490, 5)  500-tmp(end:-1:1)];  % [mM]
+% clear tmp
+
+
 % Timepoints
 tspan = (0:100:200);  % [min]
 switch (name)

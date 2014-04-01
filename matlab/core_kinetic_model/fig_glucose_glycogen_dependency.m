@@ -4,16 +4,11 @@
 %   Matthias Koenig (matthias.koenig@charite.de)
 %   Copyright 2014 Matthias Koenig
 %   date:   2014-04-01
+close all, clear all;
 
+results_folder = '../../results/glucose_glycogen_dependency';
+res_file = strcat(results_folder, '/', 'glucose_glycogen_dependency.mat');
 
-close all
-clear all
-
-%% settings
-out_folder = '/home/mkoenig/Desktop/kinetic_model_results/simulations/110314_data/glucose_glycogen_dependency/T2DM'
-
-conditions = {'normal', 'diabetes', 'insulin_restored', 'glucagon_restored'}
-save_images = 1;    % select if images should be saved
 pcolor_edge_alpha = 0;
 
 %% Select range for plot
@@ -32,124 +27,107 @@ clines_hgp = -32:4:32;
 clines_grc = 0:2:12;
 xticks = [2 4 6 8 10 12 14 16 18];
 
+% load data
+load(res_file);
+name = 'core_sbml'
+switch (name)
+    case 'core'
+        % core model time in [min]
+        dydt_fun = @(t,y) dydt_model_glucose(t,y);
+    case 'core_sbml'
+        % sbml model time in [s]
+        dydt_fun = @(t,y) dydt_model_glucose_sbml(t,y);
+        tspan = 60 * tspan;  % [s -> min]
+        v_full = 60 * v_full;  % [per_s] -> [per_min]
+end
 
-%% figure3 - glucose, hgp and hgu (pcolor)
+% indeces of boundaries
+tmp = find(glc_ext>=glc_min); glc_min_ind = tmp(1);
+tmp = find(glc_ext<=glc_max); glc_max_ind = tmp(end);
+tmp = find(glycogen>=glycogen_min); glycogen_min_ind = tmp(1);
+tmp = find(glycogen<=glycogen_max); glycogen_max_ind = tmp(end);
+tmp = find(glycogen>=250); glycogen_250_ind = tmp(1);
+tmp = find(tspan>=t_eval); t_eval_ind = tmp(1);
+clear tmp
+
+x = glc_ext(glc_min_ind:glc_max_ind);
+y = glycogen(glycogen_min_ind:glycogen_max_ind);
+
+%% HGP, HGU, GLY SUBPLOT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fig3 = figure('Name','glucose glycogen dependency', 'Color',[1 1 1]);
 map_x_min = caxis_flux(1); map_x_max = caxis_flux(2);
 map_rg = colormap_gwr(map_x_min, map_x_max);
 set(fig3, 'Colormap', map_rg);
 
-%set(fig3, 'Colormap', map_jet);
+for p_ind = 1:3
+    switch p_ind
+        case 1
+            % panel 1 - HGP and HGU
+            sp = subplot(1, 3, 1);
+            z = v_full(glc_min_ind:glc_max_ind, glycogen_min_ind:glycogen_max_ind, t_eval_ind, 1);
+        case 2    
+            % panel 2 - glycolysis and gluconeogenesis
+            sp = subplot(1, 3, 2);
+            z = v_full(glc_min_ind:glc_max_ind, glycogen_min_ind:glycogen_max_ind,  t_eval_ind, 4);
+        case 3
+            % panel 3 - glycogenolyis and glycogen synthesis
+            sp = subplot(1, 3, 3);
+            z = -v_full(glc_min_ind:glc_max_ind, glycogen_min_ind:glycogen_max_ind, t_eval_ind, 5);
 
-for condition_index = 1:length(conditions)
-    condition = conditions{condition_index};
-    % load data
-    in_file = strcat(out_folder,  '/glucose_glycogen_dependency_', condition);
-    load(in_file);
-    
-    glc_ext  = mpars.glc_ext;
-    glycogen = mpars.glycogen;
-    t_span   = mpars.t_span;
-    
-    % indeces of boundaries
-    tmp = find(glc_ext>=glc_min); glc_min_ind = tmp(1);
-    tmp = find(glc_ext<=glc_max); glc_max_ind = tmp(end);
-    tmp = find(glycogen>=glycogen_min); glycogen_min_ind = tmp(1);
-    tmp = find(glycogen<=glycogen_max); glycogen_max_ind = tmp(end);
-    tmp = find(glycogen>=250); glycogen_250_ind = tmp(1);
-    tmp = find(t_span>=t_eval); t_eval_ind = tmp(1);
-
-    x = glc_ext(glc_min_ind:glc_max_ind);
-    y = glycogen(glycogen_min_ind:glycogen_max_ind);
-
-    for p_ind = 1:3
-        switch p_ind
-            case 1
-                % panel 1 - HGP and HGU
-                sp = subplot(length(conditions), 3, 3*(condition_index-1) + 1);
-                z = v_full(glc_min_ind:glc_max_ind, glycogen_min_ind:glycogen_max_ind, t_eval_ind, 1);
-            case 2    
-                % panel 2 - glycolysis and gluconeogenesis
-                sp = subplot(length(conditions), 3, 3*(condition_index-1) + 2);
-                z = v_full(glc_min_ind:glc_max_ind, glycogen_min_ind:glycogen_max_ind,  t_eval_ind, 4);
-            case 3
-                % panel 3 - glycogenolyis and glycogen synthesis
-                sp = subplot(length(conditions), 3, 3*(condition_index-1) + 3);
-                z = -v_full(glc_min_ind:glc_max_ind, glycogen_min_ind:glycogen_max_ind, t_eval_ind, 5);
-                
-        end
-        ptmp = pcolor(x, y, z'); hold on;
-        [C,h] = contour(x,y,z',clines_hgp, 'k-', 'LineColor', ccolor_hgp); hold off
-        text_handle = clabel(C, h, clines_hgp, 'Rotation', 90, 'LabelSpacing', 500);
-        set(text_handle,'Color',ccolor_hgp);
-        set(ptmp, 'EdgeAlpha', pcolor_edge_alpha);
-        
-        % first row
-        if condition_index == 1
-            switch p_ind
-                case 1
-                    %title({'Flux v_{GLUT2} [µmol/min/kg]', '(HGP[-]/HGU[+])'}, 'FontWeight', 'bold', 'FontSize', 12),         
-                case 2
-                    %title({'v_{GPI} [µmol/min/kg]', '(gluconeo. [-] /glycolysis [+])'}, 'FontWeight', 'bold', 'FontSize', 12), 
-                case 3
-                    %title({'- v_{G1P1} [µmol/min/kg]', '(glycogenolysis[-] / glycogen synthesis [+])'}, 'FontWeight', 'bold', 'FontSize', 12), 
-            end
-        end
-        % second row
-        if condition_index == 2
-            %xlabel('glucose [mM]')
-        end
-        
-        % last row
-        if condition_index == 4
-            xlabel('glucose [mM]')
-            set(gca,'xTick', xticks)
-        end
-        
-        % first column
-        if p_ind == 1
-            %ylabel('glycogen [mM]', 'FontWeight', 'bold')
-            set(gca,'yTick', 0:250:500)
-            ylabel('glycogen [mM]')
-        else
-           %set(gca,'yTick', []) 
-           set(gca,'yTick', 0:250:500)
-           
-        end
-        
-        % third column
-        if p_ind == 3
-         colorbar('peer',sp);
-        end
-       
-        caxis(caxis_flux)
-        axis(axis_range);
-        axis square
-        shading interp
     end
+    ptmp = pcolor(x, y, z'); hold on;
+    [C,h] = contour(x,y,z',clines_hgp, 'k-', 'LineColor', ccolor_hgp); hold off
+    text_handle = clabel(C, h, clines_hgp, 'Rotation', 90, 'LabelSpacing', 500);
+    set(text_handle,'Color',ccolor_hgp);
+    set(ptmp, 'EdgeAlpha', pcolor_edge_alpha);
+
+
+    xlabel('glucose [mM]')
+    set(gca,'xTick', xticks)
+
+
+    % first column
+    if p_ind == 1
+        %ylabel('glycogen [mM]', 'FontWeight', 'bold')
+        set(gca,'yTick', 0:250:500)
+        ylabel('glycogen [mM]')
+    else
+       %set(gca,'yTick', []) 
+       set(gca,'yTick', 0:250:500)
+
+    end
+
+    % third column
+    if p_ind == 3
+     colorbar('peer',sp);
+    end
+
+    caxis(caxis_flux)
+    axis(axis_range);
+    axis square
+    shading interp
 end
 
+disp('* fig3 saved')
+fig_file = strcat(res_file, '_fig3.png')
+saveas(fig3, fig_file,'png'); 
 
-% save the image
-if save_images==1
-    disp('* fig3 saved')
-    fig_file = strcat(in_file, '_fig3.png')
-    saveas(fig3, fig_file,'png'); 
-end
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% figure4 - RC (pcolor)
+%% MCA_Subplot %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fig4 = figure('Name', 'MCA coefficient', 'Color', [1 1 1]);
 map_jet = colormap(jet(1000));
 set(fig4, 'Colormap', map_jet)
 
-for condition_index = 1:length(conditions)
-    
-    % load data
-    condition = conditions{condition_index};
-    in_file = strcat(out_folder,  '/glucose_glycogen_dependency_', condition);
-    load(in_file);
+    load(res_file);
+    switch (name)
+    case 'core'
+        % core model time in [min]
+        dydt_fun = @(t,y) dydt_model_glucose(t,y);
+    case 'core_sbml'
+        % sbml model time in [s]
+        dydt_fun = @(t,y) dydt_model_glucose_sbml(t,y);
+        tspan = 60 * tspan;  % [s -> min]
+        v_full = 60 * v_full;  % [per_s] -> [per_min]
+   end
     
     % x and y
     x = glc_ext(glc_min_ind:glc_max_ind-1);
@@ -164,7 +142,7 @@ for condition_index = 1:length(conditions)
     end
     
     % panel 1 - MCA
-    subplot(4,2,2*condition_index-1);
+    subplot(1,2,1);
     p4 = pcolor(x, y, z'); hold on
     
     % contour
@@ -178,22 +156,9 @@ for condition_index = 1:length(conditions)
     z_line = -1 * ones(length(x),length(y_line));
     plot3(x, y_line, z_line, 'k-'), hold off
     
-    if condition_index == 1
-        %title('Delta v_{GLUT2} / Delta glc_{ext}', 'FontWeight', 'bold', 'FontSize', 12),
-    end
-    if condition_index == 2
-        %xlabel('glucose [mM]')
-        
-    end
-    
-    if condition_index == 2
-        xlabel('glucose [mM]')
-        set(gca,'xTick', xticks)
-    else
-        set(gca,'xTick', xticks)
-    end
-    %ylabel('glycogen [mM]', 'FontWeight', 'bold', 'FontSize', 11),
-
+    xlabel('glucose [mM]')
+    set(gca,'xTick', xticks)
+   
     colorbar('peer', gca);
     caxis(caxis_rc)
     axis(axis_range);
@@ -205,21 +170,15 @@ for condition_index = 1:length(conditions)
     
     
     % MCA mean and glycogen 250
-    subplot(4,2,2*condition_index);
+    subplot(1,2,2);
     z_250  = z(:,glycogen_250_ind);
     z_mean = mean(z,2);
     plot(x, z_250, 'k-', x, z_mean, 'b-');
     axis square
 
-end
-% save the image
-if save_images==1
+
     disp('* fig4 saved')
-    fig_file = strcat(in_file, '_fig4.png')
+    fig_file = strcat(res_file, '_fig4.png')
     saveas(fig4, fig_file,'png'); 
-end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
