@@ -10,7 +10,7 @@ clear all, close all, format compact;
 
 %% DATA PREPARATION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 results_folder = '../../results/glucose_dependency';
-res_file = strcat(results_folder, '/', 'glucose_dependency.mat');
+res_file = strcat(results_folder, '/', 'glucose_dependency_350.mat');
 fig_fname = strcat(results_folder, '/', 'short_term_fasting.tif')
 
 % Load the simulation data [c_full, v_full, glc_ext, tspan]

@@ -9,20 +9,11 @@ close all, clear all
 
 %% DATA PREPARATION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 results_folder = '../../results/glucose_dependency';
-res_file = strcat(results_folder, '/', 'glucose_dependency.mat');
+res_file_200 = strcat(results_folder, '/', 'glucose_dependency_200.mat');
+res_file_500 = strcat(results_folder, '/', 'glucose_dependency_500.mat');
 fig_fname = strcat(results_folder, '/', 'glycogen_metabolism.tif')
 
-% Load the simulation data [c_full, v_full, glc_ext, tspan]
-% Matrix dimensions correspond to  v_full = zeros(Nt, Nv, Nsim);
-load(res_file);
-
-% Convert the time units if necessary
-switch (name)
-    case 'core'
-        tspan = tspan
-    case 'core_sbml'
-        tspan = tspan/60; % [s] -> [min]
-end
+flux_factor = 12.5;  % -> [µmol/kg/min]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Experimental data for glycogenolysis
@@ -72,62 +63,69 @@ taylor1996 = [
 ];
 
 %% GLYCOGENOLYSIS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% plot range
-t_offset = 1;           % offset for t (very rapid changes in first minute not shown)
+% Load the simulation data [c_full, v_full, glc_ext, tspan]
+% Matrix dimensions correspond to  v_full = zeros(Nt, Nv, Nsim);
+% Initial full glycogen;
+load(res_file_500);
+
+% Convert the time units if necessary
+switch (name)
+    case 'core'
+        tspan = tspan     % [min]
+    case 'core_sbml'
+        tspan = tspan/60; % [s] -> [min]
+end
 
 % plot boundaries
-glc_min = 3.5;
-glc_max = 5;
-t_max = 3900; 
+glc_min = 3.5; % [mM]
+glc_max = 5;   % [mM]
+t_max = 3900;  % [min]
 
-% indeces of plot boundaries
-glc_ext = mpars.glc_ext;
-t_span  = mpars.t_span; 
+% indeces of plot boundaries 
 tmp = find(glc_ext>=glc_min); glc_min_ind = tmp(1);
 tmp = find(glc_ext<=glc_max); glc_max_ind = tmp(end);
-tmp = find(t_span>=t_max); t_max_ind = tmp(1);
+tmp = find(tspan>=t_max); t_max_ind = tmp(1);
+clear tmp;
 
 x1 = glc_ext(glc_min_ind:glc_max_ind);
-y1 = t_span(t_offset:t_max_ind)/60;      % time in [h]
-
-% TODO: Use the correct indices
-z1 = c_full(glc_min_ind:glc_max_ind, t_offset:t_max_ind, 17);
-
-
+y1 = tspan(1:t_max_ind)/60;      % [min] -> [h]
+y1 = y1 * flux_factor;
+z1 = c_full(1:t_max_ind, 17, glc_min_ind:glc_max_ind);  % glycogen 
+z1 = squeeze(z1)';
+clear glc_min_ind glc_max_ind t_max_ind glc_min glc_max t_max t_offset
+x1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [2] glycogen synthesis
-% load simulation data
-out_folder = '/home/mkoenig/Desktop/kinetic_model_results/simulations/111031_data/glucose_dependency/T2DM_200'
-condition  = 'normal'
-in_file = strcat(out_folder, '/glucose_dependency_', condition);
-load(in_file);
+load(res_file_200);
 
-% plot range
-t_offset = 1;           % offset for t (very rapid changes in first minute not shown)
-edge_alpha_val = 0;
-pcolor_edge_alpha = 0;
+% Convert the time units if necessary
+switch (name)
+    case 'core'
+        tspan = tspan     % [min]
+    case 'core_sbml'
+        tspan = tspan/60; % [s] -> [min]
+end
 
 % plot boundaries
-glc_min = 5.5;
-glc_max = 8;
-t_max = 300; 
+glc_min = 5.5;  % [mM]
+glc_max = 8;    % [mM]
+t_max = 300;    % [min]
 
 % indeces of plot boundaries
-glc_ext = mpars.glc_ext;
-t_span  = mpars.t_span; 
 tmp = find(glc_ext>=glc_min); glc_min_ind = tmp(1);
 tmp = find(glc_ext<=glc_max); glc_max_ind = tmp(end);
-tmp = find(t_span>=t_max); t_max_ind = tmp(1);
+tmp = find(tspan>=t_max); t_max_ind = tmp(1);
+clear tmp
 
 x2 = glc_ext(glc_min_ind:glc_max_ind);
-y2 = t_span(t_offset:t_max_ind)/60;      % time in [h]
-
-% TODO: Use the correct indices
-z2 = c_full(glc_min_ind:glc_max_ind, t_offset:t_max_ind, 17);
-
+y2 = tspan(1:t_max_ind); % [min]
+y2 = y2 * flux_factor;
+z2 = c_full(1:t_max_ind, 17, glc_min_ind:glc_max_ind); % glycogen
+z2 = squeeze(z2)';
+x2
 
 %% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-fig1 = figure('Name', 'Glycogen Metabolism', Color, [1 1 1])
+fig1 = figure('Name', 'Glycogen Metabolism', 'Color', [1 1 1]);
 
 colororder = [
          0         0    1.0000
@@ -142,7 +140,7 @@ colororder = [
 
 % Glycogenolysis %
 subplot(1,2,1)
-psim = plot(y1, z1(2:end,:), 'k--'), hold on
+psim = plot(y1, z1(2:end,:), 'k--'); hold on
 psim = plot(y1, z1(1,:), '--', 'Color', [0.9 0.2 0],'LineWidth', 2.0); hold on
 psim = plot(y1, z1(end,:), '--', 'Color', [0 0.5 0], 'LineWidth', 2.0); hold on
 for k=1:7
@@ -171,7 +169,7 @@ set(gca, 'FontWeight', 'bold')
 
 % Glycogen synthesis %
 subplot(1,2,2)
-p2 = plot(y2*60, z2(2:end, :), 'k--'), hold on
+p2 = plot(y2*60, z2(2:end, :), 'k--'); hold on
 p2 = plot(y2*60, z2(1,:), '--', 'Color', [0.9 0.2 0],'LineWidth', 2.0); hold on
 p2 = plot(y2*60, z2(end,:), '--', 'Color', [0 0.5 0], 'LineWidth', 2.0); hold on
 p2 = plot(y2*60, z2(4,:), 'b--', 'LineWidth', 2.0); hold on
@@ -186,7 +184,7 @@ for k=1:3
     set(p1, 'MarkerFaceColor', colororder(k,:) );                
 end
 hp1 = plot(taylor1996(:,1), taylor1996(:,2), '-s', 'MarkerSize',6.0, 'MarkerEdgeColor', [0.2 0.2 0.2]);
-he1 =errorbar(taylor1996(:,1), taylor1996(:,2), taylor1996(:,3),'.k');
+he1 = errorbar(taylor1996(:,1), taylor1996(:,2), taylor1996(:,3),'.k');
 set(hp1,'Color',colororder(4,:) );
 set(hp1, 'MarkerFaceColor', colororder(4,:) );
 set(hp1, 'Marker', 'p')
@@ -198,3 +196,5 @@ ylabel('glycogen [mM]', 'FontWeight', 'bold')
 axis square
 axis([-10 300 180 340])
 set(gca, 'FontWeight', 'bold')
+
+saveas(fig1, fig_fname,'tif'); 

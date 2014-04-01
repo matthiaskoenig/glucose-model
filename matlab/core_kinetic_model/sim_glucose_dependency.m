@@ -7,15 +7,15 @@
 %   date:   2014-04-01
 clear all, close all, format compact;
 results_folder = '../../results/glucose_dependency';
-res_file = strcat(results_folder, '/', 'glucose_dependency.mat');
 
 % Variation in external glucose concentration
-glc_ext = 2.0:0.2:12; % [mM]
+glycogen = [200 350 500];  % [mM]
+glc_ext = 2.0:0.2:12;      % [mM]
 
 % Model to integrate: core is the classic implentation used for the
 % publication whereas the sbml version gives the same results but is
 % rewritten to represent the model properly in SBML.
-tspan = (0:10:70)*60;   % [min] 70h
+tspan = (0:0.02:70)*60;   % [min] 70h
 % name = 'core'
 name = 'core_sbml'
 switch (name)
@@ -42,29 +42,33 @@ c_full = zeros(Nt, Nc, Nsim);
 v_full = zeros(Nt, Nv, Nsim);
 
 % Simulate for all glucose concentrations
-for ks=1:Nsim
-    fprintf('%3.2f \n', ks/Nsim*100); % progress
-    
-    % set external glucose & glycogen
-    % indices can be looked up in names_c
-    x0(32) = glc_ext(ks); % [mM]
-    x0(17) = 350;         % [mM]
-    
-    % integrate
-    [t,c] = ode15s(dydt_fun, tspan , x0, odeset('RelTol', 1e-9, 'AbsTol', 1e-9));
-    
-    % Calculate fluxes from the ODE system
-    v  = zeros(Nt, Nv);
-    for kt=1:Nt
-        [~, v(kt, :), ~] = dydt_fun(t(kt), c(kt, :));
+
+for kgly = 1:numel(glycogen)
+    glyglc = glycogen(kgly);
+    fprintf('*** GLYCOGEN = %s ***\n', num2str(glyglc));
+    res_file = strcat(results_folder, '/', 'glucose_dependency_',num2str(glyglc),'.mat');
+    for ks=1:Nsim
+        fprintf('%3.2f \n', ks/Nsim*100); % progress
+
+        % set external glucose & glycogen
+        % indices can be looked up in names_c
+        x0(32) = glc_ext(ks); % [mM]
+        x0(17) = glyglc;    % [mM]
+
+        % integrate
+        [t,c] = ode15s(dydt_fun, tspan , x0, odeset('RelTol', 1e-9, 'AbsTol', 1e-9));
+
+        % Calculate fluxes from the ODE system
+        v  = zeros(Nt, Nv);
+        for kt=1:Nt
+            [~, v(kt, :), ~] = dydt_fun(t(kt), c(kt, :));
+        end
+        clear kt
+
+        % Save concentrations and fluxes
+        c_full(:, :, ks) = c;
+        v_full(:, :, ks) = v;
     end
-    clear kt
-    
-    % Save concentrations and fluxes
-    c_full(:, :, ks) = c;
-    v_full(:, :, ks) = v;
+    clear ks
+    save(res_file, 'c_full', 'v_full', 'glc_ext', 'tspan', 'name', '-v7.3')
 end
-clear ks
-
-save(res_file, 'c_full', 'v_full', 'glc_ext', 'tspan', 'name', '-v7.3')
-
