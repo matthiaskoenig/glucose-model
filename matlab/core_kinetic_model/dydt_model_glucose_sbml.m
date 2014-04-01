@@ -696,8 +696,8 @@ dydt(49) = 0; % h2o_mito
 v  = [GLUT2   % v1
       GK      % v2
       G6PASE  % v3
-      GPI 
-      G16PI 
+      GPI     % v4
+      G16PI   % v5
       UPGASE 
       PPASE 
       GS 
