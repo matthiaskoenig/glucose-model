@@ -12,40 +12,39 @@ function [t, c, v] = sim_single()
 %   Matthias Koenig (matthias.koenig@charite.de)
 %   Copyright 2014 Matthias Koenig
 %   date:   2014-03-27
-
-% # SBML TODO #
-% TODO: time units -> convert to seconds
-% TODO: volumes of cytosol and mito
-% TODO: 
-
+%
+% TODO: scaling to represent single hepatocytes and whole liver results
+% correctly with the respective simulation volumes and glycogen storage 
+% density
 clear all, close all, format compact
 results_folder = '../../results';
-
 
 % Initial concentrations
 x0 = initial_concentrations();
 
-% which model to integrate for comparison
+% Model to integrate: core is the classic implentation used for the
+% publication whereas the sbml version gives the same results but is
+% rewritten to represent the model properly in SBML.
+tspan = 0:1:2000;
 % name = 'core'
 name = 'core_sbml'
-%name = 'core'
 switch (name)
     case 'core'
         % core model time in [min]
         dydt_fun = @(t,y) dydt_model_glucose(t,y);
-        tspan = 0:1:2000;
     case 'core_sbml'
         % sbml model time in [s]
         dydt_fun = @(t,y) dydt_model_glucose_sbml(t,y);
-        tspan = 0:60:2000*60;
+        tspan = 60 * tspan;
 end
 func2str(dydt_fun)
 
-% Integration
+% Integration (relative and absolute tolerances controlled to be 
+% sure about the numerical values.
 [t,c] = ode15s(dydt_fun, tspan , x0, odeset('RelTol', 1e-9, 'AbsTol', 1e-9));
 
-% Calculate fluxes
-[~, vtmp, ~] = dydt_fun(0, x0);
+% Calculate fluxes from the ODE system
+[~, vtmp, ~] = dydt_fun(0, x0);   % get the flux names
 Nv = numel(vtmp);
 Nt = numel(t);
 v  = zeros(Nt, Nv);
@@ -60,7 +59,9 @@ res.t = t;
 sim_fname = strcat(results_folder, '/', name, '.mat')
 save(sim_fname, 'res');
 
-%% Compare the results to reference implementation from
+%% Compare the results to reference implementation
+% In case of the sbml_core the scaling due to min -> seconds as time units
+% has to be provided for the comparison function.
 ref_fname = strcat(results_folder, '/', 'standard.mat')
 switch (name)
     case 'core'
@@ -68,8 +69,6 @@ switch (name)
     case 'core_sbml'
         compare_timecourses(sim_fname, ref_fname, 1/60)
 end
-
-
 
 %% Create figure
 fig_single(t, c, v);
