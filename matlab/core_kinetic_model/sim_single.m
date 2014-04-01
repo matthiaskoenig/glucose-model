@@ -50,30 +50,21 @@ func2str(dydt_fun)
 [~, vtmp, ~] = dydt_fun(0, x0);   % get the flux names
 Nv = numel(vtmp);
 Nt = numel(t);
-v  = zeros(Nt, Nv);
+v  = zeros(Nt, Nv);     % [mmol/s]
+v_kgbw = zeros(Nt, Nv); % [µmol/kg/min]
 for k=1:Nt
-    [~, v(k, :), ~] = dydt_fun(t(k), c(k, :));
+    [~, v(k, :), ~, v_kgbw(k,:)] = dydt_fun(t(k), c(k, :));
 end
-% At this point all fluxes v are in [mmol/s/litre], all
-% concentrations in mmol/litre. The simulations were performed for a
-% hepatic tissue of the simulation volume.
-% To get absolute liver values these fluxes have to be scaled with
-
-%%
-bodyweight = 70;         % [kg]
-Vol_liver  = 1.5;        % [liter]
-Mglc       = 180E3;      % [mg/mol]
-min2sec    = 60;         % [s/min]
-v_human = v * Vol_liver*min2sec*Mglc  % [mmol/l/s] -> [µmol/min] 
-v_kgbw  = v_human/bodyweight;         % [µmol/min/kgbw]
-
 
 % Save data for comparison
-res.v = v;
+res.v = v_kgbw;
+res.v_kgbw = v_kgbw
 res.c = c;
 res.t = t;
 sim_fname = strcat(results_folder, '/', name, '.mat')
 save(sim_fname, 'res');
+
+
 
 %% Compare the results to reference implementation
 % In case of the sbml_core the scaling due to min -> seconds as time units

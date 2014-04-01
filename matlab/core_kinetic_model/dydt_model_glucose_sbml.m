@@ -1,4 +1,4 @@
-function [dydt, v, hormones] = dydt_model_glucose_sbml(t, y)
+function [dydt, v, hormones, v_kgbw] = dydt_model_glucose_sbml(t, y)
 % DYDT_MODEL_GLUCOSE_SBML
 %   author: Matthias Koenig 
 %           Charite Berlin
@@ -18,8 +18,8 @@ function [dydt, v, hormones] = dydt_model_glucose_sbml(t, y)
 % scale = 1/60;
 % time [sec]
 
-scale = 1/60 * 5.4012e-05;    % [-]
-scale_gly = scale;     % [-]
+scale = 1/60 ;    % [-]
+scale_gly =  scale;     % [-]
 scale_glyglc = scale;  % [-]
 
 % Volumes of the compartments. These are the simulation volumes
@@ -697,7 +697,7 @@ if (exist('glycogen_constant', 'var') && isequal(glycogen_constant,1) )
     dydt(17) = 0;
 end
 
-
+if (nargout > 1)
 %% Actual fluxes
 v  = [GLUT2   % v1
       GK      % v2
@@ -735,5 +735,18 @@ v  = [GLUT2   % v1
       OAAFLX 
       ACOAFLX 
       CITFLX];
-
+end
+  
+if (nargout >3)
+    % At this point all fluxes v are in [mmol/s], all
+    % concentrations in mmol/litre. The simulations were performed for a
+    % hepatic tissue of the simulation volume.
+    % To get absolute liver values these fluxes have to be scaled with
+    Vliver  = 1.5;           % [liter]
+    fliver = 102.86;         % [-]
+    bodyweight  = 70;        % [kg]
+    sec_per_min = 60;        % [s/min]
+    conversion_factor = Vliver/(Vcyto*fliver) * sec_per_min*1E3/bodyweight;
+    v_kgbw  = v * conversion_factor;  % [µmol/min/kgbw]
+end
 

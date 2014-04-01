@@ -12,10 +12,10 @@ function [dydt, v, v_human, v_kgbw] = dydt_toy_model(t, y)
 %   date:   2014-03-27
 
 %% Test for scaling
-factor = 10;
+factor = 1E-10;
 scale = 1*factor;             % [-]
 
-Vcyto = 1 *factor ;           % [litre]
+Vcyto = 1*factor ;           % [litre]
 Vext  = 10 *Vcyto;   % [litre] 
 
 %% Concentrations [mM = mmole_per_litre]
@@ -76,11 +76,12 @@ v  = [AIMP        % v1
 % hepatic tissue of the simulation volume.
 % To get absolute liver values these fluxes have to be scaled with
 Vliver  = 1.5;           % [liter]
-f_liver = Vliver/Vcyto;  % [-]
+fliver = 68.571;         % [-]
+f_liver = Vliver/(Vcyto*fliver);  % [-]
 bodyweight  = 70;        % [kg]
 sec_per_min = 60;        % [s/min]
+
 v_human = v * f_liver * sec_per_min*1E3; % [mmol/s] -> [µmol/min] 
 v_kgbw  = v_human/bodyweight;            % [µmol/min/kgbw]
  
-con_factor = sec_per_min*1E3/bodyweight
 
