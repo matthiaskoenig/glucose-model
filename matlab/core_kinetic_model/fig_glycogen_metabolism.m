@@ -92,7 +92,7 @@ y1 = tspan(1:t_max_ind)/60;      % [min] -> [h]
 y1 = y1 * flux_factor;
 z1 = c_full(1:t_max_ind, 17, glc_min_ind:glc_max_ind);  % glycogen 
 z1 = squeeze(z1)';
-clear glc_min_ind glc_max_ind t_max_ind glc_min glc_max t_max t_offset
+clear glc_min_ind glc_max_ind t_max_ind glc_min glc_max t_max t_offset tspan
 x1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [2] glycogen synthesis
@@ -123,6 +123,7 @@ y2 = y2 * flux_factor;
 z2 = c_full(1:t_max_ind, 17, glc_min_ind:glc_max_ind); % glycogen
 z2 = squeeze(z2)';
 x2
+
 
 %% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fig1 = figure('Name', 'Glycogen Metabolism', 'Color', [1 1 1]);
@@ -169,10 +170,10 @@ set(gca, 'FontWeight', 'bold')
 
 % Glycogen synthesis %
 subplot(1,2,2)
-p2 = plot(y2*60, z2(2:end, :), 'k--'); hold on
-p2 = plot(y2*60, z2(1,:), '--', 'Color', [0.9 0.2 0],'LineWidth', 2.0); hold on
-p2 = plot(y2*60, z2(end,:), '--', 'Color', [0 0.5 0], 'LineWidth', 2.0); hold on
-p2 = plot(y2*60, z2(4,:), 'b--', 'LineWidth', 2.0); hold on
+p2 = plot(y2, z2(2:end, :), 'k--'); hold on
+p2 = plot(y2, z2(1,:), '--', 'Color', [0.9 0.2 0],'LineWidth', 2.0); hold on
+p2 = plot(y2, z2(end,:), '--', 'Color', [0 0.5 0], 'LineWidth', 2.0); hold on
+p2 = plot(y2, z2(4,:), 'b--', 'LineWidth', 2.0); hold on
 
 %title('Glycogen synthesis [5-10mM glucose]', 'FontWeight', 'bold')
 for k=1:3
