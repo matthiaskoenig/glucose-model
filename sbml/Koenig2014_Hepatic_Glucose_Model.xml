@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by libAntimony version v2.5 on 2014-03-31 18:16 with libSBML version 5.9.1. -->
-<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" xmlns:comp="http://www.sbml.org/sbml/level3/version1/comp/version1" level="3" version="1" comp:required="true">
-  <model id="Koenig2014_hepatic_glucose" name="Koenig2014_hepatic_glucose" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length" extentUnits="extent">
+<!-- Created by libAntimony version v2.5 on 2014-04-03 16:09 with libSBML version 5.9.1. -->
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
+  <model id="Koenig2014_Hepatic_Glucose_Model" name="Koenig2014_Hepatic_Glucose_Model" timeUnits="second" substanceUnits="substance" volumeUnits="volume" areaUnits="area" lengthUnits="length" extentUnits="extent">
     <listOfFunctionDefinitions>
       <functionDefinition id="maximum">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -65,8 +65,9 @@
           <unit kind="second" exponent="1" scale="1" multiplier="6"/>
         </listOfUnits>
       </unitDefinition>
-      <unitDefinition id="per_minute">
+      <unitDefinition id="s_per_min">
         <listOfUnits>
+          <unit kind="second" exponent="1" scale="0" multiplier="1"/>
           <unit kind="second" exponent="-1" scale="1" multiplier="6"/>
         </listOfUnits>
       </unitDefinition>
@@ -110,6 +111,20 @@
           <unit kind="litre" exponent="-1" scale="0" multiplier="1"/>
         </listOfUnits>
       </unitDefinition>
+      <unitDefinition id="mumol_per_min_kg">
+        <listOfUnits>
+          <unit kind="mole" exponent="1" scale="-6" multiplier="1"/>
+          <unit kind="second" exponent="-1" scale="1" multiplier="6"/>
+          <unit kind="kilogram" exponent="-1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="s_per_min_kg">
+        <listOfUnits>
+          <unit kind="second" exponent="1" scale="0" multiplier="1"/>
+          <unit kind="second" exponent="-1" scale="1" multiplier="6"/>
+          <unit kind="kilogram" exponent="-1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
       <unitDefinition id="substance">
         <listOfUnits>
           <unit kind="mole" exponent="1" scale="-3" multiplier="1"/>
@@ -137,9 +152,9 @@
       </unitDefinition>
     </listOfUnitDefinitions>
     <listOfCompartments>
-      <compartment id="extern" spatialDimensions="3" size="10" units="litre" constant="true"/>
-      <compartment id="cyto" spatialDimensions="3" size="1" units="litre" constant="true"/>
-      <compartment id="mito" spatialDimensions="3" size="0.2" units="litre" constant="true"/>
+      <compartment id="extern" spatialDimensions="3" units="litre" constant="true"/>
+      <compartment id="cyto" spatialDimensions="3" units="litre" constant="true"/>
+      <compartment id="mito" spatialDimensions="3" units="litre" constant="true"/>
     </listOfCompartments>
     <listOfSpecies>
       <species id="atp" compartment="cyto" initialConcentration="2.8" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
@@ -193,6 +208,12 @@
       <species id="h_mito" compartment="mito" initialConcentration="0" substanceUnits="substance" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
+      <parameter id="Vcyto" value="1" units="litre" constant="true"/>
+      <parameter id="Vliver" value="1.5" units="litre" constant="true"/>
+      <parameter id="fliver" value="0.583333333333334" units="dimensionless" constant="true"/>
+      <parameter id="bodyweight" value="70" units="kilogram" constant="true"/>
+      <parameter id="sec_per_min" value="60" units="s_per_min" constant="true"/>
+      <parameter id="conversion_factor" units="s_per_min_kg" constant="true"/>
       <parameter id="nadh_tot" units="mM" constant="false"/>
       <parameter id="atp_tot" units="mM" constant="false"/>
       <parameter id="utp_tot" units="mM" constant="false"/>
@@ -224,7 +245,7 @@
       <parameter id="K_glu" units="pmol_per_l" constant="true"/>
       <parameter id="K_epi" units="pmol_per_l" constant="true"/>
       <parameter id="gamma" units="dimensionless" constant="false"/>
-      <parameter id="scale" constant="true"/>
+      <parameter id="scale" units="dimensionless" constant="true"/>
       <parameter id="scale_gly" units="dimensionless" constant="true"/>
       <parameter id="scale_glyglc" units="dimensionless" constant="true"/>
       <parameter id="GLUT2_keq" value="1" units="dimensionless" constant="true"/>
@@ -278,8 +299,8 @@
       <parameter id="GP_k_p_phospho" value="5" units="mM" constant="true"/>
       <parameter id="GP_ki_glc_phospho" value="5" units="mM" constant="true"/>
       <parameter id="GP_ka_amp_native" value="1" units="mM" constant="true"/>
-      <parameter id="GP_base_amp_native" value="0.03" units="mmol_per_s" constant="true"/>
-      <parameter id="GP_max_amp_native" value="0.3" units="mmol_per_s" constant="true"/>
+      <parameter id="GP_base_amp_native" value="0.03" units="dimensionless" constant="true"/>
+      <parameter id="GP_max_amp_native" value="0.3" units="dimensionless" constant="true"/>
       <parameter id="GP_Vmax" value="6.8" units="mmol_per_s" constant="true"/>
       <parameter id="GP_C" units="mM" constant="true"/>
       <parameter id="GP_k1_max" units="dimensionless" constant="true"/>
@@ -440,8 +461,56 @@
       <parameter id="OAAFLX_Vmax" value="0" units="mmol_per_s" constant="true"/>
       <parameter id="ACOAFLX_Vmax" value="0" units="mmol_per_s" constant="true"/>
       <parameter id="CITFLX_Vmax" value="0" units="mmol_per_s" constant="true"/>
+      <parameter id="HGP" units="mumol_per_min_kg" constant="false"/>
+      <parameter id="GNG" units="mumol_per_min_kg" constant="false"/>
+      <parameter id="GLY" units="mumol_per_min_kg" constant="false"/>
     </listOfParameters>
     <listOfInitialAssignments>
+      <initialAssignment symbol="extern">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
+          <apply>
+            <times/>
+            <cn sbml:units="dimensionless" type="integer"> 10 </cn>
+            <ci> Vcyto </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="cyto">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> Vcyto </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="mito">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
+          <apply>
+            <times/>
+            <cn sbml:units="dimensionless"> 0.2 </cn>
+            <ci> Vcyto </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="conversion_factor">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <ci> fliver </ci>
+                  <ci> Vliver </ci>
+                </apply>
+                <ci> Vcyto </ci>
+              </apply>
+              <ci> sec_per_min </ci>
+              <cn sbml:units="dimensionless" type="integer"> 1000 </cn>
+            </apply>
+            <ci> bodyweight </ci>
+          </apply>
+        </math>
+      </initialAssignment>
       <initialAssignment symbol="K_ins">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
@@ -485,27 +554,19 @@
         <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <divide/>
-            <cn type="integer"> 1 </cn>
+            <cn sbml:units="dimensionless" type="integer"> 1 </cn>
             <cn sbml:units="dimensionless" type="integer"> 60 </cn>
           </apply>
         </math>
       </initialAssignment>
       <initialAssignment symbol="scale_gly">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <times/>
-            <cn> 12.5 </cn>
-            <ci> scale </ci>
-          </apply>
+          <ci> scale </ci>
         </math>
       </initialAssignment>
       <initialAssignment symbol="scale_glyglc">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <times/>
-            <cn> 12.5 </cn>
-            <ci> scale </ci>
-          </apply>
+          <ci> scale </ci>
         </math>
       </initialAssignment>
       <initialAssignment symbol="GP_C">
@@ -623,10 +684,10 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="ins_norm">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <ci> maximum </ci>
-            <cn type="integer"> 0 </cn>
+            <cn sbml:units="pmol_per_l" type="integer"> 0 </cn>
             <apply>
               <minus/>
               <ci> ins </ci>
@@ -636,7 +697,7 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="glu">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <plus/>
             <ci> x_glu2 </ci>
@@ -649,7 +710,7 @@
               </apply>
               <apply>
                 <minus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <apply>
                   <divide/>
                   <apply>
@@ -677,10 +738,10 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="glu_norm">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <ci> maximum </ci>
-            <cn type="integer"> 0 </cn>
+            <cn sbml:units="pmol_per_l" type="integer"> 0 </cn>
             <apply>
               <minus/>
               <ci> glu </ci>
@@ -690,7 +751,7 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="epi">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <plus/>
             <ci> x_epi2 </ci>
@@ -703,7 +764,7 @@
               </apply>
               <apply>
                 <minus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <apply>
                   <divide/>
                   <apply>
@@ -731,10 +792,10 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="epi_norm">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <ci> maximum </ci>
-            <cn type="integer"> 0 </cn>
+            <cn sbml:units="pmol_per_l" type="integer"> 0 </cn>
             <apply>
               <minus/>
               <ci> epi </ci>
@@ -744,15 +805,15 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="gamma">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <times/>
-            <cn> 0.5 </cn>
+            <cn sbml:units="dimensionless"> 0.5 </cn>
             <apply>
               <plus/>
               <apply>
                 <minus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <apply>
                   <divide/>
                   <ci> ins_norm </ci>
@@ -793,7 +854,7 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="GK_gc_free">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <times/>
             <apply>
@@ -819,7 +880,7 @@
             </apply>
             <apply>
               <minus/>
-              <cn type="integer"> 1 </cn>
+              <cn sbml:units="dimensionless" type="integer"> 1 </cn>
               <apply>
                 <divide/>
                 <apply>
@@ -838,14 +899,14 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="GS_storage_factor">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <divide/>
             <apply>
               <times/>
               <apply>
                 <plus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <ci> GS_k1_max </ci>
               </apply>
               <apply>
@@ -935,14 +996,14 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="GP_fmax">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <divide/>
             <apply>
               <times/>
               <apply>
                 <plus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <ci> GP_k1_max </ci>
               </apply>
               <ci> glyglc </ci>
@@ -991,7 +1052,7 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="GP_native">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <divide/>
             <apply>
@@ -1027,7 +1088,7 @@
                   <times/>
                   <apply>
                     <plus/>
-                    <cn type="integer"> 1 </cn>
+                    <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                     <apply>
                       <divide/>
                       <ci> glyglc </ci>
@@ -1036,7 +1097,7 @@
                   </apply>
                   <apply>
                     <plus/>
-                    <cn type="integer"> 1 </cn>
+                    <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                     <apply>
                       <divide/>
                       <ci> phos </ci>
@@ -1044,20 +1105,20 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <apply>
                   <divide/>
                   <ci> glc1p </ci>
                   <ci> GP_k_glc1p_native </ci>
                 </apply>
               </apply>
-              <cn type="integer"> 1 </cn>
+              <cn sbml:units="dimensionless" type="integer"> 1 </cn>
             </apply>
           </apply>
         </math>
       </assignmentRule>
       <assignmentRule variable="GP_vmax_phospho">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <times/>
             <ci> scale_glyglc </ci>
@@ -1073,7 +1134,7 @@
                     <minus/>
                     <apply>
                       <ln/>
-                      <cn type="integer"> 2 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 2 </cn>
                     </apply>
                   </apply>
                   <ci> GP_ki_glc_phospho </ci>
@@ -1085,7 +1146,7 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="GP_phospho">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <divide/>
             <apply>
@@ -1121,7 +1182,7 @@
                   <times/>
                   <apply>
                     <plus/>
-                    <cn type="integer"> 1 </cn>
+                    <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                     <apply>
                       <divide/>
                       <ci> glyglc </ci>
@@ -1130,7 +1191,7 @@
                   </apply>
                   <apply>
                     <plus/>
-                    <cn type="integer"> 1 </cn>
+                    <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                     <apply>
                       <divide/>
                       <ci> phos </ci>
@@ -1138,14 +1199,14 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <apply>
                   <divide/>
                   <ci> glc1p </ci>
                   <ci> GP_k_glc1p_phospho </ci>
                 </apply>
               </apply>
-              <cn type="integer"> 1 </cn>
+              <cn sbml:units="dimensionless" type="integer"> 1 </cn>
             </apply>
           </apply>
         </math>
@@ -1235,7 +1296,7 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="FBP2_native">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <divide/>
             <apply>
@@ -1249,7 +1310,7 @@
                 </apply>
                 <apply>
                   <plus/>
-                  <cn type="integer"> 1 </cn>
+                  <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                   <apply>
                     <divide/>
                     <ci> fru6p </ci>
@@ -1268,7 +1329,7 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="FBP2_phospho">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <divide/>
             <apply>
@@ -1282,7 +1343,7 @@
                 </apply>
                 <apply>
                   <plus/>
-                  <cn type="integer"> 1 </cn>
+                  <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                   <apply>
                     <divide/>
                     <ci> fru6p </ci>
@@ -1351,14 +1412,14 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="PK_alpha_inp">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <plus/>
             <apply>
               <times/>
               <apply>
                 <minus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <ci> PK_f </ci>
               </apply>
               <apply>
@@ -1372,14 +1433,14 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="PK_alpha_p_inp">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <plus/>
             <apply>
               <times/>
               <apply>
                 <minus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <ci> PK_f_p </ci>
               </apply>
               <apply>
@@ -1393,14 +1454,14 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="PK_pep_inp">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <plus/>
             <apply>
               <times/>
               <apply>
                 <minus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <ci> PK_f </ci>
               </apply>
               <apply>
@@ -1414,14 +1475,14 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="PK_pep_p_inp">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <plus/>
             <apply>
               <times/>
               <apply>
                 <minus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <ci> PK_f_p </ci>
               </apply>
               <apply>
@@ -1553,7 +1614,7 @@
         </math>
       </assignmentRule>
       <assignmentRule variable="PDH_base">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
           <apply>
             <divide/>
             <apply>
@@ -1586,7 +1647,7 @@
                     <ci> PDH_k_nad </ci>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> nadh_mito </ci>
@@ -1606,7 +1667,7 @@
                 <ci> PDH_k_coa </ci>
                 <apply>
                   <plus/>
-                  <cn type="integer"> 1 </cn>
+                  <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                   <apply>
                     <divide/>
                     <ci> acoa_mito </ci>
@@ -1636,6 +1697,36 @@
           </apply>
         </math>
       </assignmentRule>
+      <assignmentRule variable="HGP">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> GLUT2 </ci>
+            <ci> conversion_factor </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="GNG">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> GPI </ci>
+            <ci> conversion_factor </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="GLY">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <apply>
+              <minus/>
+              <ci> G16PI </ci>
+            </apply>
+            <ci> conversion_factor </ci>
+          </apply>
+        </math>
+      </assignmentRule>
     </listOfRules>
     <listOfReactions>
       <reaction id="GLUT2" name="GLUT2 glucose transporter" reversible="true" fast="false">
@@ -1646,7 +1737,7 @@
           <speciesReference species="glc" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -1672,7 +1763,7 @@
               </apply>
               <apply>
                 <plus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <apply>
                   <divide/>
                   <ci> glc_ext </ci>
@@ -1777,7 +1868,7 @@
           <speciesReference species="fru6p" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -1803,7 +1894,7 @@
               </apply>
               <apply>
                 <plus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <apply>
                   <divide/>
                   <ci> glc6p </ci>
@@ -1827,7 +1918,7 @@
           <speciesReference species="glc6p" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -1853,7 +1944,7 @@
               </apply>
               <apply>
                 <plus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <apply>
                   <divide/>
                   <ci> glc1p </ci>
@@ -1879,7 +1970,7 @@
           <speciesReference species="pp" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -1923,7 +2014,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> utp </ci>
@@ -1932,7 +2023,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> glc1p </ci>
@@ -1944,7 +2035,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> udpglc </ci>
@@ -1953,7 +2044,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> pp </ci>
@@ -1962,7 +2053,7 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>
@@ -2004,14 +2095,14 @@
           <speciesReference species="glyglc" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <plus/>
               <apply>
                 <times/>
                 <apply>
                   <minus/>
-                  <cn type="integer"> 1 </cn>
+                  <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                   <ci> gamma </ci>
                 </apply>
                 <ci> GS_native </ci>
@@ -2034,14 +2125,14 @@
           <speciesReference species="glc1p" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <plus/>
               <apply>
                 <times/>
                 <apply>
                   <minus/>
-                  <cn type="integer"> 1 </cn>
+                  <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                   <ci> gamma </ci>
                 </apply>
                 <ci> GP_native </ci>
@@ -2262,7 +2353,7 @@
           <speciesReference species="adp" stoichiometry="2" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -2306,7 +2397,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> atp </ci>
@@ -2315,7 +2406,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> amp </ci>
@@ -2327,7 +2418,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> adp </ci>
@@ -2336,7 +2427,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> adp </ci>
@@ -2345,7 +2436,7 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>
@@ -2361,14 +2452,14 @@
           <speciesReference species="adp" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <plus/>
               <apply>
                 <times/>
                 <apply>
                   <minus/>
-                  <cn type="integer"> 1 </cn>
+                  <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                   <ci> gamma </ci>
                 </apply>
                 <ci> PFK2_native </ci>
@@ -2391,14 +2482,14 @@
           <speciesReference species="phos" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <plus/>
               <apply>
                 <times/>
                 <apply>
                   <minus/>
-                  <cn type="integer"> 1 </cn>
+                  <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                   <ci> gamma </ci>
                 </apply>
                 <ci> FBP2_native </ci>
@@ -2425,7 +2516,7 @@
           <modifierSpeciesReference species="fru26bp"/>
         </listOfModifiers>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -2434,13 +2525,13 @@
                 <ci> PFK1_Vmax </ci>
                 <apply>
                   <minus/>
-                  <cn type="integer"> 1 </cn>
+                  <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                   <apply>
                     <divide/>
-                    <cn type="integer"> 1 </cn>
+                    <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> fru26bp </ci>
@@ -2492,7 +2583,7 @@
           <modifierSpeciesReference species="fru26bp"/>
         </listOfModifiers>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -2506,7 +2597,7 @@
                   </apply>
                   <apply>
                     <plus/>
-                    <cn type="integer"> 1 </cn>
+                    <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                     <apply>
                       <divide/>
                       <ci> fru26bp </ci>
@@ -2618,7 +2709,7 @@
           <speciesReference species="grap" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -2644,7 +2735,7 @@
               </apply>
               <apply>
                 <plus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <apply>
                   <divide/>
                   <ci> dhap </ci>
@@ -2672,7 +2763,7 @@
           <speciesReference species="h" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -2718,7 +2809,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> nad </ci>
@@ -2727,7 +2818,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> grap </ci>
@@ -2736,7 +2827,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> phos </ci>
@@ -2748,7 +2839,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> nadh </ci>
@@ -2757,7 +2848,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> bpg13 </ci>
@@ -2766,7 +2857,7 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>
@@ -2782,7 +2873,7 @@
           <speciesReference species="pg3" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -2826,7 +2917,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> adp </ci>
@@ -2835,7 +2926,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> bpg13 </ci>
@@ -2847,7 +2938,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> atp </ci>
@@ -2856,7 +2947,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> pg3 </ci>
@@ -2865,7 +2956,7 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>
@@ -2879,7 +2970,7 @@
           <speciesReference species="pg2" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -2904,7 +2995,7 @@
                   <ci> PGM_k_pg3 </ci>
                   <apply>
                     <plus/>
-                    <cn type="integer"> 1 </cn>
+                    <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                     <apply>
                       <divide/>
                       <ci> pg2 </ci>
@@ -2925,7 +3016,7 @@
           <speciesReference species="pep" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -2950,7 +3041,7 @@
                   <ci> EN_k_pg2 </ci>
                   <apply>
                     <plus/>
-                    <cn type="integer"> 1 </cn>
+                    <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                     <apply>
                       <divide/>
                       <ci> pep </ci>
@@ -2973,14 +3064,14 @@
           <speciesReference species="atp" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <plus/>
               <apply>
                 <times/>
                 <apply>
                   <minus/>
-                  <cn type="integer"> 1 </cn>
+                  <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                   <ci> gamma </ci>
                 </apply>
                 <ci> PK_native </ci>
@@ -3305,7 +3396,7 @@
           <speciesReference species="nad" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -3349,7 +3440,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> nadh </ci>
@@ -3358,7 +3449,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> pyr </ci>
@@ -3370,7 +3461,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> lac </ci>
@@ -3379,7 +3470,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> nad </ci>
@@ -3388,7 +3479,7 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>
@@ -3402,7 +3493,7 @@
           <speciesReference species="lac" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -3428,7 +3519,7 @@
               </apply>
               <apply>
                 <plus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <apply>
                   <divide/>
                   <ci> lac_ext </ci>
@@ -3452,7 +3543,7 @@
           <speciesReference species="pyr_mito" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -3478,7 +3569,7 @@
               </apply>
               <apply>
                 <plus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <apply>
                   <divide/>
                   <ci> pyr </ci>
@@ -3502,7 +3593,7 @@
           <speciesReference species="pep" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -3528,7 +3619,7 @@
               </apply>
               <apply>
                 <plus/>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                 <apply>
                   <divide/>
                   <ci> pep </ci>
@@ -3557,14 +3648,14 @@
           <speciesReference species="h_mito" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <plus/>
               <apply>
                 <times/>
                 <apply>
                   <minus/>
-                  <cn type="integer"> 1 </cn>
+                  <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                   <ci> gamma </ci>
                 </apply>
                 <ci> PDH_nat </ci>
@@ -3589,7 +3680,7 @@
           <speciesReference species="coa_mito" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -3633,7 +3724,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> acoa_mito </ci>
@@ -3642,7 +3733,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> oaa_mito </ci>
@@ -3654,7 +3745,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> cit_mito </ci>
@@ -3663,7 +3754,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> coa_mito </ci>
@@ -3672,7 +3763,7 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>
@@ -3688,7 +3779,7 @@
           <speciesReference species="gtp_mito" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core">
             <apply>
               <divide/>
               <apply>
@@ -3732,7 +3823,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> atp_mito </ci>
@@ -3741,7 +3832,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> gdp_mito </ci>
@@ -3753,7 +3844,7 @@
                     <times/>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> adp_mito </ci>
@@ -3762,7 +3853,7 @@
                     </apply>
                     <apply>
                       <plus/>
-                      <cn type="integer"> 1 </cn>
+                      <cn sbml:units="dimensionless" type="integer"> 1 </cn>
                       <apply>
                         <divide/>
                         <ci> gtp_mito </ci>
@@ -3771,7 +3862,7 @@
                     </apply>
                   </apply>
                 </apply>
-                <cn type="integer"> 1 </cn>
+                <cn sbml:units="dimensionless" type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>

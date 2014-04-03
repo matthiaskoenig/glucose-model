@@ -19,11 +19,15 @@ scale = 1/60 ;         % [-] convert to time in seconds
 scale_gly =  scale;    % [-]
 scale_glyglc = scale;  % [-]
 
-% Volumes of the compartments. These are the simulation volumes
-% TODO: bring in SBML
+% Volumes of the compartments. These are the simulation volumes. To
+% simulate other volumes change 
+% Vcyto -> Vcyto_new  and  scale -> scale * V_cyto/V_cyto_new;
+% The resulting fluxes [mmol/s] do not change. 
 Vcyto = 1;           % [litre]
 Vmito = 0.2*Vcyto;   % [litre]
 Vext  = 10 *Vcyto;   % [litre] arbitrary (depends on coupled external environment)
+                     % as long as all external metabolites constant for simulations,
+                     % this has no effect
 
 %% Concentrations [mM = mmole_per_litre]
 atp         = y(1);
@@ -240,8 +244,8 @@ GP_k_p_native = 300;        % [mM]
 GP_k_p_phospho = 5;         % [mM]
 GP_ki_glc_phospho = 5;      % [mM]
 GP_ka_amp_native = 1;       % [mM]
-GP_base_amp_native = 0.03;  % [mmol_per_s]
-GP_max_amp_native = 0.30;   % [mmol_per_s]
+GP_base_amp_native = 0.03;  % [-]
+GP_max_amp_native = 0.30;   % [-]
 GP_Vmax = 6.8;              % [mmol_per_s]
 
 GP_C = GS_C;                % [mM]
@@ -741,11 +745,11 @@ if (nargout >3)
     % To get absolute liver values these fluxes have to be scaled with
     Vliver  = 1.5;                % [liter]
     fliver =  0.583333333333334;  % [-] factor to scale model to whole liver
-                                    %     effectiveness of liver relative
-                                    %     to cytosol volume of hepatocytes
+                                  %     effectiveness of liver relative
+                                  %     to cytosol volume of hepatocytes
     bodyweight  = 70;             % [kg]
     sec_per_min = 60;             % [s/min]
-    conversion_factor = fliver* Vliver/Vcyto * sec_per_min*1E3/bodyweight; % [1E3*s/min/kgbw] (12.5*60)
+    conversion_factor = fliver* Vliver/Vcyto * sec_per_min*1E3/bodyweight; % [s/min/kgbw] (12.5*60)
     v_kgbw  = v * conversion_factor;  % [mmol/s] -> [µmol/min/kgbw]
 end
 
