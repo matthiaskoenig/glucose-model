@@ -1,0 +1,5123 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="report.css" />
+		<script type="text/javascript" language="javascript" src="jquery.js"></script>
+		<script type="text/javascript" language="javascript" src="jquery.dataTables.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {
+			  $('#table_units').dataTable( {
+        			"bPaginate": false,
+        			"bLengthChange": false,
+       				"bFilter": true,
+        			"bSort": true,
+        			"bInfo": false,
+        			"bAutoWidth": false
+    			});
+			
+			  $('#table_compartments').dataTable( {
+        			"bPaginate": false,
+        			"bLengthChange": false,
+       				"bFilter": true,
+        			"bSort": true,
+        			"bInfo": false,
+        			"bAutoWidth": false
+    			});
+			
+				$('#table_species').dataTable( {
+        			"bPaginate": false,
+        			"bLengthChange": false,
+       				"bFilter": true,
+        			"bSort": true,
+        			"bInfo": false,
+        			"bAutoWidth": false
+    			});
+    			
+    			$('#table_parameters').dataTable( {
+        			"bPaginate": false,
+        			"bLengthChange": false,
+       				"bFilter": true,
+        			"bSort": true,
+        			"bInfo": false,
+        			"bAutoWidth": false
+    			});
+    			
+    			$('#table_reactions').dataTable( {
+        			"bPaginate": false,
+        			"bLengthChange": false,
+       				"bFilter": true,
+        			"bSort": true,
+        			"bInfo": false,
+        			"bAutoWidth": false
+    			}); 			
+		} );
+		</script>
+	<title>SBML Report: Koenig2014_Hepatic_Glucose_Model</title>
+</head>
+
+<body>
+
+<div id="menu">
+<table>
+<tr>
+
+<td><h1>Koenig2014_Hepatic_Glucose_Model</h1>
+<a href="Koenig2014_Hepatic_Glucose_Model.xml" target="_blank">SBML file</a>
+</td>
+
+<td><ul>
+			<li><a href="#FunctionDefinitions">FunctionDefinitions</a></li>
+				<li><a href="#UnitDefinitions">UnitDefinitions</a></li>
+				<li><a href="#Compartments">Compartments</a></li>
+				<li><a href="#Species">Species</a></li>
+				<li><a href="#Parameters">Parameters</a></li>
+	<ul></td>
+
+<td><ul>
+			<li><a href="#InitialAssignments">InitialAssignments</a></li>
+				<li><a href="#Rules">Rules</a></li>
+					<li><a href="#Reactions">Reactions</a></li>
+		</ul></td>
+
+<td><img src="sbml.gif" height=40></img></td>
+</tr>
+</table>
+</div>
+
+
+<div id="content">
+<span id="Model">
+	<table id="table_model" summary="Model">
+    <caption>Model</caption>
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">name</th>
+            <th scope="col">SBML</th>
+            <th scope="col">time</th>
+            <th scope="col">substance</th>
+            <th scope="col">volume</th>
+            <th scope="col">area</th>
+            <th scope="col">length</th>
+        </tr>
+    </thead>
+    <tbody>
+    	<td>Koenig2014_Hepatic_Glucose_Model</td>
+		<td>Koenig2014_Hepatic_Glucose_Model</td>
+		<td>L3V1</td>
+		<td>second</td>
+		<td>substance</td>
+		<td>volume</td>
+		<td>area</td>
+		<td>length</td>
+	</tbody>
+	</table>
+	
+	<pre></pre>
+	
+</span>
+
+<span id="FunctionDefinitions">
+<h1>FunctionDefinitions [2]</h1>
+<table id="table_functions">
+	<caption>FunctionDefinitions</caption>
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">name</th>
+            <th scope="col">math</th>
+            <th scope="col">links</th>
+            <th scope="col">sbo</th>
+        </tr>
+    </thead>
+    <tbody>
+    	    		<tr>
+    			<td>maximum</td>
+				<td></td>
+				<td>lambda(x, y, piecewise(x, x > y, y))</td>
+				<td></td>
+				<td></td>
+			</tr>
+		    		<tr>
+    			<td>minimum</td>
+				<td></td>
+				<td>lambda(x, y, piecewise(x, x < y, y))</td>
+				<td></td>
+				<td></td>
+			</tr>
+			</tbody>
+</table>
+</span>
+<span id="UnitDefinitions">
+<h1>UnitDefinitions [17]</h1>
+<table id="table_units">
+	<caption>UnitDefinitions</caption>
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">name</th>
+            <th scope="col">units</th>
+            <th scope="col">links</th>
+            <th scope="col">sbo</th>
+                    </tr>
+    </thead>
+    <tbody>
+    	    		<tr>
+    			<td>per_s</td>
+				<td></td>
+				<td>s^(-1)</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>minute</td>
+				<td></td>
+				<td>6*das</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>s_per_min</td>
+				<td></td>
+				<td>s*(6*das)^(-1)</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>mmol</td>
+				<td></td>
+				<td>mmol</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>mM</td>
+				<td></td>
+				<td>mmol*l^(-1)</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>per_mM</td>
+				<td></td>
+				<td>mmol^(-1)*l</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>mMmM</td>
+				<td></td>
+				<td>mmol^2*l^(-2)</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>mmol_per_s</td>
+				<td></td>
+				<td>mmol*s^(-1)</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>pmol</td>
+				<td></td>
+				<td>pmol</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>pmol_per_l</td>
+				<td></td>
+				<td>pmol*l^(-1)</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>mumol_per_min_kg</td>
+				<td></td>
+				<td>μmol*(6*das)^(-1)*kg^(-1)</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>s_per_min_kg</td>
+				<td></td>
+				<td>s*(6*das)^(-1)*kg^(-1)</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>substance</td>
+				<td></td>
+				<td>mmol</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>volume</td>
+				<td></td>
+				<td>l</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>area</td>
+				<td></td>
+				<td>m^2</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>length</td>
+				<td></td>
+				<td>m</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>extent</td>
+				<td></td>
+				<td>mmol</td>
+				<td></td>
+				<td></td>
+							</tr>
+			</tbody>
+</table>
+</span>
+<span id="Compartments">
+<h1>Compartments [3]</h1>
+<table id="table_compartments">
+	<caption>Compartments</caption>
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">name</th>
+            <th scope="col">size</th>
+            <th scope="col">constant</th>
+            <th scope="col">spatialDimensions</th>
+            <th scope="col">unit</th>
+            <th scope="col">links</th>
+            <th scope="col">sbo</th>
+                    </tr>
+    </thead>
+    <tbody>
+    	    		<tr>
+    			<td>extern</td>
+				<td></td>
+				<td class="
+					  FALSE  					">NaN</td>
+				<td class="
+					 TRUE  					">true</td>	
+				<td>3.0</td>
+				<td>litre</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>cyto</td>
+				<td></td>
+				<td class="
+					  FALSE  					">NaN</td>
+				<td class="
+					 TRUE  					">true</td>	
+				<td>3.0</td>
+				<td>litre</td>
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>mito</td>
+				<td></td>
+				<td class="
+					  FALSE  					">NaN</td>
+				<td class="
+					 TRUE  					">true</td>	
+				<td>3.0</td>
+				<td>litre</td>
+				<td></td>
+				<td></td>
+							</tr>
+			</tbody>
+</table>
+<span>
+<span id="Species">
+<h1>Species [49]</h1>
+<table id="table_species">
+	<caption>Species</caption>
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">name</th>
+            <th scope="col">compartment</th>
+            <th scope="col">boundaryCondition</th>
+            <th scope="col">constant</th>
+            <th scope="col">initialAmount</th>
+            <th scope="col">initialConcentration</th>
+            <th scope="col">substanceUnits</th>
+            <th scope="col">hasOnlySubstanceUnits</th>
+            <th scope="col">links</th>
+            <th scope="col">sbo</th>
+                   </tr>
+    </thead>
+    <tbody>
+    	    		<tr>
+    			<td>atp</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  2.8  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>adp</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.8  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>amp</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.16  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>utp</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.27  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>udp</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.09  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>gtp</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.29  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>gdp</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.1  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>nad</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  1.22  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>nadh</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  5.6E-4  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>phos</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  5.0  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>pp</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.008  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>co2</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  5.0  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>h2o</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.0  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>h</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.0  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>glc1p</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.012  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>udpglc</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.38  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>glyglc</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  250.0  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>glc</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  5.0  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>glc6p</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.12  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>fru6p</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.05  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>fru16bp</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.02  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>fru26bp</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.004  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>grap</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.1  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>dhap</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.03  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>bpg13</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.3  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>pg3</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.27  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>pg2</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.03  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>pep</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.15  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>pyr</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.1  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>oaa</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.01  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>lac</td>
+				<td></td>
+				<td>cyto</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.5  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>glc_ext</td>
+				<td></td>
+				<td>extern</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  3.0  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>lac_ext</td>
+				<td></td>
+				<td>extern</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  1.2  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>co2_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  5.0  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>phos_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  5.0  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>oaa_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.01  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>pep_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.15  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>acoa_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.04  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>pyr_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.1  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>cit_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.32  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>atp_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  2.8  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>adp_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.8  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>gtp_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.29  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>gdp_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.1  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>coa_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.055  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>nadh_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.24  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>nad_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.98  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>h2o_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.0  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+		    		<tr>
+    			<td>h_mito</td>
+				<td></td>
+				<td>mito</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td class="
+					  FALSE  					">false</td>	
+				<td>  </td>
+				<td>  0.0  </td>
+				<td>substance</td>
+				<td class="
+					  FALSE  					">false</td>				
+				<td></td>
+				<td></td>
+							</tr>
+			</tbody>
+</table>
+</span>
+<span id="Parameters">
+<h1>Parameters [256]</h1>
+<table id="table_parameters">
+	<caption>Parameters</caption>
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">name</th>
+            <th scope="col">value</th>
+            <th scope="col">unit</th>
+            <th scope="col">constant</th>
+            <th scope="col">links</th>
+            <th scope="col">sbo</th>
+            <th scope="col">annotation</th>
+        </tr>
+    </thead>
+    <tbody>
+    	    		<tr>
+    			<td>Vcyto</td>
+    			<td></td>
+    			<td class="
+					   					">1.0</td>
+				<td>litre</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>Vliver</td>
+    			<td></td>
+    			<td class="
+					   					">1.5</td>
+				<td>litre</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>fliver</td>
+    			<td></td>
+    			<td class="
+					   					">0.583333333333334</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>bodyweight</td>
+    			<td></td>
+    			<td class="
+					   					">70.0</td>
+				<td>kilogram</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>sec_per_min</td>
+    			<td></td>
+    			<td class="
+					   					">60.0</td>
+				<td>s_per_min</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>conversion_factor</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>s_per_min_kg</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>nadh_tot</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mM</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>atp_tot</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mM</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>utp_tot</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mM</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>gtp_tot</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mM</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>nadh_mito_tot</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mM</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>atp_mito_tot</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mM</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>gtp_mito_tot</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mM</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>x_ins1</td>
+    			<td></td>
+    			<td class="
+					   					">818.9</td>
+				<td>pmol_per_l</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>x_ins2</td>
+    			<td></td>
+    			<td class="
+					   					">0.0</td>
+				<td>pmol_per_l</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>x_ins3</td>
+    			<td></td>
+    			<td class="
+					   					">8.6</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>x_ins4</td>
+    			<td></td>
+    			<td class="
+					   					">4.2</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>ins</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>pmol_per_l</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>ins_norm</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>pmol_per_l</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>x_glu1</td>
+    			<td></td>
+    			<td class="
+					   					">190.0</td>
+				<td>pmol_per_l</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>x_glu2</td>
+    			<td></td>
+    			<td class="
+					   					">37.9</td>
+				<td>pmol_per_l</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>x_glu3</td>
+    			<td></td>
+    			<td class="
+					   					">3.01</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>x_glu4</td>
+    			<td></td>
+    			<td class="
+					   					">6.4</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>glu</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>pmol_per_l</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>glu_norm</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>pmol_per_l</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>x_epi1</td>
+    			<td></td>
+    			<td class="
+					   					">6090.0</td>
+				<td>pmol_per_l</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>x_epi2</td>
+    			<td></td>
+    			<td class="
+					   					">100.0</td>
+				<td>pmol_per_l</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>x_epi3</td>
+    			<td></td>
+    			<td class="
+					   					">3.1</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>x_epi4</td>
+    			<td></td>
+    			<td class="
+					   					">8.4</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>epi</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>pmol_per_l</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>epi_norm</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>pmol_per_l</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>K_val</td>
+    			<td></td>
+    			<td class="
+					   					">0.1</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>epi_f</td>
+    			<td></td>
+    			<td class="
+					   					">0.8</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>K_ins</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>pmol_per_l</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>K_glu</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>pmol_per_l</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>K_epi</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>pmol_per_l</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>gamma</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>dimensionless</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>scale</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>scale_gly</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>scale_glyglc</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GLUT2_keq</td>
+    			<td></td>
+    			<td class="
+					   					">1.0</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GLUT2_km</td>
+    			<td></td>
+    			<td class="
+					   					">42.0</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GLUT2_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">420.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GK_n_gkrp</td>
+    			<td></td>
+    			<td class="
+					   					">2.0</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GK_km_glc1</td>
+    			<td></td>
+    			<td class="
+					   					">15.0</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GK_km_fru6p</td>
+    			<td></td>
+    			<td class="
+					   					">0.01</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GK_b</td>
+    			<td></td>
+    			<td class="
+					   					">0.7</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GK_n</td>
+    			<td></td>
+    			<td class="
+					   					">1.6</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GK_km_glc</td>
+    			<td></td>
+    			<td class="
+					   					">7.5</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GK_km_atp</td>
+    			<td></td>
+    			<td class="
+					   					">0.26</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GK_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">25.2</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GK_gc_free</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>dimensionless</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>G6PASE_km_glc6p</td>
+    			<td></td>
+    			<td class="
+					   					">2.0</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>G6PASE_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">18.9</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GPI_keq</td>
+    			<td></td>
+    			<td class="
+					   					">0.517060817492925</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GPI_km_glc6p</td>
+    			<td></td>
+    			<td class="
+					   					">0.182</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GPI_km_fru6p</td>
+    			<td></td>
+    			<td class="
+					   					">0.071</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GPI_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">420.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>G16PI_keq</td>
+    			<td></td>
+    			<td class="
+					   					">15.7175540821514</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>G16PI_km_glc6p</td>
+    			<td></td>
+    			<td class="
+					   					">0.67</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>G16PI_km_glc1p</td>
+    			<td></td>
+    			<td class="
+					   					">0.045</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>G16PI_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">100.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>UPGASE_keq</td>
+    			<td></td>
+    			<td class="
+					   					">0.312237619153088</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>UPGASE_km_utp</td>
+    			<td></td>
+    			<td class="
+					   					">0.563</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>UPGASE_km_glc1p</td>
+    			<td></td>
+    			<td class="
+					   					">0.172</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>UPGASE_km_udpglc</td>
+    			<td></td>
+    			<td class="
+					   					">0.049</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>UPGASE_km_pp</td>
+    			<td></td>
+    			<td class="
+					   					">0.166</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>UPGASE_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">80.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PPASE_km_pp</td>
+    			<td></td>
+    			<td class="
+					   					">0.005</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PPASE_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">2.4</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GS_C</td>
+    			<td></td>
+    			<td class="
+					   					">500.0</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GS_k1_max</td>
+    			<td></td>
+    			<td class="
+					   					">0.2</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GS_k1_nat</td>
+    			<td></td>
+    			<td class="
+					   					">0.224</td>
+				<td>mMmM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GS_k2_nat</td>
+    			<td></td>
+    			<td class="
+					   					">0.1504</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GS_k1_phospho</td>
+    			<td></td>
+    			<td class="
+					   					">3.003</td>
+				<td>mMmM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GS_k2_phospho</td>
+    			<td></td>
+    			<td class="
+					   					">0.09029</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GS_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">13.2</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GS_storage_factor</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>dimensionless</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GS_k_udpglc_native</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mM</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GS_k_udpglc_phospho</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mM</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GS_native</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mmol_per_s</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GS_phospho</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mmol_per_s</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_keq</td>
+    			<td></td>
+    			<td class="
+					   					">0.211826505793075</td>
+				<td>per_mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_k_glyc_native</td>
+    			<td></td>
+    			<td class="
+					   					">4.8</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_k_glyc_phospho</td>
+    			<td></td>
+    			<td class="
+					   					">2.7</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_k_glc1p_native</td>
+    			<td></td>
+    			<td class="
+					   					">120.0</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_k_glc1p_phospho</td>
+    			<td></td>
+    			<td class="
+					   					">2.0</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_k_p_native</td>
+    			<td></td>
+    			<td class="
+					   					">300.0</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_k_p_phospho</td>
+    			<td></td>
+    			<td class="
+					   					">5.0</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_ki_glc_phospho</td>
+    			<td></td>
+    			<td class="
+					   					">5.0</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_ka_amp_native</td>
+    			<td></td>
+    			<td class="
+					   					">1.0</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_base_amp_native</td>
+    			<td></td>
+    			<td class="
+					   					">0.03</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_max_amp_native</td>
+    			<td></td>
+    			<td class="
+					   					">0.3</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">6.8</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_C</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_k1_max</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_fmax</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>dimensionless</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_vmax_native</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mmol_per_s</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_native</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mmol_per_s</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_vmax_phospho</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mmol_per_s</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GP_phospho</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mmol_per_s</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKGTP_keq</td>
+    			<td></td>
+    			<td class="
+					   					">1.0</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKGTP_km_atp</td>
+    			<td></td>
+    			<td class="
+					   					">1.33</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKGTP_km_adp</td>
+    			<td></td>
+    			<td class="
+					   					">0.042</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKGTP_km_gtp</td>
+    			<td></td>
+    			<td class="
+					   					">0.15</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKGTP_km_gdp</td>
+    			<td></td>
+    			<td class="
+					   					">0.031</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKGTP_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">0.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKUTP_keq</td>
+    			<td></td>
+    			<td class="
+					   					">1.0</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKUTP_km_atp</td>
+    			<td></td>
+    			<td class="
+					   					">1.33</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKUTP_km_adp</td>
+    			<td></td>
+    			<td class="
+					   					">0.042</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKUTP_km_utp</td>
+    			<td></td>
+    			<td class="
+					   					">16.0</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKUTP_km_udp</td>
+    			<td></td>
+    			<td class="
+					   					">0.19</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKUTP_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">2940.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>AK_keq</td>
+    			<td></td>
+    			<td class="
+					   					">0.247390074904985</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>AK_km_atp</td>
+    			<td></td>
+    			<td class="
+					   					">0.09</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>AK_km_amp</td>
+    			<td></td>
+    			<td class="
+					   					">0.08</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>AK_km_adp</td>
+    			<td></td>
+    			<td class="
+					   					">0.11</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>AK_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">0.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PFK2_n_native</td>
+    			<td></td>
+    			<td class="
+					   					">1.3</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PFK2_n_phospho</td>
+    			<td></td>
+    			<td class="
+					   					">2.1</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PFK2_k_fru6p_native</td>
+    			<td></td>
+    			<td class="
+					   					">0.016</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PFK2_k_fru6p_phospho</td>
+    			<td></td>
+    			<td class="
+					   					">0.05</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PFK2_k_atp_native</td>
+    			<td></td>
+    			<td class="
+					   					">0.28</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PFK2_k_atp_phospho</td>
+    			<td></td>
+    			<td class="
+					   					">0.65</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PFK2_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">0.0042</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PFK2_native</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mmol_per_s</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PFK2_phospho</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mmol_per_s</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>FBP2_km_fru26bp_native</td>
+    			<td></td>
+    			<td class="
+					   					">0.01</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>FBP2_ki_fru6p_native</td>
+    			<td></td>
+    			<td class="
+					   					">0.0035</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>FBP2_km_fru26bp_phospho</td>
+    			<td></td>
+    			<td class="
+					   					">5.0E-4</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>FBP2_ki_fru6p_phospho</td>
+    			<td></td>
+    			<td class="
+					   					">0.01</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>FBP2_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">0.126</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>FBP2_native</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mmol_per_s</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>FBP2_phospho</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mmol_per_s</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PFK1_km_atp</td>
+    			<td></td>
+    			<td class="
+					   					">0.111</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PFK1_km_fru6p</td>
+    			<td></td>
+    			<td class="
+					   					">0.077</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PFK1_ki_fru6p</td>
+    			<td></td>
+    			<td class="
+					   					">0.012</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PFK1_ka_fru26bp</td>
+    			<td></td>
+    			<td class="
+					   					">0.001</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PFK1_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">7.182</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>FBP1_ki_fru26bp</td>
+    			<td></td>
+    			<td class="
+					   					">0.001</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>FBP1_km_fru16bp</td>
+    			<td></td>
+    			<td class="
+					   					">0.0013</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>FBP1_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">4.326</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>ALD_keq</td>
+    			<td></td>
+    			<td class="
+					   					">9.76298897362969E-5</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>ALD_km_fru16bp</td>
+    			<td></td>
+    			<td class="
+					   					">0.0071</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>ALD_km_dhap</td>
+    			<td></td>
+    			<td class="
+					   					">0.0364</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>ALD_km_grap</td>
+    			<td></td>
+    			<td class="
+					   					">0.0071</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>ALD_ki1_grap</td>
+    			<td></td>
+    			<td class="
+					   					">0.0572</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>ALD_ki2_grap</td>
+    			<td></td>
+    			<td class="
+					   					">0.176</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>ALD_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">420.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>TPI_keq</td>
+    			<td></td>
+    			<td class="
+					   					">0.054476985386756</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>TPI_km_dhap</td>
+    			<td></td>
+    			<td class="
+					   					">0.59</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>TPI_km_grap</td>
+    			<td></td>
+    			<td class="
+					   					">0.42</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>TPI_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">420.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GAPDH_keq</td>
+    			<td></td>
+    			<td class="
+					   					">0.086779866194594</td>
+				<td>per_mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GAPDH_k_nad</td>
+    			<td></td>
+    			<td class="
+					   					">0.05</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GAPDH_k_grap</td>
+    			<td></td>
+    			<td class="
+					   					">0.005</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GAPDH_k_p</td>
+    			<td></td>
+    			<td class="
+					   					">3.9</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GAPDH_k_nadh</td>
+    			<td></td>
+    			<td class="
+					   					">0.0083</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GAPDH_k_bpg13</td>
+    			<td></td>
+    			<td class="
+					   					">0.0035</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GAPDH_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">420.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PGK_keq</td>
+    			<td></td>
+    			<td class="
+					   					">6.95864405248854</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PGK_k_adp</td>
+    			<td></td>
+    			<td class="
+					   					">0.35</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PGK_k_atp</td>
+    			<td></td>
+    			<td class="
+					   					">0.48</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PGK_k_bpg13</td>
+    			<td></td>
+    			<td class="
+					   					">0.002</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PGK_k_pg3</td>
+    			<td></td>
+    			<td class="
+					   					">1.2</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PGK_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">420.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PGM_keq</td>
+    			<td></td>
+    			<td class="
+					   					">0.181375378837397</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PGM_k_pg3</td>
+    			<td></td>
+    			<td class="
+					   					">5.0</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PGM_k_pg2</td>
+    			<td></td>
+    			<td class="
+					   					">1.0</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PGM_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">420.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>EN_keq</td>
+    			<td></td>
+    			<td class="
+					   					">0.054476985386756</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>EN_k_pep</td>
+    			<td></td>
+    			<td class="
+					   					">1.0</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>EN_k_pg2</td>
+    			<td></td>
+    			<td class="
+					   					">1.0</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>EN_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">35.994</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_n</td>
+    			<td></td>
+    			<td class="
+					   					">3.5</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_n_p</td>
+    			<td></td>
+    			<td class="
+					   					">3.5</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_n_fbp</td>
+    			<td></td>
+    			<td class="
+					   					">1.8</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_n_fbp_p</td>
+    			<td></td>
+    			<td class="
+					   					">1.8</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_alpha</td>
+    			<td></td>
+    			<td class="
+					   					">1.0</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_alpha_p</td>
+    			<td></td>
+    			<td class="
+					   					">1.1</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_alpha_end</td>
+    			<td></td>
+    			<td class="
+					   					">1.0</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_k_fbp</td>
+    			<td></td>
+    			<td class="
+					   					">1.6E-4</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_k_fbp_p</td>
+    			<td></td>
+    			<td class="
+					   					">3.5E-4</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_k_pep</td>
+    			<td></td>
+    			<td class="
+					   					">0.58</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_k_pep_p</td>
+    			<td></td>
+    			<td class="
+					   					">1.1</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_k_pep_end</td>
+    			<td></td>
+    			<td class="
+					   					">0.08</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_k_adp</td>
+    			<td></td>
+    			<td class="
+					   					">2.3</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_base_act</td>
+    			<td></td>
+    			<td class="
+					   					">0.08</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_base_act_p</td>
+    			<td></td>
+    			<td class="
+					   					">0.04</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">46.2</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_f</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>dimensionless</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_f_p</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>dimensionless</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_alpha_inp</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>dimensionless</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_alpha_p_inp</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>dimensionless</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_pep_inp</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mM</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_pep_p_inp</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mM</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_native</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mmol_per_s</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PK_phospho</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mmol_per_s</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PEPCK_keq</td>
+    			<td></td>
+    			<td class="
+					   					">336.956521586429</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PEPCK_k_pep</td>
+    			<td></td>
+    			<td class="
+					   					">0.237</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PEPCK_k_gdp</td>
+    			<td></td>
+    			<td class="
+					   					">0.0921</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PEPCK_k_co2</td>
+    			<td></td>
+    			<td class="
+					   					">25.5</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PEPCK_k_oaa</td>
+    			<td></td>
+    			<td class="
+					   					">0.0055</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PEPCK_k_gtp</td>
+    			<td></td>
+    			<td class="
+					   					">0.0222</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PEPCK_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">0.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PEPCKM_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">546.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PC_k_atp</td>
+    			<td></td>
+    			<td class="
+					   					">0.22</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PC_k_pyr</td>
+    			<td></td>
+    			<td class="
+					   					">0.22</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PC_k_co2</td>
+    			<td></td>
+    			<td class="
+					   					">3.2</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PC_k_acoa</td>
+    			<td></td>
+    			<td class="
+					   					">0.015</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PC_n</td>
+    			<td></td>
+    			<td class="
+					   					">2.5</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PC_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">168.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>LDH_keq</td>
+    			<td></td>
+    			<td class="
+					   					">2.78321076004752E-4</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>LDH_k_pyr</td>
+    			<td></td>
+    			<td class="
+					   					">0.495</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>LDH_k_lac</td>
+    			<td></td>
+    			<td class="
+					   					">31.98</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>LDH_k_nad</td>
+    			<td></td>
+    			<td class="
+					   					">0.984</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>LDH_k_nadh</td>
+    			<td></td>
+    			<td class="
+					   					">0.027</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>LDH_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">12.6</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>LACT_keq</td>
+    			<td></td>
+    			<td class="
+					   					">1.0</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>LACT_k_lac</td>
+    			<td></td>
+    			<td class="
+					   					">0.8</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>LACT_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">5.418</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PYRTM_keq</td>
+    			<td></td>
+    			<td class="
+					   					">1.0</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PYRTM_k_pyr</td>
+    			<td></td>
+    			<td class="
+					   					">0.1</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PYRTM_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">42.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PEPTM_keq</td>
+    			<td></td>
+    			<td class="
+					   					">1.0</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PEPTM_k_pep</td>
+    			<td></td>
+    			<td class="
+					   					">0.1</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PEPTM_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">33.6</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PDH_k_pyr</td>
+    			<td></td>
+    			<td class="
+					   					">0.025</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PDH_k_coa</td>
+    			<td></td>
+    			<td class="
+					   					">0.013</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PDH_k_nad</td>
+    			<td></td>
+    			<td class="
+					   					">0.05</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PDH_ki_acoa</td>
+    			<td></td>
+    			<td class="
+					   					">0.035</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PDH_ki_nadh</td>
+    			<td></td>
+    			<td class="
+					   					">0.036</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PDH_alpha_nat</td>
+    			<td></td>
+    			<td class="
+					   					">5.0</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PDH_alpha_p</td>
+    			<td></td>
+    			<td class="
+					   					">1.0</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PDH_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">13.44</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PDH_base</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mmol_per_s</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PDH_nat</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mmol_per_s</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>PDH_p</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mmol_per_s</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>CS_keq</td>
+    			<td></td>
+    			<td class="
+					   					">266599.030842759</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>CS_k_oaa</td>
+    			<td></td>
+    			<td class="
+					   					">0.002</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>CS_k_acoa</td>
+    			<td></td>
+    			<td class="
+					   					">0.016</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>CS_k_cit</td>
+    			<td></td>
+    			<td class="
+					   					">0.42</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>CS_k_coa</td>
+    			<td></td>
+    			<td class="
+					   					">0.07</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>CS_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">4.2</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKGTPM_keq</td>
+    			<td></td>
+    			<td class="
+					   					">1.0</td>
+				<td>dimensionless</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKGTPM_k_atp</td>
+    			<td></td>
+    			<td class="
+					   					">1.33</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKGTPM_k_adp</td>
+    			<td></td>
+    			<td class="
+					   					">0.042</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKGTPM_k_gtp</td>
+    			<td></td>
+    			<td class="
+					   					">0.15</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKGTPM_k_gdp</td>
+    			<td></td>
+    			<td class="
+					   					">0.031</td>
+				<td>mM</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>NDKGTPM_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">420.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>OAAFLX_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">0.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>ACOAFLX_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">0.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>CITFLX_Vmax</td>
+    			<td></td>
+    			<td class="
+					   					">0.0</td>
+				<td>mmol_per_s</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>HGP</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mumol_per_min_kg</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GNG</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mumol_per_min_kg</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+		    		<tr>
+    			<td>GLY</td>
+    			<td></td>
+    			<td class="
+					  FALSE  					">NaN</td>
+				<td>mumol_per_min_kg</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td></td>
+				<td></td>					
+				<td><pre></pre></td>
+			</tr>
+			</tbody>
+</table>
+</span>
+<span id="InitialAssignments">
+<h1>InitialAssignments [12]</h1>
+<table id="table_assignments">
+	<caption>InitialAssignments</caption>
+    <thead>
+        <tr>
+            <th scope="col">symbol</th>
+            <th scope="col"></th>
+            <th scope="col">assignment</th>
+            <th scope="col">links</th>
+            <th scope="col">sbo</th>
+                    </tr>
+    </thead>
+    <tbody>
+    	    		<tr>
+    			<td>extern</td>
+    			<td>=</td>
+    			<td>10*Vcyto</td>
+				<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>cyto</td>
+    			<td>=</td>
+    			<td>Vcyto</td>
+				<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>mito</td>
+    			<td>=</td>
+    			<td>0.2*Vcyto</td>
+				<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>conversion_factor</td>
+    			<td>=</td>
+    			<td>fliver*Vliver/Vcyto*sec_per_min*1000/bodyweight</td>
+				<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>K_ins</td>
+    			<td>=</td>
+    			<td>(x_ins1-x_ins2)*K_val</td>
+				<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>K_glu</td>
+    			<td>=</td>
+    			<td>(x_glu1-x_glu2)*K_val</td>
+				<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>K_epi</td>
+    			<td>=</td>
+    			<td>(x_epi1-x_epi2)*K_val</td>
+				<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>scale</td>
+    			<td>=</td>
+    			<td>1/60</td>
+				<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>scale_gly</td>
+    			<td>=</td>
+    			<td>scale</td>
+				<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>scale_glyglc</td>
+    			<td>=</td>
+    			<td>scale</td>
+				<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GP_C</td>
+    			<td>=</td>
+    			<td>GS_C</td>
+				<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GP_k1_max</td>
+    			<td>=</td>
+    			<td>GS_k1_max</td>
+				<td></td>
+				<td></td>	
+    						</tr>
+			</tbody>
+</table>
+</span>
+<span id="Rules">
+<h1>Rules [43]</h1>
+<table id="table_rules">
+	<caption>Rules</caption>
+    <thead>
+        <tr>
+            <th scope="col">variable</th>
+            <th scope="col"></th>
+            <th scope="col">assignment</th>
+            <th scope="col">links</th>
+            <th scope="col">sbo</th>
+                    </tr>
+    </thead>
+    <tbody>
+    	    		<tr>
+    			<td>nadh_tot</td>
+    			<td>=</td>
+    			<td>nadh+nad</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>atp_tot</td>
+    			<td>=</td>
+    			<td>atp+adp+amp</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>utp_tot</td>
+    			<td>=</td>
+    			<td>utp+udp+udpglc</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>gtp_tot</td>
+    			<td>=</td>
+    			<td>gtp+gdp</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>nadh_mito_tot</td>
+    			<td>=</td>
+    			<td>nadh_mito+nad_mito</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>atp_mito_tot</td>
+    			<td>=</td>
+    			<td>atp_mito+adp_mito</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>gtp_mito_tot</td>
+    			<td>=</td>
+    			<td>gtp_mito+gdp_mito</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>ins</td>
+    			<td>=</td>
+    			<td>x_ins2+(x_ins1-x_ins2)*glc_ext^x_ins4/(glc_ext^x_ins4+x_ins3^x_ins4)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>ins_norm</td>
+    			<td>=</td>
+    			<td>maximum(0, ins-x_ins2)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>glu</td>
+    			<td>=</td>
+    			<td>x_glu2+(x_glu1-x_glu2)*(1-glc_ext^x_glu4/(glc_ext^x_glu4+x_glu3^x_glu4))</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>glu_norm</td>
+    			<td>=</td>
+    			<td>maximum(0, glu-x_glu2)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>epi</td>
+    			<td>=</td>
+    			<td>x_epi2+(x_epi1-x_epi2)*(1-glc_ext^x_epi4/(glc_ext^x_epi4+x_epi3^x_epi4))</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>epi_norm</td>
+    			<td>=</td>
+    			<td>maximum(0, epi-x_epi2)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>gamma</td>
+    			<td>=</td>
+    			<td>0.5*(1-ins_norm/(ins_norm+K_ins)+maximum(glu_norm/(glu_norm+K_glu), epi_f*epi_norm/(epi_norm+K_epi)))</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GK_gc_free</td>
+    			<td>=</td>
+    			<td>glc^GK_n_gkrp/(glc^GK_n_gkrp+GK_km_glc1^GK_n_gkrp)*(1-GK_b*fru6p/(fru6p+GK_km_fru6p))</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GS_storage_factor</td>
+    			<td>=</td>
+    			<td>(1+GS_k1_max)*(GS_C-glyglc)/(GS_C-glyglc+GS_k1_max*GS_C)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GS_k_udpglc_native</td>
+    			<td>=</td>
+    			<td>GS_k1_nat/(glc6p+GS_k2_nat)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GS_k_udpglc_phospho</td>
+    			<td>=</td>
+    			<td>GS_k1_phospho/(glc6p+GS_k2_phospho)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GS_native</td>
+    			<td>=</td>
+    			<td>scale_glyglc*GS_Vmax*GS_storage_factor*udpglc/(GS_k_udpglc_native+udpglc)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GS_phospho</td>
+    			<td>=</td>
+    			<td>scale_glyglc*GS_Vmax*GS_storage_factor*udpglc/(GS_k_udpglc_phospho+udpglc)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GP_fmax</td>
+    			<td>=</td>
+    			<td>(1+GP_k1_max)*glyglc/(glyglc+GP_k1_max*GP_C)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GP_vmax_native</td>
+    			<td>=</td>
+    			<td>scale_glyglc*GP_Vmax*GP_fmax*(GP_base_amp_native+(GP_max_amp_native-GP_base_amp_native)*amp/(amp+GP_ka_amp_native))</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GP_native</td>
+    			<td>=</td>
+    			<td>GP_vmax_native/(GP_k_glyc_native*GP_k_p_native)*(glyglc*phos-glc1p/GP_keq)/((1+glyglc/GP_k_glyc_native)*(1+phos/GP_k_p_native)+1+glc1p/GP_k_glc1p_native-1)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GP_vmax_phospho</td>
+    			<td>=</td>
+    			<td>scale_glyglc*GP_Vmax*GP_fmax*exp((-log(2))/GP_ki_glc_phospho*glc)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GP_phospho</td>
+    			<td>=</td>
+    			<td>GP_vmax_phospho/(GP_k_glyc_phospho*GP_k_p_phospho)*(glyglc*phos-glc1p/GP_keq)/((1+glyglc/GP_k_glyc_phospho)*(1+phos/GP_k_p_phospho)+1+glc1p/GP_k_glc1p_phospho-1)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PFK2_native</td>
+    			<td>=</td>
+    			<td>scale_gly*PFK2_Vmax*fru6p^PFK2_n_native/(fru6p^PFK2_n_native+PFK2_k_fru6p_native^PFK2_n_native)*atp/(atp+PFK2_k_atp_native)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PFK2_phospho</td>
+    			<td>=</td>
+    			<td>scale_gly*PFK2_Vmax*fru6p^PFK2_n_phospho/(fru6p^PFK2_n_phospho+PFK2_k_fru6p_phospho^PFK2_n_phospho)*atp/(atp+PFK2_k_atp_phospho)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>FBP2_native</td>
+    			<td>=</td>
+    			<td>scale_gly*FBP2_Vmax/(1+fru6p/FBP2_ki_fru6p_native)*fru26bp/(FBP2_km_fru26bp_native+fru26bp)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>FBP2_phospho</td>
+    			<td>=</td>
+    			<td>scale_gly*FBP2_Vmax/(1+fru6p/FBP2_ki_fru6p_phospho)*fru26bp/(FBP2_km_fru26bp_phospho+fru26bp)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_f</td>
+    			<td>=</td>
+    			<td>fru16bp^PK_n_fbp/(PK_k_fbp^PK_n_fbp+fru16bp^PK_n_fbp)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_f_p</td>
+    			<td>=</td>
+    			<td>fru16bp^PK_n_fbp_p/(PK_k_fbp_p^PK_n_fbp_p+fru16bp^PK_n_fbp_p)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_alpha_inp</td>
+    			<td>=</td>
+    			<td>(1-PK_f)*(PK_alpha-PK_alpha_end)+PK_alpha_end</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_alpha_p_inp</td>
+    			<td>=</td>
+    			<td>(1-PK_f_p)*(PK_alpha_p-PK_alpha_end)+PK_alpha_end</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_pep_inp</td>
+    			<td>=</td>
+    			<td>(1-PK_f)*(PK_k_pep-PK_k_pep_end)+PK_k_pep_end</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_pep_p_inp</td>
+    			<td>=</td>
+    			<td>(1-PK_f_p)*(PK_k_pep_p-PK_k_pep_end)+PK_k_pep_end</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_native</td>
+    			<td>=</td>
+    			<td>scale_gly*PK_Vmax*PK_alpha_inp*pep^PK_n/(PK_pep_inp^PK_n+pep^PK_n)*adp/(adp+PK_k_adp)*(PK_base_act+(1-PK_base_act)*PK_f)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PK_phospho</td>
+    			<td>=</td>
+    			<td>scale_gly*PK_Vmax*PK_alpha_p_inp*pep^PK_n_p/(PK_pep_p_inp^PK_n_p+pep^PK_n_p)*adp/(adp+PK_k_adp)*(PK_base_act_p+(1-PK_base_act_p)*PK_f_p)</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PDH_base</td>
+    			<td>=</td>
+    			<td>scale_gly*PDH_Vmax*pyr_mito/(pyr_mito+PDH_k_pyr)*nad_mito/(nad_mito+PDH_k_nad*(1+nadh_mito/PDH_ki_nadh))*coa_mito/(coa_mito+PDH_k_coa*(1+acoa_mito/PDH_ki_acoa))</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PDH_nat</td>
+    			<td>=</td>
+    			<td>PDH_base*PDH_alpha_nat</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>PDH_p</td>
+    			<td>=</td>
+    			<td>PDH_base*PDH_alpha_p</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>HGP</td>
+    			<td>=</td>
+    			<td>GLUT2*conversion_factor</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GNG</td>
+    			<td>=</td>
+    			<td>GPI*conversion_factor</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+		    		<tr>
+    			<td>GLY</td>
+    			<td>=</td>
+    			<td>(-G16PI)*conversion_factor</td>
+    			<td></td>
+				<td></td>	
+    						</tr>
+			</tbody>
+</table>
+</span>
+<span id="Reactions">
+<h1>Reactions [36]</h1>
+<table id="table_reactions">
+    <caption>Reactions</caption>
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">name</th>
+            <th scope="col">reversible</th>
+            <th scope="col">equation</th>
+            <th scope="col">modifiers</th>
+            <th scope="col">derived units</th>
+            <th scope="col">formula</th>
+            <th scope="col">links</th>
+            <th scope="col">sbo</th>
+                    </tr>
+    </thead>
+    <tbody>
+    	    		<tr>
+    			<td>GLUT2</td>
+				<td>GLUT2 glucose transporter</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> glc_ext &harr; glc</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*GLUT2_Vmax/GLUT2_km*(glc_ext-glc/GLUT2_keq)/(1+glc_ext/GLUT2_km+glc/GLUT2_km)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>GK</td>
+				<td>Glucokinase</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td> glc + atp &rarr; glc6p + adp</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*GK_Vmax*GK_gc_free*atp/(GK_km_atp+atp)*glc^GK_n/(glc^GK_n+GK_km_glc^GK_n)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>G6PASE</td>
+				<td>D-Glucose-6-phosphate Phosphatase</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td> glc6p + h2o &rarr; glc + phos</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*G6PASE_Vmax*glc6p/(G6PASE_km_glc6p+glc6p)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>GPI</td>
+				<td>D-Glucose-6-phosphate Isomerase</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> glc6p &harr; fru6p</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*GPI_Vmax/GPI_km_glc6p*(glc6p-fru6p/GPI_keq)/(1+glc6p/GPI_km_glc6p+fru6p/GPI_km_fru6p)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>G16PI</td>
+				<td>Glucose 1-phosphate 1,6-phosphomutase</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> glc1p &harr; glc6p</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_glyglc*G16PI_Vmax/G16PI_km_glc1p*(glc1p-glc6p/G16PI_keq)/(1+glc1p/G16PI_km_glc1p+glc6p/G16PI_km_glc6p)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>UPGASE</td>
+				<td>UTP:Glucose-1-phosphate uridylyltransferase</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> utp + glc1p &harr; udpglc + pp</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_glyglc*UPGASE_Vmax/(UPGASE_km_utp*UPGASE_km_glc1p)*(utp*glc1p-udpglc*pp/UPGASE_keq)/((1+utp/UPGASE_km_utp)*(1+glc1p/UPGASE_km_glc1p)+(1+udpglc/UPGASE_km_udpglc)*(1+pp/UPGASE_km_pp)-1)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>PPASE</td>
+				<td>Pyrophosphate phosphohydrolase</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td> pp + h2o &rarr; 2.0 phos</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_glyglc*PPASE_Vmax*pp/(pp+PPASE_km_pp)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>GS</td>
+				<td>Glycogen synthase</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td> udpglc &rarr; udp + glyglc</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>(1-gamma)*GS_native+gamma*GS_phospho</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>GP</td>
+				<td>Glycogen-Phosphorylase</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> glyglc + phos &harr; glc1p</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>(1-gamma)*GP_native+gamma*GP_phospho</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>NDKGTP</td>
+				<td>Nucleoside-diphosphate kinase (ATP, GTP)</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> atp + gdp &harr; adp + gtp</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*NDKGTP_Vmax/(NDKGTP_km_atp*NDKGTP_km_gdp)*(atp*gdp-adp*gtp/NDKGTP_keq)/((1+atp/NDKGTP_km_atp)*(1+gdp/NDKGTP_km_gdp)+(1+adp/NDKGTP_km_adp)*(1+gtp/NDKGTP_km_gtp)-1)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>NDKUTP</td>
+				<td>Nucleoside-diphosphate kinase (ATP, UTP)</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> atp + udp &harr; adp + utp</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_glyglc*NDKUTP_Vmax/(NDKUTP_km_atp*NDKUTP_km_udp)*(atp*udp-adp*utp/NDKUTP_keq)/((1+atp/NDKUTP_km_atp)*(1+udp/NDKUTP_km_udp)+(1+adp/NDKUTP_km_adp)*(1+utp/NDKUTP_km_utp)-1)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>AK</td>
+				<td>ATP:AMP phosphotransferase (Adenylatkinase)</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> atp + amp &harr; 2.0 adp</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*AK_Vmax/(AK_km_atp*AK_km_amp)*(atp*amp-adp*adp/AK_keq)/((1+atp/AK_km_atp)*(1+amp/AK_km_amp)+(1+adp/AK_km_adp)*(1+adp/AK_km_adp)-1)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>PFK2</td>
+				<td>ATP:D-fructose-6-phosphate 2-phosphotransferase</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td> fru6p + atp &rarr; fru26bp + adp</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>(1-gamma)*PFK2_native+gamma*PFK2_phospho</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>FBP2</td>
+				<td>D-Fructose-2,6-bisphosphate 2-phosphohydrolase</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td> fru26bp &rarr; fru6p + phos</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>(1-gamma)*FBP2_native+gamma*FBP2_phospho</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>PFK1</td>
+				<td>ATP:D-fructose-6-phosphate 1-phosphotransferase</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td> fru6p + atp &rarr; fru16bp + adp</td>
+				<td>					fru26bp<br />
+									</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*PFK1_Vmax*(1-1/(1+fru26bp/PFK1_ka_fru26bp))*fru6p*atp/(PFK1_ki_fru6p*PFK1_km_atp+PFK1_km_fru6p*atp+PFK1_km_atp*fru6p+atp*fru6p)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>FBP1</td>
+				<td>D-Fructose-1,6-bisphosphate 1-phosphohydrolase</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td> fru16bp + h2o &rarr; fru6p + phos</td>
+				<td>					fru26bp<br />
+									</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*FBP1_Vmax/(1+fru26bp/FBP1_ki_fru26bp)*fru16bp/(fru16bp+FBP1_km_fru16bp)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>ALD</td>
+				<td>Aldolase</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> fru16bp &harr; grap + dhap</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*ALD_Vmax/ALD_km_fru16bp*(fru16bp-grap*dhap/ALD_keq)/(1+fru16bp/ALD_km_fru16bp+grap/ALD_ki1_grap+dhap*(grap+ALD_km_grap)/(ALD_km_dhap*ALD_ki1_grap)+fru16bp*grap/(ALD_km_fru16bp*ALD_ki2_grap))</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>TPI</td>
+				<td>Triosephosphate Isomerase</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> dhap &harr; grap</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*TPI_Vmax/TPI_km_dhap*(dhap-grap/TPI_keq)/(1+dhap/TPI_km_dhap+grap/TPI_km_grap)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>GAPDH</td>
+				<td>D-Glyceraldehyde-3-phosphate:NAD+ oxidoreductase</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> grap + phos + nad &harr; bpg13 + nadh + h</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*GAPDH_Vmax/(GAPDH_k_nad*GAPDH_k_grap*GAPDH_k_p)*(nad*grap*phos-bpg13*nadh/GAPDH_keq)/((1+nad/GAPDH_k_nad)*(1+grap/GAPDH_k_grap)*(1+phos/GAPDH_k_p)+(1+nadh/GAPDH_k_nadh)*(1+bpg13/GAPDH_k_bpg13)-1)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>PGK</td>
+				<td>Phosphoglycerate Kinase</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> adp + bpg13 &harr; atp + pg3</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*PGK_Vmax/(PGK_k_adp*PGK_k_bpg13)*(adp*bpg13-atp*pg3/PGK_keq)/((1+adp/PGK_k_adp)*(1+bpg13/PGK_k_bpg13)+(1+atp/PGK_k_atp)*(1+pg3/PGK_k_pg3)-1)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>PGM</td>
+				<td>2-Phospho-D-glycerate 2,3-phosphomutase</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> pg3 &harr; pg2</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*PGM_Vmax*(pg3-pg2/PGM_keq)/(pg3+PGM_k_pg3*(1+pg2/PGM_k_pg2))</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>EN</td>
+				<td>2-Phospho-D-glucerate hydro-lyase (enolase)</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> pg2 &harr; pep</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*EN_Vmax*(pg2-pep/EN_keq)/(pg2+EN_k_pg2*(1+pep/EN_k_pep))</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>PK</td>
+				<td>Pyruvatkinase</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td> pep + adp &rarr; pyr + atp</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>(1-gamma)*PK_native+gamma*PK_phospho</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>PEPCK</td>
+				<td>PEPCK cyto</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> oaa + gtp &harr; pep + gdp + co2</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*PEPCK_Vmax/(PEPCK_k_oaa*PEPCK_k_gtp)*(oaa*gtp-pep*gdp*co2/PEPCK_keq)/((1+oaa/PEPCK_k_oaa)*(1+gtp/PEPCK_k_gtp)+(1+pep/PEPCK_k_pep)*(1+gdp/PEPCK_k_gdp)*(1+co2/PEPCK_k_co2)-1)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>PEPCKM</td>
+				<td>PEPCK mito</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> oaa_mito + gtp_mito &harr; pep_mito + gdp_mito + co2_mito</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*PEPCKM_Vmax/(PEPCK_k_oaa*PEPCK_k_gtp)*(oaa_mito*gtp_mito-pep_mito*gdp_mito*co2_mito/PEPCK_keq)/((1+oaa_mito/PEPCK_k_oaa)*(1+gtp_mito/PEPCK_k_gtp)+(1+pep_mito/PEPCK_k_pep)*(1+gdp_mito/PEPCK_k_gdp)*(1+co2_mito/PEPCK_k_co2)-1)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>PC</td>
+				<td>Pyruvate Carboxylase</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td> atp_mito + pyr_mito + co2_mito &rarr; oaa_mito + adp_mito + phos_mito</td>
+				<td>					acoa_mito<br />
+									</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*PC_Vmax*atp_mito/(PC_k_atp+atp_mito)*pyr_mito/(PC_k_pyr+pyr_mito)*co2_mito/(PC_k_co2+co2_mito)*acoa_mito^PC_n/(acoa_mito^PC_n+PC_k_acoa^PC_n)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>LDH</td>
+				<td>Lactate Dehydrogenase</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> pyr + nadh &harr; lac + nad</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*LDH_Vmax/(LDH_k_pyr*LDH_k_nadh)*(pyr*nadh-lac*nad/LDH_keq)/((1+nadh/LDH_k_nadh)*(1+pyr/LDH_k_pyr)+(1+lac/LDH_k_lac)*(1+nad/LDH_k_nad)-1)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>LACT</td>
+				<td>Lactate transport (import)</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> lac_ext &harr; lac</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*LACT_Vmax/LACT_k_lac*(lac_ext-lac/LACT_keq)/(1+lac_ext/LACT_k_lac+lac/LACT_k_lac)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>PYRTM</td>
+				<td>Pyruvate transport (mito)</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> pyr &harr; pyr_mito</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*PYRTM_Vmax/PYRTM_k_pyr*(pyr-pyr_mito/PYRTM_keq)/(1+pyr/PYRTM_k_pyr+pyr_mito/PYRTM_k_pyr)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>PEPTM</td>
+				<td>PEP Transport (export mito)</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> pep_mito &harr; pep</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*PEPTM_Vmax/PEPTM_k_pep*(pep_mito-pep/PEPTM_keq)/(1+pep/PEPTM_k_pep+pep_mito/PEPTM_k_pep)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>PDH</td>
+				<td>Pyruvate Dehydrogenase</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td> pyr_mito + coa_mito + nad_mito &rarr; acoa_mito + co2_mito + nadh_mito + h_mito</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>(1-gamma)*PDH_nat+gamma*PDH_p</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>CS</td>
+				<td>Citrate Synthase</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> acoa_mito + oaa_mito + h2o_mito &harr; cit_mito + coa_mito</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*CS_Vmax/(CS_k_oaa*CS_k_acoa)*(acoa_mito*oaa_mito-cit_mito*coa_mito/CS_keq)/((1+acoa_mito/CS_k_acoa)*(1+oaa_mito/CS_k_oaa)+(1+cit_mito/CS_k_cit)*(1+coa_mito/CS_k_coa)-1)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>NDKGTPM</td>
+				<td>Nucleoside-diphosphate kinase (ATP, GTP) mito</td>
+				<td class="
+					 TRUE  					">true</td>
+				<td> atp_mito + gdp_mito &harr; adp_mito + gtp_mito</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*NDKGTPM_Vmax/(NDKGTPM_k_atp*NDKGTPM_k_gdp)*(atp_mito*gdp_mito-adp_mito*gtp_mito/NDKGTPM_keq)/((1+atp_mito/NDKGTPM_k_atp)*(1+gdp_mito/NDKGTPM_k_gdp)+(1+adp_mito/NDKGTPM_k_adp)*(1+gtp_mito/NDKGTPM_k_gtp)-1)</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>OAAFLX</td>
+				<td>oxalacetate influx</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td>  &rarr; oaa_mito</td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*OAAFLX_Vmax</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>ACOAFLX</td>
+				<td>acetyl-coa efflux</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td> acoa_mito &rarr; </td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*ACOAFLX_Vmax</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+		    		<tr>
+    			<td>CITFLX</td>
+				<td>citrate efflux</td>
+				<td class="
+					  FALSE  					">false</td>
+				<td> cit_mito &rarr; </td>
+				<td>				</td>
+				<td>mmol_per_s</td>
+				<td>scale_gly*CITFLX_Vmax</td>
+     			<td></td>
+				<td></td>	
+							</tr>
+			</tbody>
+</table>
+</span>
+<br />
+SBMLReport: <a href="http://www.charite.de/sysbio/people/koenig/" target="_blank">Matthias K&ouml;nig</a> (matthias.koenig[at]charite.de)
+</div>
+
+</body>
+</html>
+
