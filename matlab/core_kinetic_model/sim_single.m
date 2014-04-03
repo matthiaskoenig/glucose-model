@@ -1,4 +1,4 @@
-function [t, c, v] = sim_single()
+% function [t, c, v] = sim_single()
 %SIM_SINGLE Simulation with hepatic glucose model.
 %   Returns:
 %       t:      vector of time points
@@ -44,26 +44,24 @@ func2str(dydt_fun)
 
 % Integration (relative and absolute tolerances controlled to be 
 % sure about the numerical values.
-[t,c] = ode15s(dydt_fun, tspan , x0, odeset('RelTol', 1e-9, 'AbsTol', 1e-9));
+[t,c] = ode15s(dydt_fun, tspan , x0, odeset('RelTol', 1e-6, 'AbsTol', 1e-6));
 
 % Calculate fluxes from the ODE system
 [~, vtmp, ~] = dydt_fun(0, x0);   % get the flux names
 Nv = numel(vtmp);
 Nt = numel(t);
-v  = zeros(Nt, Nv);     % [mmol/s]
-v_kgbw = zeros(Nt, Nv); % [µmol/kg/min]
+v  = zeros(Nt, Nv);      % [mmol/s]
+v_kgbw = zeros(Nt, Nv);  % [µmol/kg/min]
 for k=1:Nt
     [~, v(k, :), ~, v_kgbw(k,:)] = dydt_fun(t(k), c(k, :));
 end
 
 % Save data for comparison
-res.v = v_kgbw;
-res.v_kgbw = v_kgbw
+res.v_kgbw = v_kgbw;
 res.c = c;
 res.t = t;
 sim_fname = strcat(results_folder, '/', name, '.mat')
 save(sim_fname, 'res');
-
 
 
 %% Compare the results to reference implementation

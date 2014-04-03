@@ -704,37 +704,37 @@ v  = [GLUT2   % v1
       G6PASE  % v3
       GPI     % v4
       G16PI   % v5
-      UPGASE 
-      PPASE 
-      GS 
-      GP 
-      NDKGTP 
-      NDKUTP 
-      AK 
-      PFK2 
-      FBP2 
-      PFK1 
-      FBP1 
-      ALD 
-      TPI 
-      GAPDH 
-      PGK 
-      PGM 
-      EN 
-      PK 
-      PEPCK 
-      PEPCKM 
-      PC 
-      LDH 
-      LACT 
-      PYRTM 
-      PEPTM 
-      PDH 
-      CS 
-      NDKGTPM 
-      OAAFLX 
-      ACOAFLX 
-      CITFLX];
+      UPGASE  % v6
+      PPASE   % v7
+      GS      % v8
+      GP      % v9
+      NDKGTP  % v10
+      NDKUTP  % v11
+      AK      % v12
+      PFK2    % v13
+      FBP2    % v14
+      PFK1    % v15
+      FBP1    % v16
+      ALD     % v17
+      TPI     % v18
+      GAPDH   % v19
+      PGK     % v20
+      PGM     % v21
+      EN      % v22
+      PK      % v23
+      PEPCK   % v24
+      PEPCKM  % v25
+      PC      % v26
+      LDH     % v27
+      LACT    % v28
+      PYRTM   % v29
+      PEPTM   % v30
+      PDH     % v31
+      CS      % v32
+      NDKGTPM % v33
+      OAAFLX  % v34
+      ACOAFLX % v35
+      CITFLX];%v36
 end
   
 if (nargout >3)
@@ -742,11 +742,11 @@ if (nargout >3)
     % concentrations in mmol/litre. The simulations were performed for a
     % hepatic tissue of the simulation volume.
     % To get absolute liver values these fluxes have to be scaled with
-    Vliver  = 1.5;           % [liter]
-    fliver = 102.86;         % [-]
-    bodyweight  = 70;        % [kg]
-    sec_per_min = 60;        % [s/min]
-    conversion_factor = Vliver/(Vcyto*fliver) * sec_per_min*1E3/bodyweight;
-    v_kgbw  = v * conversion_factor;  % [µmol/min/kgbw]
+    Vliver  = 1.5;                % [liter]
+    fliver =  102.8571428571428;  % [-] factor to scale model to whole liver
+    bodyweight  = 70;             % [kg]
+    sec_per_min = 60;             % [s/min]
+    conversion_factor = Vliver/(Vcyto*fliver) * sec_per_min*1E3/bodyweight; % [1E3*s/min/kgbw]
+    v_kgbw  = v * conversion_factor;  % [mmol/s] -> [µmol/min/kgbw]
 end
 
