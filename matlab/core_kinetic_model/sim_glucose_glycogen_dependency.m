@@ -22,7 +22,6 @@ clear tmp
 % glycogen =  [tmp linspace(10, 490, 5)  500-tmp(end:-1:1)];  % [mM]
 % clear tmp
 
-
 % Timepoints
 tspan = (0:100:200);  % [min]
 switch (name)

@@ -44,7 +44,7 @@ func2str(dydt_fun)
 
 % Integration (relative and absolute tolerances controlled to be 
 % sure about the numerical values.
-[t,c] = ode15s(dydt_fun, tspan , x0, odeset('RelTol', 1e-6, 'AbsTol', 1e-6));
+[t,c] = ode15s(dydt_fun, tspan , x0, odeset('RelTol', 1e-9, 'AbsTol', 1e-9));
 
 % Calculate fluxes from the ODE system
 [~, vtmp, ~] = dydt_fun(0, x0);   % get the flux names
@@ -57,6 +57,7 @@ for k=1:Nt
 end
 
 % Save data for comparison
+res.v = v;          
 res.v_kgbw = v_kgbw;
 res.c = c;
 res.t = t;
@@ -72,7 +73,7 @@ switch (name)
     case 'core'
         compare_timecourses(sim_fname, ref_fname, 1.0) 
     case 'core_sbml'
-        compare_timecourses(sim_fname, ref_fname, 1/60)
+        compare_timecourses(sim_fname, ref_fname, 1)
 end
 
 %% Create figure

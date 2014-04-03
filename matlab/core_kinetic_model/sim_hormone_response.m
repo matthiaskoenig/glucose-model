@@ -31,7 +31,6 @@ results_folder = '../../results/hormone_response';
 x0 = initial_concentrations();
 glc_ext_index = 32;
 
-
 % hormones and gamma depending on glc_ext
 ins = zeros(size(glc_ext));
 epi = zeros(size(glc_ext));

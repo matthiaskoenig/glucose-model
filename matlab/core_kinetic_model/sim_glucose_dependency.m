@@ -59,7 +59,7 @@ for kgly = 1:numel(glycogen)
         [t,c] = ode15s(dydt_fun, tspan , x0, odeset('RelTol', 1e-9, 'AbsTol', 1e-9));
 
         % Calculate fluxes from the ODE system
-        v  = zeros(Nt, Nv);
+        v  = zeros(Nt, Nv);      
         for kt=1:Nt
             [~, v(kt, :), ~] = dydt_fun(t(kt), c(kt, :));
         end

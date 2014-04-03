@@ -15,11 +15,8 @@ function [dydt, v, hormones, v_kgbw] = dydt_model_glucose_sbml(t, y)
 %
 
 %% Scaling hepatic glucose metablism
-% scale = 1/60;
-% time [sec]
-
-scale = 1/60 ;    % [-]
-scale_gly =  scale;     % [-]
+scale = 1/60 ;         % [-] convert to time in seconds
+scale_gly =  scale;    % [-]
 scale_glyglc = scale;  % [-]
 
 % Volumes of the compartments. These are the simulation volumes
@@ -743,10 +740,12 @@ if (nargout >3)
     % hepatic tissue of the simulation volume.
     % To get absolute liver values these fluxes have to be scaled with
     Vliver  = 1.5;                % [liter]
-    fliver =  102.8571428571428;  % [-] factor to scale model to whole liver
+    fliver =  0.583333333333334;  % [-] factor to scale model to whole liver
+                                    %     effectiveness of liver relative
+                                    %     to cytosol volume of hepatocytes
     bodyweight  = 70;             % [kg]
     sec_per_min = 60;             % [s/min]
-    conversion_factor = Vliver/(Vcyto*fliver) * sec_per_min*1E3/bodyweight; % [1E3*s/min/kgbw]
+    conversion_factor = fliver* Vliver/Vcyto * sec_per_min*1E3/bodyweight; % [1E3*s/min/kgbw] (12.5*60)
     v_kgbw  = v * conversion_factor;  % [mmol/s] -> [µmol/min/kgbw]
 end
 

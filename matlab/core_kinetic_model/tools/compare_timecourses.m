@@ -2,6 +2,7 @@ function [] = compare_timecourses(sim_fname, ref_fname, scale)
 % Control class to check that different model implementations
 % give the same timecourse and flux results.
 % Compare the integration results provided in the two files.
+% Fluxes in [µmol/min/kgbw] are compared. 
 
 format shortg
 
@@ -25,7 +26,17 @@ fprintf('\n* Difference v *\n');
 fprintf('----------------\n');
 fprintf('v(0)  v(end)\n');
 fprintf('----------------\n');
-delta_v = [(s.v(1,:) - x.v(1,:)*scale)' (s.v(end,:) - x.v(end,:)*scale)']
+if isfield(s, 'v_kgbw')
+   sv = s.v_kgbw; 
+else
+   sv = s.v; 
+end
+if isfield(x, 'v_kgbw')
+   xv = x.v_kgbw; 
+else
+   xv = x.v; 
+end
+delta_v = [(sv(1,:) - xv(1,:)*scale)' (sv(end,:) - xv(end,:)*scale)']
 
 disp('******************************');
 disp('* Delta c > 1E-6 *');

@@ -13,8 +13,6 @@ res_file_200 = strcat(results_folder, '/', 'glucose_dependency_200.mat');
 res_file_500 = strcat(results_folder, '/', 'glucose_dependency_500.mat');
 fig_fname = strcat(results_folder, '/', 'glycogen_metabolism.tif')
 
-flux_factor = 12.5;  % -> [µmol/kg/min]
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Experimental data for glycogenolysis
 % Rothman 1991
@@ -89,8 +87,7 @@ clear tmp;
 
 x1 = glc_ext(glc_min_ind:glc_max_ind);
 y1 = tspan(1:t_max_ind)/60;      % [min] -> [h]
-y1 = y1 * flux_factor;
-z1 = c_full(1:t_max_ind, 17, glc_min_ind:glc_max_ind);  % glycogen 
+z1 = c_full(1:t_max_ind, 17, glc_min_ind:glc_max_ind);  % glycogen [mM]
 z1 = squeeze(z1)';
 clear glc_min_ind glc_max_ind t_max_ind glc_min glc_max t_max t_offset tspan
 x1
@@ -119,9 +116,8 @@ clear tmp
 
 x2 = glc_ext(glc_min_ind:glc_max_ind);
 y2 = tspan(1:t_max_ind); % [min]
-y2 = y2 * flux_factor;
-z2 = c_full(1:t_max_ind, 17, glc_min_ind:glc_max_ind); % glycogen
-z2 = squeeze(z2)';
+z2 = c_full(1:t_max_ind, 17, glc_min_ind:glc_max_ind); % glycogen [mM]
+z2 = squeeze(z2)'; 
 x2
 
 

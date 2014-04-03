@@ -8,6 +8,7 @@ close all, clear all;
 
 results_folder = '../../results/glucose_glycogen_dependency';
 res_file = strcat(results_folder, '/', 'glucose_glycogen_dependency.mat');
+conversion_factor = 12.5*60;   % [mmol/s] -> [µmol/min/kgbw]
 
 pcolor_edge_alpha = 0;
 
@@ -29,6 +30,9 @@ xticks = [2 4 6 8 10 12 14 16 18];
 
 % load data
 load(res_file);
+v_kgbw = v_full * conversion_factor;  % [µmol/kg/min]
+clear v_full;
+
 name = 'core_sbml'
 switch (name)
     case 'core'
@@ -37,8 +41,8 @@ switch (name)
     case 'core_sbml'
         % sbml model time in [s]
         dydt_fun = @(t,y) dydt_model_glucose_sbml(t,y);
-        tspan = 60 * tspan;  % [s -> min]
-        v_full = 60 * v_full;  % [per_s] -> [per_min]
+        tspan = 60 * tspan;    % [s -> min]
+        % v_full = 60 * v_full;  % [per_s] -> [per_min]
 end
 
 % indeces of boundaries
@@ -64,15 +68,15 @@ for p_ind = 1:3
         case 1
             % panel 1 - HGP and HGU
             sp = subplot(1, 3, 1);
-            z = v_full(glc_min_ind:glc_max_ind, glycogen_min_ind:glycogen_max_ind, t_eval_ind, 1);
+            z = v_kgbw(glc_min_ind:glc_max_ind, glycogen_min_ind:glycogen_max_ind, t_eval_ind, 1);
         case 2    
             % panel 2 - glycolysis and gluconeogenesis
             sp = subplot(1, 3, 2);
-            z = v_full(glc_min_ind:glc_max_ind, glycogen_min_ind:glycogen_max_ind,  t_eval_ind, 4);
+            z = v_kgbw(glc_min_ind:glc_max_ind, glycogen_min_ind:glycogen_max_ind,  t_eval_ind, 4);
         case 3
             % panel 3 - glycogenolyis and glycogen synthesis
             sp = subplot(1, 3, 3);
-            z = -v_full(glc_min_ind:glc_max_ind, glycogen_min_ind:glycogen_max_ind, t_eval_ind, 5);
+            z = -v_kgbw(glc_min_ind:glc_max_ind, glycogen_min_ind:glycogen_max_ind, t_eval_ind, 5);
 
     end
     ptmp = pcolor(x, y, z'); hold on;
@@ -80,7 +84,6 @@ for p_ind = 1:3
     text_handle = clabel(C, h, clines_hgp, 'Rotation', 90, 'LabelSpacing', 500);
     set(text_handle,'Color',ccolor_hgp);
     set(ptmp, 'EdgeAlpha', pcolor_edge_alpha);
-
 
     xlabel('glucose [mM]')
     set(gca,'xTick', xticks)
@@ -117,8 +120,10 @@ fig4 = figure('Name', 'MCA coefficient', 'Color', [1 1 1]);
 map_jet = colormap(jet(1000));
 set(fig4, 'Colormap', map_jet)
 
-    load(res_file);
-    switch (name)
+load(res_file);
+v_kgwb = v_full * conversion_factor; % [µmol/kg/min]
+clear v_full
+switch (name)
     case 'core'
         % core model time in [min]
         dydt_fun = @(t,y) dydt_model_glucose(t,y);
@@ -126,15 +131,14 @@ set(fig4, 'Colormap', map_jet)
         % sbml model time in [s]
         dydt_fun = @(t,y) dydt_model_glucose_sbml(t,y);
         tspan = 60 * tspan;  % [s -> min]
-        v_full = 60 * v_full;  % [per_s] -> [per_min]
-   end
+end
     
     % x and y
     x = glc_ext(glc_min_ind:glc_max_ind-1);
     y = glycogen(glycogen_min_ind:glycogen_max_ind);
     
     % Calculate the MCA Coeffiecient from the matrix (differentiate)
-    z_tmp = squeeze(v_full(glc_min_ind:glc_max_ind, glycogen_min_ind:glycogen_max_ind, t_eval_ind, 1));
+    z_tmp = squeeze(v_kgbw(glc_min_ind:glc_max_ind, glycogen_min_ind:glycogen_max_ind, t_eval_ind, 1));
     
     z = zeros(glc_max_ind-glc_min_ind, glycogen_max_ind-glycogen_min_ind);
     for p=1:(1 + glycogen_max_ind-glycogen_min_ind)
