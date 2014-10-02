@@ -1,0 +1,38 @@
+!!SBtab Level="1" Version "0.1" Document="Koenig2014_Hepatic_Glucose_Model_annotated" TableType="Reaction" TableName="Reaction"
+!Reaction	!Name	!SumFormula	!Location	!Modifier	!KineticLaw	!SBOTerm	!IsReversible
+GLUT2	GLUT2 glucose transporter	glc_ext <=> glc	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+GK	Glucokinase	glc + atp <=> glc6p + adp	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	False
+G6PASE	D-Glucose-6-phosphate Phosphatase	glc6p + h2o <=> glc + phos	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	False
+GPI	D-Glucose-6-phosphate Isomerase	glc6p <=> fru6p	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+G16PI	Glucose 1-phosphate 1,6-phosphomutase	glc1p <=> glc6p	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+UPGASE	UTP:Glucose-1-phosphate uridylyltransferase	utp + glc1p <=> udpglc + pp	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+PPASE	Pyrophosphate phosphohydrolase	pp + h2o <=> 2 phos	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	False
+GS	Glycogen synthase	udpglc <=> udp + glyglc	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	False
+GP	Glycogen-Phosphorylase	glyglc + phos <=> glc1p	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+NDKGTP	Nucleoside-diphosphate kinase (ATP, GTP)	atp + gdp <=> adp + gtp	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+NDKUTP	Nucleoside-diphosphate kinase (ATP, UTP)	atp + udp <=> adp + utp	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+AK	ATP:AMP phosphotransferase (Adenylatkinase)	atp + amp <=> 2 adp	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+PFK2	ATP:D-fructose-6-phosphate 2-phosphotransferase	fru6p + atp <=> fru26bp + adp	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	False
+FBP2	D-Fructose-2,6-bisphosphate 2-phosphohydrolase	fru26bp <=> fru6p + phos	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	False
+PFK1	ATP:D-fructose-6-phosphate 1-phosphotransferase	fru6p + atp <=> fru16bp + adp	No compartment given in SBML	fru26bp	No kinetic law given in SBML	No SBOterm set in SBML.	False
+FBP1	D-Fructose-1,6-bisphosphate 1-phosphohydrolase	fru16bp + h2o <=> fru6p + phos	No compartment given in SBML	fru26bp	No kinetic law given in SBML	No SBOterm set in SBML.	False
+ALD	Aldolase	fru16bp <=> grap + dhap	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+TPI	Triosephosphate Isomerase	dhap <=> grap	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+GAPDH	D-Glyceraldehyde-3-phosphate:NAD+ oxidoreductase	grap + phos + nad <=> bpg13 + nadh + h	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+PGK	Phosphoglycerate Kinase	adp + bpg13 <=> atp + pg3	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+PGM	2-Phospho-D-glycerate 2,3-phosphomutase	pg3 <=> pg2	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+EN	2-Phospho-D-glucerate hydro-lyase (enolase)	pg2 <=> pep	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+PK	Pyruvatkinase	pep + adp <=> pyr + atp	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	False
+PEPCK	PEPCK cyto	oaa + gtp <=> pep + gdp + co2	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+PEPCKM	PEPCK mito	oaa_mito + gtp_mito <=> pep_mito + gdp_mito + co2_mito	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+PC	Pyruvate Carboxylase	atp_mito + pyr_mito + co2_mito <=> oaa_mito + adp_mito + phos_mito	No compartment given in SBML	acoa_mito	No kinetic law given in SBML	No SBOterm set in SBML.	False
+LDH	Lactate Dehydrogenase	pyr + nadh <=> lac + nad	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+LACT	Lactate transport (import)	lac_ext <=> lac	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+PYRTM	Pyruvate transport (mito)	pyr <=> pyr_mito	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+PEPTM	PEP Transport (export mito)	pep_mito <=> pep	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+PDH	Pyruvate Dehydrogenase	pyr_mito + coa_mito + nad_mito <=> acoa_mito + co2_mito + nadh_mito + h_mito	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	False
+CS	Citrate Synthase	acoa_mito + oaa_mito + h2o_mito <=> cit_mito + coa_mito	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+NDKGTPM	Nucleoside-diphosphate kinase (ATP, GTP) mito	atp_mito + gdp_mito <=> adp_mito + gtp_mito	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	True
+OAAFLX	oxalacetate influx	oaa_mito	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	False
+ACOAFLX	acetyl-coa efflux	acoa_mito <=> 	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	False
+CITFLX	citrate efflux	cit_mito <=> 	No compartment given in SBML		No kinetic law given in SBML	No SBOterm set in SBML.	False

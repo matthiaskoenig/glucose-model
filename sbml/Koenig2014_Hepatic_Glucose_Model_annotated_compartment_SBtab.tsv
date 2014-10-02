@@ -1,0 +1,5 @@
+!!SBtab Level="1" Version "0.1" Document="Koenig2014_Hepatic_Glucose_Model_annotated" TableType="Compartment" TableName="Compartment"
+!Compartment	!Name	!Size	!SBOTerm
+extern	No name given in SBML	nan	No SBO Term set in SBML.
+cyto	No name given in SBML	nan	No SBO Term set in SBML.
+mito	No name given in SBML	nan	No SBO Term set in SBML.
