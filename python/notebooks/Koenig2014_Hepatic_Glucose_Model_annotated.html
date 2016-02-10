@@ -1,0 +1,7221 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="SBML report">
+    <meta name="author" content="Matthias Koenig">
+    <!--<meta http-equiv="refresh" content="5" />-->
+    <link rel="icon" href="http://localhost:8001/static/simapp/images/sbml.ico">
+    <title>Koenig2014_Hepatic_Glucose_Model_annotated</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="Koenig2014_Hepatic_Glucose_Model_annotated_files/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="Koenig2014_Hepatic_Glucose_Model_annotated_files/dataTables.css">
+    <link rel="stylesheet" type="text/css" href="Koenig2014_Hepatic_Glucose_Model_annotated_files/dashboard.css">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="Koenig2014_Hepatic_Glucose_Model_annotated_files/report.css">
+
+
+    <!-- JAVASCRIPT -->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+  <script type="text/javascript" language="javascript" src="Koenig2014_Hepatic_Glucose_Model_annotated_files/jquery-1.js"></script>
+      <script type="text/javascript" language="javascript" src="Koenig2014_Hepatic_Glucose_Model_annotated_files/bootstrap.js"></script>
+    <script type="text/javascript" language="javascript" src="Koenig2014_Hepatic_Glucose_Model_annotated_files/jquery_002.js"></script>
+    <script type="text/javascript" language="javascript" src="Koenig2014_Hepatic_Glucose_Model_annotated_files/dataTables.js"></script>
+
+
+
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $.extend( $.fn.dataTable.defaults, {
+                "searching": true,
+                "ordering": true
+            } );
+
+
+            var t_functions = $('#table_functions').dataTable({
+                "bPaginate": false,
+                "bInfo": false,
+                "dom": '<"top">rt<"bottom"><"clear">'
+            });
+            $('#searchField').keyup(function(){
+                t_functions.fnFilter($(this).val());
+            });
+
+            var t_units = $('#table_units').dataTable({
+                "bPaginate": false,
+                "bInfo": false,
+                "dom": '<"top">rt<"bottom"><"clear">'
+            });
+            $('#searchField').keyup(function(){
+                t_units.fnFilter($(this).val());
+            });
+
+            var t_compartments = $('#table_compartments').dataTable({
+               "bPaginate": false,
+                "bInfo": false,
+                "dom": '<"top">rt<"bottom"><"clear">'
+            });
+            $('#searchField').keyup(function(){
+                t_compartments.fnFilter($(this).val());
+            });
+
+            var t_species = $('#table_species').dataTable({
+               "bPaginate": false,
+                "bInfo": false,
+                "dom": '<"top">rt<"bottom"><"clear">'
+            });
+            $('#searchField').keyup(function(){
+                t_species.fnFilter($(this).val());
+            });
+
+            var t_parameters = $('#table_parameters').dataTable({
+               "bPaginate": false,
+                "bInfo": false,
+                "dom": '<"top">rt<"bottom"><"clear">'
+            });
+            $('#searchField').keyup(function(){
+                t_parameters.fnFilter($(this).val());
+            });
+
+            var t_assignments = $('#table_assignments').dataTable({
+               "bPaginate": false,
+                "bInfo": false,
+                "dom": '<"top">rt<"bottom"><"clear">'
+            });
+            $('#searchField').keyup(function(){
+                t_assignments.fnFilter($(this).val());
+            });
+
+            var t_rules = $('#table_rules').dataTable({
+               "bPaginate": false,
+                "bInfo": false,
+                "dom": '<"top">rt<"bottom"><"clear">'
+            });
+            $('#searchField').keyup(function(){
+                t_rules.fnFilter($(this).val());
+            });
+
+            var t_constraints = $('#table_constraints').dataTable({
+               "bPaginate": false,
+                "bInfo": false,
+                "dom": '<"top">rt<"bottom"><"clear">'
+            });
+            $('#searchField').keyup(function(){
+                t_constraints.fnFilter($(this).val());
+            });
+
+            var t_reactions = $('#table_reactions').dataTable({
+               "bPaginate": false,
+                "bInfo": false,
+                "dom": '<"top">rt<"bottom"><"clear">'
+            });
+            $('#searchField').keyup(function(){
+                t_reactions.fnFilter($(this).val());
+            });
+
+            var t_events = $('#table_events').dataTable({
+               "bPaginate": false,
+                "bInfo": false,
+                "dom": '<"top">rt<"bottom"><"clear">'
+            });
+            $('#searchField').keyup(function(){
+                t_events.fnFilter($(this).val());
+            });
+
+            $('#searchField').val('');
+            $('#searchField').focus();
+
+        });
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#top">Koenig2014_Hepatic_Glucose_Model_annotated</a>
+        </div>
+
+          <form class="navbar-form navbar-left">
+            <input id="searchField" class="form-control" placeholder="Search..." type="text">
+          </form>
+          <!--
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/simapp/models/">Models</a></li>
+             <li><a href="/simapp/about/">About</a></li>
+              <li class="active"><a href="/admin/">Admin</a></li>
+          </ul>
+        </div>
+        -->
+      </div>
+    </nav>
+
+
+<div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+          <li><a href="#top">Model</a></li>
+             
+                    <li><a href="#UnitDefinitions">UnitDefinitions</a></li>
+                
+                    <li><a href="#FunctionDefinitions">FunctionDefinitions</a></li>
+                
+                
+                    <li><a href="#Compartments">Compartments</a></li>
+                
+                    <li><a href="#Species">Species</a></li>
+                
+                    <li><a href="#Parameters">Parameters</a></li>
+                
+                    <li><a href="#InitialAssignments">InitialAssignments</a></li>
+                
+                    <li><a href="#Rules">Rules</a></li>
+                
+                
+                    <li><a href="#Reactions">Reactions</a></li>
+                
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+    <!-- CONTENT -->
+    <div class="content">
+        <!-- <input type="text" id="searchField"> -->
+        
+    <!--------------------------------------------------->
+    <!-- Model -->
+    <!--------------------------------------------------->
+    <a class="anchor" id="Model"></a>
+        
+        
+        
+
+        
+        
+        
+
+    <h1>Model : Koenig2014_Hepatic_Glucose_Model_annotated</h1>
+    
+    <table id="table_model_annotation" class="table table-condensed table-nonfluid">
+        <tbody><tr>
+
+        <td>
+        -
+        <br>
+        -
+        </td>
+        <td>
+            <table id="table_model" class="table table-condensed table-nonfluid">
+            <tbody>
+            <tr>
+	
+	</tr><tr><td class="active">id</td><td>Koenig2014_Hepatic_Glucose_Model_annotated</td></tr>
+	<tr><td class="active">name</td><td>Koenig2014_Hepatic_Glucose_Model</td></tr>
+	<tr><td class="active">version</td><td>L3V1</td></tr>
+	<tr><td class="active">time</td><td>second</td></tr>
+	<tr><td class="active">substance</td><td>substance</td></tr>
+	<tr><td class="active">extent</td><td>extent</td></tr>
+	<tr><td class="active">volume</td><td>volume</td></tr>
+	<tr><td class="active">area</td><td>area</td></tr>
+	<tr><td class="active">length</td><td>length</td></tr>
+	
+
+            </tbody>
+            </table>
+        </td>
+        </tr>
+    </tbody></table>
+
+
+
+
+    <!--------------------------------------------------->
+    <!-- FunctionDefinitions -->
+    <!--------------------------------------------------->
+    
+        <a class="anchor" id="FunctionDefinitions"></a>
+        <div class="dataTables_wrapper form-inline dt-bootstrap no-footer" id="table_functions_wrapper"><div class="top"></div><table role="grid" id="table_functions" class="table table-condensed table-nonfluid dataTable no-footer">
+            <thead>
+            <tr role="row"><th aria-label="type: activate to sort column descending" aria-sort="ascending" style="width: 0px;" colspan="1" rowspan="1" aria-controls="table_functions" tabindex="0" scope="col" class="hidden sorting_asc">type</th><th aria-label="FunctionDefinitions [2]: activate to sort column ascending" style="width: 168px;" colspan="1" rowspan="1" aria-controls="table_functions" tabindex="0" scope="col" class="warning sorting">FunctionDefinitions [2]</th><th aria-label="name: activate to sort column ascending" style="width: 43px;" colspan="1" rowspan="1" aria-controls="table_functions" tabindex="0" class="sorting" scope="col">name</th><th aria-label="math: activate to sort column ascending" style="width: 237px;" colspan="1" rowspan="1" aria-controls="table_functions" tabindex="0" class="sorting" scope="col">math</th><th aria-label="sbo: activate to sort column ascending" style="width: 30px;" colspan="1" rowspan="1" aria-controls="table_functions" tabindex="0" class="sorting" scope="col">sbo</th><th aria-label="cvterm: activate to sort column ascending" style="width: 54px;" colspan="1" rowspan="1" aria-controls="table_functions" tabindex="0" class="sorting" scope="col">cvterm</th></tr>
+            </thead>
+            <tbody>
+            
+                
+            
+                
+            
+            <tr class="odd" role="row">
+    <td class="hidden sorting_1">FunctionDefinition</td>
+	<td class="active">maximum</td>
+	<td></td>
+	<td>lambda(x, y, piecewise(x, gt(x, y), y))</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">FunctionDefinition</td>
+	<td class="active">minimum</td>
+	<td></td>
+	<td>lambda(x, y, piecewise(x, lt(x, y), y))</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr></tbody>
+        </table><div class="bottom"></div><div class="clear"></div></div>
+        <hr>
+    
+    <!--------------------------------------------------->
+    <!-- UnitDefinitions -->
+    <!--------------------------------------------------->
+    
+        <a class="anchor" id="UnitDefinitions"></a>
+        <div class="dataTables_wrapper form-inline dt-bootstrap no-footer" id="table_units_wrapper"><div class="top"></div><table role="grid" id="table_units" class="table table-condensed table-nonfluid dataTable no-footer">
+            <thead>
+            <tr role="row"><th aria-label="type: activate to sort column descending" aria-sort="ascending" style="width: 0px;" colspan="1" rowspan="1" aria-controls="table_units" tabindex="0" scope="col" class="hidden sorting_asc">type</th><th aria-label="UnitDefinitions [17]: activate to sort column ascending" style="width: 143px;" colspan="1" rowspan="1" aria-controls="table_units" tabindex="0" scope="col" class="warning sorting">UnitDefinitions [17]</th><th aria-label="name: activate to sort column ascending" style="width: 44px;" colspan="1" rowspan="1" aria-controls="table_units" tabindex="0" class="sorting" scope="col">name</th><th aria-label="units: activate to sort column ascending" style="width: 260px;" colspan="1" rowspan="1" aria-controls="table_units" tabindex="0" class="sorting" scope="col">units</th><th aria-label="sbo: activate to sort column ascending" style="width: 30px;" colspan="1" rowspan="1" aria-controls="table_units" tabindex="0" class="sorting" scope="col">sbo</th><th aria-label="cvterm: activate to sort column ascending" style="width: 54px;" colspan="1" rowspan="1" aria-controls="table_units" tabindex="0" class="sorting" scope="col">cvterm</th></tr>
+            </thead>
+            <tbody>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+            <tr class="odd" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">per_s</td>
+	<td></td>
+	<td>s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">minute</td>
+	<td></td>
+	<td>(6.0*10^1*s)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">s_per_min</td>
+	<td></td>
+	<td>s * (6.0*10^1*s)^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">mmol</td>
+	<td></td>
+	<td>(10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">mM</td>
+	<td></td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">per_mM</td>
+	<td></td>
+	<td>litre * (10^-3*mole)^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">mMmM</td>
+	<td></td>
+	<td>litre^-2 * (10^-3*mole)^2</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">mmol_per_s</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">pmol</td>
+	<td></td>
+	<td>(10^-12*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">pmol_per_l</td>
+	<td></td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">mumol_per_min_kg</td>
+	<td></td>
+	<td>kg^-1 * (10^-6*mole)^1 * (6.0*10^1*s)^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">s_per_min_kg</td>
+	<td></td>
+	<td>kg^-1 * s * (6.0*10^1*s)^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">substance</td>
+	<td></td>
+	<td>(10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">volume</td>
+	<td></td>
+	<td>litre</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">area</td>
+	<td></td>
+	<td>m^2</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">length</td>
+	<td></td>
+	<td>m</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">UnitDefinition</td>
+	<td class="active">extent</td>
+	<td></td>
+	<td>(10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr></tbody>
+        </table><div class="bottom"></div><div class="clear"></div></div>
+        <hr>
+    
+    <!--------------------------------------------------->
+    <!-- Compartments -->
+    <!--------------------------------------------------->
+    
+        <a class="anchor" id="Compartments"></a>
+        <div class="dataTables_wrapper form-inline dt-bootstrap no-footer" id="table_compartments_wrapper"><div class="top"></div><table role="grid" id="table_compartments" class="table table-condensed table-nonfluid dataTable no-footer">
+            <thead>
+            <tr role="row"><th aria-label="type: activate to sort column descending" aria-sort="ascending" style="width: 0px;" colspan="1" rowspan="1" aria-controls="table_compartments" tabindex="0" scope="col" class="hidden sorting_asc">type</th><th aria-label="Compartments [3]: activate to sort column ascending" style="width: 97px;" colspan="1" rowspan="1" aria-controls="table_compartments" tabindex="0" scope="col" class="warning sorting">Compartments [3]</th><th aria-label="name: activate to sort column ascending" style="width: 36px;" colspan="1" rowspan="1" aria-controls="table_compartments" tabindex="0" class="sorting" scope="col">name</th><th aria-label="size: activate to sort column ascending" style="width: 26px;" colspan="1" rowspan="1" aria-controls="table_compartments" tabindex="0" class="sorting" scope="col">size</th><th aria-label="constant: activate to sort column ascending" style="width: 56px;" colspan="1" rowspan="1" aria-controls="table_compartments" tabindex="0" class="sorting" scope="col">constant</th><th aria-label="spatial dimensions: activate to sort column ascending" style="width: 75px;" colspan="1" rowspan="1" aria-controls="table_compartments" tabindex="0" class="sorting" scope="col">spatial dimensions</th><th aria-label="unit: activate to sort column ascending" style="width: 25px;" colspan="1" rowspan="1" aria-controls="table_compartments" tabindex="0" class="sorting" scope="col">unit</th><th aria-label="derived unit: activate to sort column ascending" style="width: 48px;" colspan="1" rowspan="1" aria-controls="table_compartments" tabindex="0" class="sorting" scope="col">derived unit</th><th aria-label="sbo: activate to sort column ascending" style="width: 24px;" colspan="1" rowspan="1" aria-controls="table_compartments" tabindex="0" class="sorting" scope="col">sbo</th><th aria-label="cvterm: activate to sort column ascending" style="width: 45px;" colspan="1" rowspan="1" aria-controls="table_compartments" tabindex="0" class="sorting" scope="col">cvterm</th></tr>
+            </thead>
+            <tbody>
+            
+                
+            
+                
+            
+                
+            
+            <tr class="odd" role="row">
+    <td class="hidden sorting_1">Compartment</td>
+	<td class="active">extern</td>
+	<td></td>
+	<td>
+	                               = 10 * Vcyto</td>
+	<td class="success">True</td>
+	<td>3</td>
+	<td>litre</td>
+	<td>litre</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Compartment</td>
+	<td class="active">cyto</td>
+	<td></td>
+	<td>
+	                               = Vcyto</td>
+	<td class="success">True</td>
+	<td>3</td>
+	<td>litre</td>
+	<td>litre</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Compartment</td>
+	<td class="active">mito</td>
+	<td></td>
+	<td>
+	                               = 0.2 * Vcyto</td>
+	<td class="success">True</td>
+	<td>3</td>
+	<td>litre</td>
+	<td>litre</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr></tbody>
+        </table><div class="bottom"></div><div class="clear"></div></div>
+        <hr>
+    
+    <!--------------------------------------------------->
+    <!-- Species -->
+    <!--------------------------------------------------->
+    
+        <a class="anchor" id="Species"></a>
+        <div class="dataTables_wrapper form-inline dt-bootstrap no-footer" id="table_species_wrapper"><div class="top"></div><table role="grid" id="table_species" class="table table-condensed table-nonfluid dataTable no-footer">
+            <thead>
+            <tr role="row"><th aria-label="type: activate to sort column descending" aria-sort="ascending" style="width: 0px;" colspan="1" rowspan="1" aria-controls="table_species" tabindex="0" scope="col" class="hidden sorting_asc">type</th><th aria-label="Species [49]: activate to sort column ascending" style="width: 50px;" colspan="1" rowspan="1" aria-controls="table_species" tabindex="0" scope="col" class="warning sorting">Species [49]</th><th aria-label="name: activate to sort column ascending" style="width: 36px;" colspan="1" rowspan="1" aria-controls="table_species" tabindex="0" class="sorting" scope="col">name</th><th aria-label="compartment: activate to sort column ascending" style="width: 87px;" colspan="1" rowspan="1" aria-controls="table_species" tabindex="0" class="sorting" scope="col">compartment</th><th aria-label="boundary condition: activate to sort column ascending" style="width: 61px;" colspan="1" rowspan="1" aria-controls="table_species" tabindex="0" class="sorting" scope="col">boundary condition</th><th aria-label="constant: activate to sort column ascending" style="width: 56px;" colspan="1" rowspan="1" aria-controls="table_species" tabindex="0" class="sorting" scope="col">constant</th><th aria-label="initial amount: activate to sort column ascending" style="width: 50px;" colspan="1" rowspan="1" aria-controls="table_species" tabindex="0" class="sorting" scope="col">initial amount</th><th aria-label="initial concentration: activate to sort column ascending" style="width: 89px;" colspan="1" rowspan="1" aria-controls="table_species" tabindex="0" class="sorting" scope="col">initial concentration</th><th aria-label="substance units: activate to sort column ascending" style="width: 66px;" colspan="1" rowspan="1" aria-controls="table_species" tabindex="0" class="sorting" scope="col">substance units</th><th aria-label="derived units: activate to sort column ascending" style="width: 76px;" colspan="1" rowspan="1" aria-controls="table_species" tabindex="0" class="sorting" scope="col">derived units</th><th aria-label="sbo: activate to sort column ascending" style="width: 24px;" colspan="1" rowspan="1" aria-controls="table_species" tabindex="0" class="sorting" scope="col">sbo</th><th aria-label="cvterm: activate to sort column ascending" style="width: 222px;" colspan="1" rowspan="1" aria-controls="table_species" tabindex="0" class="sorting" scope="col">cvterm</th></tr>
+            </thead>
+            <tbody>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+            <tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">atp</td>
+	<td></td>
+	<td>cyto</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 2.8  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00002" target="_blank">urn:miriam:kegg.compound:C00002</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A15422" target="_blank">urn:miriam:obo.chebi:CHEBI%3A15422</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">adp</td>
+	<td></td>
+	<td>cyto</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.8  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00008" target="_blank">urn:miriam:kegg.compound:C00008</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A16761" target="_blank">urn:miriam:obo.chebi:CHEBI%3A16761</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">amp</td>
+	<td></td>
+	<td>cyto</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.16  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00020" target="_blank">urn:miriam:kegg.compound:C00020</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A16027" target="_blank">urn:miriam:obo.chebi:CHEBI%3A16027</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">utp</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.27  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00075" target="_blank">urn:miriam:kegg.compound:C00075</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A15713" target="_blank">urn:miriam:obo.chebi:CHEBI%3A15713</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">udp</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.09  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00015" target="_blank">urn:miriam:kegg.compound:C00015</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A17659" target="_blank">urn:miriam:obo.chebi:CHEBI%3A17659</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">gtp</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.29  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00044" target="_blank">urn:miriam:kegg.compound:C00044</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A15996" target="_blank">urn:miriam:obo.chebi:CHEBI%3A15996</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">gdp</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.1  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00035" target="_blank">urn:miriam:kegg.compound:C00035</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A17552" target="_blank">urn:miriam:obo.chebi:CHEBI%3A17552</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">nad</td>
+	<td></td>
+	<td>cyto</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 1.22  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00003" target="_blank">urn:miriam:kegg.compound:C00003</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A15846" target="_blank">urn:miriam:obo.chebi:CHEBI%3A15846</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">nadh</td>
+	<td></td>
+	<td>cyto</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.00056  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00004" target="_blank">urn:miriam:kegg.compound:C00004</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A16908" target="_blank">urn:miriam:obo.chebi:CHEBI%3A16908</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">phos</td>
+	<td></td>
+	<td>cyto</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 5.0  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00009" target="_blank">urn:miriam:kegg.compound:C00009</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">pp</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.008  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00013" target="_blank">urn:miriam:kegg.compound:C00013</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">co2</td>
+	<td></td>
+	<td>cyto</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 5.0  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00011" target="_blank">urn:miriam:kegg.compound:C00011</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A16526" target="_blank">urn:miriam:obo.chebi:CHEBI%3A16526</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">h2o</td>
+	<td></td>
+	<td>cyto</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.0  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00001" target="_blank">urn:miriam:kegg.compound:C00001</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A15377" target="_blank">urn:miriam:obo.chebi:CHEBI%3A15377</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">h</td>
+	<td></td>
+	<td>cyto</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.0  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00080" target="_blank">urn:miriam:kegg.compound:C00080</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A24636" target="_blank">urn:miriam:obo.chebi:CHEBI%3A24636</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">glc1p</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.012  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00103" target="_blank">urn:miriam:kegg.compound:C00103</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A16077" target="_blank">urn:miriam:obo.chebi:CHEBI%3A16077</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">udpglc</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.38  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00029" target="_blank">urn:miriam:kegg.compound:C00029</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A18066" target="_blank">urn:miriam:obo.chebi:CHEBI%3A18066</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">glyglc</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 250.0  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00182" target="_blank">urn:miriam:kegg.compound:C00182</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A28087" target="_blank">urn:miriam:obo.chebi:CHEBI%3A28087</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">glc</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 5.0  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00031" target="_blank">urn:miriam:kegg.compound:C00031</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A4167" target="_blank">urn:miriam:obo.chebi:CHEBI%3A4167</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">glc6p</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.12  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00092" target="_blank">urn:miriam:kegg.compound:C00092</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A4170" target="_blank">urn:miriam:obo.chebi:CHEBI%3A4170</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">fru6p</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.05  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00085" target="_blank">urn:miriam:kegg.compound:C00085</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A15946" target="_blank">urn:miriam:obo.chebi:CHEBI%3A15946</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">fru16bp</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.02  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00354" target="_blank">urn:miriam:kegg.compound:C00354</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A16905" target="_blank">urn:miriam:obo.chebi:CHEBI%3A16905</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">fru26bp</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.004  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00665" target="_blank">urn:miriam:kegg.compound:C00665</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A28602" target="_blank">urn:miriam:obo.chebi:CHEBI%3A28602</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">grap</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.1  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00118" target="_blank">urn:miriam:kegg.compound:C00118</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A29052" target="_blank">urn:miriam:obo.chebi:CHEBI%3A29052</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">dhap</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.03  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00111" target="_blank">urn:miriam:kegg.compound:C00111</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A16108" target="_blank">urn:miriam:obo.chebi:CHEBI%3A16108</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">bpg13</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.3  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00236" target="_blank">urn:miriam:kegg.compound:C00236</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A16001" target="_blank">urn:miriam:obo.chebi:CHEBI%3A16001</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">pg3</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.27  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00197" target="_blank">urn:miriam:kegg.compound:C00197</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A17794" target="_blank">urn:miriam:obo.chebi:CHEBI%3A17794</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">pg2</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.03  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00631" target="_blank">urn:miriam:kegg.compound:C00631</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A17835" target="_blank">urn:miriam:obo.chebi:CHEBI%3A17835</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">pep</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.15  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00074" target="_blank">urn:miriam:kegg.compound:C00074</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A44897" target="_blank">urn:miriam:obo.chebi:CHEBI%3A44897</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">pyr</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.1  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00022" target="_blank">urn:miriam:kegg.compound:C00022</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A32816" target="_blank">urn:miriam:obo.chebi:CHEBI%3A32816</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">oaa</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.01  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00036" target="_blank">urn:miriam:kegg.compound:C00036</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A30744" target="_blank">urn:miriam:obo.chebi:CHEBI%3A30744</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">lac</td>
+	<td></td>
+	<td>cyto</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.5  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00186" target="_blank">urn:miriam:kegg.compound:C00186</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A422" target="_blank">urn:miriam:obo.chebi:CHEBI%3A422</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">glc_ext</td>
+	<td></td>
+	<td>extern</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 3.0  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00031" target="_blank">urn:miriam:kegg.compound:C00031</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A4167" target="_blank">urn:miriam:obo.chebi:CHEBI%3A4167</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">lac_ext</td>
+	<td></td>
+	<td>extern</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 1.2  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00186" target="_blank">urn:miriam:kegg.compound:C00186</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A422" target="_blank">urn:miriam:obo.chebi:CHEBI%3A422</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">co2_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 5.0  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00011" target="_blank">urn:miriam:kegg.compound:C00011</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A16526" target="_blank">urn:miriam:obo.chebi:CHEBI%3A16526</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">phos_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 5.0  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00009" target="_blank">urn:miriam:kegg.compound:C00009</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">oaa_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.01  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00036" target="_blank">urn:miriam:kegg.compound:C00036</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A30744" target="_blank">urn:miriam:obo.chebi:CHEBI%3A30744</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">pep_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.15  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00074" target="_blank">urn:miriam:kegg.compound:C00074</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A44897" target="_blank">urn:miriam:obo.chebi:CHEBI%3A44897</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">acoa_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.04  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00024" target="_blank">urn:miriam:kegg.compound:C00024</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A15351" target="_blank">urn:miriam:obo.chebi:CHEBI%3A15351</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">pyr_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.1  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00022" target="_blank">urn:miriam:kegg.compound:C00022</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A32816" target="_blank">urn:miriam:obo.chebi:CHEBI%3A32816</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">cit_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.32  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00158" target="_blank">urn:miriam:kegg.compound:C00158</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A30769" target="_blank">urn:miriam:obo.chebi:CHEBI%3A30769</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">atp_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 2.8  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00002" target="_blank">urn:miriam:kegg.compound:C00002</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A15422" target="_blank">urn:miriam:obo.chebi:CHEBI%3A15422</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">adp_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.8  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00008" target="_blank">urn:miriam:kegg.compound:C00008</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A16761" target="_blank">urn:miriam:obo.chebi:CHEBI%3A16761</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">gtp_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.29  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00044" target="_blank">urn:miriam:kegg.compound:C00044</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A15996" target="_blank">urn:miriam:obo.chebi:CHEBI%3A15996</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">gdp_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class="  danger  ">False</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.1  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00035" target="_blank">urn:miriam:kegg.compound:C00035</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A17552" target="_blank">urn:miriam:obo.chebi:CHEBI%3A17552</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">coa_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.055  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00010" target="_blank">urn:miriam:kegg.compound:C00010</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A15346" target="_blank">urn:miriam:obo.chebi:CHEBI%3A15346</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">nadh_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.24  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00004" target="_blank">urn:miriam:kegg.compound:C00004</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A16908" target="_blank">urn:miriam:obo.chebi:CHEBI%3A16908</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">nad_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.98  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00003" target="_blank">urn:miriam:kegg.compound:C00003</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A15846" target="_blank">urn:miriam:obo.chebi:CHEBI%3A15846</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">h2o_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.0  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00080" target="_blank">urn:miriam:kegg.compound:C00080</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A15377" target="_blank">urn:miriam:obo.chebi:CHEBI%3A15377</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Species</td>
+	<td class="active">h_mito</td>
+	<td></td>
+	<td>mito</td>
+	<td class=" success ">True</td>
+	<td class="  danger  ">False</td>	
+	<td></td>
+	<td> 0.0  </td>
+	<td>substance</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00011" target="_blank">urn:miriam:kegg.compound:C00011</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A24636" target="_blank">urn:miriam:obo.chebi:CHEBI%3A24636</a>
+</td>
+</tr></tbody>
+        </table><div class="bottom"></div><div class="clear"></div></div>
+        <hr>
+    
+    <!--------------------------------------------------->
+    <!-- Parameters -->
+    <!--------------------------------------------------->
+    
+        <a class="anchor" id="Parameters"></a>
+        <div class="dataTables_wrapper form-inline dt-bootstrap no-footer" id="table_parameters_wrapper"><div class="top"></div><table role="grid" id="table_parameters" class="table table-condensed table-nonfluid dataTable no-footer">
+            <thead>
+            <tr role="row"><th aria-label="type: activate to sort column descending" aria-sort="ascending" style="width: 0px;" colspan="1" rowspan="1" aria-controls="table_parameters" tabindex="0" scope="col" class="hidden sorting_asc">type</th><th aria-label="Parameters [256]: activate to sort column ascending" style="width: 156px;" colspan="1" rowspan="1" aria-controls="table_parameters" tabindex="0" scope="col" class="warning sorting">Parameters [256]</th><th aria-label="name: activate to sort column ascending" style="width: 36px;" colspan="1" rowspan="1" aria-controls="table_parameters" tabindex="0" class="sorting" scope="col">name</th><th aria-label="value: activate to sort column ascending" style="width: 163px;" colspan="1" rowspan="1" aria-controls="table_parameters" tabindex="0" class="sorting" scope="col">value</th><th aria-label="unit: activate to sort column ascending" style="width: 104px;" colspan="1" rowspan="1" aria-controls="table_parameters" tabindex="0" class="sorting" scope="col">unit</th><th aria-label="derived unit: activate to sort column ascending" style="width: 83px;" colspan="1" rowspan="1" aria-controls="table_parameters" tabindex="0" class="sorting" scope="col">derived unit</th><th aria-label="constant: activate to sort column ascending" style="width: 56px;" colspan="1" rowspan="1" aria-controls="table_parameters" tabindex="0" class="sorting" scope="col">constant</th><th aria-label="sbo: activate to sort column ascending" style="width: 24px;" colspan="1" rowspan="1" aria-controls="table_parameters" tabindex="0" class="sorting" scope="col">sbo</th><th aria-label="cvterm: activate to sort column ascending" style="width: 222px;" colspan="1" rowspan="1" aria-controls="table_parameters" tabindex="0" class="sorting" scope="col">cvterm</th></tr>
+            </thead>
+            <tbody>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+            <tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">Vcyto</td>
+	<td></td>
+	<td>1.0</td>
+	
+	<td>litre</td>
+	<td>litre</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">Vliver</td>
+	<td></td>
+	<td>1.5</td>
+	
+	<td>litre</td>
+	<td>litre</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">fliver</td>
+	<td></td>
+	<td>0.583333333333</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">bodyweight</td>
+	<td></td>
+	<td>70.0</td>
+	
+	<td>kilogram</td>
+	<td>kg</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">sec_per_min</td>
+	<td></td>
+	<td>60.0</td>
+	
+	<td>s_per_min</td>
+	<td>s * (6.0*10^1*s)^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">conversion_factor</td>
+	<td></td>
+	<td>
+								    = fliver * Vliver / Vcyto * sec_per_min * 1000 / bodyweight</td>
+	
+	<td>s_per_min_kg</td>
+	<td>kg^-1 * s * (6.0*10^1*s)^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">nadh_tot</td>
+	<td></td>
+	<td>
+								    = nadh + nad</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">atp_tot</td>
+	<td></td>
+	<td>
+								    = atp + adp + amp</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">utp_tot</td>
+	<td></td>
+	<td>
+								    = utp + udp + udpglc</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">gtp_tot</td>
+	<td></td>
+	<td>
+								    = gtp + gdp</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">nadh_mito_tot</td>
+	<td></td>
+	<td>
+								    = nadh_mito + nad_mito</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">atp_mito_tot</td>
+	<td></td>
+	<td>
+								    = atp_mito + adp_mito</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">gtp_mito_tot</td>
+	<td></td>
+	<td>
+								    = gtp_mito + gdp_mito</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">x_ins1</td>
+	<td></td>
+	<td>818.9</td>
+	
+	<td>pmol_per_l</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">x_ins2</td>
+	<td></td>
+	<td>0.0</td>
+	
+	<td>pmol_per_l</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">x_ins3</td>
+	<td></td>
+	<td>8.6</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">x_ins4</td>
+	<td></td>
+	<td>4.2</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">ins</td>
+	<td></td>
+	<td>
+								    = x_ins2 + (x_ins1 - x_ins2) * pow(glc_ext, x_ins4) / (pow(glc_ext, x_ins4) + pow(x_ins3, x_ins4))</td>
+	
+	<td>pmol_per_l</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00723" target="_blank">urn:miriam:kegg.compound:C00723</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">ins_norm</td>
+	<td></td>
+	<td>
+								    = maximum(0, ins - x_ins2)</td>
+	
+	<td>pmol_per_l</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">x_glu1</td>
+	<td></td>
+	<td>190.0</td>
+	
+	<td>pmol_per_l</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">x_glu2</td>
+	<td></td>
+	<td>37.9</td>
+	
+	<td>pmol_per_l</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">x_glu3</td>
+	<td></td>
+	<td>3.01</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">x_glu4</td>
+	<td></td>
+	<td>6.4</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">glu</td>
+	<td></td>
+	<td>
+								    = x_glu2 + (x_glu1 - x_glu2) * (1 - pow(glc_ext, x_glu4) / (pow(glc_ext, x_glu4) + pow(x_glu3, x_glu4)))</td>
+	
+	<td>pmol_per_l</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C01501" target="_blank">urn:miriam:kegg.compound:C01501</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">glu_norm</td>
+	<td></td>
+	<td>
+								    = maximum(0, glu - x_glu2)</td>
+	
+	<td>pmol_per_l</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">x_epi1</td>
+	<td></td>
+	<td>6090.0</td>
+	
+	<td>pmol_per_l</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">x_epi2</td>
+	<td></td>
+	<td>100.0</td>
+	
+	<td>pmol_per_l</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">x_epi3</td>
+	<td></td>
+	<td>3.1</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">x_epi4</td>
+	<td></td>
+	<td>8.4</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">epi</td>
+	<td></td>
+	<td>
+								    = x_epi2 + (x_epi1 - x_epi2) * (1 - pow(glc_ext, x_epi4) / (pow(glc_ext, x_epi4) + pow(x_epi3, x_epi4)))</td>
+	
+	<td>pmol_per_l</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:kegg.compound:C00547" target="_blank">urn:miriam:kegg.compound:C00547</a><br><b>BQB_IS</b><br><a href="urn:miriam:obo.chebi:CHEBI%3A18357" target="_blank">urn:miriam:obo.chebi:CHEBI%3A18357</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">epi_norm</td>
+	<td></td>
+	<td>
+								    = maximum(0, epi - x_epi2)</td>
+	
+	<td>pmol_per_l</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">K_val</td>
+	<td></td>
+	<td>0.1</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">epi_f</td>
+	<td></td>
+	<td>0.8</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">K_ins</td>
+	<td></td>
+	<td>
+								    = (x_ins1 - x_ins2) * K_val</td>
+	
+	<td>pmol_per_l</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">K_glu</td>
+	<td></td>
+	<td>
+								    = (x_glu1 - x_glu2) * K_val</td>
+	
+	<td>pmol_per_l</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">K_epi</td>
+	<td></td>
+	<td>
+								    = (x_epi1 - x_epi2) * K_val</td>
+	
+	<td>pmol_per_l</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">gamma</td>
+	<td></td>
+	<td>
+								    = 0.5 * (1 - ins_norm / (ins_norm + K_ins) + 
+maximum(glu_norm / (glu_norm + K_glu), epi_f * epi_norm / (epi_norm + 
+K_epi)))</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">scale</td>
+	<td></td>
+	<td>
+								    = 1 / 60</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">scale_gly</td>
+	<td></td>
+	<td>
+								    = scale</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">scale_glyglc</td>
+	<td></td>
+	<td>
+								    = scale</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GLUT2_keq</td>
+	<td></td>
+	<td>1.0</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GLUT2_km</td>
+	<td></td>
+	<td>42.0</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GLUT2_Vmax</td>
+	<td></td>
+	<td>420.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GK_n_gkrp</td>
+	<td></td>
+	<td>2.0</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GK_km_glc1</td>
+	<td></td>
+	<td>15.0</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GK_km_fru6p</td>
+	<td></td>
+	<td>0.01</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GK_b</td>
+	<td></td>
+	<td>0.7</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GK_n</td>
+	<td></td>
+	<td>1.6</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GK_km_glc</td>
+	<td></td>
+	<td>7.5</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GK_km_atp</td>
+	<td></td>
+	<td>0.26</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GK_Vmax</td>
+	<td></td>
+	<td>25.2</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GK_gc_free</td>
+	<td></td>
+	<td>
+								    = pow(glc, GK_n_gkrp) / (pow(glc, GK_n_gkrp) + 
+pow(GK_km_glc1, GK_n_gkrp)) * (1 - GK_b * fru6p / (fru6p + GK_km_fru6p))</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">G6PASE_km_glc6p</td>
+	<td></td>
+	<td>2.0</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">G6PASE_Vmax</td>
+	<td></td>
+	<td>18.9</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GPI_keq</td>
+	<td></td>
+	<td>0.517060817493</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GPI_km_glc6p</td>
+	<td></td>
+	<td>0.182</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GPI_km_fru6p</td>
+	<td></td>
+	<td>0.071</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GPI_Vmax</td>
+	<td></td>
+	<td>420.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">G16PI_keq</td>
+	<td></td>
+	<td>15.7175540822</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">G16PI_km_glc6p</td>
+	<td></td>
+	<td>0.67</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">G16PI_km_glc1p</td>
+	<td></td>
+	<td>0.045</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">G16PI_Vmax</td>
+	<td></td>
+	<td>100.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">UPGASE_keq</td>
+	<td></td>
+	<td>0.312237619153</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">UPGASE_km_utp</td>
+	<td></td>
+	<td>0.563</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">UPGASE_km_glc1p</td>
+	<td></td>
+	<td>0.172</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">UPGASE_km_udpglc</td>
+	<td></td>
+	<td>0.049</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">UPGASE_km_pp</td>
+	<td></td>
+	<td>0.166</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">UPGASE_Vmax</td>
+	<td></td>
+	<td>80.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PPASE_km_pp</td>
+	<td></td>
+	<td>0.005</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PPASE_Vmax</td>
+	<td></td>
+	<td>2.4</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GS_C</td>
+	<td></td>
+	<td>500.0</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GS_k1_max</td>
+	<td></td>
+	<td>0.2</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GS_k1_nat</td>
+	<td></td>
+	<td>0.224</td>
+	
+	<td>mMmM</td>
+	<td>litre^-2 * (10^-3*mole)^2</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GS_k2_nat</td>
+	<td></td>
+	<td>0.1504</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GS_k1_phospho</td>
+	<td></td>
+	<td>3.003</td>
+	
+	<td>mMmM</td>
+	<td>litre^-2 * (10^-3*mole)^2</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GS_k2_phospho</td>
+	<td></td>
+	<td>0.09029</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GS_Vmax</td>
+	<td></td>
+	<td>13.2</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GS_storage_factor</td>
+	<td></td>
+	<td>
+								    = (1 + GS_k1_max) * (GS_C - glyglc) / (GS_C - glyglc + GS_k1_max * GS_C)</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GS_k_udpglc_native</td>
+	<td></td>
+	<td>
+								    = GS_k1_nat / (glc6p + GS_k2_nat)</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GS_k_udpglc_phospho</td>
+	<td></td>
+	<td>
+								    = GS_k1_phospho / (glc6p + GS_k2_phospho)</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GS_native</td>
+	<td></td>
+	<td>
+								    = scale_glyglc * GS_Vmax * GS_storage_factor * udpglc / (GS_k_udpglc_native + udpglc)</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GS_phospho</td>
+	<td></td>
+	<td>
+								    = scale_glyglc * GS_Vmax * GS_storage_factor * udpglc / (GS_k_udpglc_phospho + udpglc)</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_keq</td>
+	<td></td>
+	<td>0.211826505793</td>
+	
+	<td>per_mM</td>
+	<td>litre * (10^-3*mole)^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_k_glyc_native</td>
+	<td></td>
+	<td>4.8</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_k_glyc_phospho</td>
+	<td></td>
+	<td>2.7</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_k_glc1p_native</td>
+	<td></td>
+	<td>120.0</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_k_glc1p_phospho</td>
+	<td></td>
+	<td>2.0</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_k_p_native</td>
+	<td></td>
+	<td>300.0</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_k_p_phospho</td>
+	<td></td>
+	<td>5.0</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_ki_glc_phospho</td>
+	<td></td>
+	<td>5.0</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_ka_amp_native</td>
+	<td></td>
+	<td>1.0</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_base_amp_native</td>
+	<td></td>
+	<td>0.03</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_max_amp_native</td>
+	<td></td>
+	<td>0.3</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_Vmax</td>
+	<td></td>
+	<td>6.8</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_C</td>
+	<td></td>
+	<td>
+								    = GS_C</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_k1_max</td>
+	<td></td>
+	<td>
+								    = GS_k1_max</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_fmax</td>
+	<td></td>
+	<td>
+								    = (1 + GP_k1_max) * glyglc / (glyglc + GP_k1_max * GP_C)</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_vmax_native</td>
+	<td></td>
+	<td>
+								    = scale_glyglc * GP_Vmax * GP_fmax * (GP_base_amp_native + 
+(GP_max_amp_native - GP_base_amp_native) * amp / (amp + 
+GP_ka_amp_native))</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_native</td>
+	<td></td>
+	<td>
+								    = GP_vmax_native / (GP_k_glyc_native * GP_k_p_native) * 
+(glyglc * phos - glc1p / GP_keq) / ((1 + glyglc / GP_k_glyc_native) * (1
+ + phos / GP_k_p_native) + 1 + glc1p / GP_k_glc1p_native - 1)</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_vmax_phospho</td>
+	<td></td>
+	<td>
+								    = scale_glyglc * GP_Vmax * GP_fmax * exp(-log(2) / GP_ki_glc_phospho * glc)</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GP_phospho</td>
+	<td></td>
+	<td>
+								    = GP_vmax_phospho / (GP_k_glyc_phospho * GP_k_p_phospho) * 
+(glyglc * phos - glc1p / GP_keq) / ((1 + glyglc / GP_k_glyc_phospho) * 
+(1 + phos / GP_k_p_phospho) + 1 + glc1p / GP_k_glc1p_phospho - 1)</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKGTP_keq</td>
+	<td></td>
+	<td>1.0</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKGTP_km_atp</td>
+	<td></td>
+	<td>1.33</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKGTP_km_adp</td>
+	<td></td>
+	<td>0.042</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKGTP_km_gtp</td>
+	<td></td>
+	<td>0.15</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKGTP_km_gdp</td>
+	<td></td>
+	<td>0.031</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKGTP_Vmax</td>
+	<td></td>
+	<td>0.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKUTP_keq</td>
+	<td></td>
+	<td>1.0</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKUTP_km_atp</td>
+	<td></td>
+	<td>1.33</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKUTP_km_adp</td>
+	<td></td>
+	<td>0.042</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKUTP_km_utp</td>
+	<td></td>
+	<td>16.0</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKUTP_km_udp</td>
+	<td></td>
+	<td>0.19</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKUTP_Vmax</td>
+	<td></td>
+	<td>2940.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">AK_keq</td>
+	<td></td>
+	<td>0.247390074905</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">AK_km_atp</td>
+	<td></td>
+	<td>0.09</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">AK_km_amp</td>
+	<td></td>
+	<td>0.08</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">AK_km_adp</td>
+	<td></td>
+	<td>0.11</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">AK_Vmax</td>
+	<td></td>
+	<td>0.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PFK2_n_native</td>
+	<td></td>
+	<td>1.3</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PFK2_n_phospho</td>
+	<td></td>
+	<td>2.1</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PFK2_k_fru6p_native</td>
+	<td></td>
+	<td>0.016</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PFK2_k_fru6p_phospho</td>
+	<td></td>
+	<td>0.05</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PFK2_k_atp_native</td>
+	<td></td>
+	<td>0.28</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PFK2_k_atp_phospho</td>
+	<td></td>
+	<td>0.65</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PFK2_Vmax</td>
+	<td></td>
+	<td>0.0042</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PFK2_native</td>
+	<td></td>
+	<td>
+								    = scale_gly * PFK2_Vmax * pow(fru6p, PFK2_n_native) / 
+(pow(fru6p, PFK2_n_native) + pow(PFK2_k_fru6p_native, PFK2_n_native)) * 
+atp / (atp + PFK2_k_atp_native)</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PFK2_phospho</td>
+	<td></td>
+	<td>
+								    = scale_gly * PFK2_Vmax * pow(fru6p, PFK2_n_phospho) / 
+(pow(fru6p, PFK2_n_phospho) + pow(PFK2_k_fru6p_phospho, PFK2_n_phospho))
+ * atp / (atp + PFK2_k_atp_phospho)</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">FBP2_km_fru26bp_native</td>
+	<td></td>
+	<td>0.01</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">FBP2_ki_fru6p_native</td>
+	<td></td>
+	<td>0.0035</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">FBP2_km_fru26bp_phospho</td>
+	<td></td>
+	<td>0.0005</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">FBP2_ki_fru6p_phospho</td>
+	<td></td>
+	<td>0.01</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">FBP2_Vmax</td>
+	<td></td>
+	<td>0.126</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">FBP2_native</td>
+	<td></td>
+	<td>
+								    = scale_gly * FBP2_Vmax / (1 + fru6p / FBP2_ki_fru6p_native) * fru26bp / (FBP2_km_fru26bp_native + fru26bp)</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">FBP2_phospho</td>
+	<td></td>
+	<td>
+								    = scale_gly * FBP2_Vmax / (1 + fru6p / FBP2_ki_fru6p_phospho) * fru26bp / (FBP2_km_fru26bp_phospho + fru26bp)</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PFK1_km_atp</td>
+	<td></td>
+	<td>0.111</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PFK1_km_fru6p</td>
+	<td></td>
+	<td>0.077</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PFK1_ki_fru6p</td>
+	<td></td>
+	<td>0.012</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PFK1_ka_fru26bp</td>
+	<td></td>
+	<td>0.001</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PFK1_Vmax</td>
+	<td></td>
+	<td>7.182</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">FBP1_ki_fru26bp</td>
+	<td></td>
+	<td>0.001</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">FBP1_km_fru16bp</td>
+	<td></td>
+	<td>0.0013</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">FBP1_Vmax</td>
+	<td></td>
+	<td>4.326</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">ALD_keq</td>
+	<td></td>
+	<td>9.76298897363e-05</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">ALD_km_fru16bp</td>
+	<td></td>
+	<td>0.0071</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">ALD_km_dhap</td>
+	<td></td>
+	<td>0.0364</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">ALD_km_grap</td>
+	<td></td>
+	<td>0.0071</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">ALD_ki1_grap</td>
+	<td></td>
+	<td>0.0572</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">ALD_ki2_grap</td>
+	<td></td>
+	<td>0.176</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">ALD_Vmax</td>
+	<td></td>
+	<td>420.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">TPI_keq</td>
+	<td></td>
+	<td>0.0544769853868</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">TPI_km_dhap</td>
+	<td></td>
+	<td>0.59</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">TPI_km_grap</td>
+	<td></td>
+	<td>0.42</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">TPI_Vmax</td>
+	<td></td>
+	<td>420.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GAPDH_keq</td>
+	<td></td>
+	<td>0.0867798661946</td>
+	
+	<td>per_mM</td>
+	<td>litre * (10^-3*mole)^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GAPDH_k_nad</td>
+	<td></td>
+	<td>0.05</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GAPDH_k_grap</td>
+	<td></td>
+	<td>0.005</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GAPDH_k_p</td>
+	<td></td>
+	<td>3.9</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GAPDH_k_nadh</td>
+	<td></td>
+	<td>0.0083</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GAPDH_k_bpg13</td>
+	<td></td>
+	<td>0.0035</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GAPDH_Vmax</td>
+	<td></td>
+	<td>420.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PGK_keq</td>
+	<td></td>
+	<td>6.95864405249</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PGK_k_adp</td>
+	<td></td>
+	<td>0.35</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PGK_k_atp</td>
+	<td></td>
+	<td>0.48</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PGK_k_bpg13</td>
+	<td></td>
+	<td>0.002</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PGK_k_pg3</td>
+	<td></td>
+	<td>1.2</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PGK_Vmax</td>
+	<td></td>
+	<td>420.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PGM_keq</td>
+	<td></td>
+	<td>0.181375378837</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PGM_k_pg3</td>
+	<td></td>
+	<td>5.0</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PGM_k_pg2</td>
+	<td></td>
+	<td>1.0</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PGM_Vmax</td>
+	<td></td>
+	<td>420.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">EN_keq</td>
+	<td></td>
+	<td>0.0544769853868</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">EN_k_pep</td>
+	<td></td>
+	<td>1.0</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">EN_k_pg2</td>
+	<td></td>
+	<td>1.0</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">EN_Vmax</td>
+	<td></td>
+	<td>35.994</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_n</td>
+	<td></td>
+	<td>3.5</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_n_p</td>
+	<td></td>
+	<td>3.5</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_n_fbp</td>
+	<td></td>
+	<td>1.8</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_n_fbp_p</td>
+	<td></td>
+	<td>1.8</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_alpha</td>
+	<td></td>
+	<td>1.0</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_alpha_p</td>
+	<td></td>
+	<td>1.1</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_alpha_end</td>
+	<td></td>
+	<td>1.0</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_k_fbp</td>
+	<td></td>
+	<td>0.00016</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_k_fbp_p</td>
+	<td></td>
+	<td>0.00035</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_k_pep</td>
+	<td></td>
+	<td>0.58</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_k_pep_p</td>
+	<td></td>
+	<td>1.1</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_k_pep_end</td>
+	<td></td>
+	<td>0.08</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_k_adp</td>
+	<td></td>
+	<td>2.3</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_base_act</td>
+	<td></td>
+	<td>0.08</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_base_act_p</td>
+	<td></td>
+	<td>0.04</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_Vmax</td>
+	<td></td>
+	<td>46.2</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_f</td>
+	<td></td>
+	<td>
+								    = pow(fru16bp, PK_n_fbp) / (pow(PK_k_fbp, PK_n_fbp) + pow(fru16bp, PK_n_fbp))</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_f_p</td>
+	<td></td>
+	<td>
+								    = pow(fru16bp, PK_n_fbp_p) / (pow(PK_k_fbp_p, PK_n_fbp_p) + pow(fru16bp, PK_n_fbp_p))</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_alpha_inp</td>
+	<td></td>
+	<td>
+								    = (1 - PK_f) * (PK_alpha - PK_alpha_end) + PK_alpha_end</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_alpha_p_inp</td>
+	<td></td>
+	<td>
+								    = (1 - PK_f_p) * (PK_alpha_p - PK_alpha_end) + PK_alpha_end</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_pep_inp</td>
+	<td></td>
+	<td>
+								    = (1 - PK_f) * (PK_k_pep - PK_k_pep_end) + PK_k_pep_end</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_pep_p_inp</td>
+	<td></td>
+	<td>
+								    = (1 - PK_f_p) * (PK_k_pep_p - PK_k_pep_end) + PK_k_pep_end</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_native</td>
+	<td></td>
+	<td>
+								    = scale_gly * PK_Vmax * PK_alpha_inp * pow(pep, PK_n) / 
+(pow(PK_pep_inp, PK_n) + pow(pep, PK_n)) * adp / (adp + PK_k_adp) * 
+(PK_base_act + (1 - PK_base_act) * PK_f)</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PK_phospho</td>
+	<td></td>
+	<td>
+								    = scale_gly * PK_Vmax * PK_alpha_p_inp * pow(pep, PK_n_p) / 
+(pow(PK_pep_p_inp, PK_n_p) + pow(pep, PK_n_p)) * adp / (adp + PK_k_adp) *
+ (PK_base_act_p + (1 - PK_base_act_p) * PK_f_p)</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PEPCK_keq</td>
+	<td></td>
+	<td>336.956521586</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PEPCK_k_pep</td>
+	<td></td>
+	<td>0.237</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PEPCK_k_gdp</td>
+	<td></td>
+	<td>0.0921</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PEPCK_k_co2</td>
+	<td></td>
+	<td>25.5</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PEPCK_k_oaa</td>
+	<td></td>
+	<td>0.0055</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PEPCK_k_gtp</td>
+	<td></td>
+	<td>0.0222</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PEPCK_Vmax</td>
+	<td></td>
+	<td>0.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PEPCKM_Vmax</td>
+	<td></td>
+	<td>546.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PC_k_atp</td>
+	<td></td>
+	<td>0.22</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PC_k_pyr</td>
+	<td></td>
+	<td>0.22</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PC_k_co2</td>
+	<td></td>
+	<td>3.2</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PC_k_acoa</td>
+	<td></td>
+	<td>0.015</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PC_n</td>
+	<td></td>
+	<td>2.5</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PC_Vmax</td>
+	<td></td>
+	<td>168.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">LDH_keq</td>
+	<td></td>
+	<td>0.000278321076005</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">LDH_k_pyr</td>
+	<td></td>
+	<td>0.495</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">LDH_k_lac</td>
+	<td></td>
+	<td>31.98</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">LDH_k_nad</td>
+	<td></td>
+	<td>0.984</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">LDH_k_nadh</td>
+	<td></td>
+	<td>0.027</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">LDH_Vmax</td>
+	<td></td>
+	<td>12.6</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">LACT_keq</td>
+	<td></td>
+	<td>1.0</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">LACT_k_lac</td>
+	<td></td>
+	<td>0.8</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">LACT_Vmax</td>
+	<td></td>
+	<td>5.418</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PYRTM_keq</td>
+	<td></td>
+	<td>1.0</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PYRTM_k_pyr</td>
+	<td></td>
+	<td>0.1</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PYRTM_Vmax</td>
+	<td></td>
+	<td>42.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PEPTM_keq</td>
+	<td></td>
+	<td>1.0</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PEPTM_k_pep</td>
+	<td></td>
+	<td>0.1</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PEPTM_Vmax</td>
+	<td></td>
+	<td>33.6</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PDH_k_pyr</td>
+	<td></td>
+	<td>0.025</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PDH_k_coa</td>
+	<td></td>
+	<td>0.013</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PDH_k_nad</td>
+	<td></td>
+	<td>0.05</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PDH_ki_acoa</td>
+	<td></td>
+	<td>0.035</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PDH_ki_nadh</td>
+	<td></td>
+	<td>0.036</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PDH_alpha_nat</td>
+	<td></td>
+	<td>5.0</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PDH_alpha_p</td>
+	<td></td>
+	<td>1.0</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PDH_Vmax</td>
+	<td></td>
+	<td>13.44</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PDH_base</td>
+	<td></td>
+	<td>
+								    = scale_gly * PDH_Vmax * pyr_mito / (pyr_mito + PDH_k_pyr) *
+ nad_mito / (nad_mito + PDH_k_nad * (1 + nadh_mito / PDH_ki_nadh)) * 
+coa_mito / (coa_mito + PDH_k_coa * (1 + acoa_mito / PDH_ki_acoa))</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PDH_nat</td>
+	<td></td>
+	<td>
+								    = PDH_base * PDH_alpha_nat</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">PDH_p</td>
+	<td></td>
+	<td>
+								    = PDH_base * PDH_alpha_p</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">CS_keq</td>
+	<td></td>
+	<td>266599.030843</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">CS_k_oaa</td>
+	<td></td>
+	<td>0.002</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">CS_k_acoa</td>
+	<td></td>
+	<td>0.016</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">CS_k_cit</td>
+	<td></td>
+	<td>0.42</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">CS_k_coa</td>
+	<td></td>
+	<td>0.07</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">CS_Vmax</td>
+	<td></td>
+	<td>4.2</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKGTPM_keq</td>
+	<td></td>
+	<td>1.0</td>
+	
+	<td>dimensionless</td>
+	<td>dimensionless</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKGTPM_k_atp</td>
+	<td></td>
+	<td>1.33</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKGTPM_k_adp</td>
+	<td></td>
+	<td>0.042</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKGTPM_k_gtp</td>
+	<td></td>
+	<td>0.15</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKGTPM_k_gdp</td>
+	<td></td>
+	<td>0.031</td>
+	
+	<td>mM</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">NDKGTPM_Vmax</td>
+	<td></td>
+	<td>420.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">OAAFLX_Vmax</td>
+	<td></td>
+	<td>0.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">ACOAFLX_Vmax</td>
+	<td></td>
+	<td>0.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">CITFLX_Vmax</td>
+	<td></td>
+	<td>0.0</td>
+	
+	<td>mmol_per_s</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td class=" success ">True</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">HGP</td>
+	<td></td>
+	<td>
+								    = GLUT2 * conversion_factor</td>
+	
+	<td>mumol_per_min_kg</td>
+	<td>kg^-1 * (10^-6*mole)^1 * (6.0*10^1*s)^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GNG</td>
+	<td></td>
+	<td>
+								    = GPI * conversion_factor</td>
+	
+	<td>mumol_per_min_kg</td>
+	<td>kg^-1 * (10^-6*mole)^1 * (6.0*10^1*s)^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Parameter</td>
+	<td class="active">GLY</td>
+	<td></td>
+	<td>
+								    = -G16PI * conversion_factor</td>
+	
+	<td>mumol_per_min_kg</td>
+	<td>kg^-1 * (10^-6*mole)^1 * (6.0*10^1*s)^-1</td>
+	<td class=" danger ">False</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr></tbody>
+        </table><div class="bottom"></div><div class="clear"></div></div>
+        <hr>
+    
+    <!--------------------------------------------------->
+    <!-- InitialAssignments -->
+    <!--------------------------------------------------->
+    
+        <a class="anchor" id="InitialAssignments"></a>
+        <div class="dataTables_wrapper form-inline dt-bootstrap no-footer" id="table_assignments_wrapper"><div class="top"></div><table role="grid" id="table_assignments" class="table table-condensed table-nonfluid dataTable no-footer">
+            <thead>
+            <tr role="row"><th aria-label="type: activate to sort column descending" aria-sort="ascending" style="width: 0px;" colspan="1" rowspan="1" aria-controls="table_assignments" tabindex="0" scope="col" class="hidden sorting_asc">type</th><th aria-label="InitialAssignments [12]: activate to sort column ascending" style="width: 133px;" colspan="1" rowspan="1" aria-controls="table_assignments" tabindex="0" scope="col" class="warning sorting">InitialAssignments [12]</th><th aria-label="&amp;nbsp;: activate to sort column ascending" style="width: 4px;" colspan="1" rowspan="1" aria-controls="table_assignments" tabindex="0" class="sorting" scope="col">&nbsp;</th><th aria-label="assignment: activate to sort column ascending" style="width: 188px;" colspan="1" rowspan="1" aria-controls="table_assignments" tabindex="0" class="sorting" scope="col">assignment</th><th aria-label="derived units: activate to sort column ascending" style="width: 112px;" colspan="1" rowspan="1" aria-controls="table_assignments" tabindex="0" class="sorting" scope="col">derived units</th><th aria-label="sbo: activate to sort column ascending" style="width: 24px;" colspan="1" rowspan="1" aria-controls="table_assignments" tabindex="0" class="sorting" scope="col">sbo</th><th aria-label="cvterm: activate to sort column ascending" style="width: 45px;" colspan="1" rowspan="1" aria-controls="table_assignments" tabindex="0" class="sorting" scope="col">cvterm</th></tr>
+            </thead>
+            <tbody>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+            <tr class="odd" role="row">
+    <td class="hidden sorting_1">InitialAssignment</td>
+	<td class="active">extern</td>
+	<td>=</td>
+	<td>10 * Vcyto</td>
+	<td>litre</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">InitialAssignment</td>
+	<td class="active">cyto</td>
+	<td>=</td>
+	<td>Vcyto</td>
+	<td>litre</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">InitialAssignment</td>
+	<td class="active">mito</td>
+	<td>=</td>
+	<td>0.2 * Vcyto</td>
+	<td>litre</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">InitialAssignment</td>
+	<td class="active">conversion_factor</td>
+	<td>=</td>
+	<td>fliver * Vliver / Vcyto * sec_per_min * 1000 / bodyweight</td>
+	<td>(60.0*10^0*kg)^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">InitialAssignment</td>
+	<td class="active">K_ins</td>
+	<td>=</td>
+	<td>(x_ins1 - x_ins2) * K_val</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">InitialAssignment</td>
+	<td class="active">K_glu</td>
+	<td>=</td>
+	<td>(x_glu1 - x_glu2) * K_val</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">InitialAssignment</td>
+	<td class="active">K_epi</td>
+	<td>=</td>
+	<td>(x_epi1 - x_epi2) * K_val</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">InitialAssignment</td>
+	<td class="active">scale</td>
+	<td>=</td>
+	<td>1 / 60</td>
+	<td>dimensionless^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">InitialAssignment</td>
+	<td class="active">scale_gly</td>
+	<td>=</td>
+	<td>scale</td>
+	<td>dimensionless</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">InitialAssignment</td>
+	<td class="active">scale_glyglc</td>
+	<td>=</td>
+	<td>scale</td>
+	<td>dimensionless</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">InitialAssignment</td>
+	<td class="active">GP_C</td>
+	<td>=</td>
+	<td>GS_C</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">InitialAssignment</td>
+	<td class="active">GP_k1_max</td>
+	<td>=</td>
+	<td>GS_k1_max</td>
+	<td>dimensionless</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr></tbody>
+        </table><div class="bottom"></div><div class="clear"></div></div>
+        <hr>
+    
+    <!--------------------------------------------------->
+    <!-- Rules -->
+    <!--------------------------------------------------->
+    
+        <a class="anchor" id="Rules"></a>
+        <div class="dataTables_wrapper form-inline dt-bootstrap no-footer" id="table_rules_wrapper"><div class="top"></div><table role="grid" id="table_rules" class="table table-condensed table-nonfluid dataTable no-footer">
+            <thead>
+            <tr role="row"><th aria-label="type: activate to sort column descending" aria-sort="ascending" style="width: 0px;" colspan="1" rowspan="1" aria-controls="table_rules" tabindex="0" scope="col" class="hidden sorting_asc">type</th><th aria-label="Rules [43]: activate to sort column ascending" style="width: 125px;" colspan="1" rowspan="1" aria-controls="table_rules" tabindex="0" scope="col" class="warning sorting">Rules [43]</th><th aria-label="&amp;nbsp;: activate to sort column ascending" style="width: 4px;" colspan="1" rowspan="1" aria-controls="table_rules" tabindex="0" class="sorting" scope="col">&nbsp;</th><th aria-label="assignment: activate to sort column ascending" style="width: 195px;" colspan="1" rowspan="1" aria-controls="table_rules" tabindex="0" class="sorting" scope="col">assignment</th><th aria-label="derived units: activate to sort column ascending" style="width: 113px;" colspan="1" rowspan="1" aria-controls="table_rules" tabindex="0" class="sorting" scope="col">derived units</th><th aria-label="sbo: activate to sort column ascending" style="width: 24px;" colspan="1" rowspan="1" aria-controls="table_rules" tabindex="0" class="sorting" scope="col">sbo</th><th aria-label="cvterm: activate to sort column ascending" style="width: 45px;" colspan="1" rowspan="1" aria-controls="table_rules" tabindex="0" class="sorting" scope="col">cvterm</th></tr>
+            </thead>
+            <tbody>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+            <tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">nadh_tot</td>
+	<td>=</td>
+	<td>nadh + nad</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">atp_tot</td>
+	<td>=</td>
+	<td>atp + adp + amp</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">utp_tot</td>
+	<td>=</td>
+	<td>utp + udp + udpglc</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">gtp_tot</td>
+	<td>=</td>
+	<td>gtp + gdp</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">nadh_mito_tot</td>
+	<td>=</td>
+	<td>nadh_mito + nad_mito</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">atp_mito_tot</td>
+	<td>=</td>
+	<td>atp_mito + adp_mito</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">gtp_mito_tot</td>
+	<td>=</td>
+	<td>gtp_mito + gdp_mito</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">ins</td>
+	<td>=</td>
+	<td>x_ins2 + (x_ins1 - x_ins2) * pow(glc_ext, x_ins4) / (pow(glc_ext, x_ins4) + pow(x_ins3, x_ins4))</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">ins_norm</td>
+	<td>=</td>
+	<td>maximum(0, ins - x_ins2)</td>
+	<td></td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">glu</td>
+	<td>=</td>
+	<td>x_glu2 + (x_glu1 - x_glu2) * (1 - pow(glc_ext, x_glu4) / (pow(glc_ext, x_glu4) + pow(x_glu3, x_glu4)))</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">glu_norm</td>
+	<td>=</td>
+	<td>maximum(0, glu - x_glu2)</td>
+	<td></td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">epi</td>
+	<td>=</td>
+	<td>x_epi2 + (x_epi1 - x_epi2) * (1 - pow(glc_ext, x_epi4) / (pow(glc_ext, x_epi4) + pow(x_epi3, x_epi4)))</td>
+	<td>litre^-1 * (10^-12*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">epi_norm</td>
+	<td>=</td>
+	<td>maximum(0, epi - x_epi2)</td>
+	<td></td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">gamma</td>
+	<td>=</td>
+	<td>0.5 * (1 - ins_norm / (ins_norm + K_ins) + maximum(glu_norm / (glu_norm + K_glu), epi_f * epi_norm / (epi_norm + K_epi)))</td>
+	<td>dimensionless</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">GK_gc_free</td>
+	<td>=</td>
+	<td>pow(glc, GK_n_gkrp) / (pow(glc, GK_n_gkrp) + pow(GK_km_glc1, GK_n_gkrp)) * (1 - GK_b * fru6p / (fru6p + GK_km_fru6p))</td>
+	<td>dimensionless</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">GS_storage_factor</td>
+	<td>=</td>
+	<td>(1 + GS_k1_max) * (GS_C - glyglc) / (GS_C - glyglc + GS_k1_max * GS_C)</td>
+	<td>dimensionless</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">GS_k_udpglc_native</td>
+	<td>=</td>
+	<td>GS_k1_nat / (glc6p + GS_k2_nat)</td>
+	<td>litre^-1 * 0.001*mole</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">GS_k_udpglc_phospho</td>
+	<td>=</td>
+	<td>GS_k1_phospho / (glc6p + GS_k2_phospho)</td>
+	<td>litre^-1 * 0.001*mole</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">GS_native</td>
+	<td>=</td>
+	<td>scale_glyglc * GS_Vmax * GS_storage_factor * udpglc / (GS_k_udpglc_native + udpglc)</td>
+	<td>0.001*mole * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">GS_phospho</td>
+	<td>=</td>
+	<td>scale_glyglc * GS_Vmax * GS_storage_factor * udpglc / (GS_k_udpglc_phospho + udpglc)</td>
+	<td>0.001*mole * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">GP_fmax</td>
+	<td>=</td>
+	<td>(1 + GP_k1_max) * glyglc / (glyglc + GP_k1_max * GP_C)</td>
+	<td>dimensionless</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">GP_vmax_native</td>
+	<td>=</td>
+	<td>scale_glyglc * GP_Vmax * GP_fmax * (GP_base_amp_native + 
+(GP_max_amp_native - GP_base_amp_native) * amp / (amp + 
+GP_ka_amp_native))</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">GP_native</td>
+	<td>=</td>
+	<td>GP_vmax_native / (GP_k_glyc_native * GP_k_p_native) * (glyglc * 
+phos - glc1p / GP_keq) / ((1 + glyglc / GP_k_glyc_native) * (1 + phos / 
+GP_k_p_native) + 1 + glc1p / GP_k_glc1p_native - 1)</td>
+	<td>0.001*mole * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">GP_vmax_phospho</td>
+	<td>=</td>
+	<td>scale_glyglc * GP_Vmax * GP_fmax * exp(-log(2) / GP_ki_glc_phospho * glc)</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">GP_phospho</td>
+	<td>=</td>
+	<td>GP_vmax_phospho / (GP_k_glyc_phospho * GP_k_p_phospho) * (glyglc * 
+phos - glc1p / GP_keq) / ((1 + glyglc / GP_k_glyc_phospho) * (1 + phos /
+ GP_k_p_phospho) + 1 + glc1p / GP_k_glc1p_phospho - 1)</td>
+	<td>0.001*mole * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">PFK2_native</td>
+	<td>=</td>
+	<td>scale_gly * PFK2_Vmax * pow(fru6p, PFK2_n_native) / (pow(fru6p, 
+PFK2_n_native) + pow(PFK2_k_fru6p_native, PFK2_n_native)) * atp / (atp +
+ PFK2_k_atp_native)</td>
+	<td>(0.001*10^0*mole)^0 * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">PFK2_phospho</td>
+	<td>=</td>
+	<td>scale_gly * PFK2_Vmax * pow(fru6p, PFK2_n_phospho) / (pow(fru6p, 
+PFK2_n_phospho) + pow(PFK2_k_fru6p_phospho, PFK2_n_phospho)) * atp / 
+(atp + PFK2_k_atp_phospho)</td>
+	<td>0.001*mole * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">FBP2_native</td>
+	<td>=</td>
+	<td>scale_gly * FBP2_Vmax / (1 + fru6p / FBP2_ki_fru6p_native) * fru26bp / (FBP2_km_fru26bp_native + fru26bp)</td>
+	<td>0.001*mole * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">FBP2_phospho</td>
+	<td>=</td>
+	<td>scale_gly * FBP2_Vmax / (1 + fru6p / FBP2_ki_fru6p_phospho) * fru26bp / (FBP2_km_fru26bp_phospho + fru26bp)</td>
+	<td>0.001*mole * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">PK_f</td>
+	<td>=</td>
+	<td>pow(fru16bp, PK_n_fbp) / (pow(PK_k_fbp, PK_n_fbp) + pow(fru16bp, PK_n_fbp))</td>
+	<td>dimensionless</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">PK_f_p</td>
+	<td>=</td>
+	<td>pow(fru16bp, PK_n_fbp_p) / (pow(PK_k_fbp_p, PK_n_fbp_p) + pow(fru16bp, PK_n_fbp_p))</td>
+	<td>dimensionless</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">PK_alpha_inp</td>
+	<td>=</td>
+	<td>(1 - PK_f) * (PK_alpha - PK_alpha_end) + PK_alpha_end</td>
+	<td>dimensionless</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">PK_alpha_p_inp</td>
+	<td>=</td>
+	<td>(1 - PK_f_p) * (PK_alpha_p - PK_alpha_end) + PK_alpha_end</td>
+	<td>dimensionless</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">PK_pep_inp</td>
+	<td>=</td>
+	<td>(1 - PK_f) * (PK_k_pep - PK_k_pep_end) + PK_k_pep_end</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">PK_pep_p_inp</td>
+	<td>=</td>
+	<td>(1 - PK_f_p) * (PK_k_pep_p - PK_k_pep_end) + PK_k_pep_end</td>
+	<td>litre^-1 * (10^-3*mole)^1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">PK_native</td>
+	<td>=</td>
+	<td>scale_gly * PK_Vmax * PK_alpha_inp * pow(pep, PK_n) / 
+(pow(PK_pep_inp, PK_n) + pow(pep, PK_n)) * adp / (adp + PK_k_adp) * 
+(PK_base_act + (1 - PK_base_act) * PK_f)</td>
+	<td>litre^-1 * (0.001*10^0*mole)^2 * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">PK_phospho</td>
+	<td>=</td>
+	<td>scale_gly * PK_Vmax * PK_alpha_p_inp * pow(pep, PK_n_p) / 
+(pow(PK_pep_p_inp, PK_n_p) + pow(pep, PK_n_p)) * adp / (adp + PK_k_adp) *
+ (PK_base_act_p + (1 - PK_base_act_p) * PK_f_p)</td>
+	<td>litre^-1 * (0.001*10^0*mole)^2 * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">PDH_base</td>
+	<td>=</td>
+	<td>scale_gly * PDH_Vmax * pyr_mito / (pyr_mito + PDH_k_pyr) * nad_mito
+ / (nad_mito + PDH_k_nad * (1 + nadh_mito / PDH_ki_nadh)) * coa_mito / 
+(coa_mito + PDH_k_coa * (1 + acoa_mito / PDH_ki_acoa))</td>
+	<td>0.001*mole * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">PDH_nat</td>
+	<td>=</td>
+	<td>PDH_base * PDH_alpha_nat</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">PDH_p</td>
+	<td>=</td>
+	<td>PDH_base * PDH_alpha_p</td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">HGP</td>
+	<td>=</td>
+	<td>GLUT2 * conversion_factor</td>
+	<td>(60.0*10^0*kg)^-1 * (10^-3*mole)^1 * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">GNG</td>
+	<td>=</td>
+	<td>GPI * conversion_factor</td>
+	<td>(60.0*10^0*kg)^-1 * (10^-3*mole)^1 * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Rule</td>
+	<td class="active">GLY</td>
+	<td>=</td>
+	<td>-G16PI * conversion_factor</td>
+	<td>(60.0*10^0*kg)^-1 * (10^-3*mole)^1 * s^-1</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr></tbody>
+        </table><div class="bottom"></div><div class="clear"></div></div>
+        <hr>
+    
+    <!--------------------------------------------------->
+    <!-- Constraints -->
+    <!--------------------------------------------------->
+    
+    <!--------------------------------------------------->
+    <!-- Reactions -->
+    <!--------------------------------------------------->
+    
+        <a class="anchor" id="Reactions"></a>
+        <div class="dataTables_wrapper form-inline dt-bootstrap no-footer" id="table_reactions_wrapper"><div class="top"></div><table role="grid" id="table_reactions" class="table table-condensed table-nonfluid dataTable no-footer">
+            <thead>
+            <tr role="row"><th aria-label="type: activate to sort column descending" aria-sort="ascending" style="width: 0px;" colspan="1" rowspan="1" aria-controls="table_reactions" tabindex="0" scope="col" class="hidden sorting_asc">type</th><th aria-label="Reactions [36]: activate to sort column ascending" style="width: 64px;" colspan="1" rowspan="1" aria-controls="table_reactions" tabindex="0" scope="col" class="warning sorting">Reactions [36]</th><th aria-label="name: activate to sort column ascending" style="width: 116px;" colspan="1" rowspan="1" aria-controls="table_reactions" tabindex="0" class="sorting" scope="col">name</th><th aria-label="reversibility: activate to sort column ascending" style="width: 75px;" colspan="1" rowspan="1" aria-controls="table_reactions" tabindex="0" class="sorting" scope="col">reversibility</th><th aria-label="equation: activate to sort column ascending" style="width: 56px;" colspan="1" rowspan="1" aria-controls="table_reactions" tabindex="0" class="sorting" scope="col">equation</th><th aria-label="modifiers: activate to sort column ascending" style="width: 61px;" colspan="1" rowspan="1" aria-controls="table_reactions" tabindex="0" class="sorting" scope="col">modifiers</th><th aria-label="derived units: activate to sort column ascending" style="width: 76px;" colspan="1" rowspan="1" aria-controls="table_reactions" tabindex="0" class="sorting" scope="col">derived units</th><th aria-label="formula: activate to sort column ascending" style="width: 121px;" colspan="1" rowspan="1" aria-controls="table_reactions" tabindex="0" class="sorting" scope="col">formula</th><th aria-label="sbo: activate to sort column ascending" style="width: 24px;" colspan="1" rowspan="1" aria-controls="table_reactions" tabindex="0" class="sorting" scope="col">sbo</th><th aria-label="cvterm: activate to sort column ascending" style="width: 184px;" colspan="1" rowspan="1" aria-controls="table_reactions" tabindex="0" class="sorting" scope="col">cvterm</th></tr>
+            </thead>
+            <tbody>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+            <tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">GLUT2</td>
+	<td>GLUT2 glucose transporter</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>glc_ext &lt;=&gt; glc</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>scale_gly * GLUT2_Vmax / GLUT2_km * (glc_ext - glc / GLUT2_keq) / (1 + glc_ext / GLUT2_km + glc / GLUT2_km)</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">GK</td>
+	<td>Glucokinase</td>
+	
+	<td class="danger">&nbsp;=&gt;</td>
+	<td>glc + atp =&gt; glc6p + adp</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * GK_Vmax * GK_gc_free * atp / (GK_km_atp + atp) * pow(glc, GK_n) / (pow(glc, GK_n) + pow(GK_km_glc, GK_n))</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:2.7.1.2" target="_blank">urn:miriam:ec-code:2.7.1.2</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00299" target="_blank">urn:miriam:kegg.reaction:R00299</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">G6PASE</td>
+	<td>D-Glucose-6-phosphate Phosphatase</td>
+	
+	<td class="danger">&nbsp;=&gt;</td>
+	<td>glc6p + h2o =&gt; glc + phos</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * G6PASE_Vmax * glc6p / (G6PASE_km_glc6p + glc6p)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:3.1.3.9" target="_blank">urn:miriam:ec-code:3.1.3.9</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00303" target="_blank">urn:miriam:kegg.reaction:R00303</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">GPI</td>
+	<td>D-Glucose-6-phosphate Isomerase</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>glc6p &lt;=&gt; fru6p</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>scale_gly * GPI_Vmax / GPI_km_glc6p * (glc6p - fru6p / GPI_keq) / (1 + glc6p / GPI_km_glc6p + fru6p / GPI_km_fru6p)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:5.3.1.9" target="_blank">urn:miriam:ec-code:5.3.1.9</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00771" target="_blank">urn:miriam:kegg.reaction:R00771</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">G16PI</td>
+	<td>Glucose 1-phosphate 1,6-phosphomutase</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>glc1p &lt;=&gt; glc6p</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>scale_glyglc * G16PI_Vmax / G16PI_km_glc1p * (glc1p - glc6p / G16PI_keq) / (1 + glc1p / G16PI_km_glc1p + glc6p / G16PI_km_glc6p)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:5.4.2.2" target="_blank">urn:miriam:ec-code:5.4.2.2</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00959" target="_blank">urn:miriam:kegg.reaction:R00959</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">UPGASE</td>
+	<td>UTP:Glucose-1-phosphate uridylyltransferase</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>utp + glc1p &lt;=&gt; udpglc + pp</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_glyglc * UPGASE_Vmax / (UPGASE_km_utp * UPGASE_km_glc1p) * 
+(utp * glc1p - udpglc * pp / UPGASE_keq) / ((1 + utp / UPGASE_km_utp) * 
+(1 + glc1p / UPGASE_km_glc1p) + (1 + udpglc / UPGASE_km_udpglc) * (1 + 
+pp / UPGASE_km_pp) - 1)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:2.7.7.9" target="_blank">urn:miriam:ec-code:2.7.7.9</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00289" target="_blank">urn:miriam:kegg.reaction:R00289</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">PPASE</td>
+	<td>Pyrophosphate phosphohydrolase</td>
+	
+	<td class="danger">&nbsp;=&gt;</td>
+	<td>pp + h2o =&gt; 2.0 phos</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_glyglc * PPASE_Vmax * pp / (pp + PPASE_km_pp)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:3.6.1.1" target="_blank">urn:miriam:ec-code:3.6.1.1</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00004" target="_blank">urn:miriam:kegg.reaction:R00004</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">GS</td>
+	<td>Glycogen synthase</td>
+	
+	<td class="danger">&nbsp;=&gt;</td>
+	<td>udpglc =&gt; udp + glyglc</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>(1 - gamma) * GS_native + gamma * GS_phospho</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">GP</td>
+	<td>Glycogen-Phosphorylase</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>glyglc + phos &lt;=&gt; glc1p</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>(1 - gamma) * GP_native + gamma * GP_phospho</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">NDKGTP</td>
+	<td>Nucleoside-diphosphate kinase (ATP, GTP)</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>atp + gdp &lt;=&gt; adp + gtp</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * NDKGTP_Vmax / (NDKGTP_km_atp * NDKGTP_km_gdp) * (atp * 
+gdp - adp * gtp / NDKGTP_keq) / ((1 + atp / NDKGTP_km_atp) * (1 + gdp / 
+NDKGTP_km_gdp) + (1 + adp / NDKGTP_km_adp) * (1 + gtp / NDKGTP_km_gtp) -
+ 1)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:2.7.4.6" target="_blank">urn:miriam:ec-code:2.7.4.6</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00330" target="_blank">urn:miriam:kegg.reaction:R00330</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">NDKUTP</td>
+	<td>Nucleoside-diphosphate kinase (ATP, UTP)</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>atp + udp &lt;=&gt; adp + utp</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_glyglc * NDKUTP_Vmax / (NDKUTP_km_atp * NDKUTP_km_udp) * (atp
+ * udp - adp * utp / NDKUTP_keq) / ((1 + atp / NDKUTP_km_atp) * (1 + udp
+ / NDKUTP_km_udp) + (1 + adp / NDKUTP_km_adp) * (1 + utp / 
+NDKUTP_km_utp) - 1)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:2.7.4.6" target="_blank">urn:miriam:ec-code:2.7.4.6</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00156" target="_blank">urn:miriam:kegg.reaction:R00156</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">AK</td>
+	<td>ATP:AMP phosphotransferase (Adenylatkinase)</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>atp + amp &lt;=&gt; 2.0 adp</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * AK_Vmax / (AK_km_atp * AK_km_amp) * (atp * amp - adp * 
+adp / AK_keq) / ((1 + atp / AK_km_atp) * (1 + amp / AK_km_amp) + (1 + 
+adp / AK_km_adp) * (1 + adp / AK_km_adp) - 1)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:2.7.4.3" target="_blank">urn:miriam:ec-code:2.7.4.3</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00127" target="_blank">urn:miriam:kegg.reaction:R00127</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">PFK2</td>
+	<td>ATP:D-fructose-6-phosphate 2-phosphotransferase</td>
+	
+	<td class="danger">&nbsp;=&gt;</td>
+	<td>fru6p + atp =&gt; fru26bp + adp</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>(1 - gamma) * PFK2_native + gamma * PFK2_phospho</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:2.7.1.105" target="_blank">urn:miriam:ec-code:2.7.1.105</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R02732" target="_blank">urn:miriam:kegg.reaction:R02732</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">FBP2</td>
+	<td>D-Fructose-2,6-bisphosphate 2-phosphohydrolase</td>
+	
+	<td class="danger">&nbsp;=&gt;</td>
+	<td>fru26bp =&gt; fru6p + phos</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>(1 - gamma) * FBP2_native + gamma * FBP2_phospho</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:3.1.3.46" target="_blank">urn:miriam:ec-code:3.1.3.46</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R02731" target="_blank">urn:miriam:kegg.reaction:R02731</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">PFK1</td>
+	<td>ATP:D-fructose-6-phosphate 1-phosphotransferase</td>
+	
+	<td class="danger">&nbsp;=&gt;</td>
+	<td>fru6p + atp =&gt; fru16bp + adp</td>
+	<td>
+						fru26bp<br>
+		 </td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * PFK1_Vmax * (1 - 1 / (1 + fru26bp / PFK1_ka_fru26bp)) *
+ fru6p * atp / (PFK1_ki_fru6p * PFK1_km_atp + PFK1_km_fru6p * atp + 
+PFK1_km_atp * fru6p + atp * fru6p)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:2.7.1.11" target="_blank">urn:miriam:ec-code:2.7.1.11</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00756" target="_blank">urn:miriam:kegg.reaction:R00756</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">FBP1</td>
+	<td>D-Fructose-1,6-bisphosphate 1-phosphohydrolase</td>
+	
+	<td class="danger">&nbsp;=&gt;</td>
+	<td>fru16bp + h2o =&gt; fru6p + phos</td>
+	<td>
+						fru26bp<br>
+		 </td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * FBP1_Vmax / (1 + fru26bp / FBP1_ki_fru26bp) * fru16bp / (fru16bp + FBP1_km_fru16bp)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:3.1.3.11" target="_blank">urn:miriam:ec-code:3.1.3.11</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00762" target="_blank">urn:miriam:kegg.reaction:R00762</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">ALD</td>
+	<td>Aldolase</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>fru16bp &lt;=&gt; grap + dhap</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>scale_gly * ALD_Vmax / ALD_km_fru16bp * (fru16bp - grap * dhap / 
+ALD_keq) / (1 + fru16bp / ALD_km_fru16bp + grap / ALD_ki1_grap + dhap * 
+(grap + ALD_km_grap) / (ALD_km_dhap * ALD_ki1_grap) + fru16bp * grap / 
+(ALD_km_fru16bp * ALD_ki2_grap))</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:4.1.2.13" target="_blank">urn:miriam:ec-code:4.1.2.13</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R01068" target="_blank">urn:miriam:kegg.reaction:R01068</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">TPI</td>
+	<td>Triosephosphate Isomerase</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>dhap &lt;=&gt; grap</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>scale_gly * TPI_Vmax / TPI_km_dhap * (dhap - grap / TPI_keq) / (1 + dhap / TPI_km_dhap + grap / TPI_km_grap)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:5.3.1.1" target="_blank">urn:miriam:ec-code:5.3.1.1</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R01015" target="_blank">urn:miriam:kegg.reaction:R01015</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">GAPDH</td>
+	<td>D-Glyceraldehyde-3-phosphate:NAD+ oxidoreductase</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>grap + phos + nad &lt;=&gt; bpg13 + nadh + h</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * GAPDH_Vmax / (GAPDH_k_nad * GAPDH_k_grap * GAPDH_k_p) *
+ (nad * grap * phos - bpg13 * nadh / GAPDH_keq) / ((1 + nad / 
+GAPDH_k_nad) * (1 + grap / GAPDH_k_grap) * (1 + phos / GAPDH_k_p) + (1 +
+ nadh / GAPDH_k_nadh) * (1 + bpg13 / GAPDH_k_bpg13) - 1)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:1.2.1.12" target="_blank">urn:miriam:ec-code:1.2.1.12</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R01061" target="_blank">urn:miriam:kegg.reaction:R01061</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">PGK</td>
+	<td>Phosphoglycerate Kinase</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>adp + bpg13 &lt;=&gt; atp + pg3</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * PGK_Vmax / (PGK_k_adp * PGK_k_bpg13) * (adp * bpg13 - 
+atp * pg3 / PGK_keq) / ((1 + adp / PGK_k_adp) * (1 + bpg13 / 
+PGK_k_bpg13) + (1 + atp / PGK_k_atp) * (1 + pg3 / PGK_k_pg3) - 1)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:2.7.2.3" target="_blank">urn:miriam:ec-code:2.7.2.3</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R01512" target="_blank">urn:miriam:kegg.reaction:R01512</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">PGM</td>
+	<td>2-Phospho-D-glycerate 2,3-phosphomutase</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>pg3 &lt;=&gt; pg2</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * PGM_Vmax * (pg3 - pg2 / PGM_keq) / (pg3 + PGM_k_pg3 * (1 + pg2 / PGM_k_pg2))</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:5.4.2.1" target="_blank">urn:miriam:ec-code:5.4.2.1</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R01518" target="_blank">urn:miriam:kegg.reaction:R01518</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">EN</td>
+	<td>2-Phospho-D-glucerate hydro-lyase (enolase)</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>pg2 &lt;=&gt; pep</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * EN_Vmax * (pg2 - pep / EN_keq) / (pg2 + EN_k_pg2 * (1 + pep / EN_k_pep))</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:4.2.1.11" target="_blank">urn:miriam:ec-code:4.2.1.11</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00658" target="_blank">urn:miriam:kegg.reaction:R00658</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">PK</td>
+	<td>Pyruvatkinase</td>
+	
+	<td class="danger">&nbsp;=&gt;</td>
+	<td>pep + adp =&gt; pyr + atp</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>(1 - gamma) * PK_native + gamma * PK_phospho</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:2.7.1.40" target="_blank">urn:miriam:ec-code:2.7.1.40</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00200" target="_blank">urn:miriam:kegg.reaction:R00200</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">PEPCK</td>
+	<td>PEPCK cyto</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>oaa + gtp &lt;=&gt; pep + gdp + co2</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * PEPCK_Vmax / (PEPCK_k_oaa * PEPCK_k_gtp) * (oaa * gtp -
+ pep * gdp * co2 / PEPCK_keq) / ((1 + oaa / PEPCK_k_oaa) * (1 + gtp / 
+PEPCK_k_gtp) + (1 + pep / PEPCK_k_pep) * (1 + gdp / PEPCK_k_gdp) * (1 + 
+co2 / PEPCK_k_co2) - 1)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:4.1.1.32" target="_blank">urn:miriam:ec-code:4.1.1.32</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00431" target="_blank">urn:miriam:kegg.reaction:R00431</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">PEPCKM</td>
+	<td>PEPCK mito</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>oaa_mito + gtp_mito &lt;=&gt; pep_mito + gdp_mito + co2_mito</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * PEPCKM_Vmax / (PEPCK_k_oaa * PEPCK_k_gtp) * (oaa_mito *
+ gtp_mito - pep_mito * gdp_mito * co2_mito / PEPCK_keq) / ((1 + oaa_mito
+ / PEPCK_k_oaa) * (1 + gtp_mito / PEPCK_k_gtp) + (1 + pep_mito / 
+PEPCK_k_pep) * (1 + gdp_mito / PEPCK_k_gdp) * (1 + co2_mito / 
+PEPCK_k_co2) - 1)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:4.1.1.32" target="_blank">urn:miriam:ec-code:4.1.1.32</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00431" target="_blank">urn:miriam:kegg.reaction:R00431</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">PC</td>
+	<td>Pyruvate Carboxylase</td>
+	
+	<td class="danger">&nbsp;=&gt;</td>
+	<td>atp_mito + pyr_mito + co2_mito =&gt; oaa_mito + adp_mito + phos_mito</td>
+	<td>
+						acoa_mito<br>
+		 </td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * PC_Vmax * atp_mito / (PC_k_atp + atp_mito) * pyr_mito /
+ (PC_k_pyr + pyr_mito) * co2_mito / (PC_k_co2 + co2_mito) * 
+pow(acoa_mito, PC_n) / (pow(acoa_mito, PC_n) + pow(PC_k_acoa, PC_n))</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:6.4.1.1" target="_blank">urn:miriam:ec-code:6.4.1.1</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00344" target="_blank">urn:miriam:kegg.reaction:R00344</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">LDH</td>
+	<td>Lactate Dehydrogenase</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>pyr + nadh &lt;=&gt; lac + nad</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * LDH_Vmax / (LDH_k_pyr * LDH_k_nadh) * (pyr * nadh - lac
+ * nad / LDH_keq) / ((1 + nadh / LDH_k_nadh) * (1 + pyr / LDH_k_pyr) + 
+(1 + lac / LDH_k_lac) * (1 + nad / LDH_k_nad) - 1)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:1.1.1.27" target="_blank">urn:miriam:ec-code:1.1.1.27</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00703" target="_blank">urn:miriam:kegg.reaction:R00703</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">LACT</td>
+	<td>Lactate transport (import)</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>lac_ext &lt;=&gt; lac</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>scale_gly * LACT_Vmax / LACT_k_lac * (lac_ext - lac / LACT_keq) / (1 + lac_ext / LACT_k_lac + lac / LACT_k_lac)</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">PYRTM</td>
+	<td>Pyruvate transport (mito)</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>pyr &lt;=&gt; pyr_mito</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>scale_gly * PYRTM_Vmax / PYRTM_k_pyr * (pyr - pyr_mito / PYRTM_keq) / (1 + pyr / PYRTM_k_pyr + pyr_mito / PYRTM_k_pyr)</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">PEPTM</td>
+	<td>PEP Transport (export mito)</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>pep_mito &lt;=&gt; pep</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>scale_gly * PEPTM_Vmax / PEPTM_k_pep * (pep_mito - pep / PEPTM_keq) / (1 + pep / PEPTM_k_pep + pep_mito / PEPTM_k_pep)</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">PDH</td>
+	<td>Pyruvate Dehydrogenase</td>
+	
+	<td class="danger">&nbsp;=&gt;</td>
+	<td>pyr_mito + coa_mito + nad_mito =&gt; acoa_mito + co2_mito + nadh_mito + h_mito</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>(1 - gamma) * PDH_nat + gamma * PDH_p</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:1.2.4.1" target="_blank">urn:miriam:ec-code:1.2.4.1</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00209" target="_blank">urn:miriam:kegg.reaction:R00209</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">CS</td>
+	<td>Citrate Synthase</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>acoa_mito + oaa_mito + h2o_mito &lt;=&gt; cit_mito + coa_mito</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * CS_Vmax / (CS_k_oaa * CS_k_acoa) * (acoa_mito * 
+oaa_mito - cit_mito * coa_mito / CS_keq) / ((1 + acoa_mito / CS_k_acoa) *
+ (1 + oaa_mito / CS_k_oaa) + (1 + cit_mito / CS_k_cit) * (1 + coa_mito /
+ CS_k_coa) - 1)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:2.3.3.1" target="_blank">urn:miriam:ec-code:2.3.3.1</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00351" target="_blank">urn:miriam:kegg.reaction:R00351</a>
+</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">NDKGTPM</td>
+	<td>Nucleoside-diphosphate kinase (ATP, GTP) mito</td>
+	<td class="success">&lt;=&gt;</td>
+	<td>atp_mito + gdp_mito &lt;=&gt; adp_mito + gtp_mito</td>
+	<td></td>
+	<td>0.001*mole * s^-1</td>
+	<td>scale_gly * NDKGTPM_Vmax / (NDKGTPM_k_atp * NDKGTPM_k_gdp) * 
+(atp_mito * gdp_mito - adp_mito * gtp_mito / NDKGTPM_keq) / ((1 + 
+atp_mito / NDKGTPM_k_atp) * (1 + gdp_mito / NDKGTPM_k_gdp) + (1 + 
+adp_mito / NDKGTPM_k_adp) * (1 + gtp_mito / NDKGTPM_k_gtp) - 1)</td>
+	<td>
+    -
+</td>
+	<td>
+<b>BQB_IS</b><br><a href="urn:miriam:ec-code:2.7.4.6" target="_blank">urn:miriam:ec-code:2.7.4.6</a><br><b>BQB_IS</b><br><a href="urn:miriam:kegg.reaction:R00330" target="_blank">urn:miriam:kegg.reaction:R00330</a>
+</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">OAAFLX</td>
+	<td>oxalacetate influx</td>
+	
+	<td class="danger">&nbsp;=&gt;</td>
+	<td> =&gt; oaa_mito</td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>scale_gly * OAAFLX_Vmax</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="odd" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">ACOAFLX</td>
+	<td>acetyl-coa efflux</td>
+	
+	<td class="danger">&nbsp;=&gt;</td>
+	<td>acoa_mito =&gt; </td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>scale_gly * ACOAFLX_Vmax</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr><tr class="even" role="row">
+    <td class="hidden sorting_1">Reaction</td>
+	<td class="active">CITFLX</td>
+	<td>citrate efflux</td>
+	
+	<td class="danger">&nbsp;=&gt;</td>
+	<td>cit_mito =&gt; </td>
+	<td></td>
+	<td>(10^-3*mole)^1 * s^-1</td>
+	<td>scale_gly * CITFLX_Vmax</td>
+	<td>
+    -
+</td>
+	<td>-</td>
+</tr></tbody>
+        </table><div class="bottom"></div><div class="clear"></div></div>
+        <hr>
+    
+    <!--------------------------------------------------->
+    <!-- Events -->
+    <!--------------------------------------------------->
+    
+
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <hr>
+        <p>© 2015 Matthias Koenig.
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="Koenig2014_Hepatic_Glucose_Model_annotated_files/80x15.png"></a><br>This
+            work by <a xmlns:cc="http://creativecommons.org/ns#" href="https://www.livermetabolism.com/" property="cc:attributionName" rel="cc:attributionURL">Matthias Koenig</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons
+                Attribution-ShareAlike 4.0 International License</a>.
+            <br>
+            Powered by <a href="https://www.djangoproject.com/" target="_blank"><img src="Koenig2014_Hepatic_Glucose_Model_annotated_files/django.png" alt="django" height="15"></a> and
+            bootstrap <a href="http://getbootstrap.com/" target="_blank"><img src="Koenig2014_Hepatic_Glucose_Model_annotated_files/bootstrap.png" alt="bootstrap" height="15"></a>.
+            Source available on <a href="https://github.com/matthiaskoenig/multiscale-galactose/" target="_blank"><img src="Koenig2014_Hepatic_Glucose_Model_annotated_files/github.png" alt="GitHub" height="20"></a>.
+        </p>
+    </div>
+
+        </div>
+
+</div>
+<!-- /container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+<link rel="stylesheet" href="Koenig2014_Hepatic_Glucose_Model_annotated_files/print.css" type="text/css" media="print">
+<link rel="stylesheet" href="Koenig2014_Hepatic_Glucose_Model_annotated_files/toolbar.css" type="text/css">
+
+<!-- Prevent our copy of jQuery from registering as an AMD module on sites that use RequireJS. -->
+<script src="Koenig2014_Hepatic_Glucose_Model_annotated_files/jquery_pre.js"></script>
+<script src="Koenig2014_Hepatic_Glucose_Model_annotated_files/jquery.js"></script>
+<script src="Koenig2014_Hepatic_Glucose_Model_annotated_files/jquery_post.js"></script>
+
+<script src="Koenig2014_Hepatic_Glucose_Model_annotated_files/toolbar.js"></script>
+<div style="display: block;" id="djDebug" dir="ltr" data-store-id="1a819daf112840c985ab8e6584e5c897" data-render-panel-url="/__debug__/render_panel/" hidden="hidden">
+	<div style="display: none;" id="djDebugToolbar" hidden="hidden">
+		<ul id="djDebugPanelList">
+			
+			<li><a id="djHideToolBarButton" href="#" title="Hide toolbar">Hide »</a></li>
+			
+			
+				<li class="djDebugPanelButton">
+					<input data-cookie="djdtVersionsPanel" checked="checked" title="Disable for next and successive requests" type="checkbox">
+					
+						<a href="#" title="Versions" class="VersionsPanel">
+					
+					Versions
+					
+					
+						<br><small>Django 1.8.7</small>
+					
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					<input data-cookie="djdtTimerPanel" checked="checked" title="Disable for next and successive requests" type="checkbox">
+					
+						<a href="#" title="Time" class="TimerPanel">
+					
+					Time
+					
+					
+						<br><small>CPU: 468.00ms (466.80ms)</small>
+					
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					<input data-cookie="djdtSettingsPanel" checked="checked" title="Disable for next and successive requests" type="checkbox">
+					
+						<a href="#" title="Settings from &lt;code&gt;multiscalesite.settings&lt;/code&gt;" class="SettingsPanel">
+					
+					Settings
+					
+					
+						
+					
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					<input data-cookie="djdtHeadersPanel" checked="checked" title="Disable for next and successive requests" type="checkbox">
+					
+						<a href="#" title="Headers" class="HeadersPanel">
+					
+					Headers
+					
+					
+						
+					
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					<input data-cookie="djdtRequestPanel" checked="checked" title="Disable for next and successive requests" type="checkbox">
+					
+						<a href="#" title="Request" class="RequestPanel">
+					
+					Request
+					
+					
+						<br><small>report</small>
+					
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					<input data-cookie="djdtSQLPanel" checked="checked" title="Disable for next and successive requests" type="checkbox">
+					
+						<a href="#" title="SQL queries from 1 connection" class="SQLPanel">
+					
+					SQL
+					
+					
+						<br><small>1 query in 0.78ms</small>
+					
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					<input data-cookie="djdtStaticFilesPanel" checked="checked" title="Disable for next and successive requests" type="checkbox">
+					
+						<a href="#" title="Static files (238 found, 12 used)" class="StaticFilesPanel">
+					
+					Static files
+					
+					
+						<br><small>12 files used</small>
+					
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					<input data-cookie="djdtTemplatesPanel" checked="checked" title="Disable for next and successive requests" type="checkbox">
+					
+						<a href="#" title="Templates (2 rendered)" class="TemplatesPanel">
+					
+					Templates
+					
+					
+						<br><small>report/report.html</small>
+					
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					<input data-cookie="djdtCachePanel" checked="checked" title="Disable for next and successive requests" type="checkbox">
+					
+						<a href="#" title="Cache calls from 1 backend" class="CachePanel">
+					
+					Cache
+					
+					
+						<br><small>0 calls in 0.00ms</small>
+					
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					<input data-cookie="djdtSignalsPanel" checked="checked" title="Disable for next and successive requests" type="checkbox">
+					
+						<a href="#" title="Signals" class="SignalsPanel">
+					
+					Signals
+					
+					
+						<br><small>22 receivers of 12 signals</small>
+					
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					<input data-cookie="djdtLoggingPanel" checked="checked" title="Disable for next and successive requests" type="checkbox">
+					
+						<a href="#" title="Log messages" class="LoggingPanel">
+					
+					Logging
+					
+					
+						<br><small>0 messages</small>
+					
+					
+					
+						</a>
+					
+				</li>
+			
+				<li class="djDebugPanelButton">
+					<input data-cookie="djdtRedirectsPanel" title="Enable for next and successive requests" type="checkbox">
+					
+						<div class="djdt-contentless djdt-disabled">
+					
+					Intercept redirects
+					
+					
+						</div>
+					
+				</li>
+			
+		</ul>
+	</div>
+	<div style="display: block;" id="djDebugToolbarHandle" hidden="hidden">
+		<span title="Show toolbar" id="djShowToolBarButton">«</span>
+	</div>
+	
+		
+			<div style="display: none;" id="VersionsPanel" class="djdt-panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose"></a>
+					<h3>Versions</h3>
+				</div>
+				<div class="djDebugPanelContent">
+					
+					<img src="Koenig2014_Hepatic_Glucose_Model_annotated_files/ajax-loader.gif" alt="loading" class="djdt-loader">
+					<div class="djdt-scroll"></div>
+					
+				</div>
+			</div>
+		
+	
+		
+			<div style="display: none;" id="TimerPanel" class="djdt-panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose"></a>
+					<h3>Time</h3>
+				</div>
+				<div class="djDebugPanelContent">
+					
+					<img src="Koenig2014_Hepatic_Glucose_Model_annotated_files/ajax-loader.gif" alt="loading" class="djdt-loader">
+					<div class="djdt-scroll"></div>
+					
+				</div>
+			</div>
+		
+	
+		
+			<div style="display: none;" id="SettingsPanel" class="djdt-panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose"></a>
+					<h3>Settings from <code>multiscalesite.settings</code></h3>
+				</div>
+				<div class="djDebugPanelContent">
+					
+					<img src="Koenig2014_Hepatic_Glucose_Model_annotated_files/ajax-loader.gif" alt="loading" class="djdt-loader">
+					<div class="djdt-scroll"></div>
+					
+				</div>
+			</div>
+		
+	
+		
+			<div style="display: none;" id="HeadersPanel" class="djdt-panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose"></a>
+					<h3>Headers</h3>
+				</div>
+				<div class="djDebugPanelContent">
+					
+					<img src="Koenig2014_Hepatic_Glucose_Model_annotated_files/ajax-loader.gif" alt="loading" class="djdt-loader">
+					<div class="djdt-scroll"></div>
+					
+				</div>
+			</div>
+		
+	
+		
+			<div style="display: none;" id="RequestPanel" class="djdt-panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose"></a>
+					<h3>Request</h3>
+				</div>
+				<div class="djDebugPanelContent">
+					
+					<img src="Koenig2014_Hepatic_Glucose_Model_annotated_files/ajax-loader.gif" alt="loading" class="djdt-loader">
+					<div class="djdt-scroll"></div>
+					
+				</div>
+			</div>
+		
+	
+		
+			<div style="display: none;" id="SQLPanel" class="djdt-panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose"></a>
+					<h3>SQL queries from 1 connection</h3>
+				</div>
+				<div class="djDebugPanelContent">
+					
+					<img src="Koenig2014_Hepatic_Glucose_Model_annotated_files/ajax-loader.gif" alt="loading" class="djdt-loader">
+					<div class="djdt-scroll"></div>
+					
+				</div>
+			</div>
+		
+	
+		
+			<div style="display: none;" id="StaticFilesPanel" class="djdt-panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose"></a>
+					<h3>Static files (238 found, 12 used)</h3>
+				</div>
+				<div class="djDebugPanelContent">
+					
+					<img src="Koenig2014_Hepatic_Glucose_Model_annotated_files/ajax-loader.gif" alt="loading" class="djdt-loader">
+					<div class="djdt-scroll"></div>
+					
+				</div>
+			</div>
+		
+	
+		
+			<div style="display: none;" id="TemplatesPanel" class="djdt-panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose"></a>
+					<h3>Templates (2 rendered)</h3>
+				</div>
+				<div class="djDebugPanelContent">
+					
+					<img src="Koenig2014_Hepatic_Glucose_Model_annotated_files/ajax-loader.gif" alt="loading" class="djdt-loader">
+					<div class="djdt-scroll"></div>
+					
+				</div>
+			</div>
+		
+	
+		
+			<div style="display: none;" id="CachePanel" class="djdt-panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose"></a>
+					<h3>Cache calls from 1 backend</h3>
+				</div>
+				<div class="djDebugPanelContent">
+					
+					<img src="Koenig2014_Hepatic_Glucose_Model_annotated_files/ajax-loader.gif" alt="loading" class="djdt-loader">
+					<div class="djdt-scroll"></div>
+					
+				</div>
+			</div>
+		
+	
+		
+			<div style="display: none;" id="SignalsPanel" class="djdt-panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose"></a>
+					<h3>Signals</h3>
+				</div>
+				<div class="djDebugPanelContent">
+					
+					<img src="Koenig2014_Hepatic_Glucose_Model_annotated_files/ajax-loader.gif" alt="loading" class="djdt-loader">
+					<div class="djdt-scroll"></div>
+					
+				</div>
+			</div>
+		
+	
+		
+			<div style="display: none;" id="LoggingPanel" class="djdt-panelContent">
+				<div class="djDebugPanelTitle">
+					<a href="" class="djDebugClose"></a>
+					<h3>Log messages</h3>
+				</div>
+				<div class="djDebugPanelContent">
+					
+					<img src="Koenig2014_Hepatic_Glucose_Model_annotated_files/ajax-loader.gif" alt="loading" class="djdt-loader">
+					<div class="djdt-scroll"></div>
+					
+				</div>
+			</div>
+		
+	
+		
+	
+	<div style="display: none;" id="djDebugWindow" class="djdt-panelContent"></div>
+</div>
+
+
+
+</div></body></html>

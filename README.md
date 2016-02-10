@@ -1,5 +1,6 @@
 # glucose-model
 
+
 König M., Bulik S. and Holzhütter HG.  
 *Quantifying the Contribution of the Liver to the Homeostasis of Plasma Glucose: A Detailed Kinetic Model of Hepatic Glucose Metabolism Integrated with the Hormonal Control by Insulin, Glucagon and Epinephrine*  
 PLoS Comput Biol. 2012 Jun;8(6):e1002577. Epub 2012 Jun 21.
